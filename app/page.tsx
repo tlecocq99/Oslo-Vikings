@@ -1,0 +1,178 @@
+"use client";
+
+import { useStoryblok } from "@storyblok/nextjs";
+import { StoryblokComponent } from "@storyblok/nextjs";
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
+import Hero from "./components/Hero";
+import NewsCard from "./components/NewsCard";
+import GameCard from "./components/GameCard";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ArrowRight, Trophy, Users, Calendar } from "lucide-react";
+
+// Type guard to ensure valid status
+function normalizeGameStatus(
+  status: string
+): "upcoming" | "live" | "completed" {
+  if (status === "upcoming" || status === "live" || status === "completed") {
+    return status;
+  }
+  return "upcoming"; // Default fallback
+}
+
+export default function Home() {
+  // Mock data for demo - replace with actual Storyblok data
+  const heroData = {
+    component: "hero",
+    title: "Oslo Vikings",
+    subtitle:
+      "Conquering the field with Norwegian strength and American football passion",
+    cta_text: "Meet the Team",
+    cta_link: { url: "/team" },
+  };
+
+  const featuredNews = [
+    {
+      component: "news_card",
+      title: "Vikings Dominate Season Opener",
+      excerpt:
+        "Oslo Vikings secured a commanding 28-14 victory in their season opener against Bergen Bears.",
+      author: "Sports Desk",
+      date: "2025-01-15",
+      category: "Game Recap",
+      slug: "vikings-dominate-season-opener",
+    },
+    {
+      component: "news_card",
+      title: "New Head Coach Brings Championship Experience",
+      excerpt:
+        "Former NFL assistant coach joins Oslo Vikings with plans to elevate the program.",
+      author: "Team Management",
+      date: "2025-01-10",
+      category: "Team News",
+      slug: "new-head-coach",
+    },
+  ];
+
+  const upcomingGame = {
+    component: "game",
+    home_team: "Oslo Vikings",
+    away_team: "Stavanger Stallions",
+    date: "2025-01-22",
+    time: "15:00",
+    location: "Viking Stadium, Oslo",
+    status: normalizeGameStatus("upcoming"), // Safely convert string to literal type
+  };
+
+  return (
+    <>
+      <Navigation />
+
+      {/* Hero Section */}
+      <Hero blok={heroData} />
+
+      {/* Quick Stats Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-viking-red rounded-full flex items-center justify-center mx-auto mb-4">
+                <Trophy className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-viking-charcoal mb-2">
+                5
+              </h3>
+              <p className="text-gray-600">Championship Wins</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-viking-gold rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-viking-charcoal" />
+              </div>
+              <h3 className="text-2xl font-bold text-viking-charcoal mb-2">
+                45
+              </h3>
+              <p className="text-gray-600">Active Players</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 bg-viking-red rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calendar className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-viking-charcoal mb-2">
+                15
+              </h3>
+              <p className="text-gray-600">Years Established</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Next Game Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
+              Next Game
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Don't miss our upcoming match. Come cheer for the Vikings!
+            </p>
+          </div>
+
+          <div className="max-w-md mx-auto">
+            <GameCard blok={upcomingGame} />
+          </div>
+
+          <div className="text-center mt-8">
+            <Button
+              asChild
+              variant="outline"
+              className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
+            >
+              <Link href="/schedule">
+                View Full Schedule <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Latest News Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
+              Latest News
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Stay updated with the latest Oslo Vikings news, game recaps, and
+              team announcements.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {featuredNews.map((news, index) => (
+              <NewsCard key={index} blok={news} />
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Button
+              asChild
+              variant="outline"
+              className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
+            >
+              <Link href="/news">
+                All News <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </>
+  );
+}
