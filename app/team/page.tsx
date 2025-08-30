@@ -1,78 +1,72 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import PlayerCard from "../components/PlayerCard";
 import { Grid3X3, List, Users } from "lucide-react";
 
+interface Player {
+  id: string;
+  name: string;
+  position: string;
+  number: string;
+  height?: string;
+  weight?: string;
+  photo?: string;
+  bio?: string;
+  image?: string;
+}
+
+/**
+ * Fetch players from the Google Sheets API
+ */
+async function fetchPlayersFromAPI(): Promise<Player[]> {
+  try {
+    const response = await fetch("/api/players", {
+      next: { revalidate: 60 },
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `API request failed: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const players = await response.json();
+    return Array.isArray(players) ? players : [];
+  } catch (error) {
+    console.error("Error fetching players from API:", error);
+    return [];
+  }
+}
+
 export default function TeamPage() {
-  // Mock player data - replace with Storyblok data
-  const players = [
-    {
-      component: "player_card",
-      name: "William Sewell",
-      position: "Quarterback",
-      number: "01",
-      height: "6'2\"",
-      weight: "210 lbs",
-      bio: "Team captain and veteran quarterback leading the Vikings offense with precision and Norwegian grit.",
-      photo: { filename: "/images/players/williamsewell.avif" },
-    },
-    {
-      component: "player_card",
-      name: "Jesper Jørgensen",
-      position: "Running Back",
-      number: "02",
-      height: "5'11\"",
-      weight: "195 lbs",
-      bio: "Explosive running back known for his speed and agility on the field.",
-      photo: { filename: "/images/players/jesperjorgensen.avif" },
-    },
-    {
-      component: "player_card",
-      name: "Ahmed Yasin",
-      position: "Wide Receiver",
-      number: "04",
-      height: "6'0\"",
-      weight: "185 lbs",
-      bio: "Sure-handed receiver with excellent route running and catching ability.",
-      photo: { filename: "/images/players/ahmedyasin.avif" },
-    },
-    {
-      component: "player_card",
-      name: "Robin Rossvold Ekstrøm",
-      position: "Linebacker",
-      number: "06",
-      height: "6'3\"",
-      weight: "235 lbs",
-      bio: "Defensive anchor with incredible tackling skills and field awareness.",
-      photo: { filename: "/images/players/robinekstrom.avif" },
-    },
-    {
-      component: "player_card",
-      name: "Vegard Tysse",
-      position: "Running Back",
-      number: "07",
-      height: "6'4\"",
-      weight: "250 lbs",
-      bio: "Pass rush specialist bringing pressure from the edge with relentless pursuit.",
-      photo: { filename: "/images/players/vegardtysse.avif" },
-    },
-    {
-      component: "player_card",
-      name: "Daniel Nygård",
-      position: "Wide Receiver",
-      number: "08",
-      height: "6'5\"",
-      weight: "290 lbs",
-      bio: "Veteran lineman protecting the quarterback with strength and technique.",
-      photo: { filename: "/images/players/danielnygard.avif" },
-    },
-  ];
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const positions = ["All", "Offense", "Defense", "Special Teams"];
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
+  // Fetch players on component mount
+  useEffect(() => {
+    async function loadPlayers() {
+      try {
+        setLoading(true);
+        const fetchedPlayers = await fetchPlayersFromAPI();
+        setPlayers(fetchedPlayers);
+        setError(null);
+      } catch (err) {
+        console.error("Error loading players:", err);
+        setError("Failed to load players. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadPlayers();
+  }, []);
 
   return (
     <>
@@ -113,119 +107,155 @@ export default function TeamPage() {
               </p>
             </div>
 
-            {/* Controls: Position Filter + View Toggle */}
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-12 gap-4">
-              {/* Position Filter */}
-              <div className="flex flex-wrap gap-2">
-                {positions.map((position) => (
-                  <button
-                    key={position}
-                    className={`px-4 py-2 rounded-full transition-colors ${
-                      position === "All"
-                        ? "bg-viking-red text-white"
-                        : "bg-gray-100 text-viking-charcoal hover:bg-gray-200"
-                    }`}
-                  >
-                    {position}
-                  </button>
-                ))}
-              </div>
-
-              {/* View Toggle */}
-              <div className="flex items-center bg-gray-100 rounded-lg p-1">
-                <button
-                  onClick={() => setViewMode("grid")}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
-                    viewMode === "grid"
-                      ? "bg-white text-viking-red shadow-sm"
-                      : "text-gray-600 hover:text-viking-red"
-                  }`}
-                >
-                  <Grid3X3 className="w-4 h-4" />
-                  Grid
-                </button>
-                <button
-                  onClick={() => setViewMode("list")}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
-                    viewMode === "list"
-                      ? "bg-white text-viking-red shadow-sm"
-                      : "text-gray-600 hover:text-viking-red"
-                  }`}
-                >
-                  <List className="w-4 h-4" />
-                  List
-                </button>
-              </div>
-            </div>
-
-            {/* Grid View */}
-            {viewMode === "grid" && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {players.map((player, index) => (
-                  <PlayerCard key={index} blok={player} />
-                ))}
+            {/* Loading State */}
+            {loading && (
+              <div className="text-center py-12">
+                <div className="inline-flex items-center gap-2">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-viking-red"></div>
+                  <span>Loading players...</span>
+                </div>
               </div>
             )}
 
-            {/* List View */}
-            {viewMode === "list" && (
-              <div className="space-y-4">
-                {players.map((player, index) => (
-                  <div
-                    key={index}
-                    className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow"
-                  >
-                    <div className="flex items-center p-4">
-                      {/* Player Image */}
-                      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
-                        {player.image ? (
-                          <img
-                            src={player.image}
-                            alt={player.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-viking-red flex items-center justify-center">
-                            <Users className="w-8 h-8 text-white" />
-                          </div>
-                        )}
-                        {/* Number overlay */}
-                        <div className="absolute inset-0 bg-black/20 flex items-end justify-end p-1">
-                          <span className="text-white text-xs font-bold bg-black/50 px-1 rounded">
-                            #{player.number}
-                          </span>
-                        </div>
-                      </div>
+            {/* Error State */}
+            {error && (
+              <div className="text-center py-12">
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                  {error}
+                </div>
+              </div>
+            )}
 
-                      {/* Player Info */}
-                      <div className="flex-1 ml-4 min-w-0">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                          <div className="flex-1">
-                            <h3 className="text-lg font-bold text-viking-charcoal truncate">
-                              {player.name}
-                            </h3>
-                            <p className="text-viking-red font-semibold text-sm">
-                              {player.position}
+            {/* Controls: Position Filter + View Toggle */}
+            {!loading && !error && players.length > 0 && (
+              <>
+                <div className="flex flex-col sm:flex-row justify-between items-center mb-12 gap-4">
+                  {/* Position Filter */}
+                  <div className="flex flex-wrap gap-2">
+                    {positions.map((position) => (
+                      <button
+                        key={position}
+                        className={`px-4 py-2 rounded-full transition-colors ${
+                          position === "All"
+                            ? "bg-viking-red text-white"
+                            : "bg-gray-100 text-viking-charcoal hover:bg-gray-200"
+                        }`}
+                      >
+                        {position}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* View Toggle */}
+                  <div className="flex items-center bg-gray-100 rounded-lg p-1">
+                    <button
+                      onClick={() => setViewMode("grid")}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
+                        viewMode === "grid"
+                          ? "bg-white text-viking-red shadow-sm"
+                          : "text-gray-600 hover:text-viking-red"
+                      }`}
+                    >
+                      <Grid3X3 className="w-4 h-4" />
+                      Grid
+                    </button>
+                    <button
+                      onClick={() => setViewMode("list")}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
+                        viewMode === "list"
+                          ? "bg-white text-viking-red shadow-sm"
+                          : "text-gray-600 hover:text-viking-red"
+                      }`}
+                    >
+                      <List className="w-4 h-4" />
+                      List
+                    </button>
+                  </div>
+                </div>
+
+                {/* Grid View */}
+                {viewMode === "grid" && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {players.map((player, index) => (
+                      <PlayerCard key={player.id || index} player={player} />
+                    ))}
+                  </div>
+                )}
+
+                {/* List View */}
+                {viewMode === "list" && (
+                  <div className="space-y-4">
+                    {players.map((player, index) => (
+                      <div
+                        key={player.id || index}
+                        className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow"
+                      >
+                        <div className="flex items-center p-4">
+                          {/* Player Image */}
+                          <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
+                            {player.image || player.photo ? (
+                              <img
+                                src={player.image || player.photo}
+                                alt={player.name}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-viking-red flex items-center justify-center">
+                                <Users className="w-8 h-8 text-white" />
+                              </div>
+                            )}
+                            {/* Number overlay */}
+                            <div className="absolute inset-0 bg-black/20 flex items-end justify-end p-1">
+                              <span className="text-white text-xs font-bold bg-black/50 px-1 rounded">
+                                #{player.number}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Player Info */}
+                          <div className="flex-1 ml-4 min-w-0">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                              <div className="flex-1">
+                                <h3 className="text-lg font-bold text-viking-charcoal truncate">
+                                  {player.name}
+                                </h3>
+                                <p className="text-viking-red font-semibold text-sm">
+                                  {player.position}
+                                </p>
+                              </div>
+
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2 sm:mt-0">
+                                <div className="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                                  {player.height || "N/A"}
+                                </div>
+                                <div className="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                                  {player.weight || "N/A"}
+                                </div>
+                              </div>
+                            </div>
+
+                            <p className="text-gray-700 text-sm mt-2 line-clamp-2">
+                              {player.bio || "No bio available"}
                             </p>
                           </div>
-
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2 sm:mt-0">
-                            <div className="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
-                              {player.height}
-                            </div>
-                            <div className="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
-                              {player.weight}
-                            </div>
-                          </div>
                         </div>
-
-                        <p className="text-gray-700 text-sm mt-2 line-clamp-2">
-                          {player.bio}
-                        </p>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                ))}
+                )}
+              </>
+            )}
+
+            {/* Empty State */}
+            {!loading && !error && players.length === 0 && (
+              <div className="text-center py-12">
+                <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-600 mb-2">
+                  No players found
+                </h3>
+                <p className="text-gray-500">
+                  Check your Google Sheets configuration and try again.
+                </p>
               </div>
             )}
           </div>

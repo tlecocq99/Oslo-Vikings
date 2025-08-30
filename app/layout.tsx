@@ -1,7 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import StoryblokProvider from "./StoryblokProvider";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 const inter = Inter({
@@ -39,9 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className={`${inter.className} antialiased`}>
-        <ErrorBoundary>
-          <StoryblokProvider>{children}</StoryblokProvider>
-        </ErrorBoundary>
+        <ErrorBoundary>{children}</ErrorBoundary>
       </body>
     </html>
   );

@@ -1,36 +1,31 @@
 "use client";
 
-import { storyblokEditable } from "@storyblok/react";
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, User } from "lucide-react";
 
-interface NewsCardProps {
-  blok: {
-    title?: string;
-    excerpt?: string;
-    image?: {
-      filename: string;
-      alt: string;
-    };
-    author?: string;
-    date?: string;
-    slug?: string;
-    category?: string;
-  };
+interface NewsArticle {
+  title?: string;
+  excerpt?: string;
+  image?: string;
+  author?: string;
+  date?: string;
+  slug?: string;
+  category?: string;
 }
 
-export default function NewsCard({ blok }: NewsCardProps) {
+interface NewsCardProps {
+  article: NewsArticle;
+}
+
+export default function NewsCard({ article }: NewsCardProps) {
   return (
-    <article
-      {...storyblokEditable(blok)}
-      className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
-    >
+    <article className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
       <div className="relative h-48 overflow-hidden">
-        {blok.image?.filename ? (
+        {article.image ? (
           <Image
-            src={blok.image.filename}
-            alt={blok.image.alt || blok.title || "News image"}
+            src={article.image}
+            alt={article.title || "News image"}
             width={400}
             height={200}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -42,37 +37,37 @@ export default function NewsCard({ blok }: NewsCardProps) {
             </span>
           </div>
         )}
-        {blok.category && (
+        {article.category && (
           <div className="absolute top-4 left-4 bg-viking-gold text-viking-charcoal px-3 py-1 rounded-full text-sm font-medium">
-            {blok.category}
+            {article.category}
           </div>
         )}
       </div>
 
       <div className="p-6">
         <h3 className="text-xl font-bold text-viking-charcoal mb-3 group-hover:text-viking-red transition-colors">
-          {blok.title || "News Title"}
+          {article.title || "News Title"}
         </h3>
 
         <p className="text-gray-700 mb-4 leading-relaxed">
-          {blok.excerpt || "News excerpt goes here..."}
+          {article.excerpt || "News excerpt goes here..."}
         </p>
 
         <div className="flex items-center justify-between text-sm text-gray-500">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-1">
               <User className="w-4 h-4" />
-              <span>{blok.author || "Oslo Vikings"}</span>
+              <span>{article.author || "Oslo Vikings"}</span>
             </div>
             <div className="flex items-center space-x-1">
               <Calendar className="w-4 h-4" />
-              <span>{blok.date || new Date().toLocaleDateString()}</span>
+              <span>{article.date || new Date().toLocaleDateString()}</span>
             </div>
           </div>
 
-          {blok.slug && (
+          {article.slug && (
             <Link
-              href={`/news/${blok.slug}`}
+              href={`/news/${article.slug}`}
               className="text-viking-red hover:text-viking-red-dark font-medium transition-colors"
             >
               Read more →
