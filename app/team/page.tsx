@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import PlayerCard from "../components/PlayerCard";
+import type { PlayerCard } from "@/types/player";
 import { Grid3X3, List, Users } from "lucide-react";
 
 export default function TeamPage() {
