@@ -68,8 +68,7 @@ oslo-vikings-website/
 │   │   ├── Page.tsx            # Page wrapper component
 │   │   ├── Navigation.tsx      # Site navigation
 │   │   └── Footer.tsx          # Site footer
-│   ├── lib/                    # Utility functions
-│   │   └── storyblok.ts      
+│   ├── lib/                    # Utility functions    
 │   ├── about/                  # About page
 │   ├── contact/                # Contact page
 │   ├── news/                   # News listing page

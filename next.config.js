@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: {
+  images: { 
     unoptimized: true,
+  },
+  env: {
   },
   // Performance optimizations
   experimental: {

@@ -1,5 +1,4 @@
 "use client";
-
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
@@ -20,9 +19,18 @@ function normalizeGameStatus(
 }
 
 export default function Home() {
-  // Static data for home page display
+  const heroData = {
+    component: "hero",
+    title: "Oslo Vikings",
+    subtitle:
+      "Conquering the field with Norwegian strength and American football passion",
+    cta_text: "Meet the Team",
+    cta_link: { url: "/team" },
+  };
+
   const featuredNews = [
     {
+      component: "news_card",
       title: "Vikings Dominate Season Opener",
       excerpt:
         "Oslo Vikings secured a commanding 28-14 victory in their season opener against Bergen Bears.",
@@ -32,6 +40,7 @@ export default function Home() {
       slug: "vikings-dominate-season-opener",
     },
     {
+      component: "news_card",
       title: "New Head Coach Brings Championship Experience",
       excerpt:
         "Former NFL assistant coach joins Oslo Vikings with plans to elevate the program.",
@@ -43,11 +52,12 @@ export default function Home() {
   ];
 
   const upcomingGame = {
+    component: "game",
     home_team: "Oslo Vikings",
     away_team: "Stavanger Stallions",
     date: "2025-01-22",
     time: "15:00",
-    venue: "Viking Stadium, Oslo",
+    location: "Viking Stadium, Oslo",
     status: normalizeGameStatus("upcoming"), // Safely convert string to literal type
   };
 
@@ -56,12 +66,7 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <Hero
-        title="Oslo Vikings"
-        subtitle="Conquering the field with Norwegian strength and American football passion"
-        ctaText="Meet the Team"
-        ctaLink="/team"
-      />
+      <Hero {...heroData} />
 
       {/* Quick Stats Section */}
       <section className="py-16 bg-gray-50">
@@ -113,7 +118,7 @@ export default function Home() {
           </div>
 
           <div className="max-w-md mx-auto">
-            <GameCard game={upcomingGame} />
+            <GameCard {...upcomingGame} />
           </div>
 
           <div className="text-center mt-8">
@@ -145,7 +150,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             {featuredNews.map((news, index) => (
-              <NewsCard key={index} article={news} />
+              <NewsCard key={index} {...news} />
             ))}
           </div>
 

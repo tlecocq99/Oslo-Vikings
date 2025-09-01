@@ -5,56 +5,106 @@ import Footer from "../components/Footer";
 import GameCard from "../components/GameCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+interface UpcomingGame {
+  component: string;
+  home_team: string;
+  away_team: string;
+  date: string;
+  time: string;
+  location: string;
+  status: "upcoming";
+}
+
+interface CompletedGame {
+  component: string;
+  home_team: string;
+  away_team: string;
+  date: string;
+  time: string;
+  location: string;
+  home_score: number;
+  away_score: number;
+  status: "completed";
+}
+
+const upcomingGames: UpcomingGame[] = [
+  {
+    component: "game",
+    home_team: "Vikings",
+    away_team: "Eagles",
+    date: "2024-01-15",
+    time: "19:00",
+    location: "Viking Stadium",
+    status: "upcoming", // Now properly typed
+  },
+];
+
+const completedGames: CompletedGame[] = [
+  {
+    component: "game",
+    home_team: "Vikings",
+    away_team: "Panthers",
+    date: "2024-01-08",
+    time: "18:00",
+    location: "Panthers Stadium",
+    home_score: 21,
+    away_score: 14,
+    status: "completed", // Now properly typed
+  },
+];
+
 export default function SchedulePage() {
   const games = [
     {
+      component: "game_card",
       home_team: "Oslo Vikings",
       away_team: "Bergen Bears",
       date: "2025-01-15",
       time: "15:00",
-      venue: "Viking Stadium, Oslo",
+      location: "Viking Stadium, Oslo",
       home_score: 28,
       away_score: 14,
       status: "completed" as const,
     },
     {
+      component: "game_card",
       home_team: "Trondheim Thunder",
       away_team: "Oslo Vikings",
       date: "2025-01-08",
       time: "14:00",
-      venue: "Thunder Field, Trondheim",
+      location: "Thunder Field, Trondheim",
       home_score: 21,
       away_score: 35,
       status: "completed" as const,
     },
     {
+      component: "game_card",
       home_team: "Oslo Vikings",
       away_team: "Stavanger Stallions",
       date: "2025-01-22",
       time: "15:00",
-      venue: "Viking Stadium, Oslo",
+      location: "Viking Stadium, Oslo",
       status: "upcoming" as const,
     },
     {
+      component: "game_card",
       home_team: "Kristiansand Knights",
       away_team: "Oslo Vikings",
       date: "2025-01-29",
       time: "13:00",
-      venue: "Knights Arena, Kristiansand",
+      location: "Knights Arena, Kristiansand",
       status: "upcoming" as const,
     },
     {
+      component: "game_card",
       home_team: "Oslo Vikings",
       away_team: "Bergen Bears",
       date: "2025-02-05",
       time: "15:30",
-      venue: "Viking Stadium, Oslo",
-      status: "upcoming" as const,
+      location: "Viking Stadium, Oslo",
+      status: "upcoming",
     },
   ];
-
-  const completedGames = games.filter((game) => game.status === "completed");
-  const upcomingGames = games.filter((game) => game.status === "upcoming");
 
   return (
     <>
@@ -93,7 +143,7 @@ export default function SchedulePage() {
                   </p>
                 </div>
                 {upcomingGames.map((game, index) => (
-                  <GameCard key={index} game={game} />
+                  <GameCard key={index} {...game} />
                 ))}
               </TabsContent>
 
@@ -107,7 +157,7 @@ export default function SchedulePage() {
                   </p>
                 </div>
                 {completedGames.map((game, index) => (
-                  <GameCard key={index} game={game} />
+                  <GameCard key={index} {...game} />
                 ))}
               </TabsContent>
             </Tabs>
