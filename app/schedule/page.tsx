@@ -3,6 +3,10 @@
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import GameCard from "../components/GameCard";
+import dynamic from "next/dynamic";
+
+// Dynamically import standings (client component)
+const Standings = dynamic(() => import("../components/Standings"), { ssr: false });
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface UpcomingGame {
@@ -164,41 +168,14 @@ export default function SchedulePage() {
           </div>
         </section>
 
-        {/* Season Stats */}
+        {/* Standings */}
         <section className="py-16 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
-                Season Stats
-              </h2>
+              <h2 className="text-3xl font-bold text-viking-charcoal mb-4">Standings</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">Live league table pulled from superserien.se (cached every 30 minutes).</p>
             </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-viking-red mb-2">
-                  2-0
-                </div>
-                <div className="text-gray-600">Record</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-viking-red mb-2">
-                  63
-                </div>
-                <div className="text-gray-600">Points For</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-viking-red mb-2">
-                  35
-                </div>
-                <div className="text-gray-600">Points Against</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-viking-red mb-2">
-                  1st
-                </div>
-                <div className="text-gray-600">Division Rank</div>
-              </div>
-            </div>
+            <Standings />
           </div>
         </section>
       </main>

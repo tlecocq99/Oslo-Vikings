@@ -40,7 +40,7 @@ export async function fetchPlayers(): Promise<Player[]> {
     const [
       name = "",
       position = "",
-      number = "",
+      rawNumber = "",
       height = "",
       weight = "",
       imageUrl = "",
@@ -48,11 +48,19 @@ export async function fetchPlayers(): Promise<Player[]> {
       bio = "",
     ] = r;
 
+    // Sanitize jersey number: accept formats like "#07", "07", "7"
+    let parsedNumber: number | undefined = undefined;
+    if (rawNumber) {
+      const cleaned = String(rawNumber).trim().replace(/^#/, "");
+      const n = parseInt(cleaned, 10);
+      if (!Number.isNaN(n)) parsedNumber = n;
+    }
+
     return {
       id: String(i + 1),
       name: name.trim(),
       position: position.trim(),
-      number: number ? Number(number) : undefined,
+      number: parsedNumber,
       height: height || undefined,
       weight: weight || undefined,
       image: imageUrl || undefined,

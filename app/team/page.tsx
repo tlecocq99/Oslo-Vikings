@@ -1,7 +1,7 @@
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import PlayerCard from "../components/PlayerCard";
-import { Grid3X3, List } from "lucide-react";
+import PlayerCard from "../components/PlayerCard"; // still used via RosterClient
+import RosterClient from "../components/RosterClient";
 import { fetchPlayers } from "../services/fetchPlayers";
 import { Player } from "../types/player";
 import React from "react";
@@ -59,113 +59,6 @@ function RosterSection({ players }: { players: Player[] }) {
         <RosterClient players={players} />
       </div>
     </section>
-  );
-}
-
-// Mark as client for stateful logic
-function RosterClient({ players }: { players: Player[] }) {
-  "use client";
-  const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
-  const [positionFilter, setPositionFilter] = React.useState<string>("All");
-  const positions = ["All", "Offense", "Defense", "Special Teams"];
-
-  const visible =
-    positionFilter === "All"
-      ? players
-      : players.filter((p) => p.position === positionFilter);
-
-  return (
-    <>
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-12 gap-4">
-        <div className="flex flex-wrap gap-2">
-          {positions.map((pos) => {
-            const active = pos === positionFilter;
-            return (
-              <button
-                key={pos}
-                onClick={() => setPositionFilter(pos)}
-                className={`px-4 py-2 rounded-full transition-colors ${
-                  active
-                    ? "bg-viking-red text-white"
-                    : "bg-gray-100 text-viking-charcoal hover:bg-gray-200"
-                }`}
-              >
-                {pos}
-              </button>
-            );
-          })}
-        </div>
-        <div className="flex items-center bg-gray-100 rounded-lg p-1">
-          <button
-            onClick={() => setViewMode("grid")}
-            className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
-              viewMode === "grid"
-                ? "bg-white text-viking-red shadow-sm"
-                : "text-gray-600 hover:text-viking-red"
-            }`}
-            aria-label="Grid view"
-          >
-            <Grid3X3 className="w-4 h-4" /> Grid
-          </button>
-          <button
-            onClick={() => setViewMode("list")}
-            className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
-              viewMode === "list"
-                ? "bg-white text-viking-red shadow-sm"
-                : "text-gray-600 hover:text-viking-red"
-            }`}
-            aria-label="List view"
-          >
-            <List className="w-4 h-4" /> List
-          </button>
-        </div>
-      </div>
-
-      {visible.length === 0 && (
-        <p className="text-center text-gray-500">
-          No players match the selected filter.
-        </p>
-      )}
-
-      {viewMode === "grid" && visible.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {visible.map((p) => (
-            <PlayerCard key={p.id} {...p} />
-          ))}
-        </div>
-      )}
-
-      {viewMode === "list" && visible.length > 0 && (
-        <ul className="space-y-4">
-          {visible.map((p) => (
-            <li
-              key={`list-${p.id}`}
-              className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow"
-            >
-              <div className="flex items-center p-4">
-                {p.image && (
-                  <img
-                    src={p.image}
-                    alt={p.imageAlt || p.name}
-                    className="w-16 h-16 rounded-full object-cover mr-4"
-                    loading="lazy"
-                  />
-                )}
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {p.name}
-                  </h3>
-                  <p className="text-gray-600">
-                    {p.number ? `#${p.number} • ` : ""}
-                    {p.position}
-                  </p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
   );
 }
 
