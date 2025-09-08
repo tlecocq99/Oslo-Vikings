@@ -29,6 +29,78 @@ export default async function TeamPage() {
     })
   );
   const rosters: Record<string, Player[]> = Object.fromEntries(entries);
+=======
+import PlayerCard from "../components/PlayerCard";
+import type { PlayerCard } from "@/types/player";
+import { Grid3X3, List, Users } from "lucide-react";
+
+export default function TeamPage() {
+  // Mock player data - replace with Storyblok data
+  const players = [
+    {
+      component: "player_card",
+      name: "William Sewell",
+      position: "Quarterback",
+      number: "01",
+      height: "6'2\"",
+      weight: "210 lbs",
+      bio: "Team captain and veteran quarterback leading the Vikings offense with precision and Norwegian grit.",
+      photo: { filename: "/images/players/williamsewell.avif" },
+    },
+    {
+      component: "player_card",
+      name: "Jesper Jørgensen",
+      position: "Running Back",
+      number: "02",
+      height: "5'11\"",
+      weight: "195 lbs",
+      bio: "Explosive running back known for his speed and agility on the field.",
+      photo: { filename: "/images/players/jesperjorgensen.avif" },
+    },
+    {
+      component: "player_card",
+      name: "Ahmed Yasin",
+      position: "Wide Receiver",
+      number: "04",
+      height: "6'0\"",
+      weight: "185 lbs",
+      bio: "Sure-handed receiver with excellent route running and catching ability.",
+      photo: { filename: "/images/players/ahmedyasin.avif" },
+    },
+    {
+      component: "player_card",
+      name: "Robin Rossvold Ekstrøm",
+      position: "Linebacker",
+      number: "06",
+      height: "6'3\"",
+      weight: "235 lbs",
+      bio: "Defensive anchor with incredible tackling skills and field awareness.",
+      photo: { filename: "/images/players/robinekstrom.avif" },
+    },
+    {
+      component: "player_card",
+      name: "Vegard Tysse",
+      position: "Running Back",
+      number: "07",
+      height: "6'4\"",
+      weight: "250 lbs",
+      bio: "Pass rush specialist bringing pressure from the edge with relentless pursuit.",
+      photo: { filename: "/images/players/vegardtysse.avif" },
+    },
+    {
+      component: "player_card",
+      name: "Daniel Nygård",
+      position: "Wide Receiver",
+      number: "08",
+      height: "6'5\"",
+      weight: "290 lbs",
+      bio: "Veteran lineman protecting the quarterback with strength and technique.",
+      photo: { filename: "/images/players/danielnygard.avif" },
+    },
+  ];
+
+  const positions = ["All", "Offense", "Defense", "Special Teams"];
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   return (
     <>
