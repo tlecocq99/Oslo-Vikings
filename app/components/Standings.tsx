@@ -23,28 +23,27 @@ export default function Standings() {
   const [data, setData] = React.useState<StandingsData | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const fetchData = React.useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/standings", { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json: StandingsData = await res.json();
+      setData(json);
+    } catch (e: any) {
+      setError(e.message || "Failed to load standings");
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
 
   React.useEffect(() => {
-    let cancelled = false;
-    async function load() {
-      try {
-        const res = await fetch("/api/standings", { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json: StandingsData = await res.json();
-        if (!cancelled) {
-          setData(json);
-        }
-      } catch (e: any) {
-        if (!cancelled) setError(e.message || "Failed to load standings");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    fetchData();
+  }, [fetchData]);
 
   if (loading)
     return <p className="text-center text-gray-500">Loading standings...</p>;
@@ -65,25 +64,40 @@ export default function Standings() {
     if (pctB !== pctA) return pctB - pctA;
     const pfA = a.pointsFor ?? -1;
     const pfB = b.pointsFor ?? -1;
-    return pfB - pfA;
+    if (pfB !== pfA) return pfB - pfA;
+    const diffA = a.pointsPlusMinus ?? -9999;
+    const diffB = b.pointsPlusMinus ?? -9999;
+    return diffB - diffA;
   });
 
   return (
     <div className="overflow-x-auto">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
         <h3 className="text-xl font-bold text-viking-charcoal">
           League Standings
         </h3>
-        <span className="text-xs text-gray-500">
-          Updated {new Date(data.updatedAt).toLocaleString()}
-        </span>
+        <div className="flex items-center gap-3 text-xs text-gray-500">
+          <span>Updated {new Date(data.updatedAt).toLocaleString()}</span>
+          <button
+            type="button"
+            onClick={() => {
+              setRefreshing(true);
+              fetchData();
+            }}
+            className="px-2 py-1 rounded border text-viking-red border-viking-red/40 hover:bg-viking-red hover:text-white transition text-[11px] disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading || refreshing}
+            aria-label="Refresh standings"
+          >
+            {refreshing ? "Refreshing..." : "Refresh"}
+          </button>
+        </div>
       </div>
       <table className="min-w-full text-sm">
         <thead>
           <tr className="bg-gray-100 text-viking-charcoal">
             <th className="px-2 py-2 text-left">#</th>
             <th className="px-2 py-2 text-left">Team</th>
-            <th className="px-2 py-2 text-center">Conf</th>
+            <th className="px-2 py-2 text-center">CONF</th>
             <th className="px-2 py-2 text-center">G</th>
             <th className="px-2 py-2 text-center">W-L</th>
             <th className="px-2 py-2 text-center">PCT</th>
@@ -124,10 +138,16 @@ export default function Standings() {
               </td>
               <td className="px-2 py-1 text-center">{r.pointsFor ?? "-"}</td>
               <td className="px-2 py-1 text-center">
-                {r.pointsPlusMinus !== undefined ? r.pointsPlusMinus : "-"}
+                {r.pointsPlusMinus !== undefined
+                  ? `${r.pointsPlusMinus > 0 ? "+" : ""}${r.pointsPlusMinus}`
+                  : "-"}
               </td>
               <td className="px-2 py-1 text-center">
-                {r.pointsPerGame !== undefined ? r.pointsPerGame : "-"}
+                {r.pointsPerGame !== undefined
+                  ? Number.isInteger(r.pointsPerGame)
+                    ? r.pointsPerGame
+                    : r.pointsPerGame.toFixed(1)
+                  : "-"}
               </td>
             </tr>
           ))}

@@ -115,19 +115,32 @@ export async function fetchStandings(): Promise<StandingsResult> {
       if (teamIdx === undefined || !cellEls[teamIdx]) return;
       const teamCell = $(cellEls[teamIdx]);
       // Extract logo src if present
-      const teamLogo = teamCell.find('img').attr('src');
+      const teamLogo = teamCell.find("img").attr("src");
       // Remove images and links to isolate text
-      const teamName = teamCell
+      // Extract raw textual content for the team (remove media elements first)
+      const rawTeamText = teamCell
         .clone()
-        .find('img, svg, picture, source')
+        .find("img, svg, picture, source")
         .remove()
         .end()
         .text()
-        .replace(/\s+/g, ' ')
-        .trim()
-        // Remove playoff suffix patterns if present
-        .replace(/\b(Semi[- ]?Final|Quarter[- ]?Final|Playoff).*$/i, '')
+        .replace(/\s+/g, " ")
         .trim();
+
+      // Some rows concatenate the playoff stage directly after the team name
+      // e.g. "CrusadersSemi-Final 1." (no separating space). Our previous
+      // regex using a word boundary failed in that scenario. Remove any
+      // trailing playoff / finals annotation regardless of preceding space.
+      let teamName = rawTeamText
+        .replace(/(Semi[- ]?Final.*|Quarter[- ]?Final.*|Playoff.*)$/i, "")
+        .trim();
+      // Extra defensive cleanup: strip any stray HTML tags (if present) and trailing periods
+      if (/[<>]/.test(teamName))
+        teamName = teamName
+          .replace(/<[^>]*>/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      teamName = teamName.replace(/\.+$/, "");
       if (!teamName) return;
       const row: StandingRow = { team: teamName, conf: "", teamLogo };
 
@@ -140,9 +153,9 @@ export async function fetchStandings(): Promise<StandingsResult> {
       if (colMap.gamesPlayed !== undefined)
         row.gamesPlayed = toNum(textAt(colMap.gamesPlayed));
       if (colMap.winLoss !== undefined) {
-        const wlRaw = (textAt(colMap.winLoss) || '')
-          .replace(/\s+/g, '')
-          .replace(/–/, '-');
+        const wlRaw = (textAt(colMap.winLoss) || "")
+          .replace(/\s+/g, "")
+          .replace(/–/, "-");
         if (/^\d+[-]\d+$/.test(wlRaw)) row.winLoss = wlRaw;
         else if (wlRaw) row.winLoss = wlRaw; // keep original if something else
       }
