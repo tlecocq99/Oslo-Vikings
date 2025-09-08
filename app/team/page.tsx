@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import PlayerCard from "../components/PlayerCard"; // still used via RosterClient
