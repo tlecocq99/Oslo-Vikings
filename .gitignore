@@ -31,9 +31,16 @@ yarn-error.log*
 
 # vercel
 .vercel
+.bolt
+.vscode
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
 certificates
+
+gsa-key.json
+
+.github/instructions/copilot.instructions.md
+.github/copilot-instructions.md

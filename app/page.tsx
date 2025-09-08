@@ -1,8 +1,8 @@
 "use client";
-
-import { useStoryblok } from "@storyblok/nextjs";
-import { StoryblokComponent } from "@storyblok/nextjs";
+import type { Game } from "@/app/types/game";
 import Navigation from "./components/Navigation";
+import SplashScreen from "./components/SplashScreen";
+import UpcomingGamesBar from "./components/UpcomingGamesBar";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import NewsCard from "./components/NewsCard";
@@ -10,6 +10,9 @@ import GameCard from "./components/GameCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight, Trophy, Users, Calendar } from "lucide-react";
+import { Teko } from "next/font/google";
+
+const teko = Teko({ subsets: ["latin"] });
 
 // Type guard to ensure valid status
 function normalizeGameStatus(
@@ -22,7 +25,6 @@ function normalizeGameStatus(
 }
 
 export default function Home() {
-  // Mock data for demo - replace with actual Storyblok data
   const heroData = {
     component: "hero",
     title: "Oslo Vikings",
@@ -65,19 +67,77 @@ export default function Home() {
     status: normalizeGameStatus("upcoming"), // Safely convert string to literal type
   };
 
+  // Example upcoming games data
+  const upcomingGames: Game[] = [
+    {
+      id: "1",
+      date: "2025-09-07",
+      time: "15:00",
+      home_team: "Oslo Vikings",
+      away_team: "Bergen Bears",
+      location: "Viking Stadium, Oslo",
+      sport: "Football",
+      team: "Main",
+    },
+    {
+      id: "2",
+      date: "2025-09-14",
+      time: "14:00",
+      home_team: "Trondheim Thunder",
+      away_team: "Oslo Vikings",
+      location: "Thunder Field, Trondheim",
+      sport: "Football",
+      team: "Main",
+    },
+    {
+      id: "3",
+      date: "2025-09-21",
+      time: "16:00",
+      home_team: "Oslo Vikings D2",
+      away_team: "Stavanger Stallions D2",
+      location: "Viking Stadium, Oslo",
+      sport: "Football",
+      team: "D2",
+    },
+    {
+      id: "4",
+      date: "2025-09-28",
+      time: "13:00",
+      home_team: "Oslo Vikings U17",
+      away_team: "Kristiansand Knights U17",
+      location: "Knights Arena, Kristiansand",
+      sport: "Football",
+      team: "U17",
+    },
+    {
+      id: "5",
+      date: "2025-10-05",
+      time: "12:00",
+      home_team: "Oslo Vikings",
+      away_team: "Stavanger Stallions",
+      location: "Viking Stadium, Oslo",
+      sport: "Football",
+      team: "Main",
+    },
+  ];
+
   return (
     <>
+      <SplashScreen />
       <Navigation />
 
+      {/* Upcoming Games Bar */}
+      <UpcomingGamesBar games={upcomingGames} />
+
       {/* Hero Section */}
-      <Hero blok={heroData} />
+      <Hero {...heroData} />
 
       {/* Quick Stats Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-viking-red rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#ac1416] rounded-full flex items-center justify-center mx-auto mb-4">
                 <Trophy className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-viking-charcoal mb-2">
@@ -122,7 +182,7 @@ export default function Home() {
           </div>
 
           <div className="max-w-md mx-auto">
-            <GameCard blok={upcomingGame} />
+            <GameCard {...upcomingGame} />
           </div>
 
           <div className="text-center mt-8">
@@ -154,7 +214,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             {featuredNews.map((news, index) => (
-              <NewsCard key={index} blok={news} />
+              <NewsCard key={index} {...news} />
             ))}
           </div>
 

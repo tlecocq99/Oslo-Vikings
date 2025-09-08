@@ -1,32 +1,27 @@
-"use client";
-
-import { storyblokEditable } from "@storyblok/react";
+"use client"
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface HeroProps {
-  blok: {
-    title?: string;
-    subtitle?: string;
-    background_image?: {
-      filename: string;
-      alt: string;
+  title?: string;
+  subtitle?: string;
+  background_image?: {
+    filename: string;
+    alt: string;
     };
     cta_text?: string;
     cta_link?: {
       url: string;
     };
   };
-}
 
-export default function Hero({ blok }: HeroProps) {
+export default function Hero({ title, subtitle, background_image, cta_text, cta_link }: HeroProps) {
   return (
     <section
-      {...storyblokEditable(blok)}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: blok.background_image?.filename
-          ? `url(${blok.background_image.filename})`
+        backgroundImage: background_image?.filename
+          ? `url(${background_image.filename})`
           : `url('/images/backgrounds/team.avif')`,
       }}
     >
@@ -36,22 +31,22 @@ export default function Hero({ blok }: HeroProps) {
       {/* Content */}
       <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 hero-text-shadow animate-fade-in-up">
-          {blok.title || "Oslo Vikings"}
+          {title || "Oslo Vikings"}
         </h1>
 
         <p className="text-xl sm:text-2xl mb-8 text-gray-100 max-w-2xl mx-auto leading-relaxed animate-fade-in-up">
-          {blok.subtitle ||
+          {subtitle ||
             "Conquering the field with Norwegian strength and American football passion"}
         </p>
 
-        {blok.cta_text && (
+        {cta_text && (
           <div className="animate-fade-in-up">
             <Button
               asChild
               size="lg"
               className="bg-viking-gold hover:bg-viking-gold-dark text-viking-charcoal font-semibold px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
             >
-              <Link href={blok.cta_link?.url || "/team"}>{blok.cta_text}</Link>
+              <Link href={cta_link?.url || "/team"}>{cta_text}</Link>
             </Button>
           </div>
         )}

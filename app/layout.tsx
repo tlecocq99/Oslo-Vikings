@@ -1,13 +1,20 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import StoryblokProvider from "./StoryblokProvider";
+import { Inter, Teko } from "next/font/google";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+});
+
+// Teko Semibold for navigation / headings
+const teko = Teko({
+  weight: ["600"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-teko",
 });
 
 export const metadata: Metadata = {
@@ -37,11 +44,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${teko.variable}`}>
       <body className={`${inter.className} antialiased`}>
-        <ErrorBoundary>
-          <StoryblokProvider>{children}</StoryblokProvider>
-        </ErrorBoundary>
+        <ErrorBoundary>{children}</ErrorBoundary>
       </body>
     </html>
   );

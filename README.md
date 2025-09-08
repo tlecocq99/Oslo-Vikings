@@ -1,11 +1,10 @@
 # Oslo Vikings - Norwegian American Football Team Website
 
-A modern, responsive website for the Oslo Vikings American Football team built with Next.js 14, TypeScript, and Storyblok CMS integration.
+A modern, responsive website for the Oslo Vikings American Football team built with Next.js 14 and TypeScript
 
 ## 🏈 Features
 
 - **Modern Next.js 14 Application** with App Router and TypeScript
-- **Storyblok CMS Integration** for dynamic content management
 - **Responsive Design** optimized for desktop, tablet, and mobile
 - **Norwegian Viking-themed Design** with authentic color scheme
 - **Complete Team Management** with player profiles and roster
@@ -34,7 +33,6 @@ A modern, responsive website for the Oslo Vikings American Football team built w
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
-- Storyblok account (free tier available)
 
 ### Installation
 
@@ -47,13 +45,6 @@ A modern, responsive website for the Oslo Vikings American Football team built w
 2. **Install dependencies**
    ```bash
    npm install
-   ```
-
-3. **Environment Setup**
-   Create a `.env.local` file in the root directory:
-   ```env
-   STORYBLOK_ACCESS_TOKEN=VuTHerLCsvoGkSPWQ2k5QAtt
-   NEXT_PUBLIC_STORYBLOK_ACCESS_TOKEN=VuTHerLCsvoGkSPWQ2k5QAtt
    ```
 
 4. **Run the development server**
@@ -69,7 +60,7 @@ A modern, responsive website for the Oslo Vikings American Football team built w
 ```
 oslo-vikings-website/
 ├── app/                          # Next.js App Router
-│   ├── components/              # Storyblok components
+│   ├── components/              # App components
 │   │   ├── Hero.tsx            # Hero section component
 │   │   ├── PlayerCard.tsx      # Player profile cards
 │   │   ├── NewsCard.tsx        # News article cards
@@ -77,8 +68,7 @@ oslo-vikings-website/
 │   │   ├── Page.tsx            # Page wrapper component
 │   │   ├── Navigation.tsx      # Site navigation
 │   │   └── Footer.tsx          # Site footer
-│   ├── lib/                    # Utility functions
-│   │   └── storyblok.ts       # Storyblok API helpers
+│   ├── lib/                    # Utility functions    
 │   ├── about/                  # About page
 │   ├── contact/                # Contact page
 │   ├── news/                   # News listing page
@@ -87,7 +77,7 @@ oslo-vikings-website/
 │   ├── globals.css             # Global styles
 │   ├── layout.tsx              # Root layout
 │   ├── page.tsx                # Home page
-│   └── StoryblokProvider.tsx   # Storyblok provider
+│
 ├── components/ui/               # shadcn/ui components
 ├── lib/                        # Shared utilities
 │   └── utils.ts               # Utility functions
@@ -97,11 +87,8 @@ oslo-vikings-website/
 └── package.json                # Dependencies
 ```
 
-## 🎯 Storyblok Integration
 
 ### Content Types
-
-The application includes the following Storyblok content types:
 
 1. **Page** - Basic page structure
 2. **Hero** - Hero section with title, subtitle, and CTA
@@ -119,22 +106,7 @@ const components = {
   news_card: NewsCard,
   game_card: GameCard,
 };
-```
 
-### API Integration
-
-The app uses Storyblok's Delivery API for content fetching:
-
-```typescript
-// Fetch single story
-const story = await fetchStory('home');
-
-// Fetch multiple stories
-const stories = await fetchStories({
-  starts_with: 'news/',
-  content_type: 'news_card'
-});
-```
 
 ## 🎨 Styling & Theming
 
@@ -216,10 +188,9 @@ Output directory: `.next`
 
 ### Adding New Content
 
-1. **Log into Storyblok** dashboard
-2. **Create new story** using appropriate content type
-3. **Fill in content** fields
-4. **Publish** to make live on website
+1. **Log into Googlesheets**
+2. **Fill in content** fields
+3. **Will automatically** go live on website
 
 ### Content Types Guide
 
@@ -259,13 +230,6 @@ npm run start        # Start production server
 npm run lint         # Run ESLint
 ```
 
-### Adding New Components
-
-1. **Create component** in `app/components/`
-2. **Add to Storyblok** component registry
-3. **Update** `StoryblokProvider.tsx`
-4. **Test** in Storyblok visual editor
-
 ### Customizing Styles
 
 1. **Update** `tailwind.config.ts` for theme changes
@@ -292,7 +256,6 @@ The Oslo Vikings are Norway's premier American Football team, representing Norwe
 
 For technical support or questions about the website:
 - **Email**: tech@oslovikings.no
-- **Documentation**: [Storyblok Docs](https://www.storyblok.com/docs)
 - **Next.js Docs**: [Next.js Documentation](https://nextjs.org/docs)
 
 ---
