@@ -142,6 +142,8 @@ export async function fetchStandings(): Promise<StandingsResult> {
           .trim();
       teamName = teamName.replace(/\.+$/, "");
       if (!teamName) return;
+      // Skip any phantom/header-like rows accidentally appearing inside tbody
+      if (/^team$/i.test(teamName)) return;
       const row: StandingRow = { team: teamName, conf: "", teamLogo };
 
       const textAt = (idx?: number) =>
@@ -167,7 +169,16 @@ export async function fetchStandings(): Promise<StandingsResult> {
       if (colMap.pointsPerGame !== undefined)
         row.pointsPerGame = toNum(textAt(colMap.pointsPerGame));
 
-      rows.push(row);
+      // If every numeric/stat field is missing AND no conference, treat as noise
+      const allStatsMissing =
+        row.conf === "" &&
+        row.gamesPlayed === undefined &&
+        row.winLoss === undefined &&
+        row.pct === undefined &&
+        row.pointsFor === undefined &&
+        row.pointsPlusMinus === undefined &&
+        row.pointsPerGame === undefined;
+      if (!allStatsMissing) rows.push(row);
     });
   }
 
