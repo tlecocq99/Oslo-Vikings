@@ -1,6 +1,7 @@
 // Revalidate roster data every 30 minutes (ISR)
 export const revalidate = 1800; // seconds
 
+
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import PlayerCard from "../components/PlayerCard"; // still used via RosterClient
