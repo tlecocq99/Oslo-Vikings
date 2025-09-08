@@ -31,6 +31,29 @@ export interface StandingsResult {
 const TARGET_URL = "https://www.superserien.se/standings";
 const TABLE_SELECTOR = "table.Table_table__nHJtt";
 
+// Static mapping of team names to logo URLs. Fill in / adjust URLs as needed.
+// Prefer hosting locally in /public/images/logos and switching to relative paths
+// once assets are added. For now includes example / known entry for Crusaders.
+const TEAM_LOGO_MAP: Record<string, string> = {
+  Crusaders:
+    "https://res.cloudinary.com/dxqwurksw/image/fetch/f_webp,c_limit,w_32,q_auto/https://amfotboll-media.s3.amazonaws.com/cc.png",
+  "Black Knights":
+    "https://res.cloudinary.com/dxqwurksw/image/fetch/f_webp,c_limit,w_32,q_auto/https://amfotboll-media.s3.amazonaws.com/obk.png",
+  "Royal Crowns":
+    "http://res.cloudinary.com/dxqwurksw/image/fetch/f_webp,c_limit,w_32,q_auto/https://amfotboll-media.s3.amazonaws.com/trc.png",
+  Predators:
+    "https://res.cloudinary.com/dxqwurksw/image/fetch/f_webp,c_limit,w_32,q_auto/https://amfotboll-media.s3.amazonaws.com/predators.png",
+  "Mean Machines":
+    "https://res.cloudinary.com/dxqwurksw/image/fetch/f_webp,c_limit,w_32,q_auto/https://amfotboll-media.s3.amazonaws.com/smm_1.png",
+  AIK: "https://res.cloudinary.com/dxqwurksw/image/fetch/f_webp,c_limit,w_32,q_auto/https://amfotboll-media.s3.amazonaws.com/aik_crop.png",
+  Griffins:
+    "https://res.cloudinary.com/dxqwurksw/image/fetch/f_webp,c_limit,w_32,q_auto/https://amfotboll-media.s3.amazonaws.com/griffins_1.png",
+  Vikings:
+    "https://res.cloudinary.com/dxqwurksw/image/fetch/f_webp,c_limit,w_32,q_auto/https://amfotboll-media.s3.amazonaws.com/oslo_vikings_logo2.png",
+  Towers:
+    "https://res.cloudinary.com/dxqwurksw/image/fetch/f_webp,c_limit,w_32,q_auto/https://amfotboll-media.s3.amazonaws.com/222Asset_2.png",
+};
+
 let cache: { data: StandingsResult; expires: number } | null = null;
 const TTL_MS = 1000 * 60 * 30; // 30 minutes
 
@@ -114,8 +137,6 @@ export async function fetchStandings(): Promise<StandingsResult> {
       const teamIdx = colMap.team;
       if (teamIdx === undefined || !cellEls[teamIdx]) return;
       const teamCell = $(cellEls[teamIdx]);
-      // Extract logo src if present
-      const teamLogo = teamCell.find("img").attr("src");
       // Remove images and links to isolate text
       // Extract raw textual content for the team (remove media elements first)
       const rawTeamText = teamCell
@@ -144,6 +165,38 @@ export async function fetchStandings(): Promise<StandingsResult> {
       if (!teamName) return;
       // Skip any phantom/header-like rows accidentally appearing inside tbody
       if (/^team$/i.test(teamName)) return;
+
+      // Determine logo: prefer static map, else attempt dynamic extraction
+      let teamLogo: string | undefined = TEAM_LOGO_MAP[teamName] || undefined;
+      if (!teamLogo) {
+        const imgEl = teamCell.find("img").first();
+        if (imgEl.length) {
+          teamLogo = imgEl.attr("src") || undefined;
+          const srcset = imgEl.attr("srcset") || imgEl.attr("data-srcset");
+          if (!teamLogo && srcset) {
+            const candidates = srcset
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean);
+            let best: { url: string; density: number } | null = null;
+            for (const c of candidates) {
+              const parts = c.split(/\s+/);
+              const url = parts[0];
+              let density = 1;
+              if (parts[1]) {
+                const d = parts[1];
+                if (/^[0-9]+(\.[0-9]+)?x$/.test(d))
+                  density = parseFloat(d.replace("x", ""));
+                else if (/^[0-9]+w$/.test(d))
+                  density = parseFloat(d.replace("w", "")) / 1000;
+              }
+              if (!best || density > best.density) best = { url, density };
+            }
+            if (best) teamLogo = best.url;
+          }
+        }
+      }
+
       const row: StandingRow = { team: teamName, conf: "", teamLogo };
 
       const textAt = (idx?: number) =>
