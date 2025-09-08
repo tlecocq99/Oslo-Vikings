@@ -1,20 +1,41 @@
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import PlayerCard from "../components/PlayerCard"; // still used via RosterClient
-import RosterClient from "../components/RosterClient";
-import { fetchPlayers } from "../services/fetchPlayers";
 import { Player } from "../types/player";
 import React from "react";
+import RosterSwitcher from "@/app/components/RosterSwitcher";
+import { fetchRoster } from "@/app/services/fetchRoster";
 
 // Server component: fetch players securely (no bundling googleapis into client)
 export default async function TeamPage() {
-  const players = await fetchPlayers();
+  const ROSTER_TABS = {
+    "Senior Elite": "Senior Elite",
+    "Senior D2": "Senior D2",
+    U17: "U17",
+    U14: "U14",
+    "Flag Football": "Flag",
+  } as const;
+
+  // Fetch each roster tab in parallel; if a tab is missing, return empty list instead of throwing.
+  const entries = await Promise.all(
+    Object.entries(ROSTER_TABS).map(async ([label, tab]) => {
+      try {
+        const list = await fetchRoster(tab);
+        return [label, list] as const;
+      } catch (e) {
+        console.warn(`Roster tab '${tab}' failed to load:`, e);
+        return [label, [] as Player[]] as const;
+      }
+    })
+  );
+  const rosters: Record<string, Player[]> = Object.fromEntries(entries);
+
   return (
     <>
       <Navigation />
       <main className="min-h-screen">
         <Hero />
-        <RosterSection players={players} />
+        <RosterSwitcher rosters={rosters} />
         <CoachingStaff />
       </main>
       <Footer />
@@ -42,25 +63,7 @@ function Hero() {
   );
 }
 
-// Client subcomponent for interactive filtering & view toggle
-function RosterSection({ players }: { players: Player[] }) {
-  return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <header className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
-            2025 Roster
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Meet the warriors who defend Oslo's honor on the American football
-            field
-          </p>
-        </header>
-        <RosterClient players={players} />
-      </div>
-    </section>
-  );
-}
+// (Removed obsolete inline RosterSwitcher)
 
 function CoachingStaff() {
   return (
