@@ -46,15 +46,15 @@ export default async function TeamPage() {
 function Hero() {
   return (
     <section
-      className="py-24 bg-cover bg-center bg-no-repeat relative"
+      className="py-20 md:py-24 bg-cover bg-center bg-no-repeat relative min-h-[50vh] md:min-h-[60vh] flex items-center"
       style={{ backgroundImage: "url('/images/backgrounds/teamClose.avif')" }}
     >
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 drop-shadow-2xl">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl leading-tight">
           Meet the Vikings
         </h1>
-        <p className="text-xl text-white/90 max-w-3xl mx-auto drop-shadow-lg">
+        <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto drop-shadow-lg">
           Our roster of dedicated athletes representing Norwegian American
           football excellence
         </p>

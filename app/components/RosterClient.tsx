@@ -62,8 +62,8 @@ export default function RosterClient({ players }: RosterClientProps) {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-12 gap-4">
-        <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-8 lg:mb-12 gap-4">
+        <div className="flex flex-nowrap overflow-x-auto max-w-full gap-2 pb-1 scrollbar-thin scrollbar-thumb-gray-300">
           {sideFilters.map((side) => {
             const active = side === sideFilter;
             return (
@@ -114,7 +114,7 @@ export default function RosterClient({ players }: RosterClientProps) {
       )}
 
       {viewMode === "grid" && sortedVisible.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {sortedVisible.map((p) => (
             <PlayerCard key={p.id} {...p} variant="grid" />
           ))}
