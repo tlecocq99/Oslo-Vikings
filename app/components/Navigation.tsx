@@ -7,12 +7,12 @@ import { Menu, X, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Team", href: "/team" },
-  { name: "Schedule", href: "/schedule" },
-  { name: "News", href: "/news" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
+  { name: "HOME", href: "/" },
+  { name: "TEAM", href: "/team" },
+  { name: "SCHEDULE", href: "/schedule" },
+  { name: "NEWS", href: "/news" },
+  { name: "ABOUT", href: "/about" },
+  { name: "CONTACT", href: "/contact" },
 ];
 
 export default function Navigation() {
