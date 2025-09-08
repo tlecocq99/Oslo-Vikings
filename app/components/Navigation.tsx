@@ -68,13 +68,13 @@ export default function Navigation() {
         </div>
 
         {/* Mobile menu button */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center ml-auto">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
-            className="text-white hover:bg-white/20"
+            className="text-viking-red border border-viking-red/50 bg-white hover:bg-viking-red hover:text-white focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white rounded-md shadow-sm transition-colors"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>

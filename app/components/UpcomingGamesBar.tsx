@@ -25,7 +25,8 @@ export default function UpcomingGamesBar({ games }: UpcomingGamesBarProps) {
   const filteredGames = games.filter((g) => g.team === teamFilter);
 
   return (
-    <section className="w-full bg-gray-50 border-b border-gray-200 py-4">
+    // Hidden on mobile ( < md ) per requirement
+    <section className="hidden md:block w-full bg-gray-50 border-b border-gray-200 py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
         <div className="mr-6">
           <label
