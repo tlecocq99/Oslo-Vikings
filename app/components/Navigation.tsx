@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,72 +17,87 @@ const navigation = [
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <nav className="shadow-lg sticky top-0 z-50">
-      {/* Top banner with background image */}
-      <div
-        className="bg-cover bg-center bg-no-repeat h-20"
-        style={{
-          backgroundImage: `url('/images/navImg.avif')`,
-        }}
-      >
-        {/* Background overlay for better readability */}
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-          <div className="flex justify-between items-center h-full">
-            {/* Mobile menu button */}
-            <div className="md:hidden flex items-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsOpen(!isOpen)}
-                aria-label="Toggle menu"
-                className="text-white hover:bg-white/20"
-              >
-                {isOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <nav className="shadow-lg sticky top-0 z-50 bg-white">
+      <div className="relative max-w-7xl px-4 sm:px-6 lg:px-8 h-32 flex items-center justify-start">
+        {/* Logo on the far left */}
+        <Link href="/" className="flex items-center h-full group mr-4">
+          <img
+            src="/images/splashImg.png"
+            alt="Oslo Vikings logo"
+            className="h-24 w-auto drop-shadow-lg transition-transform group-hover:scale-110"
+            style={{ maxHeight: 96 }}
+            draggable={false}
+          />
+          <span className="sr-only">Home</span>
+        </Link>
 
-      {/* Navigation links bar underneath */}
-      <div className="bg-red-700 border-t border-red-600 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center justify-center space-x-2 py-3">
-            {navigation.map((item, index) => (
+        {/* Desktop Navigation (pipe-separated) */}
+        <div className="hidden md:flex items-center h-full ml-8 select-none">
+          {navigation.map((item, idx) => {
+            const active = pathname === item.href;
+            return (
               <div key={item.name} className="flex items-center">
+                {idx > 0 && (
+                  <span
+                    aria-hidden="true"
+                    className="px-3 text-viking-red/40 font-light text-4xl"
+                  >
+                    |
+                  </span>
+                )}
                 <Link
                   href={item.href}
-                  className="text-white hover:text-red-200 transition-colors duration-200 font-medium px-3 py-2 rounded-md hover:bg-red-600 cursor-pointer relative z-20"
+                  aria-current={active ? "page" : undefined}
+                  className={[
+                    "font-teko font-semibold text-4xl tracking-wide focus:outline-none focus:ring-2 focus:ring-viking-gold focus:ring-offset-2 focus:ring-offset-white",
+                    "transition-transform duration-200 ease-out transform-gpu", // smooth growth
+                    active
+                      ? "text-viking-red"
+                      : "text-viking-red hover:scale-[1.20]",
+                  ].join(" ")}
                   style={{ pointerEvents: "auto" }}
                 >
                   {item.name}
                 </Link>
-                {index < navigation.length - 1 && (
-                  <span className="text-red-300 mx-2 select-none">|</span>
-                )}
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
+
+        {/* Mobile menu button */}
+        <div className="md:hidden flex items-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+            className="text-white hover:bg-white/20"
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
         </div>
       </div>
 
       {/* Mobile Navigation */}
       {isOpen && (
         <div className="md:hidden bg-red-700 relative z-10">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-red-600">
+          <div className="px-2 pt-2 pb-4 space-y-2 sm:px-3 border-t border-red-600">
             {navigation.map((item, index) => (
               <div key={item.name}>
                 <Link
                   href={item.href}
-                  className="block px-3 py-2 text-white hover:text-red-200 hover:bg-red-600 rounded-md transition-colors duration-200 font-medium cursor-pointer relative z-20"
+                  aria-current={pathname === item.href ? "page" : undefined}
+                  className={[
+                    "w-full text-center block rounded-md font-teko font-semibold text-3xl transition-all duration-200 border-2",
+                    // Uniform height
+                    "h-20 flex items-center justify-center",
+                    pathname === item.href
+                      ? "bg-white text-viking-red border-white"
+                      : "text-white border-white/60 bg-red-700/40 hover:bg-white hover:text-viking-red hover:border-white",
+                  ].join(" ")}
                   onClick={() => setIsOpen(false)}
                   style={{ pointerEvents: "auto" }}
                 >
