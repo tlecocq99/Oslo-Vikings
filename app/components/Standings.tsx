@@ -2,14 +2,15 @@
 import React from "react";
 
 interface StandingRow {
-  rank: number;
   team: string;
+  conf: string;
   gamesPlayed?: number;
-  wins?: number;
-  losses?: number;
+  winLoss?: string;
+  pct?: number;
   pointsFor?: number;
-  pointsAgainst?: number;
-  points?: number;
+  pointsPlusMinus?: number;
+  pointsPerGame?: number;
+  teamLogo?: string;
 }
 
 interface StandingsData {
@@ -45,45 +46,104 @@ export default function Standings() {
     };
   }, []);
 
-  if (loading) return <p className="text-center text-gray-500">Loading standings...</p>;
+  if (loading)
+    return <p className="text-center text-gray-500">Loading standings...</p>;
   if (error) return <p className="text-center text-red-600">{error}</p>;
   if (!data) return null;
+  if (!data.rows.length)
+    return (
+      <div className="text-center text-sm text-gray-500">
+        Standings currently unavailable. Source page may be dynamically
+        rendered.
+      </div>
+    );
+
+  // Derive simple ranking by PCT desc then pointsFor desc
+  const displayed = [...data.rows].sort((a, b) => {
+    const pctA = a.pct ?? -1;
+    const pctB = b.pct ?? -1;
+    if (pctB !== pctA) return pctB - pctA;
+    const pfA = a.pointsFor ?? -1;
+    const pfB = b.pointsFor ?? -1;
+    return pfB - pfA;
+  });
 
   return (
     <div className="overflow-x-auto">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-bold text-viking-charcoal">League Standings</h3>
-        <span className="text-xs text-gray-500">Updated {new Date(data.updatedAt).toLocaleString()}</span>
+        <h3 className="text-xl font-bold text-viking-charcoal">
+          League Standings
+        </h3>
+        <span className="text-xs text-gray-500">
+          Updated {new Date(data.updatedAt).toLocaleString()}
+        </span>
       </div>
       <table className="min-w-full text-sm">
         <thead>
           <tr className="bg-gray-100 text-viking-charcoal">
             <th className="px-2 py-2 text-left">#</th>
             <th className="px-2 py-2 text-left">Team</th>
-            <th className="px-2 py-2 text-center">GP</th>
-            <th className="px-2 py-2 text-center">W</th>
-            <th className="px-2 py-2 text-center">L</th>
-            <th className="px-2 py-2 text-center">PF</th>
-            <th className="px-2 py-2 text-center">PA</th>
-            <th className="px-2 py-2 text-center">Pts</th>
+            <th className="px-2 py-2 text-center">Conf</th>
+            <th className="px-2 py-2 text-center">G</th>
+            <th className="px-2 py-2 text-center">W-L</th>
+            <th className="px-2 py-2 text-center">PCT</th>
+            <th className="px-2 py-2 text-center">P</th>
+            <th className="px-2 py-2 text-center">P+-</th>
+            <th className="px-2 py-2 text-center">P/G</th>
           </tr>
         </thead>
         <tbody>
-          {data.rows.map((r) => (
-            <tr key={r.rank} className="border-b last:border-b-0 hover:bg-gray-50">
-              <td className="px-2 py-1 font-semibold">{r.rank}</td>
-              <td className="px-2 py-1">{r.team}</td>
+          {displayed.map((r, idx) => (
+            <tr
+              key={r.team + idx}
+              className="border-b last:border-b-0 hover:bg-gray-50"
+            >
+              <td className="px-2 py-1 font-semibold">{idx + 1}</td>
+              <td className="px-2 py-1">
+                <div className="flex items-center gap-2">
+                  {r.teamLogo && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={r.teamLogo}
+                      alt={r.team + " logo"}
+                      className="h-6 w-6 object-contain"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                  <span>{r.team}</span>
+                </div>
+              </td>
+              <td className="px-2 py-1 text-center">{r.conf || "-"}</td>
               <td className="px-2 py-1 text-center">{r.gamesPlayed ?? "-"}</td>
-              <td className="px-2 py-1 text-center">{r.wins ?? "-"}</td>
-              <td className="px-2 py-1 text-center">{r.losses ?? "-"}</td>
+              <td className="px-2 py-1 text-center">{r.winLoss ?? "-"}</td>
+              <td className="px-2 py-1 text-center">
+                {r.pct !== undefined
+                  ? r.pct.toFixed(3).replace(/^0+/, "")
+                  : "-"}
+              </td>
               <td className="px-2 py-1 text-center">{r.pointsFor ?? "-"}</td>
-              <td className="px-2 py-1 text-center">{r.pointsAgainst ?? "-"}</td>
-              <td className="px-2 py-1 text-center">{r.points ?? "-"}</td>
+              <td className="px-2 py-1 text-center">
+                {r.pointsPlusMinus !== undefined ? r.pointsPlusMinus : "-"}
+              </td>
+              <td className="px-2 py-1 text-center">
+                {r.pointsPerGame !== undefined ? r.pointsPerGame : "-"}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <p className="mt-2 text-xs text-gray-500">Source: <a className="underline" href={data.source} target="_blank" rel="noreferrer">superserien.se</a></p>
+      <p className="mt-2 text-xs text-gray-500">
+        Source:{" "}
+        <a
+          className="underline"
+          href={data.source}
+          target="_blank"
+          rel="noreferrer"
+        >
+          superserien.se
+        </a>
+      </p>
     </div>
   );
 }
