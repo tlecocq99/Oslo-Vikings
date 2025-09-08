@@ -63,8 +63,6 @@ function Hero() {
   );
 }
 
-// (Removed obsolete inline RosterSwitcher)
-
 function CoachingStaff() {
   return (
     <section className="py-16 bg-gray-50">
