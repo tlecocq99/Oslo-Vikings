@@ -57,17 +57,27 @@ export default function Standings() {
       </div>
     );
 
-  // Derive simple ranking by PCT desc then pointsFor desc
+  // Ranking: primary = PCT (or derived from W-L), tie -> P+- (diff), then Points For
+  const parseWinLossPct = (wl?: string) => {
+    if (!wl) return undefined;
+    const m = wl.match(/^(\d+)-(\d+)$/);
+    if (!m) return undefined;
+    const w = parseInt(m[1], 10);
+    const l = parseInt(m[2], 10);
+    if (w + l === 0) return undefined;
+    return w / (w + l);
+  };
   const displayed = [...data.rows].sort((a, b) => {
-    const pctA = a.pct ?? -1;
-    const pctB = b.pct ?? -1;
+    const pctA = a.pct ?? parseWinLossPct(a.winLoss) ?? -1;
+    const pctB = b.pct ?? parseWinLossPct(b.winLoss) ?? -1;
     if (pctB !== pctA) return pctB - pctA;
-    const pfA = a.pointsFor ?? -1;
-    const pfB = b.pointsFor ?? -1;
+    const diffA = a.pointsPlusMinus ?? -Infinity;
+    const diffB = b.pointsPlusMinus ?? -Infinity;
+    if (diffB !== diffA) return diffB - diffA;
+    const pfA = a.pointsFor ?? -Infinity;
+    const pfB = b.pointsFor ?? -Infinity;
     if (pfB !== pfA) return pfB - pfA;
-    const diffA = a.pointsPlusMinus ?? -9999;
-    const diffB = b.pointsPlusMinus ?? -9999;
-    return diffB - diffA;
+    return a.team.localeCompare(b.team);
   });
 
   return (
