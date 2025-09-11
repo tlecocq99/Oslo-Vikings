@@ -12,8 +12,8 @@ const config: Config = {
       colors: {
         // Oslo Vikings Brand Colors
         viking: {
-          red: "#C41E3A",
-          "red-dark": "#8B1538",
+          red: "#AC1416", // updated brand red
+          "red-dark": "#7C0F11", // adjusted darker variant
           // Refined antique gold tones (less yellow)
           gold: "#C9A227", // antique gold
           "gold-dark": "#8A6B16", // deep accent gold
@@ -90,7 +90,23 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function (pluginApi: {
+      addUtilities: (utils: Record<string, any>) => void;
+    }) {
+      const newUtils: Record<string, any> = {
+        ".scrollbar-hide": {
+          scrollbarWidth: "none", // Firefox
+          MsOverflowStyle: "none", // IE 10+
+        },
+        ".scrollbar-hide::-webkit-scrollbar": {
+          display: "none", // Chrome/Safari
+        },
+      };
+      pluginApi.addUtilities(newUtils);
+    },
+  ],
 };
 
 export default config;

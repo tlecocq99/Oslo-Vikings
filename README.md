@@ -16,14 +16,16 @@ A modern, responsive website for the Oslo Vikings American Football team built w
 ## 🎨 Design System
 
 ### Color Palette
-- **Viking Red**: `#C41E3A` - Primary brand color
-- **Viking Red Dark**: `#8B1538` - Darker variant for depth
+
+- **Viking Red**: `#AC1416` - Primary brand color (updated)
+- **Viking Red Dark**: `#7C0F11` - Darker variant for depth (updated)
 - **Viking Gold**: `#FFD700` - Accent color for highlights
 - **Viking Gold Dark**: `#B8860B` - Darker gold variant
 - **Viking Silver**: `#C0C0C0` - Secondary accent
 - **Viking Charcoal**: `#1F2937` - Text and contrast color
 
 ### Typography
+
 - **Primary Font**: Inter (Google Fonts)
 - **Display**: Bold weights for headings
 - **Body**: Regular and medium weights for content
@@ -31,28 +33,32 @@ A modern, responsive website for the Oslo Vikings American Football team built w
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd oslo-vikings-website
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
-4. **Run the development server**
+3. **Run the development server**
+
    ```bash
    npm run dev
    ```
 
-5. **Open your browser**
+4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 📁 Project Structure
@@ -68,7 +74,7 @@ oslo-vikings-website/
 │   │   ├── Page.tsx            # Page wrapper component
 │   │   ├── Navigation.tsx      # Site navigation
 │   │   └── Footer.tsx          # Site footer
-│   ├── lib/                    # Utility functions    
+│   ├── lib/                    # Utility functions
 │   ├── about/                  # About page
 │   ├── contact/                # Contact page
 │   ├── news/                   # News listing page
@@ -87,7 +93,6 @@ oslo-vikings-website/
 └── package.json                # Dependencies
 ```
 
-
 ### Content Types
 
 1. **Page** - Basic page structure
@@ -98,7 +103,7 @@ oslo-vikings-website/
 
 ### Component Mapping
 
-```typescript
+````typescript
 const components = {
   page: Page,
   hero: Hero,
@@ -117,15 +122,15 @@ Custom colors and utilities are defined in `tailwind.config.ts`:
 ```typescript
 colors: {
   viking: {
-    red: '#C41E3A',
-    'red-dark': '#8B1538',
+   red: '#AC1416',
+   'red-dark': '#7C0F11',
     gold: '#FFD700',
     'gold-dark': '#B8860B',
     silver: '#C0C0C0',
     charcoal: '#1F2937',
   }
 }
-```
+````
 
 ### Custom CSS Classes
 
@@ -137,11 +142,13 @@ colors: {
 ## 📱 Responsive Design
 
 The website is fully responsive with breakpoints:
+
 - **Mobile**: 320px - 768px
-- **Tablet**: 768px - 1024px  
+- **Tablet**: 768px - 1024px
 - **Desktop**: 1024px+
 
 Key responsive features:
+
 - Collapsible navigation menu
 - Flexible grid layouts
 - Optimized typography scaling
@@ -150,6 +157,7 @@ Key responsive features:
 ## ♿ Accessibility
 
 The website follows WCAG 2.1 AA standards:
+
 - Semantic HTML structure
 - Proper heading hierarchy
 - Alt text for images
@@ -176,6 +184,7 @@ The website follows WCAG 2.1 AA standards:
 ### Other Platforms
 
 The app can be deployed to any platform supporting Next.js:
+
 - Netlify
 - AWS Amplify
 - Railway
@@ -195,6 +204,7 @@ Output directory: `.next`
 ### Content Types Guide
 
 #### Player Cards
+
 - **Name**: Player's full name
 - **Position**: Playing position
 - **Number**: Jersey number
@@ -203,6 +213,7 @@ Output directory: `.next`
 - **Photo**: Player image (optional)
 
 #### News Articles
+
 - **Title**: Article headline
 - **Excerpt**: Brief summary
 - **Author**: Article author
@@ -212,6 +223,7 @@ Output directory: `.next`
 - **Slug**: URL slug for article
 
 #### Game Cards
+
 - **Home Team**: Home team name
 - **Away Team**: Away team name
 - **Date/Time**: Game date and time
@@ -255,6 +267,7 @@ The Oslo Vikings are Norway's premier American Football team, representing Norwe
 ## 📞 Support
 
 For technical support or questions about the website:
+
 - **Email**: tech@oslovikings.no
 - **Next.js Docs**: [Next.js Documentation](https://nextjs.org/docs)
 

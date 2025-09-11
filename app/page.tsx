@@ -30,8 +30,8 @@ export default function Home() {
     title: "Oslo Vikings",
     subtitle:
       "Conquering the field with Norwegian strength and American football passion",
-    cta_text: "Meet the Team",
-    cta_link: { url: "/team" },
+    cta_text: "Join OV Now!",
+    cta_link: { url: "/recruitment" },
   };
 
   const featuredNews = [
@@ -176,11 +176,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
               Next Game
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Don't miss our upcoming match. Come cheer for the Vikings!
-            </p>
           </div>
-
           <div className="max-w-md mx-auto">
             <GameCard {...upcomingGame} />
           </div>

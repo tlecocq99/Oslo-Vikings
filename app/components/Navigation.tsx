@@ -3,16 +3,17 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Menu, X, Shield } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Team", href: "/team" },
-  { name: "Schedule", href: "/schedule" },
-  { name: "News", href: "/news" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
+  { name: "HOME", href: "/" },
+  { name: "TEAM", href: "/team" },
+  { name: "SCHEDULE", href: "/schedule" },
+  { name: "JOIN OV", href: "/recruitment" },
+  { name: "NEWS", href: "/news" },
+  { name: "ABOUT", href: "/about" },
+  { name: "CONTACT", href: "/contact" },
 ];
 
 export default function Navigation() {
@@ -21,11 +22,11 @@ export default function Navigation() {
 
   return (
     <nav className="shadow-lg sticky top-0 z-50 bg-white">
-      <div className="relative max-w-7xl px-4 sm:px-6 lg:px-8 h-32 flex items-center justify-start">
+      <div className="container-fluid flex relative h-24 items-center px-4 sm:px-6 lg:px-12">
         {/* Logo on the far left */}
         <Link href="/" className="flex items-center h-full group mr-4">
           <img
-            src="/images/splashImg.png"
+            src="/images/logo.png"
             alt="Oslo Vikings logo"
             className="h-24 w-auto drop-shadow-lg transition-transform group-hover:scale-110"
             style={{ maxHeight: 96 }}
@@ -35,7 +36,7 @@ export default function Navigation() {
         </Link>
 
         {/* Desktop Navigation (pipe-separated) */}
-        <div className="hidden md:flex items-center h-full ml-8 select-none">
+        <div className="hidden md:flex items-center h-full select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           {navigation.map((item, idx) => {
             const active = pathname === item.href;
             return (
@@ -43,7 +44,7 @@ export default function Navigation() {
                 {idx > 0 && (
                   <span
                     aria-hidden="true"
-                    className="px-3 text-viking-red/40 font-light text-4xl"
+                    className="px-3 text-viking-red font-light text-4xl"
                   >
                     |
                   </span>
@@ -52,7 +53,7 @@ export default function Navigation() {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={[
-                    "font-teko font-semibold text-4xl tracking-wide focus:outline-none focus:ring-2 focus:ring-viking-gold focus:ring-offset-2 focus:ring-offset-white",
+                    "font-teko font-semibold text-4xl tracking-wide uppercase focus:outline-none focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white",
                     "transition-transform duration-200 ease-out transform-gpu", // smooth growth
                     active
                       ? "text-viking-red"
@@ -91,7 +92,7 @@ export default function Navigation() {
                   href={item.href}
                   aria-current={pathname === item.href ? "page" : undefined}
                   className={[
-                    "w-full text-center block rounded-md font-teko font-semibold text-3xl transition-all duration-200 border-2",
+                    "w-full text-center block rounded-md font-teko font-semibold text-3xl uppercase transition-all duration-200 border-2",
                     // Uniform height
                     "h-20 flex items-center justify-center",
                     pathname === item.href
