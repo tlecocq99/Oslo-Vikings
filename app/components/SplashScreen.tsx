@@ -2,7 +2,7 @@
 import React from "react";
 
 // Adjust the logo path as needed (should be in public/images/)
-const LOGO_SRC = "/images/splashImg.png"; // Replace with your logo file if different
+const LOGO_SRC = "/images/logo.png"; // Replace with your logo file if different
 
 export default function SplashScreen() {
   const [visible, setVisible] = React.useState(true);

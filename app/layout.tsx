@@ -47,6 +47,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${teko.variable}`}>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="icon" href="/images/logo.png" />
       <body className={`${inter.className} antialiased`}>
         <ErrorBoundary>{children}</ErrorBoundary>
       </body>
