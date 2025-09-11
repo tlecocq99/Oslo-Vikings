@@ -24,7 +24,7 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section
-      className="relative min-h-[70vh] md:min-h-[85vh] xl:min-h-screen flex items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="relative min-h-[50vh] md:min-h-[70vh] xl:min-h-screen flex justify-center items-start pt-24 md:pt-32 pb-12 overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage: background_image?.filename
           ? `url(${background_image.filename})`
@@ -49,8 +49,7 @@ export default function Hero({
           <div className="animate-fade-in-up">
             <Button
               asChild
-              size="lg"
-              className="bg-viking-gold hover:bg-viking-gold-dark text-viking-charcoal font-semibold px-8 py-3 text-lg transition-all duration-300 hover:scale-105"
+              className="bg-viking-red hover:bg-viking-red-dark text-white font-bold px-20 py-10 text-2xl tracking-wide rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:ring-4 focus:ring-viking-red/40"
             >
               <Link href={cta_link?.url || "/team"}>{cta_text}</Link>
             </Button>
