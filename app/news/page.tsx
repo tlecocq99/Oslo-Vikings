@@ -116,12 +116,12 @@ export default function NewsPage() {
 
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="oslo-gradient norse-pattern py-20 md:py-24">
+        <section className="oslo-gradient py-20 md:py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-viking-charcoal mb-6 leading-tight relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 leading-tight relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               Vikings News
             </h1>
-            <p className="text-lg sm:text-xl text-viking-charcoal/80 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-viking-charcoal/80 dark:text-gray-300 max-w-3xl mx-auto">
               Stay updated with the latest Oslo Vikings news, game recaps, and
               team announcements
             </p>
@@ -129,8 +129,8 @@ export default function NewsPage() {
         </section>
 
         {/* News Content */}
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 dark:text-gray-200">
             {/* Search and Filter */}
             <SearchAndFilter
               categories={categories}
@@ -141,7 +141,7 @@ export default function NewsPage() {
 
             {/* Featured Article */}
             <div className="mb-16">
-              <h2 className="text-2xl font-bold text-viking-charcoal mb-8">
+              <h2 className="text-2xl font-bold text-viking-charcoal dark:text-gray-200 mb-8">
                 Featured Story
               </h2>
               <div className="bg-gray-50 rounded-lg p-8">
@@ -175,7 +175,7 @@ export default function NewsPage() {
             {/* News Grid */}
             <div className="mb-8">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-viking-charcoal">
+                <h2 className="text-2xl font-bold text-viking-charcoal dark:text-gray-200">
                   {activeCategory === "All" ? "All Articles" : activeCategory}
                   <span className="text-viking-red text-lg ml-2">
                     ({filteredArticles.length})
@@ -194,10 +194,10 @@ export default function NewsPage() {
                   <div className="text-viking-red/50 mb-4">
                     <Search className="w-16 h-16 mx-auto mb-4" />
                   </div>
-                  <h3 className="text-xl font-semibold text-viking-charcoal mb-2">
+                  <h3 className="text-xl font-semibold text-viking-charcoal dark:text-gray-200 mb-2">
                     No articles found
                   </h3>
-                  <p className="text-viking-charcoal/70">
+                  <p className="text-viking-charcoal/70 dark:text-gray-300">
                     {searchQuery
                       ? `No articles match "${searchQuery}"`
                       : `No articles in "${activeCategory}" category`}

@@ -35,7 +35,7 @@ export default function SearchAndFilter({
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search articles..."
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-viking-red focus:border-transparent"
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-viking-red focus:border-transparent"
         />
       </div>
       

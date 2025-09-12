@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navigation = [
   { name: "HOME", href: "/" },
@@ -21,7 +22,7 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="shadow-lg sticky top-0 z-50 bg-white">
+    <nav className="shadow-lg sticky top-0 z-50 bg-white dark:bg-viking-charcoal/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-viking-charcoal/70 transition-colors">
       <div className="container-fluid flex relative h-24 items-center px-4 sm:px-6 lg:px-12">
         {/* Logo on the far left */}
         <Link href="/" className="flex items-center h-full group mr-4">
@@ -68,14 +69,20 @@ export default function Navigation() {
           })}
         </div>
 
-        {/* Mobile menu button */}
-        <div className="md:hidden flex items-center ml-auto">
+        {/* Right side actions (desktop) */}
+        <div className="hidden md:flex items-center ml-auto">
+          <ThemeToggle />
+        </div>
+
+        {/* Mobile actions */}
+        <div className="md:hidden flex items-center ml-auto space-x-2">
+          <ThemeToggle />
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
-            className="text-viking-red border border-viking-red/50 bg-white hover:bg-viking-red hover:text-white focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white rounded-md shadow-sm transition-colors"
+            className="text-viking-red dark:text-viking-gold border border-viking-red/50 dark:border-viking-gold/50 bg-white dark:bg-viking-charcoal hover:bg-viking-red hover:text-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal focus:ring-2 focus:ring-viking-red dark:focus:ring-viking-gold focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-viking-charcoal rounded-md shadow-sm transition-colors"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
@@ -84,8 +91,8 @@ export default function Navigation() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-red-700 relative z-10">
-          <div className="px-2 pt-2 pb-4 space-y-2 sm:px-3 border-t border-red-600">
+        <div className="md:hidden bg-red-700 dark:bg-viking-charcoal relative z-10 transition-colors">
+          <div className="px-2 pt-2 pb-4 space-y-2 sm:px-3 border-t border-red-600 dark:border-viking-gold/30">
             {navigation.map((item, index) => (
               <div key={item.name}>
                 <Link
@@ -96,8 +103,8 @@ export default function Navigation() {
                     // Uniform height
                     "h-20 flex items-center justify-center",
                     pathname === item.href
-                      ? "bg-white text-viking-red border-white"
-                      : "text-white border-white/60 bg-red-700/40 hover:bg-white hover:text-viking-red hover:border-white",
+                      ? "bg-white dark:bg-viking-gold text-viking-red dark:text-viking-charcoal border-white dark:border-viking-gold"
+                      : "text-white dark:text-viking-gold border-white/60 dark:border-viking-gold/40 bg-red-700/40 dark:bg-viking-charcoal/40 hover:bg-white hover:text-viking-red hover:border-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal dark:hover:border-viking-gold",
                   ].join(" ")}
                   onClick={() => setIsOpen(false)}
                   style={{ pointerEvents: "auto" }}
@@ -105,7 +112,7 @@ export default function Navigation() {
                   {item.name}
                 </Link>
                 {index < navigation.length - 1 && (
-                  <div className="border-b border-red-600/50 my-1"></div>
+                  <div className="border-b border-red-600/50 dark:border-viking-gold/30 my-1"></div>
                 )}
               </div>
             ))}

@@ -69,13 +69,13 @@ function Hero() {
 
 function CoachingStaff() {
   return (
-    <section className="py-16 bg-gray-50">
+  <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
+          <h2 className="text-3xl font-bold text-viking-charcoal mb-4 dark:text-gray-200">
             Coaching Staff
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-200">
             Experienced leadership guiding our team to victory
           </p>
         </div>
@@ -125,15 +125,17 @@ function StaffCard({
       ? "bg-viking-red text-white"
       : "bg-viking-gold text-viking-charcoal";
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+    <div className="bg-white dark:bg-gray-800 rounded-lg dark:border dark:border-viking-red shadow-lg p-6 text-center transition-colors">
       <div
         className={`w-20 h-20 ${bg} rounded-full mx-auto mb-4 flex items-center justify-center`}
       >
         <span className="font-bold text-xl">{code}</span>
       </div>
-      <h3 className="text-xl font-bold text-viking-charcoal mb-2">{name}</h3>
+      <h3 className="text-xl font-bold text-viking-charcoal mb-2 dark:text-gray-200">
+        {name}
+      </h3>
       <p className="text-viking-red font-semibold mb-3">{title}</p>
-      <p className="text-gray-700 text-sm">{desc}</p>
+      <p className="text-gray-700 text-sm dark:text-gray-200">{desc}</p>
     </div>
   );
 }

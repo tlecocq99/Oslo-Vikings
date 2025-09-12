@@ -27,7 +27,7 @@ export default function NewsCard({
 }: NewsCardProps) {
   const href = slug ? `/news/${slug}` : "#";
   return (
-    <article className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+    <article className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700">
       <div className="relative h-48 overflow-hidden">
         {image?.filename ? (
           <Image
@@ -52,14 +52,16 @@ export default function NewsCard({
       </div>
 
       <div className="p-6 flex flex-col h-full">
-        <h3 className="text-xl font-bold text-viking-charcoal mb-3 line-clamp-2">
+        <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-3 line-clamp-2">
           {title || "Untitled Article"}
         </h3>
         {excerpt && (
-          <p className="text-gray-600 text-sm mb-4 line-clamp-3">{excerpt}</p>
+          <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
+            {excerpt}
+          </p>
         )}
 
-        <div className="mt-auto flex items-center justify-between text-xs text-gray-500">
+        <div className="mt-auto flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
           <span className="flex items-center gap-1">
             <User className="w-4 h-4 text-viking-red" />
             {author || "Oslo Vikings"}
@@ -74,7 +76,7 @@ export default function NewsCard({
 
         <Link
           href={href}
-          className="mt-4 inline-block text-viking-red font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-viking-red focus:ring-offset-2 rounded"
+          className="mt-4 inline-block text-viking-red font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-viking-charcoal/70 rounded"
           aria-label={`Read more: ${title || "article"}`}
         >
           Read more →

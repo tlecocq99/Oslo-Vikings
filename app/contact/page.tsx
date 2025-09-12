@@ -14,19 +14,19 @@ export default function ContactPage() {
 
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="oslo-gradient norse-pattern py-24">
+        <section className="dark:bg-gray-800 py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
+            <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               Contact Us
             </h1>
-            <p className="text-xl text-viking-charcoal/80 max-w-3xl mx-auto">
+            <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-3xl mx-auto">
               Get in touch with the Oslo Vikings organization
             </p>
           </div>
         </section>
 
         {/* Contact Content */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
@@ -37,9 +37,9 @@ export default function ContactPage() {
               {/* Contact Information */}
               <div className="space-y-8">
                 {/* Contact Details */}
-                <Card>
+                <Card className="bg-white dark:bg-viking-charcoal/70 border border-gray-200 dark:border-gray-700 transition-colors">
                   <CardHeader>
-                    <CardTitle className="text-2xl text-viking-charcoal">
+                    <CardTitle className="text-2xl text-viking-charcoal dark:text-gray-100">
                       Get in Touch
                     </CardTitle>
                   </CardHeader>
@@ -49,11 +49,15 @@ export default function ContactPage() {
                         <Mail className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-viking-charcoal">
+                        <h3 className="font-semibold text-viking-charcoal dark:text-gray-100">
                           Email
                         </h3>
-                        <p className="text-gray-600">info@oslovikings.no</p>
-                        <p className="text-gray-600">media@oslovikings.no</p>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          info@oslovikings.no
+                        </p>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          media@oslovikings.no
+                        </p>
                       </div>
                     </div>
 
@@ -62,11 +66,13 @@ export default function ContactPage() {
                         <Phone className="w-5 h-5 text-viking-charcoal" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-viking-charcoal">
+                        <h3 className="font-semibold text-viking-charcoal dark:text-gray-100">
                           Phone
                         </h3>
-                        <p className="text-gray-600">+47 XXX XX XXX</p>
-                        <p className="text-gray-600">
+                        <p className="text-gray-600 dark:text-gray-300">
+                          +47 XXX XX XXX
+                        </p>
+                        <p className="text-gray-600 dark:text-gray-300">
                           Emergency: +47 XXX XX XXX
                         </p>
                       </div>
@@ -77,10 +83,10 @@ export default function ContactPage() {
                         <MapPin className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-viking-charcoal">
+                        <h3 className="font-semibold text-viking-charcoal dark:text-gray-100">
                           Address
                         </h3>
-                        <p className="text-gray-600">
+                        <p className="text-gray-600 dark:text-gray-300">
                           Viking Stadium
                           <br />
                           123 Football Street
@@ -95,10 +101,10 @@ export default function ContactPage() {
                         <Clock className="w-5 h-5 text-viking-charcoal" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-viking-charcoal">
+                        <h3 className="font-semibold text-viking-charcoal dark:text-gray-100">
                           Office Hours
                         </h3>
-                        <p className="text-gray-600">
+                        <p className="text-gray-600 dark:text-gray-300">
                           Monday - Friday: 9:00 - 17:00
                           <br />
                           Saturday: 10:00 - 15:00
@@ -111,51 +117,57 @@ export default function ContactPage() {
                 </Card>
 
                 {/* Quick Links */}
-                <Card>
+                <Card className="bg-white dark:bg-viking-charcoal/70 border border-gray-200 dark:border-gray-700 transition-colors">
                   <CardHeader>
-                    <CardTitle className="text-xl text-viking-charcoal">
+                    <CardTitle className="text-xl text-viking-charcoal dark:text-gray-100">
                       Quick Links
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-700">Season Tickets</span>
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Season Tickets
+                      </span>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
+                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
                       >
                         Buy Now
                       </Button>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-700">Group Sales</span>
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Group Sales
+                      </span>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
+                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
                       >
                         Inquire
                       </Button>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-700">
+                      <span className="text-gray-700 dark:text-gray-300">
                         Corporate Partnerships
                       </span>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
+                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
                       >
                         Contact
                       </Button>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-700">Media Requests</span>
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Media Requests
+                      </span>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
+                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
                       >
                         Submit
                       </Button>
@@ -168,22 +180,24 @@ export default function ContactPage() {
         </section>
 
         {/* Map Section */}
-        <section className="py-16 bg-gray-100">
+        <section className="py-16 bg-gray-100 dark:bg-viking-charcoal/60 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
+              <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
                 Find Us
               </h2>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 Viking Stadium is located in the heart of Oslo
               </p>
             </div>
 
-            <div className="bg-gray-300 rounded-lg h-96 flex items-center justify-center">
-              <div className="text-center text-gray-600">
-                <MapPin className="w-12 h-12 mx-auto mb-4" />
-                <p className="text-lg font-medium">Interactive Map</p>
-                <p className="text-sm">
+            <div className="bg-gray-300 dark:bg-gray-700 rounded-lg h-96 flex items-center justify-center transition-colors">
+              <div className="text-center text-gray-600 dark:text-gray-300">
+                <MapPin className="w-12 h-12 mx-auto mb-4 dark:text-gray-200" />
+                <p className="text-lg font-medium dark:text-gray-100">
+                  Interactive Map
+                </p>
+                <p className="text-sm dark:text-gray-300">
                   Google Maps integration would be added here
                 </p>
               </div>

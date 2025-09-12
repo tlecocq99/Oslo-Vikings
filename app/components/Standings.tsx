@@ -46,12 +46,16 @@ export default function Standings() {
   }, [fetchData]);
 
   if (loading)
-    return <p className="text-center text-gray-500">Loading standings...</p>;
+    return (
+      <p className="text-center text-gray-500 dark:text-gray-400">
+        Loading standings...
+      </p>
+    );
   if (error) return <p className="text-center text-red-600">{error}</p>;
   if (!data) return null;
   if (!data.rows.length)
     return (
-      <div className="text-center text-sm text-gray-500">
+      <div className="text-center text-sm text-gray-500 dark:text-gray-400">
         Standings currently unavailable. Source page may be dynamically
         rendered.
       </div>
@@ -83,10 +87,10 @@ export default function Standings() {
   return (
     <div className="overflow-x-auto">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
-        <h3 className="text-xl font-bold text-viking-charcoal">
+        <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-200">
           League Standings
         </h3>
-        <div className="flex items-center gap-3 text-xs text-gray-500">
+        <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
           <span>Updated {new Date(data.updatedAt).toLocaleString()}</span>
           <button
             type="button"
@@ -104,7 +108,7 @@ export default function Standings() {
       </div>
       <table className="min-w-full text-sm">
         <thead>
-          <tr className="bg-gray-100 text-viking-charcoal">
+          <tr className="bg-gray-100 dark:bg-gray-800 text-viking-charcoal dark:text-gray-200">
             <th className="px-2 py-2 text-left">#</th>
             <th className="px-2 py-2 text-left">Team</th>
             <th className="px-2 py-2 text-center">CONF</th>
@@ -120,7 +124,7 @@ export default function Standings() {
           {displayed.map((r, idx) => (
             <tr
               key={r.team + idx}
-              className="border-b last:border-b-0 hover:bg-gray-50"
+              className="border-b last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-200 dark:border-gray-700 text-viking-charcoal dark:text-gray-200"
             >
               <td className="px-2 py-1 font-semibold">{idx + 1}</td>
               <td className="px-2 py-1">
@@ -163,7 +167,7 @@ export default function Standings() {
           ))}
         </tbody>
       </table>
-      <p className="mt-2 text-xs text-gray-500">
+      <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
         Source:{" "}
         <a
           className="underline"

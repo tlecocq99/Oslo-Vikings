@@ -133,47 +133,47 @@ export default function Home() {
       <Hero {...heroData} />
 
       {/* Quick Stats Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-[#ac1416] rounded-full flex items-center justify-center mx-auto mb-4">
                 <Trophy className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-viking-charcoal mb-2">
+              <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-gold mb-2">
                 5
               </h3>
-              <p className="text-gray-600">Championship Wins</p>
+              <p className="text-gray-600 dark:text-gray-200">Championship Wins</p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-viking-gold rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-viking-charcoal" />
               </div>
-              <h3 className="text-2xl font-bold text-viking-charcoal mb-2">
+              <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-red mb-2">
                 45
               </h3>
-              <p className="text-gray-600">Active Players</p>
+              <p className="text-gray-600 dark:text-gray-200">Active Players</p>
             </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-viking-red rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calendar className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-viking-charcoal mb-2">
+              <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-gold mb-2">
                 15
               </h3>
-              <p className="text-gray-600">Years Established</p>
+              <p className="text-gray-600 dark:text-gray-200">Years Established</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Next Game Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
+            <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
               Next Game
             </h2>
           </div>
@@ -196,13 +196,13 @@ export default function Home() {
       </section>
 
       {/* Latest News Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
+            <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
               Latest News
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto dark:text-gray-300">
               Stay updated with the latest Oslo Vikings news, game recaps, and
               team announcements.
             </p>

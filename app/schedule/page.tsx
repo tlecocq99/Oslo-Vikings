@@ -118,12 +118,12 @@ export default function SchedulePage() {
 
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="oslo-gradient norse-pattern py-24">
+        <section className="oslo-gradient py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
+            <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               Season Schedule
             </h1>
-            <p className="text-xl text-viking-charcoal/80 max-w-3xl mx-auto">
+            <p className="text-xl text-viking-charcoal/80 dark:text-gray-300 max-w-3xl mx-auto">
               Follow the Oslo Vikings through the 2025 season. Never miss a
               game!
             </p>
@@ -131,7 +131,7 @@ export default function SchedulePage() {
         </section>
 
         {/* Schedule Content */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <Tabs defaultValue="upcoming" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-8">
@@ -141,10 +141,10 @@ export default function SchedulePage() {
 
               <TabsContent value="upcoming" className="space-y-6">
                 <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold text-viking-charcoal mb-2">
+                  <h2 className="text-2xl font-bold text-viking-charcoal dark:text-gray-200 mb-2">
                     Upcoming Matches
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 dark:text-gray-300">
                     Get ready for these exciting games!
                   </p>
                 </div>
@@ -155,10 +155,10 @@ export default function SchedulePage() {
 
               <TabsContent value="results" className="space-y-6">
                 <div className="text-center mb-8">
-                  <h2 className="text-2xl font-bold text-viking-charcoal mb-2">
+                  <h2 className="text-2xl font-bold text-viking-charcoal dark:text-gray-200 mb-2">
                     Game Results
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 dark:text-gray-300">
                     Review our recent performances
                   </p>
                 </div>
@@ -171,13 +171,13 @@ export default function SchedulePage() {
         </section>
 
         {/* Standings */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-viking-charcoal mb-4">
+              <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
                 Standings
               </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
+              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 Live league table pulled from superserien.se (cached every 30
                 minutes).
               </p>
