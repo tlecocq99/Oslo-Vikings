@@ -1,5 +1,5 @@
-// Revalidate roster data every 5 minutes (ISR)
-export const revalidate = 300; // seconds
+// Revalidate contact page every 5 minutes
+export const revalidate = 300;
 
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";

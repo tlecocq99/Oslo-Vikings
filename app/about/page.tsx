@@ -1,3 +1,5 @@
+"use client";
+
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { Shield, Target, Users, Trophy, Heart, Star } from "lucide-react";
