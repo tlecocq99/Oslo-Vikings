@@ -1,7 +1,3 @@
-// Revalidate about content every 5 minutes
-export const revalidate = 300;
-("use client");
-
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { Shield, Target, Users, Trophy, Heart, Star } from "lucide-react";
