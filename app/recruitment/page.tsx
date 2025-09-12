@@ -40,14 +40,16 @@ export default function RecruitmentPage() {
     <>
       <Navigation />
       <main className="min-h-screen">
-        <section className="oslo-gradient norse-pattern dark:bg-gray-700 py-24 text-center px-4">
-          <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
-            Join Oslo Vikings
-          </h1>
-          <p className="text-xl text-viking-charcoal/80 max-w-3xl mx-auto mb-8">
-            Ready to put on the helmet? We welcome new and experienced players
-            across all age groups and competition levels.
-          </p>
+        <section className="dark:bg-gray-800 py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
+              Join Oslo Vikings
+            </h1>
+            <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-3xl mx-auto mb-6">
+              Ready to put on the helmet? We welcome new and experienced players
+              across all age groups and competition levels.
+            </p>
+          </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               asChild
