@@ -1,6 +1,5 @@
-// Revalidate roster data every 30 minutes (ISR)
-export const revalidate = 1800; // seconds
-
+// Revalidate roster data every 5 minutes (ISR)
+export const revalidate = 300; // seconds
 
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
@@ -69,7 +68,7 @@ function Hero() {
 
 function CoachingStaff() {
   return (
-  <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
+    <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-viking-charcoal mb-4 dark:text-gray-200">

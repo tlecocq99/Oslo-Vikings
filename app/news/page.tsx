@@ -1,4 +1,6 @@
-"use client";
+// Revalidate news listing every 5 minutes
+export const revalidate = 300;
+("use client");
 
 import { useState, useMemo } from "react";
 import Navigation from "../components/Navigation";
