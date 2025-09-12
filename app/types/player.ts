@@ -8,4 +8,5 @@ export interface Player {
   image?: string;
   imageAlt?: string;
   bio?: string;
+  nationality?: string;
 }

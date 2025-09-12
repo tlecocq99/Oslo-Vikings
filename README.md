@@ -134,8 +134,6 @@ colors: {
 
 ### Custom CSS Classes
 
-- `.oslo-gradient` - Viking-themed gradient background
-- `.norse-pattern` - Subtle Nordic pattern overlay
 - `.hero-text-shadow` - Text shadow for hero sections
 - `.animate-fadeInUp` - Fade-in animation
 

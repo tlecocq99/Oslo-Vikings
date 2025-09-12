@@ -23,10 +23,15 @@ export default function RosterClient({ players }: RosterClientProps) {
     ...ROSTER_SIDES,
   ];
 
+  // Ensure players with unknown or unmapped positions are still shown when a side filter is active
   const visible =
     sideFilter === "All"
       ? players
-      : players.filter((p) => getSideForPosition(p.position) === sideFilter);
+      : players.filter((p) => {
+          const side = getSideForPosition(p.position);
+          if (!side) return true; // keep unknown positions visible instead of hiding them
+          return side === sideFilter;
+        });
 
   // Build a stable ordering index for positions (side order + intra-side order)
   const positionOrderRef = React.useRef<Record<string, number>>();
@@ -62,18 +67,18 @@ export default function RosterClient({ players }: RosterClientProps) {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-8 lg:mb-12 gap-4">
-        <div className="flex flex-nowrap overflow-x-auto max-w-full gap-2 pb-1 scrollbar-thin scrollbar-thumb-gray-300">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-8 lg:mb-12 gap-4 ">
+        <div className="flex flex-nowrap overflow-x-auto max-w-full gap-2 pb-1 scrollbar-thin scrollbar-thumb-gray-300 ">
           {sideFilters.map((side) => {
             const active = side === sideFilter;
             return (
               <button
                 key={side}
                 onClick={() => setSideFilter(side)}
-                className={`px-4 py-2 rounded-full transition-colors ${
+                className={`px-4 py-2 rounded-full transition-colors text-sm font-medium border ${
                   active
-                    ? "bg-viking-red text-white"
-                    : "bg-gray-100 text-viking-charcoal hover:bg-gray-200"
+                    ? "bg-viking-red text-white border-viking-red hover:bg-viking-red/90"
+                    : "bg-gray-100 dark:bg-gray-800 text-viking-charcoal dark:text-gray-200 border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700"
                 }`}
               >
                 {side}
@@ -81,24 +86,24 @@ export default function RosterClient({ players }: RosterClientProps) {
             );
           })}
         </div>
-        <div className="flex items-center bg-gray-100 rounded-lg p-1">
+        <div className="flex items-center bg-gray-100 dark:bg-viking-charcoal/60 rounded-lg p-1">
           <button
             onClick={() => setViewMode("grid")}
-            className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors dark:bg-viking-charcoal ${
               viewMode === "grid"
                 ? "bg-white text-viking-red shadow-sm"
-                : "text-gray-600 hover:text-viking-red"
+                : "text-gray-600 dark:text-gray-200 hover:text-viking-red"
             }`}
             aria-label="Grid view"
           >
-            <Grid3X3 className="w-4 h-4" /> Grid
+            <Grid3X3 className="w-4 h-4 dark:bg-viking-charcoal" /> Grid
           </button>
           <button
             onClick={() => setViewMode("list")}
             className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
               viewMode === "list"
                 ? "bg-white text-viking-red shadow-sm"
-                : "text-gray-600 hover:text-viking-red"
+                : "text-gray-600 dark:text-gray-200 hover:text-viking-red"
             }`}
             aria-label="List view"
           >
@@ -108,13 +113,13 @@ export default function RosterClient({ players }: RosterClientProps) {
       </div>
 
       {visible.length === 0 && (
-        <p className="text-center text-gray-500">
+        <p className="text-center text-gray-500 dark:text-gray-400">
           No players match the selected filter.
         </p>
       )}
 
       {viewMode === "grid" && sortedVisible.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {sortedVisible.map((p) => (
             <PlayerCard key={p.id} {...p} variant="grid" />
           ))}

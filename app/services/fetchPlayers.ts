@@ -29,7 +29,8 @@ const auth = new google.auth.GoogleAuth({
 
 export async function fetchPlayers(): Promise<Player[]> {
   const sheets = google.sheets({ version: "v4", auth });
-  const range = "Players!A2:H500";
+  // Include column I (Nationality)
+  const range = "Players!A2:I500";
   const resp = await sheets.spreadsheets.values.get({
     spreadsheetId: sheetId,
     range,
@@ -46,6 +47,7 @@ export async function fetchPlayers(): Promise<Player[]> {
       imageUrl = "",
       imageAlt = "",
       bio = "",
+      nationality = "", // new column
     ] = r;
 
     // Sanitize jersey number: accept formats like "#07", "07", "7"
@@ -66,6 +68,7 @@ export async function fetchPlayers(): Promise<Player[]> {
       image: imageUrl || undefined,
       imageAlt: imageAlt || undefined,
       bio: bio || undefined,
+      nationality: nationality || undefined,
     };
   });
 }

@@ -34,7 +34,8 @@ export async function fetchRoster(tab: string): Promise<Player[]> {
     );
     return [];
   }
-  const range = `${tab}!A2:H500`;
+  // Include column I for Nationality
+  const range = `${tab}!A2:I500`;
   let rows: any[][] = [];
   try {
     const resp = await sheets.spreadsheets.values.get({
@@ -56,6 +57,7 @@ export async function fetchRoster(tab: string): Promise<Player[]> {
       imageUrl = "",
       imageAlt = "",
       bio = "",
+      nationality = "", // new column
     ] = r;
     let parsedNumber: number | undefined = undefined;
     if (rawNumber) {
@@ -73,6 +75,7 @@ export async function fetchRoster(tab: string): Promise<Player[]> {
       image: imageUrl || undefined,
       imageAlt: imageAlt || undefined,
       bio: bio || undefined,
+      nationality: nationality || undefined,
     };
   });
 }
