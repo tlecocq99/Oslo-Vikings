@@ -8,16 +8,14 @@ import {
   ROSTER_SIDES,
   POSITION_GROUPS,
 } from "@/app/config/positions";
+import { useRosterUI } from "./RosterUIContext";
 
 interface RosterClientProps {
   players: Player[];
 }
 
 export default function RosterClient({ players }: RosterClientProps) {
-  const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
-  const [sideFilter, setSideFilter] = React.useState<
-    "All" | (typeof ROSTER_SIDES)[number]
-  >("All");
+  const { sideFilter, setSideFilter, viewMode, setViewMode } = useRosterUI();
   const sideFilters: ("All" | (typeof ROSTER_SIDES)[number])[] = [
     "All",
     ...ROSTER_SIDES,
@@ -68,7 +66,7 @@ export default function RosterClient({ players }: RosterClientProps) {
   return (
     <>
       <div className="flex flex-col sm:flex-row justify-between items-center mb-8 lg:mb-12 gap-4 ">
-        <div className="flex flex-nowrap overflow-x-auto max-w-full gap-2 pb-1 scrollbar-thin scrollbar-thumb-gray-300 ">
+        <div className="hidden md:flex flex-wrap gap-2 pb-1">
           {sideFilters.map((side) => {
             const active = side === sideFilter;
             return (
