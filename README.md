@@ -175,7 +175,7 @@ The website follows WCAG 2.1 AA standards:
 
 ### Vercel 
 
-Live deployment preview available <a href="https://oslo-vikings.vercel.app/"> here </a>
+Live deployment preview available <a href="https://oslo-vikings.vercel.app/" target=_blank> here </a>
 
 ## 🎮 Content Management
 
