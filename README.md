@@ -152,7 +152,7 @@ Key responsive features:
 - Optimized typography scaling
 - Touch-friendly interactive elements
 
-## ♿ Accessibility
+## Accessibility
 
 The website follows WCAG 2.1 AA standards:
 
@@ -173,23 +173,9 @@ The website follows WCAG 2.1 AA standards:
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Vercel 
 
-1. **Connect your repository** to Vercel
-2. **Add environment variables** in Vercel dashboard
-3. **Deploy** - Vercel will automatically build and deploy
-
-### Other Platforms
-
-The app can be deployed to any platform supporting Next.js:
-
-- Netlify
-- AWS Amplify
-- Railway
-- DigitalOcean App Platform
-
-Build command: `npm run build`
-Output directory: `.next`
+Live deployment preview available <a href="https://oslo-vikings.vercel.app/" target=_blank> here </a>
 
 ## 🎮 Content Management
 
