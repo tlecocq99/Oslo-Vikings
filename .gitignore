@@ -1,46 +1,50 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+### Dependencies / Package Managers
 /node_modules
 /.pnp
 .pnp.js
+.pnpm-state.yaml
 
-# testing
-/coverage
-
-# next.js
+### Build & Generated Output
 /out/
 .next
-
-# production
 /build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env
-    gsa-key.json
-.env*.local
-
-# vercel
-.vercel
-.bolt
-.vscode
-
-# typescript
 *.tsbuildinfo
 next-env.d.ts
 
+### Test Coverage
+/coverage
+
+### Environment & Secrets
+.env
+.env*.local
+gsa-key.json
+*.pem
 certificates
 
-gsa-key.json
+### Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
 
+### Tooling Caches
+.eslintcache
+.turbo/
+
+### IDE / Editor
+.vscode
+.idea/
+
+### System Files
+.DS_Store
+Thumbs.db
+
+### Project Specific / Service
+.vercel
+.bolt
+
+### Documentation (internal only)
 .github/instructions/copilot.instructions.md
 .github/copilot-instructions.md
