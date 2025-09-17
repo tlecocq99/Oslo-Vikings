@@ -152,7 +152,7 @@ Key responsive features:
 - Optimized typography scaling
 - Touch-friendly interactive elements
 
-## ♿ Accessibility
+## Accessibility
 
 The website follows WCAG 2.1 AA standards:
 
