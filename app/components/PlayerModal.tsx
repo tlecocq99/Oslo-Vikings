@@ -81,10 +81,8 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
           <div className="sm:w-1/2 p-6 space-y-4">
             <DialogHeader>
               <DialogTitle className="text-xl font-bold">{name}</DialogTitle>
-              <DialogDescription>
+              <DialogDescription className="text-viking-red">
                 {position}
-                {normalizedHeight ? ` • ${normalizedHeight}` : ""}
-                {normalizedWeight ? ` • ${normalizedWeight}` : ""}
               </DialogDescription>
             </DialogHeader>
             <div className="grid grid-cols-2 gap-4 text-sm mt-2">
