@@ -43,6 +43,41 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
       : `${weight} kg`
     : undefined;
 
+  // Resolve a human-friendly country name from a 2-letter code or pass through a full name
+  function countryDisplay(n: string): string {
+    const raw = n.trim();
+    const upper = raw.toUpperCase();
+    const SPECIAL: Record<string, string> = {
+      UK: "United Kingdom",
+      GB: "United Kingdom",
+      US: "United States",
+      USA: "United States",
+      NO: "Norway",
+      SE: "Sweden",
+      DK: "Denmark",
+      DE: "Germany",
+      FR: "France",
+      CA: "Canada",
+      ES: "Spain",
+      IT: "Italy",
+    };
+    if (SPECIAL[upper]) return SPECIAL[upper];
+    if (
+      /^[A-Z]{2}$/.test(upper) &&
+      typeof (Intl as any).DisplayNames !== "undefined"
+    ) {
+      try {
+        const dn = new (Intl as any).DisplayNames(["en"], { type: "region" });
+        const name = dn.of(upper);
+        if (name) return name as string;
+      } catch {}
+    }
+    return raw;
+  }
+  const displayNationality = nationality
+    ? countryDisplay(nationality)
+    : undefined;
+
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -114,7 +149,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
                       nationality={nationality}
                       className="w-6 h-4 rounded-sm ring-1 ring-black/10 dark:ring-white/10"
                     />
-                    <span>{nationality}</span>
+                    <span>{displayNationality}</span>
                   </div>
                 </div>
               )}
