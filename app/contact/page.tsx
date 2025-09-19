@@ -6,6 +6,10 @@ import ContactForm from "../components/ContactForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import dynamic from "next/dynamic";
+const GoogleMap = dynamic(() => import("@/app/components/GoogleMap"), {
+  ssr: false,
+});
 
 export default function ContactPage() {
   return (
@@ -89,9 +93,9 @@ export default function ContactPage() {
                         <p className="text-gray-600 dark:text-gray-300">
                           Viking Stadium
                           <br />
-                          123 Football Street
+                          Middelthuns gate 26
                           <br />
-                          0123 Oslo, Norway
+                          0368 Oslo, Norway
                         </p>
                       </div>
                     </div>
@@ -105,11 +109,9 @@ export default function ContactPage() {
                           Office Hours
                         </h3>
                         <p className="text-gray-600 dark:text-gray-300">
-                          Monday - Friday: 9:00 - 17:00
+                          Monday - Friday: 09:00 - 17:00
                           <br />
-                          Saturday: 10:00 - 15:00
-                          <br />
-                          Sunday: Closed
+                          Saturday & Sunday: Closed
                         </p>
                       </div>
                     </div>
@@ -190,18 +192,26 @@ export default function ContactPage() {
                 Viking Stadium is located in the heart of Oslo
               </p>
             </div>
-
-            <div className="bg-gray-300 dark:bg-gray-700 rounded-lg h-96 flex items-center justify-center transition-colors">
-              <div className="text-center text-gray-600 dark:text-gray-300">
-                <MapPin className="w-12 h-12 mx-auto mb-4 dark:text-gray-200" />
-                <p className="text-lg font-medium dark:text-gray-100">
-                  Interactive Map
-                </p>
-                <p className="text-sm dark:text-gray-300">
-                  Google Maps integration would be added here
-                </p>
-              </div>
-            </div>
+            <GoogleMap
+              locations={[
+                {
+                  id: "stadium",
+                  title: "Viking Stadium (Frogner Stadium)",
+                  address: "Middelthuns gate 26, 0368 Oslo, Norway",
+                },
+                {
+                  id: "office",
+                  title: "Head Office",
+                  address: "Mølleparken 4, 0459 Oslo, Norway",
+                },
+                {
+                  id: "gym",
+                  title: "Wang Gym",
+                  address: "Kronprinsens gate 5, 0251 Oslo, Norway",
+                },
+              ]}
+              height={480}
+            />
           </div>
         </section>
       </main>
