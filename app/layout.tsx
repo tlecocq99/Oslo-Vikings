@@ -5,6 +5,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "next-themes";
+import Script from "next/script";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,11 +35,26 @@ export const metadata: Metadata = {
     url: "https://oslo-vikings.vercel.app/",
     siteName: "Oslo Vikings",
     images: [
+      // Default wide (good for FB/iMessage)
       {
-        url: "https://oslo-vikings.vercel.app/og/og-logo.png",
+        url: "https://oslo-vikings.vercel.app/og/og-logo1200x630.png",
         width: 1200,
         height: 630,
         alt: "Oslo Vikings",
+      },
+      // Square (WhatsApp/Slack sometimes prefer)
+      {
+        url: "https://oslovikings.no/og/og-1200x1200.png",
+        width: 1200,
+        height: 1200,
+        alt: "Oslo Vikings (Square)",
+      },
+      // 16:9
+      {
+        url: "https://oslovikings.no/og/og-1600x900.png",
+        width: 1600,
+        height: 900,
+        alt: "Oslo Vikings (16:9)",
       },
     ],
   },
@@ -71,8 +87,9 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          storageKey="ov-theme"
+          defaultTheme="light" // first visit = light
+          enableSystem={false} // ignore OS on first load
           disableTransitionOnChange
         >
           <ErrorBoundary>{children}</ErrorBoundary>
