@@ -38,11 +38,6 @@ export const metadata: Metadata = {
       {
         url: "https://oslo-vikings.vercel.app/og/og-logo-white.png",
         alt: "Oslo Vikings",
-       },
-      // Default wide (good for FB/iMessage)
-      {
-        url: "https://oslo-vikings.vercel.app/og/og-logo1200x630.png",
-        alt: "Oslo Vikings",
       },
       // Square (WhatsApp/Slack sometimes prefer)
       {
