@@ -37,6 +37,12 @@ export const metadata: Metadata = {
     images: [
       // Default wide (good for FB/iMessage)
       {
+        url: "https://oslovikings.no/og/og-default-white-1200x630.jpg?v=2", // neutral bg
+        width: 1200,
+        height: 630,
+        alt: "Oslo Vikings",
+      },
+      {
         url: "https://oslo-vikings.vercel.app/og/og-logo1200x630.png",
         width: 1200,
         height: 630,
@@ -80,6 +86,17 @@ export default function RootLayout({
     >
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
+      {/* Control preview/UI tint fallback */}
+      <meta
+        name="theme-color"
+        content="#ffffff"
+        media="(prefers-color-scheme: light)"
+      />
+      <meta
+        name="theme-color"
+        content="#0b0e12"
+        media="(prefers-color-scheme: dark)"
+      />
       <link rel="icon" href="/images/logo.png" />
       <body
         suppressHydrationWarning
