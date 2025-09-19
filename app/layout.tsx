@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: "Oslo Vikings",
     images: [
       {
-        url: "https://oslo-vikings.vercel.app/images/logo.png",
+        url: "https://oslo-vikings.vercel.app/og/og-logo.png",
         width: 1200,
         height: 630,
         alt: "Oslo Vikings",
