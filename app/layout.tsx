@@ -31,6 +31,16 @@ export const metadata: Metadata = {
     description: "Official website of the Oslo Vikings American Football team.",
     type: "website",
     locale: "en_US",
+    url: "https://oslo-vikings.vercel.app/",
+    siteName: "Oslo Vikings",
+    images: [
+      {
+        url: "https://oslo-vikings.vercel.app/images/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Oslo Vikings",
+      },
+    ],
   },
   robots: {
     index: true,
