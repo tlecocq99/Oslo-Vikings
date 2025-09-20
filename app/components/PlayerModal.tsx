@@ -90,7 +90,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
               className="absolute inset-0 bg-cover bg-center opacity-40"
               style={{
                 backgroundImage: `url(${
-                  image || "/images/players/playerFiller.avif"
+                  image || "/images/players/playerFiller.png"
                 })`,
               }}
             />

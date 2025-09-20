@@ -9,7 +9,7 @@ export interface PlayerCardProps extends Player {
   highlight?: boolean; // optional future styling flag
 }
 
-const fallbackImage = "/images/players/playerFiller.avif";
+const fallbackImage = "/images/players/playerFiller.png";
 
 export default function PlayerCard(props: PlayerCardProps) {
   const {
