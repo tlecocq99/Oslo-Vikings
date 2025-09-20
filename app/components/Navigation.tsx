@@ -92,7 +92,12 @@ export default function Navigation() {
       {/* Mobile Navigation */}
       {isOpen && (
         <div className="md:hidden bg-red-700 dark:bg-viking-charcoal relative z-10 transition-colors">
-          <div className="px-2 pt-2 pb-4 space-y-2 sm:px-3 border-t border-red-600 dark:border-viking-gold/30">
+          <div
+            className="px-2 pt-2 pb-8 sm:pb-10 space-y-2 sm:px-3 border-t border-red-600 dark:border-viking-gold/30"
+            style={{
+              paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 0.75rem)",
+            }}
+          >
             {navigation.map((item, index) => (
               <div key={item.name}>
                 <Link
