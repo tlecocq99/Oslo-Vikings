@@ -1,3 +1,4 @@
+import { Lato } from "next/font/google";
 import type { Config } from "tailwindcss";
 
 
@@ -88,6 +89,7 @@ const config: Config = {
       fontFamily: {
         norse: ["Inter", "sans-serif"],
         teko: ["Teko", "sans-serif"],
+        Lato: ["Lato", "sans-serif"],
       },
     },
   },

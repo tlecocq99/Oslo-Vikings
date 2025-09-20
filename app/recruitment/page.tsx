@@ -40,14 +40,26 @@ export default function RecruitmentPage() {
     <>
       <Navigation />
       <main className="min-h-screen">
-        <section className="dark:bg-gray-800 py-24">
+        <section
+          style={{
+            backgroundImage:
+              "url('/images/backgrounds/recruitmentBackground.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          className="dark:bg-gray-800 py-24"
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
+            <h1
+              className="font-Anton_SC text-4xl sm:text-5xl font-bold text-white mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4"
+              style={{ textShadow: "2px 2px 8px rgba(0, 0, 0, 0.7)" }}
+            >
               Join Oslo Vikings
             </h1>
-            <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-3xl mx-auto mb-6">
-              Ready to put on the helmet? We welcome new and experienced players
-              across all age groups and competition levels.
+            <p
+              className="text-xl text-white max-w-3xl mx-auto mb-6"
+              style={{ textShadow: "1px 1px 6px rgba(0, 0, 0, 0.6)" }}
+            >
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

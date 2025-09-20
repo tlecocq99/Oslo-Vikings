@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Teko } from "next/font/google";
+import { Inter, Teko, Lato } from "next/font/google";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
@@ -19,6 +19,13 @@ const teko = Teko({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-teko",
+});
+
+const lato = Lato({
+  weight: ["400"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-Lato",
 });
 
 export const metadata: Metadata = {
@@ -73,7 +80,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${teko.variable}`}
+      className={`${inter.variable} ${teko.variable} ${lato.variable}`}
     >
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
