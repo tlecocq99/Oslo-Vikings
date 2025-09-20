@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     siteName: "Oslo Vikings",
     images: [
       {
-        url: "https://oslo-vikings.vercel.app/og/og-logo-white.png",
+        url: "https://oslo-vikings.vercel.app/og/logo.png",
         alt: "Oslo Vikings",
       },
       // Square (WhatsApp/Slack sometimes prefer)
