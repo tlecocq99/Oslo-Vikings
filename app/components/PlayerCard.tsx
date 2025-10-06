@@ -25,10 +25,10 @@ export default function PlayerCard(props: PlayerCardProps) {
     variant = "grid",
     highlight,
   } = props;
-  const displayNumber =
-    number !== undefined && number !== null
-      ? `#${number.toString().padStart(2, "0")}`
-      : "#00";
+const displayNumber =
+  typeof number === "number" || (typeof number === "string")
+    ? `#${String(number).trim()}`
+    : undefined;
 
   // List variant (horizontal card)
   if (variant === "list") {

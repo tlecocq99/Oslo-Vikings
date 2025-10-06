@@ -52,13 +52,9 @@ export default function RosterClient({ players }: RosterClientProps) {
 
   const sortedVisible = React.useMemo(() => {
     return [...visible].sort((a, b) => {
-      const ra = getPositionRank(a.position);
-      const rb = getPositionRank(b.position);
-      if (ra !== rb) return ra - rb;
-      // Secondary: jersey number if present, else name
-      if (a.number != null && b.number != null && a.number !== b.number) {
-        return a.number - b.number;
-      }
+      const numA = a.number ?? Number.MAX_SAFE_INTEGER;
+      const numB = b.number ?? Number.MAX_SAFE_INTEGER;
+      if (numA !== numB) return numA - numB;
       return a.name.localeCompare(b.name);
     });
   }, [visible]);
