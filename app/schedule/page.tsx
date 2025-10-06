@@ -121,7 +121,7 @@ export default function SchedulePage() {
         <section className="dark:bg-gray-800 py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
-              Contact Us Season Schedule
+              Season Schedule
             </h1>
             <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-3xl mx-auto">
               Follow the Oslo Vikings through the 2025 season. Never miss a
