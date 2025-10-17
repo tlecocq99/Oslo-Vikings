@@ -28,8 +28,12 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
     height,
     weight,
   } = player;
-  const displayNumber =
-    number != null ? `#${number.toString().padStart(2, "0")}` : "#00";
+  const rawNumberValue =
+    typeof number === "number" || typeof number === "string"
+      ? String(number).trim().replace(/^#/, "")
+      : "";
+  const displayNumber = rawNumberValue ? `#${rawNumberValue}` : undefined;
+  const displayNumberFallback = displayNumber ?? "#00";
 
   // Append units if raw values are plain numbers (no existing letters or symbols)
   const normalizedHeight = height
@@ -84,7 +88,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
       <DialogContent className="max-w-3xl w-[95vw] sm:w-full p-0 overflow-hidden">
         <div className="flex flex-col sm:flex-row">
           {/* Left / Top visual section */}
-          <div className="sm:w-1/2 relative bg-gray-900 text-white flex items-center justify-center min-h-[200px] sm:min-h-[360px]">
+          <div className="sm:w-1/2 relative bg-gray-900 text-white flex items-stretch justify-center min-h-[200px] sm:min-h-[360px]">
             {/* Background image */}
             <div
               className="absolute inset-0 bg-cover bg-center opacity-40"
@@ -94,9 +98,9 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
                 })`,
               }}
             />
-            <div className="relative z-10 text-center p-6 space-y-2">
+            <div className="relative z-10 flex h-full w-full flex-col items-center justify-end px-6 pt-8 pb-4 sm:pt-10 sm:pb-5 text-center space-y-2">
               <div className="text-5xl font-extrabold drop-shadow-lg">
-                {displayNumber}
+                {displayNumberFallback}
               </div>
               <div className="flex items-center justify-center gap-2">
                 <h2 className="text-2xl font-bold tracking-wide">{name}</h2>
@@ -121,7 +125,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
               </DialogDescription>
             </DialogHeader>
             <div className="grid grid-cols-2 gap-4 text-sm mt-2">
-              <InfoBlock label="Number" value={displayNumber} />
+              <InfoBlock label="Number" value={displayNumberFallback} />
               <InfoBlock label="Position" value={position || "N/A"} />
               <InfoBlock label="Height" value={normalizedHeight || "N/A"} />
               <InfoBlock label="Weight" value={normalizedWeight || "N/A"} />

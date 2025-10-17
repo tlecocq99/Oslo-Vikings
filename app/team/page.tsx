@@ -3,7 +3,6 @@ export const revalidate = 300;
 
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import PlayerCard from "../components/PlayerCard"; // still used via RosterClient
 import { Player } from "../types/player";
 import React from "react";
 import RosterSwitcher from "@/app/components/RosterSwitcher";
