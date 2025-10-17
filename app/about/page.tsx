@@ -72,7 +72,7 @@ export default function AboutPage() {
               Contact Us About the Vikings
             </h1>
             <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-3xl mx-auto">
-              Discover the story behind Norway's premier American football team
+              Discover the story behind Norway’s premier American football team
             </p>
           </div>
         </section>

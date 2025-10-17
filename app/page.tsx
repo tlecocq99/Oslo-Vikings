@@ -309,7 +309,7 @@ export default function Home() {
                     variant="outline"
                     className="mt-6 border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
                   >
-                    <a href={sponsor.website} target="_blank" rel="noreferrer">
+                    <a href={sponsor.website} rel="noreferrer">
                       Visit Site
                     </a>
                   </Button>

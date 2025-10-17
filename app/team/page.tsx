@@ -3,41 +3,17 @@ export const revalidate = 300;
 
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import { Player } from "../types/player";
-import React from "react";
-import RosterSwitcher from "@/app/components/RosterSwitcher";
-import { fetchRoster } from "@/app/services/fetchRoster";
+import Link from "next/link";
+import { ALL_TEAMS } from "./team-config";
 
 // Server component: fetch players securely (no bundling googleapis into client)
-export default async function TeamPage() {
-  const ROSTER_TABS = {
-    "Senior Elite": "Senior Elite",
-    "Senior D2": "Senior D2",
-    U17: "U17",
-    U14: "U14",
-    "Flag Football": "Flag",
-  } as const;
-
-  // Fetch each roster tab in parallel; if a tab is missing, return empty list instead of throwing.
-  const entries = await Promise.all(
-    Object.entries(ROSTER_TABS).map(async ([label, tab]) => {
-      try {
-        const list = await fetchRoster(tab);
-        return [label, list] as const;
-      } catch (e) {
-        console.warn(`Roster tab '${tab}' failed to load:`, e);
-        return [label, [] as Player[]] as const;
-      }
-    })
-  );
-  const rosters: Record<string, Player[]> = Object.fromEntries(entries);
-
+export default function TeamPage() {
   return (
     <>
       <Navigation />
       <main className="min-h-screen">
         <Hero />
-        <RosterSwitcher rosters={rosters} />
+        <TeamsOverview />
         <CoachingStaff />
       </main>
       <Footer />
@@ -60,6 +36,64 @@ function Hero() {
           Our roster of dedicated athletes representing Norwegian American
           football excellence
         </p>
+      </div>
+    </section>
+  );
+}
+
+function TeamsOverview() {
+  return (
+    <section className="py-16 bg-white dark:bg-viking-charcoal/70 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-100 mb-4">
+            Choose Your Team
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Explore dedicated roster pages for each Oslo Vikings program to
+            learn more about the players representing the organization.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {ALL_TEAMS.map((team) => (
+            <Link
+              key={team.slug}
+              href={`/team/${team.slug}`}
+              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-viking-red/20 dark:border-viking-gold/20 bg-gradient-to-tr from-white to-viking-red/5 dark:from-viking-charcoal dark:to-viking-charcoal/60"
+            >
+              <div
+                className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity"
+                style={{
+                  backgroundImage: `url('${
+                    team.heroImage ?? "/images/backgrounds/teamClose.avif"
+                  }')`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+              <div className="relative p-8 flex flex-col gap-4">
+                <p className="text-xs uppercase tracking-[0.4em] text-viking-gold">
+                  Oslo Vikings
+                </p>
+                <h3 className="text-2xl font-bold text-viking-charcoal dark:text-gray-100">
+                  {team.name}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {team.description}
+                </p>
+                <span className="mt-auto inline-flex items-center gap-2 text-viking-red dark:text-viking-gold font-semibold">
+                  View roster
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );
