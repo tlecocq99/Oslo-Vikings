@@ -12,16 +12,19 @@ interface TeamPageParams {
   team: string;
 }
 
+type TeamPageProps = {
+  params: Promise<TeamPageParams>;
+};
+
 export function generateStaticParams(): { team: TeamSlug }[] {
   return Object.keys(TEAM_CONFIG).map((slug) => ({ team: slug as TeamSlug }));
 }
 
 export async function generateMetadata({
   params,
-}: {
-  params: TeamPageParams;
-}): Promise<Metadata> {
-  const team = getTeamBySlug(params.team);
+}: TeamPageProps): Promise<Metadata> {
+  const { team: teamSlug } = await params;
+  const team = getTeamBySlug(teamSlug);
   if (!team) {
     return {};
   }
@@ -39,12 +42,9 @@ export async function generateMetadata({
   } satisfies Metadata;
 }
 
-export default async function TeamDetailPage({
-  params,
-}: {
-  params: TeamPageParams;
-}) {
-  const team = getTeamBySlug(params.team);
+export default async function TeamDetailPage({ params }: TeamPageProps) {
+  const { team: teamSlug } = await params;
+  const team = getTeamBySlug(teamSlug);
 
   if (!team) {
     notFound();

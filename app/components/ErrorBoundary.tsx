@@ -46,7 +46,7 @@ export default class ErrorBoundary extends Component<Props, State> {
             </h1>
 
             <p className="text-gray-600 mb-6">
-              We&rsquo;re sorry, but something unexpected happened. Please try
+              We’re sorry, but something unexpected happened. Please try
               refreshing the page.
             </p>
 
