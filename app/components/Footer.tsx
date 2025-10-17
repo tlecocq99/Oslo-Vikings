@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 export default function Footer() {
@@ -10,10 +11,12 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-14 h-14 rounded-lg flex items-center justify-center">
-                <img
+                <Image
                   src="/images/logo.png"
                   alt="Oslo Vikings Logo"
-                  className="w-12 h-12 text-white"
+                  width={48}
+                  height={48}
+                  className="w-12 h-12"
                 />
               </div>
               <div>

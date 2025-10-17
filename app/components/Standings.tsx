@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
 interface StandingRow {
   team: string;
@@ -130,13 +131,15 @@ export default function Standings() {
               <td className="px-2 py-1">
                 <div className="flex items-center gap-2">
                   {r.teamLogo && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={r.teamLogo}
-                      alt={r.team + " logo"}
+                      alt={`${r.team} logo`}
+                      width={24}
+                      height={24}
                       className="h-6 w-6 object-contain"
                       loading="lazy"
-                      decoding="async"
+                      sizes="24px"
+                      unoptimized
                     />
                   )}
                   <span>{r.team}</span>
@@ -169,12 +172,7 @@ export default function Standings() {
       </table>
       <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
         Source:{" "}
-        <a
-          className="underline"
-          href={data.source}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a className="underline" href={data.source} rel="noreferrer">
           superserien.se
         </a>
       </p>

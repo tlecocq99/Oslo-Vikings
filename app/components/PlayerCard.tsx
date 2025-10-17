@@ -25,10 +25,12 @@ export default function PlayerCard(props: PlayerCardProps) {
     variant = "grid",
     highlight,
   } = props;
-const displayNumber =
-  typeof number === "number" || (typeof number === "string")
-    ? `#${String(number).trim()}`
-    : undefined;
+  const displayNumber =
+    typeof number === "number" || typeof number === "string"
+      ? `#${String(number).trim()}`
+      : undefined;
+  const imageSrc = image || fallbackImage;
+  const imageAltText = imageAlt || name || "Player image";
 
   // List variant (horizontal card)
   if (variant === "list") {
@@ -39,12 +41,15 @@ const displayNumber =
         }`}
       >
         <div className="relative flex-shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={image || fallbackImage}
-            alt={imageAlt || name || "Player image"}
+          <Image
+            src={imageSrc}
+            alt={imageAltText}
+            width={64}
+            height={64}
             className="w-16 h-16 rounded-full object-cover"
             loading="lazy"
+            sizes="64px"
+            unoptimized
           />
           {nationality && (
             <div className="absolute -bottom-1 -right-1 bg-white dark:bg-viking-charcoal rounded-sm p-[2px] shadow ring-1 ring-black/5 dark:ring-white/10">
@@ -89,22 +94,16 @@ const displayNumber =
               highlight ? "ring-2 ring-viking-red" : ""
             }`}
           >
-            {image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={image}
-                alt={imageAlt || name || "Player image"}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            ) : (
-              <img
-                src={fallbackImage}
-                alt={imageAlt || name || "Player image"}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            )}
+            <Image
+              src={imageSrc}
+              alt={imageAltText}
+              width={112}
+              height={112}
+              className="w-full h-full object-cover"
+              loading="lazy"
+              sizes="112px"
+              unoptimized
+            />
           </div>
           {nationality && (
             <div className="absolute bottom-2 right-3 translate-x-1/4 translate-y-1/4 w-7 h-5 rounded-[3px] bg-white dark:bg-viking-charcoal shadow ring-1 ring-black/10 dark:ring-white/10 flex items-center justify-center">

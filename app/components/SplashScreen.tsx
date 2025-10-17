@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
 // Adjust the logo path as needed (should be in public/images/)
 const LOGO_SRC = "/images/logo.png"; // Replace with your logo file if different
@@ -32,9 +33,12 @@ export default function SplashScreen() {
       }}
       aria-label="Oslo Vikings splash screen"
     >
-      <img
+      <Image
         src={LOGO_SRC}
         alt="Oslo Vikings logo"
+        width={224}
+        height={224}
+        priority
         className="w-56 h-56 object-contain drop-shadow-2xl animate-pulse"
         draggable={false}
       />

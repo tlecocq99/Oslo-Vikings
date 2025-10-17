@@ -59,8 +59,7 @@ export default function RecruitmentPage() {
             <p
               className="text-xl text-white max-w-3xl mx-auto mb-6"
               style={{ textShadow: "1px 1px 6px rgba(0, 0, 0, 0.6)" }}
-            >
-            </p>
+            ></p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
@@ -114,9 +113,7 @@ export default function RecruitmentPage() {
                 size="lg"
                 className="bg-viking-gold hover:bg-viking-gold-dark text-viking-charcoal font-semibold px-10 py-6 text-lg"
               >
-                <Link href="https://forms.gle/example" target="_blank">
-                  Open Interest Form
-                </Link>
+                <Link href="https://forms.gle/example">Open Interest Form</Link>
               </Button>
             </div>
 
