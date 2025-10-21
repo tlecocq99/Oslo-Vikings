@@ -1,260 +1,166 @@
-# Oslo Vikings - Norwegian American Football Team Website
+# Oslo Vikings — Norwegian American Football Team Website
 
-A modern, responsive website for the Oslo Vikings American Football team built with Next.js 14 and TypeScript
+A modern, content-driven site for the Oslo Vikings American Football club built with Next.js 15, TypeScript, Tailwind CSS, and the App Router.
 
-## 🏈 Features
+## 🌐 Live Site
 
-- **Modern Next.js 14 Application** with App Router and TypeScript
-- **Responsive Design** optimized for desktop, tablet, and mobile
-- **Norwegian Viking-themed Design** with authentic color scheme
-- **Complete Team Management** with player profiles and roster
-- **News & Blog System** for team updates and game recaps
-- **Game Schedule & Results** tracking
-- **SEO Optimized** with Next.js metadata API
-- **Accessibility Compliant** (WCAG 2.1 AA standards)
+Catch the latest roster, schedule, and club news at **[oslovikings.vercel.app](https://oslovikings.vercel.app/)**.
+
+## 🏈 Feature Highlights
+
+- **Animated Rosters** – Multi-team roster switcher with side filters, grid/list toggles, and IntersectionObserver-powered reveal animations that keep cards evenly sized across breakpoints.
+- **Real-Time Standings** – Serverless API route scrapes Superserien standings on a timed cache and pipes results into a sortable, refreshable table with team logos.
+- **Schedule Hub** – Tabs for upcoming fixtures and completed results, reusable `GameCard` UI, and a marquee-style `UpcomingGamesBar` on the homepage.
+- **News Center with Search** – Category filters, live search, featured story spotlight, and responsive news grid.
+- **Interactive Contact Page** – Validated contact form with success states plus a dynamically loaded Google Map displaying key club locations.
+- **Recruitment Funnel** – Benefits grid, anchored CTAs, and an accordion FAQ to drive prospective players to interest forms.
+- **Sponsor & Fan Experience** – Splash screen intro, dark mode support, hero sections, sponsor highlights, and consistent Viking-themed branding.
+
+## 🧱 Tech Stack
+
+- **Next.js 15** with App Router & Route Handlers
+- **TypeScript** for type-safe components and services
+- **Tailwind CSS** + `tailwind-merge` for utility-first styling
+- **shadcn/ui** component primitives (accordion, tabs, sheet, dialog, etc.)
+- **Lucide Icons** for consistent iconography
+- **Cheerio** for HTML scraping of league standings
+- **Google Sheets API** for roster and schedule content ingestion
+- **Vercel** hosting with ISR/route revalidation
+
+## � Environment Variables
+
+Set the following secrets in your hosting platform to enable live data integrations:
+
+| Variable                                                       | Purpose                                                                                   |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `SHEET_ID`                                                     | Google Sheet ID that stores roster and schedule data.                                     |
+| `SHEET_NAME` / `SHEET_RANGE` (optional)                        | Override defaults for sheet tab name and value range.                                     |
+| `SERVICE_ACCOUNT_JSON`                                         | Service-account JSON blob for Google Sheets access (used by `lib/googleSheets.ts`).       |
+| `GOOGLE_SHEET_ID`, `GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY` | Alternate credential set used by `app/services/googleSheets.ts` for server-only fetching. |
+| `CACHE_TTL` (optional)                                         | Overrides the cached lifetime (seconds) for Google Sheets fetches.                        |
+| `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`                              | Enables the interactive map on the contact page.                                          |
+
+> Tip: store secrets in Vercel project settings or your preferred secret manager; never commit them to the repository.
+
+## �🗺️ Architecture & Data Flow
+
+- **Google Sheets Content Pipeline** – `app/services/googleSheets.ts` authenticates with Google and hydrates roster (`fetchRoster`) and schedule (`fetchSchedule`) data for the roster pages and schedule tables.
+- **Superserien Standings API** – `app/api/standings/route.ts` calls `fetchStandings`, scraping standings data, caching the payload, and exposing it to the client-side `Standings` component with on-demand refresh.
+- **Roster Experience** – `RosterSwitcher` wires up global roster UI state (filters, view mode, selected team) and renders `RosterClient` rows that animate into view.
+- **UI Composition** – Shared UI primitives live in `components/ui`, while page-level compositions reside under `app/components` for reusability across routes.
+- **Dark Mode & Theming** – `next-themes` integrates with Tailwind to deliver seamless dark/light palettes and toggles persisted per user.
+
+## 📈 Monitoring & DX
+
+- **Error Boundary** – `app/components/ErrorBoundary.tsx` shields the UI and surfaces stack traces during development.
+- **Vercel Analytics & Speed Insights** – baked into `app/layout.tsx` for traffic tracking and performance telemetry.
+- **Theming Provider** – `next-themes` keeps light/dark preferences synced via the `ThemeProvider` wrapper.
+- **Splash Screen Experience** – `SplashScreen` component orchestrates branded entry animations without blocking page content.
 
 ## 🎨 Design System
 
 ### Color Palette
 
-- **Viking Red**: `#AC1416` - Primary brand color (updated)
-- **Viking Red Dark**: `#7C0F11` - Darker variant for depth (updated)
-- **Viking Gold**: `#FFD700` - Accent color for highlights
-- **Viking Gold Dark**: `#B8860B` - Darker gold variant
-- **Viking Silver**: `#C0C0C0` - Secondary accent
-- **Viking Charcoal**: `#1F2937` - Text and contrast color
+- **Viking Red**: `#AC1416` – Primary brand color
+- **Viking Red Dark**: `#7C0F11` – Depth variant for hover/active states
+- **Viking Gold**: `#FFD700` – Accent for highlights and CTAs
+- **Viking Gold Dark**: `#B8860B` – Complementary gold tone
+- **Viking Silver**: `#C0C0C0` – Secondary accent for UI chrome
+- **Viking Charcoal**: `#1F2937` – Base text/contrast color
 
 ### Typography
 
-- **Primary Font**: Inter (Google Fonts)
-- **Display**: Bold weights for headings
-- **Body**: Regular and medium weights for content
+- **Inter** – Primary sans-serif for body copy and UI
+- **Teko** – Display font for hero stats and scoreboard callouts
 
-## 🚀 Getting Started
+### Utility Highlights
 
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone <repository-url>
-   cd oslo-vikings-website
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-3. **Run the development server**
-
-   ```bash
-   npm run dev
-   ```
-
-4. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+- Tailwind config encapsulates brand colors, drop shadows, and animations.
+- Shared helpers in `lib/utils.ts` pair with `tailwind-merge` for safer class composition.
 
 ## 📁 Project Structure
 
-```
-oslo-vikings-website/
-├── app/                          # Next.js App Router
-│   ├── components/              # App components
-│   │   ├── Hero.tsx            # Hero section component
-│   │   ├── PlayerCard.tsx      # Player profile cards
-│   │   ├── NewsCard.tsx        # News article cards
-│   │   ├── GameCard.tsx        # Game schedule cards
-│   │   ├── Page.tsx            # Page wrapper component
-│   │   ├── Navigation.tsx      # Site navigation
-│   │   └── Footer.tsx          # Site footer
-│   ├── lib/                    # Utility functions
-│   ├── about/                  # About page
-│   ├── contact/                # Contact page
-│   ├── news/                   # News listing page
-│   ├── schedule/               # Schedule page
-│   ├── team/                   # Team roster page
-│   ├── globals.css             # Global styles
-│   ├── layout.tsx              # Root layout
-│   ├── page.tsx                # Home page
-│
-├── components/ui/               # shadcn/ui components
-├── lib/                        # Shared utilities
-│   └── utils.ts               # Utility functions
-├── public/                     # Static assets
-├── tailwind.config.ts          # Tailwind configuration
-├── next.config.js              # Next.js configuration
-└── package.json                # Dependencies
+```text
+Oslo-Vikings/
+├── app/
+│   ├── api/standings/              # Route handler exposing live standings JSON
+│   ├── components/                 # Reusable feature components (Hero, RosterClient, GoogleMap, etc.)
+│   ├── config/                     # Position group metadata & constants
+│   ├── services/                   # Google Sheets + standings data fetchers
+│   ├── types/                      # Shared TypeScript types (Player, Game, etc.)
+│   ├── about/ | contact/ | news/   # Top-level routes
+│   ├── recruitment/ | schedule/    # Specialized marketing & schedule pages
+│   ├── team/                       # Roster hub with dynamic subroutes
+│   ├── globals.css                 # Base styles
+│   ├── layout.tsx                  # Root layout & theme provider
+│   └── page.tsx                    # Home page composition
+├── components/ui/                  # shadcn/ui primitives wired with Tailwind tokens
+├── hooks/                          # Custom hooks (e.g., toast helpers)
+├── lib/                            # Shared utilities and configuration glue
+├── public/                         # Static assets and imagery
+├── tailwind.config.ts              # Tailwind theme customization
+├── next.config.js                  # Next.js configuration (includes Storyblok, analytics, etc.)
+└── package.json                    # Dependencies & scripts
 ```
 
-### Content Types
+## 🔎 Key Pages & Components
 
-1. **Page** - Basic page structure
-2. **Hero** - Hero section with title, subtitle, and CTA
-3. **Player Card** - Individual player profiles
-4. **News Card** - News articles and blog posts
-5. **Game Card** - Game schedules and results
+- **`app/page.tsx`** – Landing experience with splash screen, stats, featured news, and sponsor grid.
+- **`app/team/page.tsx`** – Roster index routing to team-specific lineups and coaching staff spotlights.
+- **`app/schedule/page.tsx`** – Season overview with tabbed upcoming/results views plus live standings.
+- **`app/news/page.tsx`** – Searchable news archive with category filters and featured story hero.
+- **`app/contact/page.tsx`** – Contact form, quick action cards, and a dynamic Google Map of locations.
+- **`app/recruitment/page.tsx`** – Player pipeline, program benefits, and accordion-based FAQs.
 
-### Component Mapping
+## � Content Management
 
-````typescript
-const components = {
-  page: Page,
-  hero: Hero,
-  player_card: PlayerCard,
-  news_card: NewsCard,
-  game_card: GameCard,
-};
+Roster, schedule, and several homepage modules are populated from shared Google Sheets tabs:
 
+1. **Log into the Oslo Vikings Google Sheets workspace.**
+2. **Edit the relevant tab** (e.g., `Players`, `Schedule`).
+3. **Save the sheet** — changes propagate automatically via scheduled ISR and API cache refresh.
 
-## 🎨 Styling & Theming
+### Content Reference
 
-### Tailwind CSS Configuration
+#### Player Rows (`Players` sheet)
 
-Custom colors and utilities are defined in `tailwind.config.ts`:
+- **Name / Position / Number** – Displayed on cards and modals (number automatically cleans `#`).
+- **Height & Weight** – Optional stats shown in detail view.
+- **Bio** – Short blurb surfaced in list/desktop cards.
+- **Image & Alt Text** – Player portrait; falls back to branded filler if omitted.
+- **Nationality** – Renders flag badge using `country-flag-icons`.
 
-```typescript
-colors: {
-  viking: {
-   red: '#AC1416',
-   'red-dark': '#7C0F11',
-    gold: '#FFD700',
-    'gold-dark': '#B8860B',
-    silver: '#C0C0C0',
-    charcoal: '#1F2937',
-  }
-}
-````
+#### Schedule Rows (`Schedule` tab)
 
-### Custom CSS Classes
+- Smart header detection maps sheet columns into schedule table keys.
+- Supports upcoming and completed games (scores become available fields when provided).
+- Entries surface in page tabs and `TeamScheduleSection` modules.
 
-- `.hero-text-shadow` - Text shadow for hero sections
-- `.animate-fadeInUp` - Fade-in animation
+#### News Items & Static Content
 
-## 📱 Responsive Design
+- Curated directly within page components or via Storyblok (if enabled by environment).
+- Use `SearchAndFilter` props to seed new categories or featured articles.
 
-The website is fully responsive with breakpoints:
+## 🛡️ Accessibility & Performance
 
-- **Mobile**: 320px - 768px
-- **Tablet**: 768px - 1024px
-- **Desktop**: 1024px+
+- Semantic headings, aria labels, and keyboard navigable menus.
+- High-contrast Viking palette tuned for WCAG 2.1 AA compliance.
+- Lazy-loaded imagery, dynamic imports, and route segment streaming for faster interactions.
+- Splash screen and row animations respect reduced motion preferences.
 
-Key responsive features:
+## ⚙️ Deployment
 
-- Collapsible navigation menu
-- Flexible grid layouts
-- Optimized typography scaling
-- Touch-friendly interactive elements
-
-## Accessibility
-
-The website follows WCAG 2.1 AA standards:
-
-- Semantic HTML structure
-- Proper heading hierarchy
-- Alt text for images
-- Keyboard navigation support
-- Sufficient color contrast ratios
-- Screen reader compatibility
-
-## 🔧 Performance Optimizations
-
-- **Next.js Image Optimization** for automatic image optimization
-- **Static Generation** for improved loading times
-- **Code Splitting** with dynamic imports
-- **Lazy Loading** for images and components
-- **Font Optimization** with Google Fonts
-
-## 🚀 Deployment
-
-### Vercel 
-
-Live deployment preview available <a href="https://oslo-vikings.vercel.app/" target=_blank> here </a>
-
-## 🎮 Content Management
-
-### Adding New Content
-
-1. **Log into Googlesheets**
-2. **Fill in content** fields
-3. **Will automatically** go live on website
-
-### Content Types Guide
-
-#### Player Cards
-
-- **Name**: Player's full name
-- **Position**: Playing position
-- **Number**: Jersey number
-- **Height/Weight**: Physical stats
-- **Bio**: Player description
-- **Photo**: Player image (optional)
-
-#### News Articles
-
-- **Title**: Article headline
-- **Excerpt**: Brief summary
-- **Author**: Article author
-- **Date**: Publication date
-- **Category**: Article category
-- **Image**: Featured image
-- **Slug**: URL slug for article
-
-#### Game Cards
-
-- **Home Team**: Home team name
-- **Away Team**: Away team name
-- **Date/Time**: Game date and time
-- **Location**: Venue location
-- **Status**: upcoming/live/completed
-- **Scores**: Final scores (if completed)
-
-## 🛠️ Development
-
-### Available Scripts
-
-```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-```
-
-### Customizing Styles
-
-1. **Update** `tailwind.config.ts` for theme changes
-2. **Modify** `globals.css` for global styles
-3. **Use** Tailwind classes in components
+- Hosted on **Vercel** with automatic previews for pull requests.
+- Incremental revalidation keeps roster, schedule, and standings fresh without manual redeploys.
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+Have improvements or bug fixes? Open an issue or submit a pull request on GitHub. Internal contributors can reference the engineering handbook for workflow details.
 
-## 📄 License
+## � License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🏈 About Oslo Vikings
-
-The Oslo Vikings are Norway's premier American Football team, representing Norwegian values of teamwork, perseverance, and community excellence. Founded in 2010, the team has grown to become a championship-winning organization dedicated to promoting American football in Norway.
-
-## 📞 Support
-
-For technical support or questions about the website:
-
-- **Email**: tech@oslovikings.no
-- **Next.js Docs**: [Next.js Documentation](https://nextjs.org/docs)
+Released under the MIT License — see `LICENSE` for terms.
 
 ---
 
-**Built with ❤️ for the Oslo Vikings community**
+Built with ❤️ for the Oslo Vikings community.
