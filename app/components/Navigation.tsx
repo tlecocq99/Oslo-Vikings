@@ -10,10 +10,10 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const navigation = [
   { name: "HOME", href: "/" },
-  { name: "TEAM", href: "/team" },
-  { name: "SCHEDULE", href: "/schedule" },
-  { name: "JOIN OV", href: "/recruitment" },
+  { name: "TEAMS", href: "/team" },
   { name: "NEWS", href: "/news" },
+  { name: "JOIN OV", href: "/recruitment" },
+  { name: "SHOP", href: "/shop" },
   { name: "ABOUT", href: "/about" },
   { name: "CONTACT", href: "/contact" },
 ];
@@ -49,9 +49,9 @@ export default function Navigation() {
         </Link>
 
         {/* Desktop Navigation (pipe-separated) */}
-        <div className="hidden md:flex items-center h-full select-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="hidden md:flex flex-1 items-center justify-center h-full select-none">
           {navigation.map((item, idx) => {
-            const isTeam = item.name === "TEAM";
+            const isTeam = item.name === "TEAMS";
             const active =
               item.href === "/"
                 ? pathname === "/"
@@ -87,26 +87,16 @@ export default function Navigation() {
 
                   {isTeam && (
                     <div className="pointer-events-none absolute left-1/2 top-full z-40 -translate-x-1/2 translate-y-2 opacity-0 invisible group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto transition-all duration-200 ease-out">
-                      <div className="mt-4 w-56 rounded-xl bg-white dark:bg-viking-charcoal shadow-2xl ring-1 ring-black/5 border border-viking-red/20 dark:border-viking-gold/20 p-2 space-y-1">
-                        {teamLinks.map((team) => {
-                          const teamActive = pathname === team.href;
-                          const desktopTeamClasses = [
-                            "flex items-center justify-between px-3 py-2 rounded-lg text-lg font-teko uppercase tracking-wide transition-colors",
-                            teamActive
-                              ? "bg-viking-red text-white dark:bg-viking-gold dark:text-viking-charcoal"
-                              : "text-viking-charcoal dark:text-gray-100 hover:bg-viking-red hover:text-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal",
-                          ].join(" ");
-
-                          return (
-                            <Link
-                              key={team.name}
-                              href={team.href}
-                              className={desktopTeamClasses}
-                            >
-                              <span>{team.name}</span>
-                            </Link>
-                          );
-                        })}
+                      <div className="mt-4 w-56 rounded-xl bg-white dark:bg-viking-charcoal shadow-2xl ring-1 ring-black/5 border border-viking-red/20 dark:border-viking-red-dark/20 p-2 space-y-1">
+                        {teamLinks.map((team) => (
+                          <Link
+                            key={team.name}
+                            href={team.href}
+                            className="flex items-center justify-between px-3 py-2 rounded-lg text-lg font-teko uppercase tracking-wide transition-colors text-viking-charcoal dark:text-gray-100 hover:bg-viking-red hover:text-white dark:hover:bg-viking-red-dark dark:hover:text-white"
+                          >
+                            <span>{team.name}</span>
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   )}
@@ -129,7 +119,7 @@ export default function Navigation() {
             size="sm"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
-            className="text-viking-red dark:text-viking-gold border border-viking-red/50 dark:border-viking-gold/50 bg-white dark:bg-viking-charcoal hover:bg-viking-red hover:text-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal focus:ring-2 focus:ring-viking-red dark:focus:ring-viking-gold focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-viking-charcoal rounded-md shadow-sm transition-colors"
+            className="text-viking-red dark:text-viking-red-dark border border-viking-red/50 dark:border-viking-red-dark/50 bg-white dark:bg-viking-charcoal hover:bg-viking-red hover:text-white dark:hover:bg-viking-red-dark dark:hover:text-viking-charcoal focus:ring-2 focus:ring-viking-red dark:focus:ring-viking-red-dark focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-viking-charcoal rounded-md shadow-sm transition-colors"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
@@ -171,26 +161,16 @@ export default function Navigation() {
                   </Link>
                   {isTeam && (
                     <div className="mt-2 space-y-2">
-                      {teamLinks.map((team) => {
-                        const teamActive = pathname === team.href;
-                        const mobileTeamClasses = [
-                          "block rounded-md border px-4 py-3 text-xl font-teko uppercase tracking-wide transition-colors",
-                          teamActive
-                            ? "bg-white text-viking-red border-white dark:bg-viking-gold dark:text-viking-charcoal dark:border-viking-gold"
-                            : "text-white dark:text-viking-gold border-white dark:border-viking-gold bg-red-700 dark:bg-viking-charcoal hover:bg-white hover:text-viking-red hover:border-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal dark:hover:border-viking-gold",
-                        ].join(" ");
-
-                        return (
-                          <Link
-                            key={`mobile-${team.name}`}
-                            href={team.href}
-                            onClick={() => setIsOpen(false)}
-                            className={mobileTeamClasses}
-                          >
-                            {team.name}
-                          </Link>
-                        );
-                      })}
+                      {teamLinks.map((team) => (
+                        <Link
+                          key={`mobile-${team.name}`}
+                          href={team.href}
+                          onClick={() => setIsOpen(false)}
+                          className="block rounded-md border px-4 py-3 text-xl font-teko uppercase tracking-wide transition-colors text-white dark:text-viking-gold border-white dark:border-viking-gold bg-red-700 dark:bg-viking-charcoal hover:bg-white hover:text-viking-red hover:border-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal dark:hover:border-viking-gold"
+                        >
+                          {team.name}
+                        </Link>
+                      ))}
                     </div>
                   )}
                   {index < navigation.length - 1 && (

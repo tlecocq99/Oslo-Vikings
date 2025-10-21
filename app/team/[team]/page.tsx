@@ -1,7 +1,9 @@
 import Navigation from "@/app/components/Navigation";
 import Footer from "@/app/components/Footer";
 import RosterSwitcher from "@/app/components/RosterSwitcher";
+import { TeamScheduleSection } from "@/app/components/TeamScheduleSection";
 import { fetchRoster } from "@/app/services/fetchRoster";
+import { fetchSchedule } from "@/app/services/fetchSchedule";
 import { getTeamBySlug, TEAM_CONFIG, type TeamSlug } from "../team-config";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -50,7 +52,10 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
     notFound();
   }
 
-  const players = await fetchRoster(team.sheetTab);
+  const [players, schedule] = await Promise.all([
+    fetchRoster(team.sheetTab),
+    fetchSchedule(team.sheetTab),
+  ]);
   const rosters = { [team.name]: players } as const;
 
   return (
@@ -64,6 +69,7 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
           tagline={team.heroTagline}
         />
         <RosterSwitcher rosters={rosters} />
+        <TeamScheduleSection teamName={team.name} schedule={schedule} />
       </main>
       <Footer />
     </>
