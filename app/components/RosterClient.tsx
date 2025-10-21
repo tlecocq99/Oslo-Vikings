@@ -9,6 +9,7 @@ import {
   POSITION_GROUPS,
 } from "@/app/config/positions";
 import { useRosterUI } from "./RosterUIContext";
+import clsx from "clsx";
 
 interface RosterClientProps {
   players: Player[];
@@ -113,9 +114,13 @@ export default function RosterClient({ players }: RosterClientProps) {
       )}
 
       {viewMode === "grid" && sortedVisible.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {sortedVisible.map((p) => (
-            <PlayerCard key={p.id} {...p} variant="grid" />
+        <div className="space-y-12">
+          {chunkPlayers(sortedVisible, 4).map((row, rowIndex) => (
+            <AnimatedPlayerRow
+              key={`player-row-${rowIndex}`}
+              players={row}
+              rowIndex={rowIndex}
+            />
           ))}
         </div>
       )}
@@ -130,5 +135,77 @@ export default function RosterClient({ players }: RosterClientProps) {
         </ul>
       )}
     </>
+  );
+}
+
+function chunkPlayers(players: Player[], size: number): Player[][] {
+  const rows: Player[][] = [];
+  for (let i = 0; i < players.length; i += size) {
+    rows.push(players.slice(i, i + size));
+  }
+  return rows;
+}
+
+function AnimatedPlayerRow({
+  players,
+  rowIndex,
+}: {
+  players: Player[];
+  rowIndex: number;
+}) {
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.25, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={clsx(
+        "grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 items-stretch",
+        "transition-all duration-700 ease-out",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      )}
+      style={{
+        transitionDelay: isVisible
+          ? `${Math.min(rowIndex, 5) * 60}ms`
+          : undefined,
+      }}
+    >
+      {players.map((player, idx) => (
+        <div
+          key={player.id}
+          className={clsx(
+            "transition-all duration-700 ease-out h-full",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+          style={{
+            transitionDelay: isVisible
+              ? `${idx * 90 + rowIndex * 45}ms`
+              : undefined,
+          }}
+        >
+          <PlayerCard {...player} variant="grid" />
+        </div>
+      ))}
+    </div>
   );
 }

@@ -127,7 +127,7 @@ export default function PlayerCard(props: PlayerCardProps) {
     );
     const desktop = (
       <div
-        className={`hidden md:block bg-white dark:bg-viking-charcoal/70 dark:border-viking-red-dark rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 ${
+        className={`hidden md:flex md:flex-col md:h-full bg-white dark:bg-viking-charcoal/70 dark:border-viking-red-dark rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 ${
           highlight ? "ring-2 ring-viking-red" : ""
         }`}
       >
@@ -151,7 +151,7 @@ export default function PlayerCard(props: PlayerCardProps) {
             {displayNumber}
           </div>
         </div>
-        <div className="p-6">
+        <div className="p-6 flex-1 flex flex-col">
           <div className="flex items-start justify-between gap-4 mb-2">
             <div>
               <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100">
@@ -181,7 +181,7 @@ export default function PlayerCard(props: PlayerCardProps) {
       <PlayerModal
         player={props}
         trigger={
-          <div className="cursor-pointer">
+          <div className="cursor-pointer h-full flex flex-col">
             {mobile}
             {desktop}
           </div>
