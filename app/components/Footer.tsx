@@ -82,7 +82,7 @@ export default function Footer() {
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-viking-red" />
                 <span className="text-gray-300 text-sm">
-                  info@oslovikings.no
+                  styret@oslovikings.com
                 </span>
               </div>
               <div className="flex items-center space-x-2">

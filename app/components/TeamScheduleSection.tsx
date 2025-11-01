@@ -3,17 +3,22 @@ import type { ScheduleTable } from "@/app/services/fetchSchedule";
 interface TeamScheduleSectionProps {
   teamName: string;
   schedule: ScheduleTable;
+  anchorId?: string;
 }
 
 export function TeamScheduleSection({
   teamName,
   schedule,
+  anchorId,
 }: TeamScheduleSectionProps) {
   const hasSchedule =
     schedule.entries.length > 0 && schedule.columns.length > 0;
 
   return (
-    <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/70 transition-colors">
+    <section
+      id={anchorId ?? "team-schedule"}
+      className="py-16 bg-gray-50 dark:bg-viking-charcoal/70 transition-colors"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-100 mb-3">

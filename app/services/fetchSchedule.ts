@@ -1,6 +1,6 @@
 import { fetchSheetRows } from "./googleSheets";
 
-const SCHEDULE_RANGE = "A70:G90";
+export const SCHEDULE_RANGE = "A101:G130";
 const SCHEDULE_HEADER_KEYWORDS = [
   "date",
   "opponent",

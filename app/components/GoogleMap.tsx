@@ -9,6 +9,7 @@ type GoogleMapProps = {
   apiKey?: string;
   locations: LocationInput[];
   height?: number | string;
+  initialSelectedId?: string;
 };
 
 declare global {
@@ -17,10 +18,80 @@ declare global {
   }
 }
 
+let googleMapsScriptLoadingPromise: Promise<void> | null = null;
+
+function loadGoogleMapsScript(apiKey: string): Promise<void> {
+  if (typeof window === "undefined") {
+    return Promise.resolve();
+  }
+
+  if (window.google?.maps) {
+    return Promise.resolve();
+  }
+
+  if (googleMapsScriptLoadingPromise) {
+    return googleMapsScriptLoadingPromise;
+  }
+
+  const existingScript = document.querySelector<HTMLScriptElement>(
+    'script[data-google-maps-loader="true"]'
+  );
+
+  if (existingScript) {
+    googleMapsScriptLoadingPromise = new Promise((resolve, reject) => {
+      const handleLoad = () => {
+        existingScript.setAttribute("data-loaded", "true");
+        resolve();
+      };
+      const handleError = () => {
+        googleMapsScriptLoadingPromise = null;
+        reject(new Error("Failed to load Google Maps script."));
+      };
+
+      if (existingScript.getAttribute("data-loaded") === "true") {
+        handleLoad();
+        return;
+      }
+
+      existingScript.addEventListener("load", handleLoad, { once: true });
+      existingScript.addEventListener("error", handleError, { once: true });
+    });
+
+    return googleMapsScriptLoadingPromise;
+  }
+
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+  script.async = true;
+  script.defer = true;
+  script.setAttribute("data-google-maps-loader", "true");
+
+  googleMapsScriptLoadingPromise = new Promise((resolve, reject) => {
+    const handleLoad = () => {
+      script.setAttribute("data-loaded", "true");
+      resolve();
+    };
+    const handleError = () => {
+      script.removeEventListener("load", handleLoad);
+      script.removeEventListener("error", handleError);
+      script.remove();
+      googleMapsScriptLoadingPromise = null;
+      reject(new Error("Failed to load Google Maps script."));
+    };
+
+    script.addEventListener("load", handleLoad, { once: true });
+    script.addEventListener("error", handleError, { once: true });
+  });
+
+  document.head.appendChild(script);
+  return googleMapsScriptLoadingPromise;
+}
+
 export default function GoogleMap({
   apiKey,
   locations,
   height = 384,
+  initialSelectedId,
 }: GoogleMapProps) {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const mapRef = React.useRef<any>(null);
@@ -28,39 +99,79 @@ export default function GoogleMap({
   const directionsRendererRef = React.useRef<any>(null);
   const markersRef = React.useRef<any[]>([]);
   const markerByIdRef = React.useRef<Record<string, any>>({});
+  const initialSelection = React.useMemo(() => {
+    if (
+      initialSelectedId &&
+      locations.some((location) => location.id === initialSelectedId)
+    ) {
+      return initialSelectedId;
+    }
+    return locations[0]?.id ?? null;
+  }, [initialSelectedId, locations]);
+
   const [selectedId, setSelectedId] = React.useState<string | null>(
-    locations[0]?.id ?? null
+    initialSelection
   );
   const [userPos, setUserPos] = React.useState<{
     lat: number;
     lng: number;
   } | null>(null);
   const [status, setStatus] = React.useState<string>("");
+  const [isScriptReady, setIsScriptReady] = React.useState(false);
 
   const publicKey = apiKey || process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
+  React.useEffect(() => {
+    if (!initialSelectedId) return;
+    const exists = locations.some(
+      (location) => location.id === initialSelectedId
+    );
+    if (exists && selectedId !== initialSelectedId) {
+      setSelectedId(initialSelectedId);
+    }
+  }, [initialSelectedId, locations, selectedId]);
+
+  React.useEffect(() => {
+    if (!selectedId && locations.length) {
+      setSelectedId(locations[0].id);
+    } else if (
+      selectedId &&
+      !locations.some((location) => location.id === selectedId)
+    ) {
+      setSelectedId(locations[0]?.id ?? null);
+    }
+  }, [locations, selectedId]);
+
   // Load Google Maps script once
   React.useEffect(() => {
-    if (window.google?.maps) return; // already loaded
     if (!publicKey) {
       setStatus(
         "Missing Google Maps API key. Set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY."
       );
       return;
     }
-    const src = `https://maps.googleapis.com/maps/api/js?key=${publicKey}&libraries=places`;
-    const script = document.createElement("script");
-    script.src = src;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => initMap();
-    script.onerror = () => setStatus("Failed to load Google Maps script.");
-    document.head.appendChild(script);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    let isCancelled = false;
+
+    loadGoogleMapsScript(publicKey)
+      .then(() => {
+        if (!isCancelled) {
+          setIsScriptReady(true);
+        }
+      })
+      .catch((error) => {
+        if (!isCancelled) {
+          setStatus(error.message || "Failed to load Google Maps script.");
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
   }, [publicKey]);
 
   // Initialize map and content
-  const initMap = React.useCallback(async () => {
+  const initMap = React.useCallback(() => {
     if (!containerRef.current || !window.google?.maps) return;
     const center = { lat: 59.927, lng: 10.735 }; // Oslo approx
     mapRef.current = new window.google.maps.Map(containerRef.current, {
@@ -75,12 +186,7 @@ export default function GoogleMap({
       suppressMarkers: false,
     });
     directionsRendererRef.current.setMap(mapRef.current);
-
-    // Add markers
-    await plotLocations(locations);
-    // Fit bounds to markers if any
-    fitBoundsToMarkers();
-  }, [locations]);
+  }, []);
 
   const geocodeIfNeeded = React.useCallback(
     async (
@@ -193,7 +299,7 @@ export default function GoogleMap({
         }
       }
     );
-  }, [locations, selectedId, userPos]);
+  }, [selectedId, userPos]);
 
   // Pan/zoom when dropdown selection changes
   React.useEffect(() => {
@@ -225,12 +331,25 @@ export default function GoogleMap({
 
   // Re-init if locations change after script ready
   React.useEffect(() => {
-    if (window.google?.maps && containerRef.current && !mapRef.current) {
-      initMap();
-    } else if (window.google?.maps && mapRef.current) {
-      plotLocations(locations).then(fitBoundsToMarkers);
+    if (!isScriptReady || !window.google?.maps || !containerRef.current) {
+      return;
     }
-  }, [locations, initMap, plotLocations, fitBoundsToMarkers]);
+
+    if (!mapRef.current) {
+      initMap();
+    }
+
+    if (mapRef.current) {
+      plotLocations(locations)
+        .then(() => {
+          fitBoundsToMarkers();
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.warn(error);
+        });
+    }
+  }, [isScriptReady, locations, initMap, plotLocations, fitBoundsToMarkers]);
 
   return (
     <div className="space-y-3">

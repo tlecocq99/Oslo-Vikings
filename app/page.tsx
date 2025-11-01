@@ -1,8 +1,7 @@
-"use client";
-import type { Game } from "@/app/types/game";
+import type { UpcomingEvent } from "@/app/types/event";
 import Navigation from "./components/Navigation";
 import SplashScreen from "./components/SplashScreen";
-import UpcomingGamesBar from "./components/UpcomingGamesBar";
+import UpcomingEventsBar from "./components/UpcomingEventsBar";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import NewsCard from "./components/NewsCard";
@@ -11,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight, Trophy, Users, Calendar } from "lucide-react";
 import { Teko } from "next/font/google";
+import { fetchUpcomingEvents } from "./services/fetchUpcomingEvents";
 
 const teko = Teko({ subsets: ["latin"] });
 
@@ -24,7 +24,85 @@ function normalizeGameStatus(
   return "upcoming"; // Default fallback
 }
 
-export default function Home() {
+function buildFallbackEvents(): UpcomingEvent[] {
+  return [
+    {
+      id: "fallback-game-1",
+      title: "Oslo Vikings vs Bergen Bears",
+      category: "Game",
+      team: "Main",
+      date: "2025-09-07",
+      time: "15:00",
+      startsAt: "2025-09-07T15:00:00Z",
+      location: "Viking Stadium, Oslo",
+      description: "Season opener at home for the Senior Elite squad.",
+      isGame: true,
+      homeTeam: "Oslo Vikings",
+      awayTeam: "Bergen Bears",
+      sport: "Football",
+    },
+    {
+      id: "fallback-game-2",
+      title: "Trondheim Thunder vs Oslo Vikings",
+      category: "Game",
+      team: "Main",
+      date: "2025-09-14",
+      time: "14:00",
+      startsAt: "2025-09-14T14:00:00Z",
+      location: "Thunder Field, Trondheim",
+      description: "First away trip of the season.",
+      isGame: true,
+      homeTeam: "Trondheim Thunder",
+      awayTeam: "Oslo Vikings",
+      sport: "Football",
+    },
+    {
+      id: "fallback-game-3",
+      title: "Oslo Vikings D2 vs Stavanger Stallions D2",
+      category: "Game",
+      team: "D2",
+      date: "2025-09-21",
+      time: "16:00",
+      startsAt: "2025-09-21T16:00:00Z",
+      location: "Viking Stadium, Oslo",
+      description: "Division 2 showdown at home.",
+      isGame: true,
+      homeTeam: "Oslo Vikings D2",
+      awayTeam: "Stavanger Stallions D2",
+      sport: "Football",
+    },
+    {
+      id: "fallback-event-1",
+      title: "Club Community Day",
+      category: "Community",
+      team: "All",
+      date: "2025-09-28",
+      time: "11:00",
+      startsAt: "2025-09-28T11:00:00Z",
+      location: "Viking Stadium, Oslo",
+      description:
+        "Family-friendly events, player meet & greet, and merchandise fair.",
+      isGame: false,
+    },
+    {
+      id: "fallback-game-4",
+      title: "Oslo Vikings U17 vs Kristiansand Knights U17",
+      category: "Game",
+      team: "U17",
+      date: "2025-10-05",
+      time: "13:00",
+      startsAt: "2025-10-05T13:00:00Z",
+      location: "Knights Arena, Kristiansand",
+      description: "Big matchup for the U17 squad.",
+      isGame: true,
+      homeTeam: "Kristiansand Knights U17",
+      awayTeam: "Oslo Vikings U17",
+      sport: "Football",
+    },
+  ];
+}
+
+export default async function Home() {
   const heroData = {
     component: "hero",
     title: "Oslo Vikings",
@@ -67,59 +145,9 @@ export default function Home() {
     status: normalizeGameStatus("upcoming"), // Safely convert string to literal type
   };
 
-  // Example upcoming games data
-  const upcomingGames: Game[] = [
-    {
-      id: "1",
-      date: "2025-09-07",
-      time: "15:00",
-      home_team: "Oslo Vikings",
-      away_team: "Bergen Bears",
-      location: "Viking Stadium, Oslo",
-      sport: "Football",
-      team: "Main",
-    },
-    {
-      id: "2",
-      date: "2025-09-14",
-      time: "14:00",
-      home_team: "Trondheim Thunder",
-      away_team: "Oslo Vikings",
-      location: "Thunder Field, Trondheim",
-      sport: "Football",
-      team: "Main",
-    },
-    {
-      id: "3",
-      date: "2025-09-21",
-      time: "16:00",
-      home_team: "Oslo Vikings D2",
-      away_team: "Stavanger Stallions D2",
-      location: "Viking Stadium, Oslo",
-      sport: "Football",
-      team: "D2",
-    },
-    {
-      id: "4",
-      date: "2025-09-28",
-      time: "13:00",
-      home_team: "Oslo Vikings U17",
-      away_team: "Kristiansand Knights U17",
-      location: "Knights Arena, Kristiansand",
-      sport: "Football",
-      team: "U17",
-    },
-    {
-      id: "5",
-      date: "2025-10-05",
-      time: "12:00",
-      home_team: "Oslo Vikings",
-      away_team: "Stavanger Stallions",
-      location: "Viking Stadium, Oslo",
-      sport: "Football",
-      team: "Main",
-    },
-  ];
+  const sheetEvents = await fetchUpcomingEvents();
+  const upcomingEvents =
+    sheetEvents.length > 0 ? sheetEvents : buildFallbackEvents();
 
   const sponsors = [
     {
@@ -162,7 +190,7 @@ export default function Home() {
       <Navigation />
 
       {/* Upcoming Games Bar */}
-      <UpcomingGamesBar games={upcomingGames} />
+      <UpcomingEventsBar events={upcomingEvents} />
 
       {/* Hero Section */}
       <Hero {...heroData} />

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense, useEffect, useRef } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import ContactForm from "../components/ContactForm";
@@ -7,11 +8,72 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 const GoogleMap = dynamic(() => import("@/app/components/GoogleMap"), {
   ssr: false,
 });
 
-export default function ContactPage() {
+const MAP_LOCATIONS = [
+  {
+    id: "stadium",
+    title: "Viking Stadium (Frogner Stadium)",
+    address: "Middelthuns gate 26, 0368 Oslo, Norway",
+  },
+  {
+    id: "office",
+    title: "Head Office",
+    address: "Mølleparken 4, 0459 Oslo, Norway",
+  },
+  {
+    id: "gym",
+    title: "Wang Gym",
+    address: "Kronprinsens gate 5, 0251 Oslo, Norway",
+  },
+  {
+    id: "nih-field",
+    title: "NIH Kunstgressbane",
+    address: "Sognsveien 220, 0863 Oslo, Norway",
+  },
+];
+
+function ContactPageContent() {
+  const searchParams = useSearchParams();
+  const requestedLocation = searchParams.get("location");
+  const initialLocationId = requestedLocation
+    ? MAP_LOCATIONS.find(
+        (loc) => loc.id.toLowerCase() === requestedLocation.toLowerCase()
+      )?.id
+    : undefined;
+  const mapSectionRef = useRef<HTMLElement | null>(null);
+  const hasScrolledRef = useRef(false);
+
+  useEffect(() => {
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    const shouldScrollToMap =
+      !hasScrolledRef.current &&
+      (Boolean(initialLocationId) || hash.replace("#", "") === "map");
+
+    if (!shouldScrollToMap || !mapSectionRef.current) {
+      return;
+    }
+
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    const timeout = window.setTimeout(() => {
+      mapSectionRef.current?.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+      hasScrolledRef.current = true;
+    }, 150);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [initialLocationId, requestedLocation]);
+
   return (
     <>
       <Navigation />
@@ -182,7 +244,11 @@ export default function ContactPage() {
         </section>
 
         {/* Map Section */}
-        <section className="py-16 bg-gray-100 dark:bg-viking-charcoal/60 transition-colors">
+        <section
+          id="map"
+          ref={mapSectionRef}
+          className="py-16 bg-gray-100 dark:bg-viking-charcoal/60 transition-colors"
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
@@ -193,24 +259,9 @@ export default function ContactPage() {
               </p>
             </div>
             <GoogleMap
-              locations={[
-                {
-                  id: "stadium",
-                  title: "Viking Stadium (Frogner Stadium)",
-                  address: "Middelthuns gate 26, 0368 Oslo, Norway",
-                },
-                {
-                  id: "office",
-                  title: "Head Office",
-                  address: "Mølleparken 4, 0459 Oslo, Norway",
-                },
-                {
-                  id: "gym",
-                  title: "Wang Gym",
-                  address: "Kronprinsens gate 5, 0251 Oslo, Norway",
-                },
-              ]}
+              locations={MAP_LOCATIONS}
               height={480}
+              initialSelectedId={initialLocationId}
             />
           </div>
         </section>
@@ -218,5 +269,13 @@ export default function ContactPage() {
 
       <Footer />
     </>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" aria-hidden="true" />}>
+      <ContactPageContent />
+    </Suspense>
   );
 }

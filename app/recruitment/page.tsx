@@ -113,7 +113,12 @@ export default function RecruitmentPage() {
                 size="lg"
                 className="bg-viking-gold hover:bg-viking-gold-dark text-viking-charcoal font-semibold px-10 py-6 text-lg"
               >
-                <Link href="https://forms.gle/example">Open Interest Form</Link>
+                <Link
+                  href="https://club.spond.com/landing/signup/ov/form/0F5B063376B34A10A885A137A46F817B"
+                  target="_blank"
+                >
+                  Open Interest Form
+                </Link>
               </Button>
             </div>
 

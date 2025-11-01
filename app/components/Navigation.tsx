@@ -31,7 +31,7 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="shadow-lg sticky top-0 z-50 bg-white dark:bg-viking-charcoal/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-viking-charcoal/70 transition-colors">
+    <nav className="shadow-lg sticky top-0 z-[100] w-full overflow-visible bg-white dark:bg-viking-charcoal/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-viking-charcoal/70 transition-colors">
       <div className="container-fluid flex relative h-24 items-center px-4 sm:px-6 lg:px-12">
         {/* Logo on the far left */}
         <Link href="/" className="flex items-center h-full group mr-4">
@@ -86,8 +86,8 @@ export default function Navigation() {
                   </Link>
 
                   {isTeam && (
-                    <div className="pointer-events-none absolute left-1/2 top-full z-40 -translate-x-1/2 translate-y-2 opacity-0 invisible group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto transition-all duration-200 ease-out">
-                      <div className="mt-4 w-56 rounded-xl bg-white dark:bg-viking-charcoal shadow-2xl ring-1 ring-black/5 border border-viking-red/20 dark:border-viking-red-dark/20 p-2 space-y-1">
+                    <div className="pointer-events-none absolute left-1/2 top-full z-[70] -translate-x-1/2 translate-y-1 opacity-0 invisible group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto transition-all duration-200 ease-out">
+                      <div className="mt-1 w-56 rounded-xl bg-white dark:bg-viking-charcoal shadow-2xl ring-1 ring-black/5 border border-viking-red/20 dark:border-viking-red-dark/20 p-2 space-y-1">
                         {teamLinks.map((team) => (
                           <Link
                             key={team.name}

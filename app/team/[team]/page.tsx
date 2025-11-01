@@ -1,9 +1,12 @@
 import Navigation from "@/app/components/Navigation";
 import Footer from "@/app/components/Footer";
 import RosterSwitcher from "@/app/components/RosterSwitcher";
+import { TeamStaffSection } from "@/app/components/TeamStaffSection";
 import { TeamScheduleSection } from "@/app/components/TeamScheduleSection";
+import { Button } from "@/components/ui/button";
 import { fetchRoster } from "@/app/services/fetchRoster";
 import { fetchSchedule } from "@/app/services/fetchSchedule";
+import { fetchStaffForTeam } from "@/app/services/fetchStaff";
 import { getTeamBySlug, TEAM_CONFIG, type TeamSlug } from "../team-config";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -47,14 +50,16 @@ export async function generateMetadata({
 export default async function TeamDetailPage({ params }: TeamPageProps) {
   const { team: teamSlug } = await params;
   const team = getTeamBySlug(teamSlug);
+  const scheduleAnchorId = "team-schedule";
 
   if (!team) {
     notFound();
   }
 
-  const [players, schedule] = await Promise.all([
+  const [players, schedule, staff] = await Promise.all([
     fetchRoster(team.sheetTab),
     fetchSchedule(team.sheetTab),
+    fetchStaffForTeam(team),
   ]);
   const rosters = { [team.name]: players } as const;
 
@@ -68,8 +73,27 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
           backgroundImage={team.heroImage}
           tagline={team.heroTagline}
         />
+        <nav
+          aria-label="Team shortcuts"
+          className="bg-white/90 dark:bg-viking-charcoal/75 border-b border-gray-200/60 dark:border-gray-700/60"
+        >
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-center">
+            <Button
+              asChild
+              variant="secondary"
+              className="uppercase tracking-wide font-semibold text-sm"
+            >
+              <a href={`#${scheduleAnchorId}`}>Jump to Schedule</a>
+            </Button>
+          </div>
+        </nav>
+        <TeamStaffSection teamName={team.name} staff={staff} />
         <RosterSwitcher rosters={rosters} />
-        <TeamScheduleSection teamName={team.name} schedule={schedule} />
+        <TeamScheduleSection
+          teamName={team.name}
+          schedule={schedule}
+          anchorId={scheduleAnchorId}
+        />
       </main>
       <Footer />
     </>

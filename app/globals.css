@@ -48,12 +48,19 @@
 }
 
 @layer base {
+  html {
+    @apply h-full w-full overflow-x-hidden;
+  }
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground max-w-full overflow-x-hidden;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  main {
+    @apply w-full overflow-x-hidden;
   }
 
   .hero-text-shadow {

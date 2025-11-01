@@ -10,7 +10,7 @@ Catch the latest roster, schedule, and club news at **[oslovikings.vercel.app](h
 
 - **Animated Rosters** – Multi-team roster switcher with side filters, grid/list toggles, and IntersectionObserver-powered reveal animations that keep cards evenly sized across breakpoints.
 - **Real-Time Standings** – Serverless API route scrapes Superserien standings on a timed cache and pipes results into a sortable, refreshable table with team logos.
-- **Schedule Hub** – Tabs for upcoming fixtures and completed results, reusable `GameCard` UI, and a marquee-style `UpcomingGamesBar` on the homepage.
+- **Schedule & Events Hub** – Tabs for upcoming fixtures and completed results, reusable `GameCard` UI, and a marquee-style `Upcoming Events` bar blending team games with club-wide happenings.
 - **News Center with Search** – Category filters, live search, featured story spotlight, and responsive news grid.
 - **Interactive Contact Page** – Validated contact form with success states plus a dynamically loaded Google Map displaying key club locations.
 - **Recruitment Funnel** – Benefits grid, anchored CTAs, and an accordion FAQ to drive prospective players to interest forms.
@@ -31,14 +31,15 @@ Catch the latest roster, schedule, and club news at **[oslovikings.vercel.app](h
 
 Set the following secrets in your hosting platform to enable live data integrations:
 
-| Variable                                                       | Purpose                                                                                   |
-| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `SHEET_ID`                                                     | Google Sheet ID that stores roster and schedule data.                                     |
-| `SHEET_NAME` / `SHEET_RANGE` (optional)                        | Override defaults for sheet tab name and value range.                                     |
-| `SERVICE_ACCOUNT_JSON`                                         | Service-account JSON blob for Google Sheets access (used by `lib/googleSheets.ts`).       |
-| `GOOGLE_SHEET_ID`, `GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY` | Alternate credential set used by `app/services/googleSheets.ts` for server-only fetching. |
-| `CACHE_TTL` (optional)                                         | Overrides the cached lifetime (seconds) for Google Sheets fetches.                        |
-| `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`                              | Enables the interactive map on the contact page.                                          |
+| Variable                                                       | Purpose                                                                                                               |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `SHEET_ID`                                                     | Google Sheet ID that stores roster and schedule data.                                                                 |
+| `SHEET_NAME` / `SHEET_RANGE` (optional)                        | Override defaults for sheet tab name and value range.                                                                 |
+| `SERVICE_ACCOUNT_JSON`                                         | Service-account JSON blob for Google Sheets access (used by `lib/googleSheets.ts`).                                   |
+| `GOOGLE_SHEET_ID`, `GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY` | Alternate credential set used by `app/services/googleSheets.ts` for server-only fetching.                             |
+| `GOOGLE_EVENTS_SHEET` / `GOOGLE_EVENTS_RANGE` (optional)       | Configure the tab name and range for the unified upcoming events feed consumed by the homepage bar and `/api/events`. |
+| `CACHE_TTL` (optional)                                         | Overrides the cached lifetime (seconds) for Google Sheets fetches.                                                    |
+| `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`                              | Enables the interactive map on the contact page.                                                                      |
 
 > Tip: store secrets in Vercel project settings or your preferred secret manager; never commit them to the repository.
 
@@ -135,6 +136,15 @@ Roster, schedule, and several homepage modules are populated from shared Google 
 - Smart header detection maps sheet columns into schedule table keys.
 - Supports upcoming and completed games (scores become available fields when provided).
 - Entries surface in page tabs and `TeamScheduleSection` modules.
+- Rows in each team tab also power the homepage `UpcomingEventsBar` (only future dates are shown automatically).
+
+#### Upcoming Events (`UpcomingEvents` tab)
+
+- Provide a header row with columns such as `Date`, `Time`, `Title`, `Team`, `Type`, `Location`, `Description`, `Home Team`, and `Away Team`.
+- Rows are parsed into unified events that power the homepage bar and `/api/events` endpoint.
+- Set the `Team` value to `All` for club-wide happenings so they remain visible regardless of the team filter.
+- Mark the `Type` as `Game`, `Match`, or include both `Home Team` and `Away Team` to render fixtures with versus styling.
+- Avoid duplicating regular season games here—team schedules already sync into the bar. Use this tab for club-wide events, clinics, fundraisers, and other non-schedule highlights.
 
 #### News Items & Static Content
 

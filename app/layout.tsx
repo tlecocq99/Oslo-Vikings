@@ -98,7 +98,7 @@ export default function RootLayout({
       <link rel="icon" href="/images/logo.png" />
       <body
         suppressHydrationWarning
-        className={`${inter.className} antialiased transition-colors duration-300`}
+        className={`${inter.className} antialiased transition-colors duration-300 max-w-full overflow-x-hidden`}
       >
         <ThemeProvider
           attribute="class"

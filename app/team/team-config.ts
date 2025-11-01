@@ -13,6 +13,7 @@ export interface TeamInfo {
   description: string;
   heroImage?: string;
   heroTagline?: string;
+  staffRange?: string;
 }
 
 const DEFAULT_HERO_IMAGE = "/images/backgrounds/teamClose.avif";
@@ -23,6 +24,7 @@ export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
     slug: "senior-elite",
     name: "Senior Elite",
     sheetTab: "Senior Elite",
+    staffRange: "A13:D24",
     description:
       "The top-tier Oslo Vikings squad competing for national championships in Norway.",
     heroImage: DEFAULT_HERO_IMAGE,
@@ -32,6 +34,7 @@ export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
     slug: "senior-d2",
     name: "Senior D2",
     sheetTab: "Senior D2",
+    staffRange: "A27:D36",
     description:
       "Developing talent and providing competitive opportunities in Norway's Division 2 league.",
     heroImage: DEFAULT_HERO_IMAGE,
@@ -41,6 +44,7 @@ export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
     slug: "u17",
     name: "U17",
     sheetTab: "U17",
+    staffRange: "A39:D47",
     description:
       "Elite youth program cultivating the next generation of Oslo Vikings standouts.",
     heroImage: DEFAULT_HERO_IMAGE,
@@ -50,6 +54,7 @@ export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
     slug: "u14",
     name: "U14",
     sheetTab: "U14",
+    staffRange: "A51:D58",
     description:
       "Early development and fundamentals with a focus on fun, teamwork, and skill building.",
     heroImage: DEFAULT_HERO_IMAGE,

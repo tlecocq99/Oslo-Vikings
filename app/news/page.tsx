@@ -8,86 +8,86 @@ import SearchAndFilter from "../components/SearchAndFilter";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 
+const NEWS_ARTICLES = [
+  {
+    component: "news_card",
+    title: "Vikings Dominate Season Opener",
+    excerpt:
+      "Oslo Vikings secured a commanding 28-14 victory in their season opener against Bergen Bears with stellar performances from both offense and defense.",
+    author: "Sports Desk",
+    date: "2025-01-15",
+    category: "Game Recap",
+    slug: "vikings-dominate-season-opener",
+  },
+  {
+    component: "news_card",
+    title: "New Head Coach Brings Championship Experience",
+    excerpt:
+      "Former NFL assistant coach Stein Eriksen joins Oslo Vikings with plans to elevate the program to new heights with his proven championship methodology.",
+    author: "Team Management",
+    date: "2025-01-10",
+    category: "Team News",
+    slug: "new-head-coach",
+  },
+  {
+    component: "news_card",
+    title: "Training Camp Highlights: Team Looks Sharp",
+    excerpt:
+      "Pre-season training camp showcased improved chemistry and new offensive strategies that promise an exciting 2025 season ahead.",
+    author: "Coach Staff",
+    date: "2025-01-05",
+    category: "Training",
+    slug: "training-camp-highlights",
+  },
+  {
+    component: "news_card",
+    title: "Community Outreach: Vikings Visit Local Schools",
+    excerpt:
+      "Team members visited Oslo elementary schools to promote sports participation and healthy lifestyles among Norwegian youth.",
+    author: "Community Relations",
+    date: "2025-01-03",
+    category: "Community",
+    slug: "community-outreach",
+  },
+  {
+    component: "news_card",
+    title: "Draft Day Success: Three New Rookies Join Squad",
+    excerpt:
+      "Oslo Vikings added three promising rookies to the roster, strengthening both offensive and defensive units for the upcoming season.",
+    author: "Draft Analyst",
+    date: "2024-12-20",
+    category: "Draft",
+    slug: "draft-day-success",
+  },
+  {
+    component: "news_card",
+    title: "Stadium Renovation Complete: New Fan Experience",
+    excerpt:
+      "Viking Stadium unveils enhanced facilities including improved seating, concessions, and state-of-the-art sound system for better game day experience.",
+    author: "Facilities Team",
+    date: "2024-12-15",
+    category: "Stadium",
+    slug: "stadium-renovation",
+  },
+];
+
+const CATEGORIES = [
+  "All",
+  "Game Recap",
+  "Team News",
+  "Training",
+  "Community",
+  "Draft",
+  "Stadium",
+];
+
 export default function NewsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const newsArticles = [
-    {
-      component: "news_card",
-      title: "Vikings Dominate Season Opener",
-      excerpt:
-        "Oslo Vikings secured a commanding 28-14 victory in their season opener against Bergen Bears with stellar performances from both offense and defense.",
-      author: "Sports Desk",
-      date: "2025-01-15",
-      category: "Game Recap",
-      slug: "vikings-dominate-season-opener",
-    },
-    {
-      component: "news_card",
-      title: "New Head Coach Brings Championship Experience",
-      excerpt:
-        "Former NFL assistant coach Stein Eriksen joins Oslo Vikings with plans to elevate the program to new heights with his proven championship methodology.",
-      author: "Team Management",
-      date: "2025-01-10",
-      category: "Team News",
-      slug: "new-head-coach",
-    },
-    {
-      component: "news_card",
-      title: "Training Camp Highlights: Team Looks Sharp",
-      excerpt:
-        "Pre-season training camp showcased improved chemistry and new offensive strategies that promise an exciting 2025 season ahead.",
-      author: "Coach Staff",
-      date: "2025-01-05",
-      category: "Training",
-      slug: "training-camp-highlights",
-    },
-    {
-      component: "news_card",
-      title: "Community Outreach: Vikings Visit Local Schools",
-      excerpt:
-        "Team members visited Oslo elementary schools to promote sports participation and healthy lifestyles among Norwegian youth.",
-      author: "Community Relations",
-      date: "2025-01-03",
-      category: "Community",
-      slug: "community-outreach",
-    },
-    {
-      component: "news_card",
-      title: "Draft Day Success: Three New Rookies Join Squad",
-      excerpt:
-        "Oslo Vikings added three promising rookies to the roster, strengthening both offensive and defensive units for the upcoming season.",
-      author: "Draft Analyst",
-      date: "2024-12-20",
-      category: "Draft",
-      slug: "draft-day-success",
-    },
-    {
-      component: "news_card",
-      title: "Stadium Renovation Complete: New Fan Experience",
-      excerpt:
-        "Viking Stadium unveils enhanced facilities including improved seating, concessions, and state-of-the-art sound system for better game day experience.",
-      author: "Facilities Team",
-      date: "2024-12-15",
-      category: "Stadium",
-      slug: "stadium-renovation",
-    },
-  ];
-
-  const categories = [
-    "All",
-    "Game Recap",
-    "Team News",
-    "Training",
-    "Community",
-    "Draft",
-    "Stadium",
-  ];
-
   // Filter and search logic
   const filteredArticles = useMemo(() => {
-    let filtered = newsArticles;
+    let filtered = NEWS_ARTICLES;
 
     // Filter by category
     if (activeCategory !== "All") {
@@ -134,7 +134,7 @@ export default function NewsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 dark:text-gray-200">
             {/* Search and Filter */}
             <SearchAndFilter
-              categories={categories}
+              categories={CATEGORIES}
               onSearch={setSearchQuery}
               onFilter={setActiveCategory}
               activeCategory={activeCategory}
