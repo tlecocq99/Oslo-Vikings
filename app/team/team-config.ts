@@ -54,7 +54,7 @@ export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
     slug: "u14",
     name: "U14",
     sheetTab: "U14",
-    staffRange: "A51:D58",
+    staffRange: "A50:D55",
     description:
       "Early development and fundamentals with a focus on fun, teamwork, and skill building.",
     heroImage: DEFAULT_HERO_IMAGE,
@@ -64,6 +64,7 @@ export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
     slug: "flag-football",
     name: "Flag Football",
     sheetTab: "Flag",
+    staffRange: "A58:D64",
     description:
       "Fast-paced flag football squads introducing players to the sport in a non-contact format.",
     heroImage: DEFAULT_HERO_IMAGE,
