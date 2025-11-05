@@ -6,11 +6,13 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import NewsCard from "./components/NewsCard";
 import GameCard from "./components/GameCard";
+import PartnersCarousel from "./components/PartnersCarousel";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight, Trophy, Users, Calendar } from "lucide-react";
 import { Teko } from "next/font/google";
 import { fetchUpcomingEvents } from "./services/fetchUpcomingEvents";
+import type { Partner } from "./types/partner";
 
 const teko = Teko({ subsets: ["latin"] });
 
@@ -149,38 +151,62 @@ export default async function Home() {
   const upcomingEvents =
     sheetEvents.length > 0 ? sheetEvents : buildFallbackEvents();
 
-  const sponsors = [
+  const partners: Partner[] = [
     {
-      name: "Nordic Energy Group",
-      tier: "Premier Partner",
-      description: "Powering every kickoff with sustainable energy solutions.",
-      website: "https://example.com/nordic-energy",
-      initials: "NE",
-      accent: "from-viking-red to-viking-gold",
+      name: "RevisionsBureauet AS",
+      description:
+        "RevisionsBureauet AS is more than just your accountant. That is their motto, and they have been much more for the Oslo Vikings. They are our biggest, most generous supporter and their services are unmatched.",
+      website: "https://revisionsbureauet.no",
+      logoSrc: "/images/sponsors/RBlogo.svg",
+      logoAlt: "RevisionsBureauet AS logo",
     },
     {
-      name: "Viking Financial",
-      tier: "Gold Sponsor",
-      description: "Supporting our athletes with smart financial planning.",
-      website: "https://example.com/viking-financial",
-      initials: "VF",
-      accent: "from-viking-gold to-amber-400",
+      name: "SpareBank 1 Østlandet",
+      description:
+        "Sparebank 1 Østlandet is Norway's fourth largest savings bank, but they are much more with their work in the community. We love collaborating at their Verdens Kuleste Dag, and appreciate their generous partnership.",
+      website: "https://www.sparebank1.no/nb/ostlandet/privat.html",
+      logoSrc: "/images/sponsors/sparebank1Logo.svg",
+      logoAlt: "SpareBank 1 Østlandet logo",
     },
     {
-      name: "Oslo Sports Medicine",
-      tier: "Official Medical Partner",
-      description: "Keeping the roster ready for battle all season long.",
-      website: "https://example.com/oslo-sports-medicine",
-      initials: "OS",
-      accent: "from-sky-500 to-blue-600",
+      name: "Wang Toppidrett",
+      description:
+        "Founded in 1907, WANG is a leading sports and academic institution. They have been a crucial service partner of the Oslo Vikings for over a decade, providing access to their best in class gym facility.",
+      website: "https://www.wang.no/",
+      logoSrc: "/images/sponsors/wangLogo.svg",
+      logoAlt: "Wang Toppidrett logo",
     },
     {
-      name: "FjordTech Labs",
-      tier: "Technology Partner",
-      description: "Delivering cutting-edge analytics for performance gains.",
-      website: "https://example.com/fjordtech",
-      initials: "FT",
-      accent: "from-emerald-500 to-teal-500",
+      name: "Hopstock Helse",
+      description:
+        "Hopstock Helse is a Norwegian health clinic network offering physiotherapy, chiropractic care, osteopathy, and naprapathy, with additional services like personal training, massage, ultrasound diagnostics, and shockwave treatment.",
+      website: "https://hopstockhelse.no/",
+      logoSrc: "/images/sponsors/hopstockhelseLogo.png",
+      logoAlt: "Hopstock Helse logo",
+    },
+    {
+      name: "TanTan Barber",
+      description:
+        "TanTan Barber is a highly rated barber in central Oslo, and is the official barber of the Oslo Vikings.",
+      website: "https://www.tantanbarbers.no/",
+      logoSrc: "/images/sponsors/tantanLogo.webp",
+      logoAlt: "TanTan Barber logo",
+    },
+    {
+      name: "&Partners",
+      description:
+        "&Partners turns local insight into real value, and the Oslo Vikings are proud to have them as an official partner.",
+      website: "https://www.partners.no/",
+      logoSrc: "/images/sponsors/schalaPartnersLogo.svg",
+      logoAlt: "Schala & Partners logo",
+    },
+    {
+      name: "Al-Asali Rørfix",
+      description:
+        "Keeping Oslo flowing strong — your hometown plumber and proud sponsor of the Oslo Vikings! Strength, reliability, and service you can trust.",
+      website: "",
+      logoSrc: "/images/sponsors/al-asaliLogo.png",
+      logoAlt: "Al-Asali Rørfix logo",
     },
   ];
 
@@ -233,6 +259,23 @@ export default async function Home() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="py-16 bg-gray-100 dark:bg-viking-charcoal/90 transition-colors">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-viking-charcoal dark:text-white mb-4">
+              Partners
+            </h2>
+            <p className="text-gray-600 dark:text-gray-200 max-w-2xl mx-auto">
+              Proud to collaborate with organizations that strengthen Oslo
+              Vikings football on and off the field.
+            </p>
+          </div>
+
+          <PartnersCarousel partners={partners} />
         </div>
       </section>
 
@@ -291,59 +334,6 @@ export default async function Home() {
                 All News <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Sponsors Section */}
-      <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
-              Proud Sponsors
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              We’re grateful for the partners who help grow Oslo Vikings
-              football. Interested in joining this roster? Reach out to our
-              partnerships team.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {sponsors.map((sponsor) => (
-              <div
-                key={sponsor.name}
-                className="rounded-2xl border border-gray-200/70 dark:border-white/10 bg-white/90 dark:bg-viking-charcoal/60 backdrop-blur-sm p-6 shadow-sm hover:shadow-lg transition-shadow"
-              >
-                <div className="flex flex-col h-full">
-                  <div
-                    className={`w-16 h-16 rounded-full bg-gradient-to-br ${sponsor.accent} flex items-center justify-center text-white text-xl font-semibold mx-auto mb-4 shadow-md`}
-                  >
-                    {sponsor.initials}
-                  </div>
-                  <div className="text-center flex-1">
-                    <p className="text-sm uppercase tracking-wide text-viking-red/80 dark:text-viking-gold/80 font-semibold">
-                      {sponsor.tier}
-                    </p>
-                    <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mt-1">
-                      {sponsor.name}
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-3">
-                      {sponsor.description}
-                    </p>
-                  </div>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="mt-6 border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
-                  >
-                    <a href={sponsor.website} rel="noreferrer">
-                      Visit Site
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
