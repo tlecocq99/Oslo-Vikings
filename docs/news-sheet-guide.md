@@ -14,37 +14,37 @@ If you change the sheet name or the tab range, update the environment variables 
 
 Each row represents a single article. Header names are matched case-insensitively (e.g. `Title`, `TITLE`, or `headline` are all accepted). At minimum provide:
 
-| Purpose              | Accepted headers                          | Notes |
-|----------------------|-------------------------------------------|-------|
-| Title                | `Title`, `Headline`, `Name`                | Used as display title and default fallback for slug & image alt text. |
-| Slug (URL fragment)  | `Slug`, `URL`, `Permalink`                 | Optional—auto-generated from title if blank. Must be unique per article. |
-| Visibility / Status  | `Status`, `Visibility`, `State`            | Accepted values: `Published`, `Draft`, `Archived` (draft & archived hidden from site unless explicitly requested). |
-| Featured flag        | `Featured`, `IsFeatured`                   | `true/yes/on/1` marks the article as featured on the news page hero slot. |
-| Publish date         | `Date`, `PublishDate`, `Published`         | ISO format preferred (`YYYY-MM-DD`). Used for sorting and display. |
+| Purpose             | Accepted headers                   | Notes                                                                                                              |
+| ------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Title               | `Title`, `Headline`, `Name`        | Used as display title and default fallback for slug & image alt text.                                              |
+| Slug (URL fragment) | `Slug`, `URL`, `Permalink`         | Optional—auto-generated from title if blank. Must be unique per article.                                           |
+| Visibility / Status | `Status`, `Visibility`, `State`    | Accepted values: `Published`, `Draft`, `Archived` (draft & archived hidden from site unless explicitly requested). |
+| Featured flag       | `Featured`, `IsFeatured`           | `true/yes/on/1` marks the article as featured on the news page hero slot.                                          |
+| Publish date        | `Date`, `PublishDate`, `Published` | ISO format preferred (`YYYY-MM-DD`). Used for sorting and display.                                                 |
 
 ## Optional content columns
 
-| Purpose            | Accepted headers                                 | Details |
-|--------------------|--------------------------------------------------|---------|
-| Summary/Excerpt    | `Excerpt`, `Summary`, `Description`              | Short teaser text displayed on cards. |
-| Author/Byline      | `Author`, `Byline`                               | Optional text shown with the article. |
-| Category/Section   | `Category`, `Section`                            | Used for filtering on the news page. |
-| Detailed body      | `Content`, `Body`, `Article`                     | Future use for full article pages. |
-| Read time (minutes)| `ReadTime`, `Minutes`, `ReadTimeMinutes`         | Numeric value; rounded to the nearest minute. |
-| Tags               | `Tags`, `Keywords`                               | Comma, semicolon, or newline separated. |
-| Sources / Links    | `Sources`, `Links`, `References`                 | Comma, semicolon, or newline separated (rendered as references). |
-| Gallery images     | `Gallery`, `Images`, `ImageList`                 | Comma, semicolon, or newline separated list of image URLs (Drive links supported). |
+| Purpose             | Accepted headers                         | Details                                                                            |
+| ------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------- |
+| Summary/Excerpt     | `Excerpt`, `Summary`, `Description`      | Short teaser text displayed on cards.                                              |
+| Author/Byline       | `Author`, `Byline`                       | Optional text shown with the article.                                              |
+| Category/Section    | `Category`, `Section`                    | Used for filtering on the news page.                                               |
+| Detailed body       | `Content`, `Body`, `Article`             | Future use for full article pages.                                                 |
+| Read time (minutes) | `ReadTime`, `Minutes`, `ReadTimeMinutes` | Numeric value; rounded to the nearest minute.                                      |
+| Tags                | `Tags`, `Keywords`                       | Comma, semicolon, or newline separated.                                            |
+| Sources / Links     | `Sources`, `Links`, `References`         | Comma, semicolon, or newline separated (rendered as references).                   |
+| Gallery images      | `Gallery`, `Images`, `ImageList`         | Comma, semicolon, or newline separated list of image URLs (Drive links supported). |
 
 Blank cells are ignored. Tags, sources, and galleries are stored as arrays after splitting on commas, semicolons, or new lines.
 
 ## Image handling
 
-| Purpose          | Accepted headers                               | Details |
-|------------------|--------------------------------------------------|---------|
-| Main image URL   | `Image`, `Thumbnail`, `ImageURL`                | Use a public URL or a Google Drive share link. Drive links are converted automatically. |
-| Image alt text   | `ImageAlt`, `ImgAlt`, `Alt`                     | If blank, the title is used. |
-| Image credit     | `ImageCredit`, `Credit`                         | Optional attribution displayed beneath the image. |
-| Image placement  | `ImagePlacement`, `ImageLayout`, `Placement`    | Controls layout of the main image. Accepted values: `top`, `left`, `right`, `background`, `none`. Defaults to `top`. |
+| Purpose         | Accepted headers                             | Details                                                                                                              |
+| --------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Main image URL  | `Image`, `Thumbnail`, `ImageURL`             | Use a public URL or a Google Drive share link. Drive links are converted automatically.                              |
+| Image alt text  | `ImageAlt`, `ImgAlt`, `Alt`                  | If blank, the title is used.                                                                                         |
+| Image credit    | `ImageCredit`, `Credit`                      | Optional attribution displayed beneath the image.                                                                    |
+| Image placement | `ImagePlacement`, `ImageLayout`, `Placement` | Controls layout of the main image. Accepted values: `top`, `left`, `right`, `background`, `none`. Defaults to `top`. |
 
 ### Using Google Drive images
 
