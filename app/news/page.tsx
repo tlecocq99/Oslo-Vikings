@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import NewsCard from "../components/NewsCard";
+import NewsCard from "../components/NewsCardClient";
 import SearchAndFilter from "../components/SearchAndFilter";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";

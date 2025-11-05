@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,7 +8,11 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 
-const navigation = [
+type NavItem = {
+  name: string;
+  href: string;
+};
+const navigation: NavItem[] = [
   { name: "HOME", href: "/" },
   { name: "TEAMS", href: "/team" },
   { name: "NEWS", href: "/news" },
@@ -30,6 +34,8 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  const navItems = useMemo(() => navigation, []);
+
   return (
     <nav className="shadow-lg sticky top-0 z-[100] w-full overflow-visible bg-white dark:bg-viking-charcoal/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-viking-charcoal/70 transition-colors">
       <div className="container-fluid flex relative h-24 items-center px-4 sm:px-6 lg:px-12">
@@ -50,12 +56,12 @@ export default function Navigation() {
 
         {/* Desktop Navigation (pipe-separated) */}
         <div className="hidden md:flex flex-1 items-center justify-center h-full select-none">
-          {navigation.map((item, idx) => {
+          {navItems.map((item, idx) => {
             const isTeam = item.name === "TEAMS";
             const active =
-              item.href === "/"
+              (item.href === "/"
                 ? pathname === "/"
-                : pathname.startsWith(item.href);
+                : pathname.startsWith(item.href));
             const desktopLinkClasses = [
               "font-teko font-semibold text-4xl tracking-wide uppercase focus:outline-none focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white",
               "transition-transform duration-200 ease-out transform-gpu flex items-center justify-center gap-1 text-center whitespace-nowrap",
@@ -72,18 +78,18 @@ export default function Navigation() {
                   </span>
                 )}
                 <div className="relative group">
-                  <Link
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    aria-haspopup={isTeam ? "menu" : undefined}
-                    className={desktopLinkClasses}
-                    style={{ pointerEvents: "auto" }}
-                  >
-                    {item.name}
-                    {isTeam && (
-                      <ChevronDown className="h-6 w-6 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" />
-                    )}
-                  </Link>
+                    <Link
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      aria-haspopup={isTeam ? "menu" : undefined}
+                      className={desktopLinkClasses}
+                      style={{ pointerEvents: "auto" }}
+                    >
+                      {item.name}
+                      {isTeam && (
+                        <ChevronDown className="h-6 w-6 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" />
+                      )}
+                    </Link>
 
                   {isTeam && (
                     <div className="pointer-events-none absolute left-1/2 top-full z-[70] -translate-x-1/2 translate-y-1 opacity-0 invisible group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto transition-all duration-200 ease-out">
@@ -135,8 +141,8 @@ export default function Navigation() {
               paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 0.75rem)",
             }}
           >
-            {navigation.map((item, index) => {
-              const isTeam = item.name === "TEAM";
+            {navItems.map((item, index) => {
+              const isTeam = item.name === "TEAMS";
               const isActive = pathname.startsWith(item.href);
               const mobileLinkClasses = [
                 "w-full text-center block rounded-md font-teko font-semibold text-3xl uppercase transition-all duration-200 border-2",
@@ -147,18 +153,18 @@ export default function Navigation() {
               ].join(" ");
               return (
                 <div key={item.name}>
-                  <Link
-                    href={item.href}
-                    aria-current={isActive ? "page" : undefined}
-                    className={mobileLinkClasses}
-                    onClick={() => setIsOpen(false)}
-                    style={{ pointerEvents: "auto" }}
-                  >
-                    <span className="flex items-center gap-2">
-                      {item.name}
-                      {isTeam && <ChevronDown className="h-6 w-6" />}
-                    </span>
-                  </Link>
+                    <Link
+                      href={item.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className={mobileLinkClasses}
+                      onClick={() => setIsOpen(false)}
+                      style={{ pointerEvents: "auto" }}
+                    >
+                      <span className="flex items-center gap-2">
+                        {item.name}
+                        {isTeam && <ChevronDown className="h-6 w-6" />}
+                      </span>
+                    </Link>
                   {isTeam && (
                     <div className="mt-2 space-y-2">
                       {teamLinks.map((team) => (

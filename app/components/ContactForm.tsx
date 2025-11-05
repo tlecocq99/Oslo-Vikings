@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Mail, CheckCircle, AlertCircle } from "lucide-react";
 
 interface FormData {
   firstName: string;
@@ -14,24 +14,31 @@ interface FormData {
 }
 
 interface FormStatus {
-  type: 'idle' | 'loading' | 'success' | 'error';
+  type: "idle" | "loading" | "success" | "error";
   message?: string;
 }
 
+const CONTACT_ENDPOINT =
+  process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? "/api/contact";
+
+const createInitialFormState = (): FormData => ({
+  firstName: "",
+  lastName: "",
+  email: "",
+  subject: "",
+  message: "",
+});
+
 export default function ContactForm() {
-  const [formData, setFormData] = useState<FormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState<FormData>(createInitialFormState());
 
-  const [status, setStatus] = useState<FormStatus>({ type: 'idle' });
+  const [status, setStatus] = useState<FormStatus>({ type: "idle" });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -39,37 +46,72 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus({ type: 'loading' });
+    setStatus({ type: "loading" });
 
-    // Simulate form submission
+    const payload = {
+      firstName: formData.firstName.trim(),
+      lastName: formData.lastName.trim(),
+      email: formData.email.trim(),
+      subject: formData.subject.trim(),
+      message: formData.message.trim(),
+    } satisfies FormData;
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // In a real app, you would send the data to your backend
-      console.log('Form submitted:', formData);
-      
+      const response = await fetch(CONTACT_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const text = await response.text();
+      let asJson: Record<string, unknown> = {};
+      if (text) {
+        try {
+          asJson = JSON.parse(text);
+        } catch {
+          asJson = { error: text };
+        }
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          typeof asJson?.error === "string"
+            ? asJson.error
+            : "Something went wrong. Please try again later."
+        );
+      }
+
       setStatus({
-        type: 'success',
-        message: 'Thank you for your message! We\'ll get back to you soon.',
+        type: "success",
+        message:
+          typeof asJson?.message === "string"
+            ? asJson.message
+            : "Thank you for your message! We'll get back to you soon.",
       });
-      
-      // Reset form
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        subject: '',
-        message: '',
-      });
+
+      setFormData(createInitialFormState());
     } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again later.";
+
+      if (process.env.NODE_ENV !== "production") {
+        console.error("[contact-form] submission failed:", error);
+      }
+
       setStatus({
-        type: 'error',
-        message: 'Something went wrong. Please try again later.',
+        type: "error",
+        message,
       });
     }
   };
 
-  const isFormValid = formData.firstName && formData.lastName && formData.email && formData.subject && formData.message;
+  const isFormValid = Object.values(formData).every(
+    (value) => value.trim().length > 0
+  );
 
   return (
     <Card>
@@ -80,13 +122,15 @@ export default function ContactForm() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {status.type === 'success' ? (
+        {status.type === "success" ? (
           <div className="text-center py-8">
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-viking-charcoal mb-2">Message Sent!</h3>
+            <h3 className="text-xl font-semibold text-viking-charcoal mb-2">
+              Message Sent!
+            </h3>
             <p className="text-gray-600 mb-6">{status.message}</p>
-            <Button 
-              onClick={() => setStatus({ type: 'idle' })}
+            <Button
+              onClick={() => setStatus({ type: "idle" })}
               className="bg-viking-red hover:bg-viking-red-dark"
             >
               Send Another Message
@@ -96,7 +140,10 @@ export default function ContactForm() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="firstName"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   First Name *
                 </label>
                 <input
@@ -111,7 +158,10 @@ export default function ContactForm() {
                 />
               </div>
               <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="lastName"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Last Name *
                 </label>
                 <input
@@ -126,9 +176,12 @@ export default function ContactForm() {
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Email *
               </label>
               <input
@@ -142,9 +195,12 @@ export default function ContactForm() {
                 placeholder="your.email@example.com"
               />
             </div>
-            
+
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="subject"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Subject *
               </label>
               <input
@@ -158,9 +214,12 @@ export default function ContactForm() {
                 placeholder="What's this about?"
               />
             </div>
-            
+
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Message *
               </label>
               <textarea
@@ -175,19 +234,19 @@ export default function ContactForm() {
               />
             </div>
 
-            {status.type === 'error' && (
+            {status.type === "error" && (
               <div className="flex items-center gap-2 text-red-600 bg-red-50 p-3 rounded-lg">
                 <AlertCircle className="w-5 h-5" />
                 <span className="text-sm">{status.message}</span>
               </div>
             )}
-            
-            <Button 
+
+            <Button
               type="submit"
-              disabled={!isFormValid || status.type === 'loading'}
+              disabled={!isFormValid || status.type === "loading"}
               className="w-full bg-viking-red hover:bg-viking-red-dark disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {status.type === 'loading' ? 'Sending...' : 'Send Message'}
+              {status.type === "loading" ? "Sending..." : "Send Message"}
             </Button>
           </form>
         )}

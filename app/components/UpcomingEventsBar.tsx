@@ -79,7 +79,19 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
   const [teamFilter, setTeamFilter] = React.useState<"All" | GameTeam>("All");
 
   const sortedEvents = React.useMemo(() => {
-    return [...events].sort((a, b) => a.startsAt.localeCompare(b.startsAt));
+    return [...events]
+      .filter((event): event is UpcomingEvent => {
+        if (!event) return false;
+        if (!event.startsAt) {
+          console.warn(
+            "[upcoming-events] Dropping event without startsAt",
+            event
+          );
+          return false;
+        }
+        return true;
+      })
+      .sort((a, b) => a.startsAt.localeCompare(b.startsAt));
   }, [events]);
 
   const filteredEvents = React.useMemo(() => {
@@ -113,7 +125,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
         <div className="mr-10">
           <label
             htmlFor="team-filter"
-            className="block text-xs font-semibold text-viking-red mb-1"
+            className="block text-m font-semibold text-viking-red mb-1"
           >
             Team
           </label>
@@ -160,7 +172,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
                   className="min-w-[240px] max-w-xs h-full bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-3 flex flex-col gap-2 transition-colors"
                   style={{ scrollSnapAlign: "start" }}
                 >
-                  <div className="flex items-center justify-between text-[11px] uppercase tracking-wide text-viking-red/80">
+                  <div className="flex items-center justify-between text-[15px] uppercase tracking-wide text-viking-red/80">
                     <span className="font-semibold">{badgeLabel}</span>
                     {event.category && (
                       <span className="text-[10px] text-gray-500 dark:text-gray-400 font-medium">

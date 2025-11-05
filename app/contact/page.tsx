@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 const GoogleMap = dynamic(() => import("@/app/components/GoogleMap"), {
   ssr: false,
@@ -96,7 +97,7 @@ function ContactPageContent() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
-              <div>
+              <div id="contact-form">
                 <ContactForm />
               </div>
 
@@ -193,11 +194,12 @@ function ContactPageContent() {
                         Season Tickets
                       </span>
                       <Button
+                        asChild
                         variant="outline"
                         size="sm"
                         className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
                       >
-                        Buy Now
+                        <Link href="#contact-form">Buy Now</Link>
                       </Button>
                     </div>
                     <div className="flex justify-between items-center">
@@ -205,11 +207,12 @@ function ContactPageContent() {
                         Group Sales
                       </span>
                       <Button
+                        asChild
                         variant="outline"
                         size="sm"
                         className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
                       >
-                        Inquire
+                        <Link href="#contact-form">Inquire</Link>
                       </Button>
                     </div>
                     <div className="flex justify-between items-center">
@@ -217,11 +220,12 @@ function ContactPageContent() {
                         Corporate Partnerships
                       </span>
                       <Button
+                        asChild
                         variant="outline"
                         size="sm"
                         className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
                       >
-                        Contact
+                        <Link href="#contact-form">Contact</Link>
                       </Button>
                     </div>
                     <div className="flex justify-between items-center">
@@ -229,11 +233,12 @@ function ContactPageContent() {
                         Media Requests
                       </span>
                       <Button
+                        asChild
                         variant="outline"
                         size="sm"
                         className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
                       >
-                        Submit
+                        <Link href="#contact-form">Submit</Link>
                       </Button>
                     </div>
                   </CardContent>

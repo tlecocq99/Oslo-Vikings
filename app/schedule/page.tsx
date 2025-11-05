@@ -2,7 +2,7 @@
 
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import GameCard from "../components/GameCard";
+import GameCard from "../components/GameCardClient";
 import dynamic from "next/dynamic";
 
 // Dynamically import standings (client component)
@@ -135,8 +135,18 @@ export default function SchedulePage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <Tabs defaultValue="upcoming" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger className="text-viking-charcoal dark:text-gray-200" value="upcoming">Upcoming Games</TabsTrigger>
-                <TabsTrigger className="text-viking-charcoal dark:text-gray-200" value="results">Results</TabsTrigger>
+                <TabsTrigger
+                  className="text-viking-charcoal dark:text-gray-200"
+                  value="upcoming"
+                >
+                  Upcoming Games
+                </TabsTrigger>
+                <TabsTrigger
+                  className="text-viking-charcoal dark:text-gray-200"
+                  value="results"
+                >
+                  Results
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="upcoming" className="space-y-6">
