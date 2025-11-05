@@ -32,9 +32,21 @@ const teamLinks = [
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isTeamsMobileOpen, setIsTeamsMobileOpen] = useState(false);
   const pathname = usePathname();
 
   const navItems = useMemo(() => navigation, []);
+  const mobileTeamsMenuId = "mobile-team-links";
+
+  const toggleMobileMenu = () => {
+    setIsTeamsMobileOpen(false);
+    setIsOpen((prev) => !prev);
+  };
+
+  const closeMobileMenu = () => {
+    setIsOpen(false);
+    setIsTeamsMobileOpen(false);
+  };
 
   return (
     <nav className="shadow-lg sticky top-0 z-[100] w-full overflow-visible bg-white dark:bg-viking-charcoal/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-viking-charcoal/70 transition-colors">
@@ -59,9 +71,9 @@ export default function Navigation() {
           {navItems.map((item, idx) => {
             const isTeam = item.name === "TEAMS";
             const active =
-              (item.href === "/"
+              item.href === "/"
                 ? pathname === "/"
-                : pathname.startsWith(item.href));
+                : pathname.startsWith(item.href);
             const desktopLinkClasses = [
               "font-teko font-semibold text-4xl tracking-wide uppercase focus:outline-none focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white",
               "transition-transform duration-200 ease-out transform-gpu flex items-center justify-center gap-1 text-center whitespace-nowrap",
@@ -78,18 +90,18 @@ export default function Navigation() {
                   </span>
                 )}
                 <div className="relative group">
-                    <Link
-                      href={item.href}
-                      aria-current={active ? "page" : undefined}
-                      aria-haspopup={isTeam ? "menu" : undefined}
-                      className={desktopLinkClasses}
-                      style={{ pointerEvents: "auto" }}
-                    >
-                      {item.name}
-                      {isTeam && (
-                        <ChevronDown className="h-6 w-6 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" />
-                      )}
-                    </Link>
+                  <Link
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    aria-haspopup={isTeam ? "menu" : undefined}
+                    className={desktopLinkClasses}
+                    style={{ pointerEvents: "auto" }}
+                  >
+                    {item.name}
+                    {isTeam && (
+                      <ChevronDown className="h-6 w-6 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" />
+                    )}
+                  </Link>
 
                   {isTeam && (
                     <div className="pointer-events-none absolute left-1/2 top-full z-[70] -translate-x-1/2 translate-y-1 opacity-0 invisible group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto transition-all duration-200 ease-out">
@@ -123,7 +135,7 @@ export default function Navigation() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={toggleMobileMenu}
             aria-label="Toggle menu"
             className="text-viking-red dark:text-viking-red-dark border border-viking-red/50 dark:border-viking-red-dark/50 bg-white dark:bg-viking-charcoal hover:bg-viking-red hover:text-white dark:hover:bg-viking-red-dark dark:hover:text-viking-charcoal focus:ring-2 focus:ring-viking-red dark:focus:ring-viking-red-dark focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-viking-charcoal rounded-md shadow-sm transition-colors"
           >
@@ -153,31 +165,57 @@ export default function Navigation() {
               ].join(" ");
               return (
                 <div key={item.name}>
+                  {isTeam ? (
+                    <>
+                      <button
+                        type="button"
+                        className={mobileLinkClasses}
+                        onClick={() => setIsTeamsMobileOpen((prev) => !prev)}
+                        aria-expanded={isTeamsMobileOpen}
+                        aria-controls={mobileTeamsMenuId}
+                        style={{ pointerEvents: "auto" }}
+                      >
+                        <span className="flex items-center gap-2">
+                          {item.name}
+                          <ChevronDown
+                            className={`h-6 w-6 transition-transform duration-200 ${
+                              isTeamsMobileOpen ? "rotate-180" : ""
+                            }`}
+                          />
+                        </span>
+                      </button>
+                      <div
+                        id={mobileTeamsMenuId}
+                        className={`grid gap-2 overflow-hidden transition-[max-height,opacity,margin] duration-300 ${
+                          isTeamsMobileOpen
+                            ? "max-h-[600px] opacity-100 mt-2 pointer-events-auto"
+                            : "max-h-0 opacity-0 mt-0 pointer-events-none"
+                        }`}
+                      >
+                        {teamLinks.map((team) => (
+                          <Link
+                            key={`mobile-${team.name}`}
+                            href={team.href}
+                            onClick={closeMobileMenu}
+                            className="block rounded-md border px-4 py-3 text-xl font-teko uppercase tracking-wide transition-colors text-white dark:text-viking-gold border-white dark:border-viking-gold bg-red-700 dark:bg-viking-charcoal hover:bg-white hover:text-viking-red hover:border-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal dark:hover:border-viking-gold"
+                          >
+                            {team.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
                     <Link
                       href={item.href}
                       aria-current={isActive ? "page" : undefined}
                       className={mobileLinkClasses}
-                      onClick={() => setIsOpen(false)}
+                      onClick={closeMobileMenu}
                       style={{ pointerEvents: "auto" }}
                     >
                       <span className="flex items-center gap-2">
                         {item.name}
-                        {isTeam && <ChevronDown className="h-6 w-6" />}
                       </span>
                     </Link>
-                  {isTeam && (
-                    <div className="mt-2 space-y-2">
-                      {teamLinks.map((team) => (
-                        <Link
-                          key={`mobile-${team.name}`}
-                          href={team.href}
-                          onClick={() => setIsOpen(false)}
-                          className="block rounded-md border px-4 py-3 text-xl font-teko uppercase tracking-wide transition-colors text-white dark:text-viking-gold border-white dark:border-viking-gold bg-red-700 dark:bg-viking-charcoal hover:bg-white hover:text-viking-red hover:border-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal dark:hover:border-viking-gold"
-                        >
-                          {team.name}
-                        </Link>
-                      ))}
-                    </div>
                   )}
                   {index < navigation.length - 1 && (
                     <div className="border-b border-red-600/50 dark:border-viking-gold/30 my-1"></div>
