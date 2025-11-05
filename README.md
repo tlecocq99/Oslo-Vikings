@@ -146,10 +146,11 @@ Roster, schedule, and several homepage modules are populated from shared Google 
 - Mark the `Type` as `Game`, `Match`, or include both `Home Team` and `Away Team` to render fixtures with versus styling.
 - Avoid duplicating regular season games here—team schedules already sync into the bar. Use this tab for club-wide events, clinics, fundraisers, and other non-schedule highlights.
 
-#### News Items & Static Content
+#### News Articles (`News` tab)
 
-- Curated directly within page components or via Storyblok (if enabled by environment).
-- Use `SearchAndFilter` props to seed new categories or featured articles.
+- Managed entirely through the shared Google Sheet so editorial updates publish automatically.
+- Follow the [News Google Sheet Guide](./docs/news-sheet-guide.md) for column definitions, image placement rules, and troubleshooting tips.
+- Articles marked as `Featured` power the hero story on `/news` and flow onto the homepage "Latest News" grid.
 
 ## 🛡️ Accessibility & Performance
 

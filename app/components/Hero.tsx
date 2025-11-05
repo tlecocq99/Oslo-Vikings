@@ -23,15 +23,15 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section
-      className="relative min-h-[50vh] md:min-h-[70vh] xl:min-h-screen flex justify-center items-start pt-24 md:pt-32 pb-12 overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="relative min-h-[50vh] md:min-h-[70vh] xl:min-h-screen flex justify-center items-start pt-24 md:pt-32 pb-12 overflow-hidden bg-contain bg-center bg-no-repeat"
       style={{
         backgroundImage: background_image?.filename
           ? `url(${background_image.filename})`
-          : `url('/images/backgrounds/team.avif')`,
+          : `url('/images/backgrounds/testBG.png')`,
       }}
     >
       {/* Background overlay */}
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="absolute inset-0"></div>
 
       {/* Content */}
       <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">

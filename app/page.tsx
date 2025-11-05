@@ -12,7 +12,10 @@ import Link from "next/link";
 import { ArrowRight, Trophy, Users, Calendar } from "lucide-react";
 import { Teko } from "next/font/google";
 import { fetchUpcomingEvents } from "./services/fetchUpcomingEvents";
+import { fetchNewsArticles } from "./services/fetchNews";
 import type { Partner } from "./types/partner";
+import type { NewsCardProps } from "./components/NewsCardContent";
+import type { NewsArticle } from "./types/news";
 
 const teko = Teko({ subsets: ["latin"] });
 
@@ -114,9 +117,8 @@ export default async function Home() {
     cta_link: { url: "/recruitment" },
   };
 
-  const featuredNews = [
+  const fallbackFeaturedNews = [
     {
-      component: "news_card",
       title: "Vikings Dominate Season Opener",
       excerpt:
         "Oslo Vikings secured a commanding 28-14 victory in their season opener against Bergen Bears.",
@@ -126,7 +128,6 @@ export default async function Home() {
       slug: "vikings-dominate-season-opener",
     },
     {
-      component: "news_card",
       title: "New Head Coach Brings Championship Experience",
       excerpt:
         "Former NFL assistant coach joins Oslo Vikings with plans to elevate the program.",
@@ -136,6 +137,51 @@ export default async function Home() {
       slug: "new-head-coach",
     },
   ];
+
+  function formatNewsDate(raw?: string): string | undefined {
+    if (!raw) return undefined;
+    const parsed = new Date(raw);
+    if (Number.isNaN(parsed.getTime())) {
+      return raw;
+    }
+    return Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(parsed);
+  }
+
+  type FallbackNews = (typeof fallbackFeaturedNews)[number];
+
+  function mapNewsArticleToCard(article: NewsArticle): NewsCardProps {
+    return {
+      title: article.title,
+      excerpt: article.excerpt,
+      slug: article.slug,
+      author: article.author ?? "Oslo Vikings",
+      date: formatNewsDate(article.date ?? article.publishedAt),
+      category: article.category,
+      image: article.image
+        ? {
+            src: article.image.src,
+            alt: article.image.alt,
+            placement: article.image.placement,
+            credit: article.image.credit,
+          }
+        : undefined,
+    };
+  }
+
+  function mapFallbackArticleToCard(article: FallbackNews): NewsCardProps {
+    return {
+      title: article.title,
+      excerpt: article.excerpt,
+      slug: article.slug,
+      author: article.author ?? "Oslo Vikings",
+      date: formatNewsDate(article.date),
+      category: article.category,
+    };
+  }
 
   const upcomingGame = {
     component: "game",
@@ -150,6 +196,12 @@ export default async function Home() {
   const sheetEvents = await fetchUpcomingEvents();
   const upcomingEvents =
     sheetEvents.length > 0 ? sheetEvents : buildFallbackEvents();
+
+  const newsArticles = await fetchNewsArticles({ limit: 6 });
+  const featuredNews: NewsCardProps[] =
+    newsArticles.length > 0
+      ? newsArticles.slice(0, 2).map(mapNewsArticleToCard)
+      : fallbackFeaturedNews.slice(0, 2).map(mapFallbackArticleToCard);
 
   const partners: Partner[] = [
     {
