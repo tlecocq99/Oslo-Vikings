@@ -1,5 +1,10 @@
 import { fetchSheetRows } from "./googleSheets";
-import type { NewsArticle, NewsImage, NewsImagePlacement, NewsVisibility } from "@/app/types/news";
+import type {
+  NewsArticle,
+  NewsImage,
+  NewsImagePlacement,
+  NewsVisibility,
+} from "@/app/types/news";
 
 const DEFAULT_NEWS_SHEET = process.env.GOOGLE_NEWS_SHEET ?? "News";
 const DEFAULT_NEWS_RANGE = process.env.GOOGLE_NEWS_RANGE ?? "A1:N400";
@@ -135,12 +140,19 @@ function buildDriveImageLink(driveId: string): string {
   return `https://lh3.googleusercontent.com/d/${driveId}`;
 }
 
-function normaliseImage(raw: string, alt: string, placementRaw: string, credit: string): NewsImage | undefined {
+function normaliseImage(
+  raw: string,
+  alt: string,
+  placementRaw: string,
+  credit: string
+): NewsImage | undefined {
   if (!raw) return undefined;
 
   const driveId = extractDriveId(raw);
   const src = driveId ? buildDriveImageLink(driveId) : raw;
-  const placement = placementRaw ? normaliseImagePlacement(placementRaw) : "top";
+  const placement = placementRaw
+    ? normaliseImagePlacement(placementRaw)
+    : "top";
 
   return {
     src,
@@ -229,7 +241,8 @@ export async function fetchNewsArticles({
     const slugRaw = getValue(row, headerMap, HEADER_KEYS.slug);
     if (!title && !slugRaw) return;
 
-    const slug = slugRaw ||
+    const slug =
+      slugRaw ||
       title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
@@ -248,8 +261,17 @@ export async function fetchNewsArticles({
     const imageRaw = getValue(row, headerMap, HEADER_KEYS.image);
     const imageAlt = getValue(row, headerMap, HEADER_KEYS.imageAlt) || title;
     const imageCredit = getValue(row, headerMap, HEADER_KEYS.imageCredit);
-    const imagePlacementRaw = getValue(row, headerMap, HEADER_KEYS.imagePlacement);
-    const image = normaliseImage(imageRaw, imageAlt, imagePlacementRaw, imageCredit);
+    const imagePlacementRaw = getValue(
+      row,
+      headerMap,
+      HEADER_KEYS.imagePlacement
+    );
+    const image = normaliseImage(
+      imageRaw,
+      imageAlt,
+      imagePlacementRaw,
+      imageCredit
+    );
 
     const article: NewsArticle = {
       id: slug || `news-${index + 1}`,

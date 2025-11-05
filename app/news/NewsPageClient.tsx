@@ -56,7 +56,7 @@ function toNewsCardProps(article: NewsArticle): NewsCardProps {
           placement: article.image.placement,
           credit: article.image.credit,
         }
-    : undefined,
+      : undefined,
   };
 }
 
@@ -72,7 +72,9 @@ function filterArticles(
   const query = searchQuery.trim().toLowerCase();
   return articles.filter((article) => {
     if (activeCategory !== DEFAULT_CATEGORY) {
-      if ((article.category || "").toLowerCase() !== activeCategory.toLowerCase()) {
+      if (
+        (article.category || "").toLowerCase() !== activeCategory.toLowerCase()
+      ) {
         return false;
       }
     }
@@ -93,7 +95,8 @@ function filterArticles(
 
 export default function NewsPageClient({ articles }: NewsPageClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<string>(DEFAULT_CATEGORY);
+  const [activeCategory, setActiveCategory] =
+    useState<string>(DEFAULT_CATEGORY);
 
   const categories = useMemo(() => buildCategories(articles), [articles]);
 
@@ -103,13 +106,16 @@ export default function NewsPageClient({ articles }: NewsPageClientProps) {
   );
 
   const featuredArticle = useMemo(
-    () => getFeaturedArticle(filteredArticles.length ? filteredArticles : articles),
+    () =>
+      getFeaturedArticle(filteredArticles.length ? filteredArticles : articles),
     [articles, filteredArticles]
   );
 
   const gridArticles = useMemo(() => {
     if (!featuredArticle) return filteredArticles;
-    return filteredArticles.filter((article) => article.id !== featuredArticle.id);
+    return filteredArticles.filter(
+      (article) => article.id !== featuredArticle.id
+    );
   }, [filteredArticles, featuredArticle]);
 
   return (
@@ -123,7 +129,8 @@ export default function NewsPageClient({ articles }: NewsPageClientProps) {
               Vikings News
             </h1>
             <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-3xl mx-auto">
-              Stay updated with the latest Oslo Vikings news, game recaps, and team announcements
+              Stay updated with the latest Oslo Vikings news, game recaps, and
+              team announcements
             </p>
           </div>
         </section>
@@ -149,8 +156,12 @@ export default function NewsPageClient({ articles }: NewsPageClientProps) {
             <div className="mb-8">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-viking-charcoal dark:text-gray-200">
-                  {activeCategory === DEFAULT_CATEGORY ? "All Articles" : activeCategory}
-                  <span className="text-viking-red text-lg ml-2">({gridArticles.length})</span>
+                  {activeCategory === DEFAULT_CATEGORY
+                    ? "All Articles"
+                    : activeCategory}
+                  <span className="text-viking-red text-lg ml-2">
+                    ({gridArticles.length})
+                  </span>
                 </h2>
               </div>
 
@@ -187,17 +198,18 @@ export default function NewsPageClient({ articles }: NewsPageClientProps) {
               )}
             </div>
 
-            {gridArticles.length > 0 && gridArticles.length < filteredArticles.length && (
-              <div className="text-center mt-12">
-                <Button
-                  variant="outline"
-                  className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
-                  onClick={() => setActiveCategory(DEFAULT_CATEGORY)}
-                >
-                  Load More Articles
-                </Button>
-              </div>
-            )}
+            {gridArticles.length > 0 &&
+              gridArticles.length < filteredArticles.length && (
+                <div className="text-center mt-12">
+                  <Button
+                    variant="outline"
+                    className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
+                    onClick={() => setActiveCategory(DEFAULT_CATEGORY)}
+                  >
+                    Load More Articles
+                  </Button>
+                </div>
+              )}
           </div>
         </section>
       </main>
@@ -222,7 +234,10 @@ function FeaturedArticleCard({ article }: FeaturedProps) {
     const imageFirst = placement === "left";
     const imageSection = article.image?.src ? (
       <div className="relative w-full lg:w-1/2 h-64 lg:h-96">
-        <ImageFill src={article.image.src} alt={article.image.alt || article.title} />
+        <ImageFill
+          src={article.image.src}
+          alt={article.image.alt || article.title}
+        />
         {article.category && (
           <span className="absolute top-4 left-4 bg-viking-red text-white text-xs font-semibold px-3 py-1 rounded shadow">
             {article.category}
@@ -232,10 +247,14 @@ function FeaturedArticleCard({ article }: FeaturedProps) {
     ) : null;
 
     return (
-      <article className={`${baseClasses} flex flex-col lg:flex-row`}> 
+      <article className={`${baseClasses} flex flex-col lg:flex-row`}>
         {imageFirst ? imageSection : null}
         <div className="flex-1 p-8">
-          <FeaturedArticleBody article={article} displayDate={displayDate} href={href} />
+          <FeaturedArticleBody
+            article={article}
+            displayDate={displayDate}
+            href={href}
+          />
         </div>
         {!imageFirst ? imageSection : null}
       </article>
@@ -244,8 +263,12 @@ function FeaturedArticleCard({ article }: FeaturedProps) {
 
   if (placement === "none") {
     return (
-      <article className={`${baseClasses} p-8`}> 
-        <FeaturedArticleBody article={article} displayDate={displayDate} href={href} />
+      <article className={`${baseClasses} p-8`}>
+        <FeaturedArticleBody
+          article={article}
+          displayDate={displayDate}
+          href={href}
+        />
       </article>
     );
   }
@@ -313,7 +336,11 @@ interface FeaturedArticleBodyProps {
   href?: string;
 }
 
-function FeaturedArticleBody({ article, displayDate, href }: FeaturedArticleBodyProps) {
+function FeaturedArticleBody({
+  article,
+  displayDate,
+  href,
+}: FeaturedArticleBodyProps) {
   return (
     <div className="space-y-6">
       {article.category && (

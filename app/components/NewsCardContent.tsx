@@ -142,9 +142,13 @@ export function NewsCardContent({
   if (placement === "left" || placement === "right") {
     return (
       <article className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700 flex flex-col lg:flex-row">
-        {placement === "left" && hasImage ? renderSideImageSection("left") : null}
+        {placement === "left" && hasImage
+          ? renderSideImageSection("left")
+          : null}
         <div className="flex-1">{Content}</div>
-        {placement === "right" && hasImage ? renderSideImageSection("right") : null}
+        {placement === "right" && hasImage
+          ? renderSideImageSection("right")
+          : null}
       </article>
     );
   }
