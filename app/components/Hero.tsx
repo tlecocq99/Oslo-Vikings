@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 
 interface HeroProps {
@@ -21,17 +22,24 @@ export default function Hero({
   cta_text,
   cta_link,
 }: HeroProps) {
+  const heroImageSrc =
+    background_image?.filename ?? "/images/backgrounds/testBG1.png";
+  const heroImageAlt = background_image?.alt ?? title ?? "Oslo Vikings";
+
   return (
-    <section
-      className="relative min-h-[50vh] md:min-h-[70vh] xl:min-h-screen flex justify-center items-start pt-24 md:pt-32 pb-12 overflow-hidden bg-contain bg-center bg-no-repeat"
-      style={{
-        backgroundImage: background_image?.filename
-          ? `url(${background_image.filename})`
-          : `url('/images/backgrounds/testBG.png')`,
-      }}
-    >
+    <section className="relative isolate min-h-[50vh] md:min-h-[70vh] xl:min-h-screen flex justify-center items-start pt-24 md:pt-32 pb-12 overflow-hidden bg-viking-red-950">
+      {/* Background image */}
+      <Image
+        src={heroImageSrc}
+        alt={heroImageAlt}
+        fill
+        priority
+        sizes="100vw"
+        className="absolute inset-0 h-full w-full object-cover object-center 2xl:object-contain"
+      />
+
       {/* Background overlay */}
-      <div className="absolute inset-0"></div>
+      <div className="absolute inset-0"/>
 
       {/* Content */}
       <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">

@@ -391,7 +391,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
           return (
             <div
               key={cardKey}
-              className={`relative flex w-40 sm:w-56 lg:w-64 flex-shrink-0 transform flex-col items-center rounded-2xl border border-gray-200/70 bg-white/95 px-4 py-5 sm:px-6 sm:py-6 mb-6 text-center transition-all duration-300 ease-out dark:border-white/10 dark:bg-viking-charcoal/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 ${
+              className={`group relative flex w-40 sm:w-56 lg:w-64 flex-shrink-0 transform flex-col items-center justify-between overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-4 py-6 sm:px-6 sm:py-6 mb-6 text-center transition-all duration-300 ease-out dark:border-white/10 dark:bg-viking-charcoal/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 ${
                 isActive ? "scale-105 shadow-2xl z-10" : "scale-100"
               } ${isDimmed ? "opacity-30" : "opacity-100"}`}
               onMouseEnter={() => setActiveKey(cardKey)}
@@ -431,18 +431,22 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
               </h3>
 
               <div
-                className={`mt-0 w-full overflow-hidden transition-all duration-300 ease-out ${
-                  isActive ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0"
+                className={`absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-2xl bg-black/60 px-5 text-center text-white transition-opacity duration-300 ${
+                  isActive
+                    ? "opacity-100 pointer-events-auto"
+                    : "opacity-0 pointer-events-none"
                 }`}
+                aria-hidden={!isActive}
               >
-                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="text-sm font-bold leading-relaxed">
                   {partner.description}
                 </p>
                 {partner.website ? (
                   <Button
                     asChild
-                    variant="outline"
-                    className="mt-4 border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
+                    size="sm"
+                    variant="secondary"
+                    className="bg-white/90 text-viking-red hover:bg-white"
                   >
                     <a href={partner.website} rel="noreferrer" target="_blank">
                       Visit Site

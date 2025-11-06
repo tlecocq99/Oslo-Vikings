@@ -85,10 +85,6 @@ export default function Footer() {
                   styret@oslovikings.com
                 </span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-viking-red" />
-                <span className="text-gray-300 text-sm">+47 XXX XX XXX</span>
-              </div>
             </div>
           </div>
         </div>
