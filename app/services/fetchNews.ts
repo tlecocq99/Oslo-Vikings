@@ -113,43 +113,14 @@ function normaliseImagePlacement(raw: string): NewsImagePlacement {
   );
 }
 
-function extractDriveId(url: string): string | null {
-  if (!url) return null;
-  const trimmed = url.trim();
-  if (!trimmed) return null;
-
-  const directMatch = trimmed.match(/\/d\/([\w-]+)/);
-  if (directMatch) {
-    return directMatch[1];
-  }
-
-  const idParam = trimmed.match(/[?&]id=([\w-]+)/);
-  if (idParam) {
-    return idParam[1];
-  }
-
-  const ucMatch = trimmed.match(/\/uc\?.*?id=([\w-]+)/);
-  if (ucMatch) {
-    return ucMatch[1];
-  }
-
-  return null;
-}
-
-function buildDriveImageLink(driveId: string): string {
-  return `https://lh3.googleusercontent.com/d/${driveId}`;
-}
-
 function normaliseImage(
   raw: string,
   alt: string,
   placementRaw: string,
   credit: string
 ): NewsImage | undefined {
-  if (!raw) return undefined;
-
-  const driveId = extractDriveId(raw);
-  const src = driveId ? buildDriveImageLink(driveId) : raw;
+  const src = raw?.trim();
+  if (!src) return undefined;
   const placement = placementRaw
     ? normaliseImagePlacement(placementRaw)
     : "top";
@@ -159,7 +130,7 @@ function normaliseImage(
     alt: alt || undefined,
     placement,
     credit: credit || undefined,
-    driveId: driveId || undefined,
+    driveId: undefined,
   } satisfies NewsImage;
 }
 
@@ -172,15 +143,14 @@ function parseGallery(raw: string): NewsImage[] | undefined {
 
   if (entries.length === 0) return undefined;
 
-  return entries.map((entry, index) => {
-    const driveId = extractDriveId(entry);
-    const src = driveId ? buildDriveImageLink(driveId) : entry;
-    return {
-      src,
-      placement: "top",
-      driveId: driveId || undefined,
-    } satisfies NewsImage;
-  });
+  return entries.map(
+    (entry) =>
+      ({
+        src: entry,
+        placement: "top",
+        driveId: undefined,
+      } satisfies NewsImage)
+  );
 }
 
 function parseTags(raw: string): string[] | undefined {
@@ -312,4 +282,20 @@ export async function fetchNewsArticles({
   });
 
   return typeof limit === "number" ? sorted.slice(0, limit) : sorted;
+}
+
+export interface FetchNewsArticleOptions
+  extends Omit<FetchNewsOptions, "limit"> {}
+
+export async function fetchNewsArticleBySlug(
+  slug: string,
+  options?: FetchNewsArticleOptions
+): Promise<NewsArticle | null> {
+  if (!slug) return null;
+
+  const articles = await fetchNewsArticles({
+    ...options,
+  });
+
+  return articles.find((article) => article.slug === slug) ?? null;
 }

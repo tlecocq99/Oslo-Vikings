@@ -110,13 +110,9 @@ export function NewsCardContent({
         )}
       </div>
 
-      <Link
-        href={href}
-        className="mt-4 inline-block text-viking-red font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-viking-charcoal/70 rounded"
-        aria-label={`Read more: ${title || "article"}`}
-      >
-        Read more →
-      </Link>
+      <span className="mt-4 inline-flex items-center text-viking-red font-semibold group-hover:underline">
+        Read full story →
+      </span>
       {image?.credit && (
         <p className="mt-4 text-[11px] uppercase tracking-wide text-gray-400 dark:text-gray-500">
           Photo: {image.credit}
@@ -126,7 +122,7 @@ export function NewsCardContent({
   );
 
   if (placement === "background") {
-    return (
+    const article = (
       <article
         className="relative bg-white/90 dark:bg-viking-charcoal/80 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700"
         style={backgroundImageStyles}
@@ -137,10 +133,11 @@ export function NewsCardContent({
         </div>
       </article>
     );
+    return wrapWithLink(article);
   }
 
   if (placement === "left" || placement === "right") {
-    return (
+    const article = (
       <article className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700 flex flex-col lg:flex-row">
         {placement === "left" && hasImage
           ? renderSideImageSection("left")
@@ -151,10 +148,11 @@ export function NewsCardContent({
           : null}
       </article>
     );
+    return wrapWithLink(article);
   }
 
   if (placement === "none" || !hasImage) {
-    return (
+    const article = (
       <article className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700">
         <div className="relative h-48 overflow-hidden">
           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-viking-red to-viking-charcoal text-white text-xl font-semibold">
@@ -169,13 +167,32 @@ export function NewsCardContent({
         {Content}
       </article>
     );
+    return wrapWithLink(article);
   }
 
   // default to top placement
-  return (
+  const article = (
     <article className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700">
       {imageSection}
       {Content}
     </article>
   );
+
+  return wrapWithLink(article);
+
+  function wrapWithLink(articleNode: JSX.Element) {
+    if (!slug) {
+      return articleNode;
+    }
+
+    return (
+      <Link
+        href={href}
+        className="group block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-viking-charcoal/70 rounded-lg"
+        aria-label={`Read full story: ${title || slug}`}
+      >
+        {articleNode}
+      </Link>
+    );
+  }
 }

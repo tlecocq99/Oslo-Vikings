@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Twitter } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -9,27 +9,54 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
+            <div className="flex items-start space-x-3 mb-4">
               <div className="w-14 h-14 rounded-lg flex items-center justify-center">
                 <Image
                   src="/images/logo.png"
                   alt="Oslo Vikings Logo"
                   width={48}
                   height={48}
-                  className="w-12 h-12"
+                  className="w-18 h-18"
                 />
               </div>
               <div>
-                <span className="text-xl font-bold text-white">Oslo</span>
-                <span className="text-xl font-bold text-viking-red ml-1">
-                  Vikings
-                </span>
+                <div>
+                  <span className="text-xl font-bold text-white">Oslo</span>
+                  <span className="text-xl font-bold text-viking-red ml-1">
+                    Vikings
+                  </span>
+                </div>
+                <div className="mt-3 flex items-center space-x-4">
+                  <Link
+                    href="https://x.com/OsloVikings"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Oslo Vikings on X"
+                    className="text-gray-300 transition-colors hover:text-viking-red"
+                  >
+                    <Twitter className="h-7 w-7" />
+                  </Link>
+                  <Link
+                    href="https://www.facebook.com/OsloVikings"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Oslo Vikings on Facebook"
+                    className="text-gray-300 transition-colors hover:text-viking-red"
+                  >
+                    <Facebook className="h-7 w-7" />
+                  </Link>
+                  <Link
+                    href="https://www.instagram.com/oslovikings/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Oslo Vikings on Instagram"
+                    className="text-gray-300 transition-colors hover:text-viking-red"
+                  >
+                    <Instagram className="h-7 w-7" />
+                  </Link>
+                </div>
               </div>
             </div>
-            <p className="text-gray-300 max-w-md">
-              Representing Norwegian American Football with pride and
-              determination. Join us as we conquer the field with Viking spirit.
-            </p>
           </div>
 
           {/* Quick Links */}
