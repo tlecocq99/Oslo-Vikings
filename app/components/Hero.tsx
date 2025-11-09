@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -25,47 +24,39 @@ export default function Hero({
   const heroImageSrc =
     background_image?.filename ?? "/images/backgrounds/testBG1.png";
   const heroImageAlt = background_image?.alt ?? title ?? "Oslo Vikings";
+  const href = cta_link?.url ?? "/recruitment";
+  const ariaLabel =
+    cta_text || subtitle || "Explore Oslo Vikings recruitment opportunities";
 
   return (
-    <section className="relative isolate min-h-[50vh] md:min-h-[70vh] xl:min-h-screen flex justify-center items-start pt-24 md:pt-32 pb-12 overflow-hidden bg-viking-red-950">
-      {/* Background image */}
+    <Link
+      href={href}
+      aria-label={ariaLabel}
+      className="group relative isolate block min-h-[50vh] md:min-h-[70vh] xl:min-h-screen overflow-hidden bg-viking-red-950 focus:outline-none focus-visible:ring-4 focus-visible:ring-viking-red/60"
+    >
+      <span className="sr-only">{ariaLabel}</span>
+
       <Image
         src={heroImageSrc}
         alt={heroImageAlt}
         fill
         priority
         sizes="100vw"
-        className="absolute inset-0 h-full w-full object-cover object-center 2xl:object-contain"
+        className="absolute inset-0 h-full w-full object-cover object-center 2xl:object-contain transition-transform duration-700 ease-out group-hover:scale-105 group-focus-visible:scale-105"
       />
 
-      {/* Background overlay */}
-      <div className="absolute inset-0"/>
+      <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-60 group-focus-visible:opacity-60" />
 
-      {/* Content */}
-      <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 hero-text-shadow animate-fade-in-up leading-tight font-Lato">
-          {title || "Oslo Vikings"}
-        </h1>
-
-        <p className="text-lg sm:text-xl md:text-2xl mb-8 text-gray-100 max-w-2xl mx-auto leading-relaxed animate-fade-in-up">
-          {subtitle ||
-            "Conquering the field with Norwegian strength and American football passion"}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <p className="text-center text-white font-bold uppercase tracking-widest opacity-0 translate-y-6 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-y-0 text-2xl sm:text-3xl md:text-5xl px-6">
+          What are you waiting for?
+          <span className="block text-4xl sm:text-5xl md:text-7xl">
+            Click to join OV Now.
+          </span>
         </p>
-
-        {cta_text && (
-          <div className="animate-fade-in-up">
-            <Button
-              asChild
-              className="bg-viking-red hover:bg-viking-red-dark text-white font-bold px-20 py-10 text-2xl tracking-wide rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:ring-4 focus:ring-viking-red/40"
-            >
-              <Link href={cta_link?.url || "/team"}>{cta_text}</Link>
-            </Button>
-          </div>
-        )}
       </div>
 
-      {/* Decorative elements */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white/10 to-transparent"></div>
-    </section>
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
+    </Link>
   );
 }
