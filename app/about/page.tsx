@@ -32,31 +32,56 @@ export default function AboutPage() {
 
   const milestones = [
     {
-      year: "2010",
+      year: "1986",
       event: "Oslo Vikings Founded",
       description: "Team established with 20 founding members",
     },
     {
-      year: "2012",
+      year: "1989",
+      event: "Junior Programs",
+      description: "First junior program introduced",
+    },
+    {
+      year: "1990",
       event: "First Championship",
-      description: "Won the Norwegian League Championship",
+      description: "Vikings win their first NM Championship title",
     },
     {
-      year: "2015",
-      event: "Stadium Opening",
-      description: "Viking Stadium officially opened",
-    },
-    {
-      year: "2018",
-      event: "International Recognition",
+      year: "1994",
+      event: "First International Competition",
       description: "First Norwegian team to compete internationally",
     },
     {
-      year: "2023",
+      year: "1998",
+      event: "Eurocup participant",
+      description: "Vikings take on Europe's best teams",
+    },
+    {
+      year: "1999",
       event: "Dynasty Begins",
-      description: "Third consecutive championship title",
+      description: "6th ranked club in Europe",
+    },
+    {
+      year: "2023",
+      event: "Consistency Established",
+      description: "15th NM championship title won",
+    },
+    {
+      year: "2024",
+      event: "Crossing Borders",
+      description:
+        "Elite team joins Swedish Superseries for a two season quest",
+    },
+    {
+      year: "2026",
+      event: "Future",
+      description: "What Next?",
     },
   ];
+
+  const midpoint = Math.ceil(milestones.length / 2);
+  const firstRowMilestones = milestones.slice(0, midpoint);
+  const secondRowMilestones = milestones.slice(midpoint);
 
   return (
     <>
@@ -127,7 +152,7 @@ export default function AboutPage() {
 
         {/* History Timeline */}
         <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
                 Our Journey
@@ -137,7 +162,53 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="space-y-8">
+            <div className="hidden lg:flex flex-col gap-14">
+              <div className="relative flex w-full items-end gap-8 pb-12">
+                <div className="pointer-events-none absolute bottom-4 left-0 right-0 h-0.5 bg-viking-red/50 dark:bg-viking-red/60" />
+                {firstRowMilestones.map((milestone, index) => (
+                  <div key={index} className="relative flex-1 min-w-[180px]">
+                    <div className="mx-auto flex max-w-xs flex-col items-center rounded-xl border border-gray-200 bg-white p-6 text-center shadow-md dark:border-gray-700 dark:bg-viking-charcoal/70">
+                      <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-viking-gold">
+                        <span className="text-lg font-bold text-viking-charcoal">
+                          {milestone.year}
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-bold text-viking-charcoal dark:text-gray-100 mb-2">
+                        {milestone.event}
+                      </h3>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
+                        {milestone.description}
+                      </p>
+                    </div>
+                    <span className="pointer-events-none absolute left-1/2 bottom-4 h-4 w-4 -translate-x-1/2 translate-y-1/2 rounded-full border-4 border-white bg-viking-red dark:border-viking-charcoal" />
+                  </div>
+                ))}
+              </div>
+
+              <div className="relative flex w-full items-start gap-8 pt-12">
+                <div className="pointer-events-none absolute top-4 left-0 right-0 h-0.5 bg-viking-red/50 dark:bg-viking-red/60" />
+                {secondRowMilestones.map((milestone, index) => (
+                  <div key={index} className="relative flex-1 min-w-[180px]">
+                    <span className="pointer-events-none absolute left-1/2 top-4 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-white bg-viking-red dark:border-viking-charcoal" />
+                    <div className="mx-auto mt-6 flex max-w-xs flex-col items-center rounded-xl border border-gray-200 bg-white p-6 text-center shadow-md dark:border-gray-700 dark:bg-viking-charcoal/70">
+                      <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-viking-gold">
+                        <span className="text-lg font-bold text-viking-charcoal">
+                          {milestone.year}
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-bold text-viking-charcoal dark:text-gray-100 mb-2">
+                        {milestone.event}
+                      </h3>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">
+                        {milestone.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:hidden">
               {milestones.map((milestone, index) => (
                 <div
                   key={index}

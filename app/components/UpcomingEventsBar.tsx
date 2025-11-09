@@ -122,13 +122,10 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
   return (
     <section className="hidden md:block w-full bg-gray-50 dark:bg-viking-charcoal/70 border-b border-gray-200 dark:border-gray-700 py-4 transition-colors">
       <div className="w-full px-2 sm:px-4 lg:px-6 flex items-center">
-        <div className="mr-10">
-          <label
-            htmlFor="team-filter"
-            className="block text-m font-semibold text-viking-red mb-1"
-          >
-            Team
-          </label>
+        <div className="mr-6">
+          <h2 className="font-bold text-viking-red text-lg mr-6 whitespace-nowrap flex items-center gap-1 pb-2">
+            <Calendar className="w-5 h-5" /> Upcoming Events
+          </h2>
           <select
             id="team-filter"
             value={teamFilter}
@@ -142,15 +139,12 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
             ))}
           </select>
         </div>
-        <h2 className="font-bold text-viking-red text-lg mr-6 whitespace-nowrap flex items-center gap-1">
-          <Calendar className="w-5 h-5" /> Upcoming Events
-        </h2>
         <button
           className="hidden md:inline-flex p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-viking-red mr-2 transition-colors"
           onClick={() => scroll("left")}
           aria-label="Scroll left"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-7 h-7" />
         </button>
         <div
           ref={scrollRef}
@@ -253,7 +247,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
           onClick={() => scroll("right")}
           aria-label="Scroll right"
         >
-          <ArrowRight className="w-5 h-5" />
+          <ArrowRight className="w-7 h-7" />
         </button>
       </div>
     </section>

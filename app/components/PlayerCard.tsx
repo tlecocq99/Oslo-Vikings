@@ -127,7 +127,7 @@ export default function PlayerCard(props: PlayerCardProps) {
     );
     const desktop = (
       <div
-        className={`hidden md:flex md:flex-col md:h-full bg-white dark:bg-viking-charcoal/70 dark:border-viking-red-dark rounded-lg shadow-lg overflow-hidden transform-gpu transition-transform transition-shadow duration-300 ease-out md:hover:scale-[1.06] md:hover:-translate-y-1 md:hover:shadow-2xl ${
+        className={`hidden md:flex md:flex-col md:h-full bg-white dark:bg-viking-charcoal/70 dark:border-viking-red-dark rounded-lg shadow-lg overflow-hidden transform-gpu transition-shadow duration-300 ease-out md:hover:scale-[1.06] md:hover:-translate-y-1 md:hover:shadow-2xl ${
           highlight ? "ring-2 ring-viking-red" : ""
         }`}
       >

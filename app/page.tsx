@@ -5,14 +5,16 @@ import UpcomingEventsBar from "./components/UpcomingEventsBar";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import NewsCard from "./components/NewsCard";
-import GameCard from "./components/GameCard";
+import GameCard, { type GameCardProps } from "./components/GameCard";
 import PartnersCarousel from "./components/PartnersCarousel";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Trophy, Users, Calendar } from "lucide-react";
 import { Teko } from "next/font/google";
 import { fetchUpcomingEvents } from "./services/fetchUpcomingEvents";
 import { fetchNewsArticles } from "./services/fetchNews";
+import { fetchNorskTippingCard } from "./services/fetchNorskTippingCard";
 import type { Partner } from "./types/partner";
 import type { NewsCardProps } from "./components/NewsCardContent";
 import type { NewsArticle } from "./types/news";
@@ -183,19 +185,41 @@ export default async function Home() {
     };
   }
 
-  const upcomingGame = {
-    component: "game",
+  const sheetEvents = await fetchUpcomingEvents();
+  const upcomingEvents =
+    sheetEvents.length > 0 ? sheetEvents : buildFallbackEvents();
+
+  const fallbackUpcomingGame: GameCardProps = {
     home_team: "Oslo Vikings",
     away_team: "Stavanger Stallions",
     date: "2025-01-22",
     time: "15:00",
     location: "Viking Stadium, Oslo",
-    status: normalizeGameStatus("upcoming"), // Safely convert string to literal type
+    status: normalizeGameStatus("upcoming"),
   };
 
-  const sheetEvents = await fetchUpcomingEvents();
-  const upcomingEvents =
-    sheetEvents.length > 0 ? sheetEvents : buildFallbackEvents();
+  const eliteUpcomingGameEvent =
+    upcomingEvents.find((event) => {
+      if (!event.isGame || !event.team) return false;
+      const teamKey = String(event.team).toLowerCase().trim();
+      return (
+        teamKey === "main" ||
+        teamKey === "senior elite" ||
+        teamKey === "elite" ||
+        teamKey === "senior"
+      );
+    }) ?? upcomingEvents.find((event) => event.isGame);
+
+  const upcomingGame: GameCardProps = eliteUpcomingGameEvent
+    ? {
+        home_team: eliteUpcomingGameEvent.homeTeam ?? "Oslo Vikings",
+        away_team: eliteUpcomingGameEvent.awayTeam ?? "Opponent",
+        date: eliteUpcomingGameEvent.date,
+        time: eliteUpcomingGameEvent.time ?? "TBD",
+        location: eliteUpcomingGameEvent.location,
+        status: normalizeGameStatus("upcoming"),
+      }
+    : fallbackUpcomingGame;
 
   const newsArticles = await fetchNewsArticles({ limit: 6 });
   const featuredNews: NewsCardProps[] =
@@ -262,6 +286,8 @@ export default async function Home() {
     },
   ];
 
+  const norskTippingCard = await fetchNorskTippingCard();
+
   return (
     <>
       <SplashScreen />
@@ -282,7 +308,7 @@ export default async function Home() {
                 <Trophy className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-gold mb-2">
-                5
+                15
               </h3>
               <p className="text-gray-600 dark:text-gray-200">
                 Championship Wins
@@ -294,7 +320,7 @@ export default async function Home() {
                 <Users className="w-8 h-8 text-viking-charcoal" />
               </div>
               <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-red mb-2">
-                45
+                Over 100
               </h3>
               <p className="text-gray-600 dark:text-gray-200">Active Players</p>
             </div>
@@ -304,7 +330,7 @@ export default async function Home() {
                 <Calendar className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-gold mb-2">
-                15
+                39
               </h3>
               <p className="text-gray-600 dark:text-gray-200">
                 Years Established
@@ -328,6 +354,89 @@ export default async function Home() {
           </div>
 
           <PartnersCarousel partners={partners} />
+        </div>
+      </section>
+
+      {/* Booster & Grasrot Support Section */}
+      <section className="bg-white dark:bg-viking-charcoal/70 transition-colors">
+        <div className="grid min-h-[260px] sm:min-h-[200px] xl:min-h-[320px] grid-cols-1 gap-y-6 px-4 lg:grid-cols-2 lg:gap-y-0 lg:px-0">
+          <div className="relative h-full min-h-[220px] overflow-hidden bg-viking-red">
+            <Image
+              src="/images/og/og-logo1600x900.png"
+              alt="Vikings Booster Club"
+              fill
+              className="object-cover object-center"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              priority={false}
+            />
+            <div className="absolute inset-0 bg-black/45" />
+            <div className="relative z-10 flex h-full w-full items-center justify-center px-6 text-center">
+              <div className="space-y-1 text-white">
+                <h3 className="text-2xl font-semibold uppercase tracking-wide">
+                  Vikings Booster Club
+                </h3>
+                <p className="text-sm text-white/80">
+                  Fuel the program with your continued support.
+                </p>
+                <Button
+                  size="sm"
+                  asChild
+                  className="bg-white text-viking-red hover:bg-viking-gold hover:text-viking-charcoal"
+                >
+                  <Link
+                    href="https://www.norsk-tipping.no/grasrotandelen"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Join the Booster Club
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex h-full min-h-[220px] flex-col justify-center gap-3 bg-white px-2 lg:px-8 dark:bg-viking-charcoal/80">
+            <div className="space-y-1">
+              <h3 className="text-xl font-semibold text-viking-charcoal dark:text-gray-100"></h3>
+            </div>
+
+            <div className="relative flex-1 overflow-hidden">
+              {norskTippingCard ? (
+                <iframe
+                  title="Norsk Tipping Grasrotandelen Card"
+                  srcDoc={norskTippingCard.srcDoc}
+                  className="h-full min-h-[200px] w-full border-0"
+                  loading="lazy"
+                  sandbox="allow-scripts allow-same-origin allow-popups"
+                  scrolling="no"
+                />
+              ) : (
+                <iframe
+                  title="Norsk Tipping Grasrotandelen Card"
+                  src="https://www.norsk-tipping.no/grasrotandelen/statistikk/iframe/887798052"
+                  className="h-full min-h-[160px] w-full border-0 remove-scroll"
+                  loading="lazy"
+                  scrolling="no"
+                />
+              )}
+              <Button
+                asChild
+                size="sm"
+                className="absolute bottom-4 z-10 bg-viking-red text-white shadow-md hover:bg-viking-gold hover:text-viking-charcoal"
+              >
+                <Link
+                  href="https://www.norsk-tipping.no/grasrotandelen/din-mottaker/887798052"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Support via Norsk Tipping
+                </Link>
+              </Button>
+            </div>
+            <p className="text-sm text-viking-charcoal/70 dark:text-gray-300">
+              Live stats from Norsk Tipping&apos;s grassroots program.
+            </p>
+          </div>
         </div>
       </section>
 
