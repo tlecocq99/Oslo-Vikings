@@ -12,11 +12,22 @@ export interface TeamInfo {
   shortName?: string;
   description: string;
   heroImage?: string;
+  heroImageMobile?: string;
   heroTagline?: string;
   staffRange?: string;
 }
 
 const DEFAULT_HERO_IMAGE = "/images/backgrounds/teamClose.avif";
+const eliteBanner = "/images/backgrounds/elite-banner.png";
+const eliteBannerMobile = "/images/backgrounds/elite-banner(16x9).png";
+const d2Banner = "/images/backgrounds/d2-banner.png";
+const d2BannerMobile = "/images/backgrounds/d2-banner(16x9).png";
+const u17Banner = "/images/backgrounds/u17-banner.png";
+const u17BannerMobile = "/images/backgrounds/u17-banner(16x9).png";
+const u14Banner = "/images/backgrounds/u14-banner.png";
+const u14BannerMobile = "/images/backgrounds/u14-banner(16x9).png";
+const flagBanner = "/images/backgrounds/flag-banner.png";
+const flagBannerMobile = "/images/backgrounds/flag-banner(16x9).png";
 const DEFAULT_TAGLINE = "Proudly representing the Oslo Vikings organization.";
 
 export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
@@ -24,50 +35,55 @@ export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
     slug: "senior-elite",
     name: "Senior Elite",
     sheetTab: "Senior Elite",
-    staffRange: "A13:D24",
+    staffRange: "A28:D42",
     description:
       "The top-tier Oslo Vikings squad competing for national championships in Norway.",
-    heroImage: DEFAULT_HERO_IMAGE,
-    heroTagline: "The flagship program of the Oslo Vikings.",
+    heroImage: eliteBanner,
+    heroImageMobile: eliteBannerMobile,
+    heroTagline: "",
   },
   "senior-d2": {
     slug: "senior-d2",
     name: "Senior D2",
     sheetTab: "Senior D2",
-    staffRange: "A27:D36",
+    staffRange: "A45:D57",
     description:
       "Developing talent and providing competitive opportunities in Norway's Division 2 league.",
-    heroImage: DEFAULT_HERO_IMAGE,
+    heroImage: d2Banner,
+    heroImageMobile: d2BannerMobile,
     heroTagline: DEFAULT_TAGLINE,
   },
   u17: {
     slug: "u17",
     name: "U17",
     sheetTab: "U17",
-    staffRange: "A39:D47",
+    staffRange: "A60:D71",
     description:
       "Elite youth program cultivating the next generation of Oslo Vikings standouts.",
-    heroImage: DEFAULT_HERO_IMAGE,
+    heroImage: u17Banner,
+    heroImageMobile: u17BannerMobile,
     heroTagline: DEFAULT_TAGLINE,
   },
   u14: {
     slug: "u14",
     name: "U14",
     sheetTab: "U14",
-    staffRange: "A50:D55",
+    staffRange: "A74:D82",
     description:
       "Early development and fundamentals with a focus on fun, teamwork, and skill building.",
-    heroImage: DEFAULT_HERO_IMAGE,
+    heroImage: u14Banner,
+    heroImageMobile: u14BannerMobile,
     heroTagline: DEFAULT_TAGLINE,
   },
   "flag-football": {
     slug: "flag-football",
     name: "Flag Football",
     sheetTab: "Flag",
-    staffRange: "A58:D64",
+    staffRange: "A84:D90",
     description:
       "Fast-paced flag football squads introducing players to the sport in a non-contact format.",
     heroImage: DEFAULT_HERO_IMAGE,
+    heroImageMobile: DEFAULT_HERO_IMAGE,
     heroTagline: DEFAULT_TAGLINE,
   },
 };

@@ -3,7 +3,7 @@ import { fetchSheetRows } from "./googleSheets";
 
 // -------- Player helpers --------
 
-const PLAYER_RANGE = "A2:I50"; // includes Nationality (column I)
+const PLAYER_RANGE = "A2:I200"; // includes Nationality (column I)
 function mapPlayerRow(row: any[], index: number, namespace: string): Player {
   const [
     name = "",

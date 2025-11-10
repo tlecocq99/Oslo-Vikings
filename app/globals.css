@@ -57,6 +57,12 @@
   body {
     @apply bg-background text-foreground max-w-full overflow-x-hidden;
     font-feature-settings: "rlig" 1, "calt" 1;
+    scrollbar-gutter: stable both-edges;
+  }
+
+  body.react-remove-scroll-body {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
   }
 
   main {

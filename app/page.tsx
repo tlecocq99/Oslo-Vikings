@@ -14,7 +14,6 @@ import { ArrowRight, Trophy, Users, Calendar } from "lucide-react";
 import { Teko } from "next/font/google";
 import { fetchUpcomingEvents } from "./services/fetchUpcomingEvents";
 import { fetchNewsArticles } from "./services/fetchNews";
-import { fetchNorskTippingCard } from "./services/fetchNorskTippingCard";
 import type { Partner } from "./types/partner";
 import type { NewsCardProps } from "./components/NewsCardContent";
 import type { NewsArticle } from "./types/news";
@@ -286,8 +285,6 @@ export default async function Home() {
     },
   ];
 
-  const norskTippingCard = await fetchNorskTippingCard();
-
   return (
     <>
       <SplashScreen />
@@ -341,7 +338,7 @@ export default async function Home() {
       </section>
 
       {/* Partners Section */}
-      <section className="py-16 bg-gray-100 dark:bg-viking-charcoal/90 transition-colors">
+      <section className="py-10 bg-gray-100 dark:bg-viking-charcoal/90 transition-colors">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-white mb-4">
@@ -359,84 +356,68 @@ export default async function Home() {
 
       {/* Booster & Grasrot Support Section */}
       <section className="bg-white dark:bg-viking-charcoal/70 transition-colors">
-        <div className="grid min-h-[260px] sm:min-h-[200px] xl:min-h-[320px] grid-cols-1 gap-y-6 px-4 lg:grid-cols-2 lg:gap-y-0 lg:px-0">
-          <div className="relative h-full min-h-[220px] overflow-hidden bg-viking-red">
-            <Image
-              src="/images/og/og-logo1600x900.png"
-              alt="Vikings Booster Club"
-              fill
-              className="object-cover object-center"
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              priority={false}
-            />
-            <div className="absolute inset-0 bg-black/45" />
-            <div className="relative z-10 flex h-full w-full items-center justify-center px-6 text-center">
-              <div className="space-y-1 text-white">
-                <h3 className="text-2xl font-semibold uppercase tracking-wide">
-                  Vikings Booster Club
-                </h3>
-                <p className="text-sm text-white/80">
-                  Fuel the program with your continued support.
-                </p>
-                <Button
-                  size="sm"
-                  asChild
-                  className="bg-white text-viking-red hover:bg-viking-gold hover:text-viking-charcoal"
-                >
-                  <Link
-                    href="https://www.norsk-tipping.no/grasrotandelen"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Join the Booster Club
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex h-full min-h-[220px] flex-col justify-center gap-3 bg-white px-2 lg:px-8 dark:bg-viking-charcoal/80">
-            <div className="space-y-1">
-              <h3 className="text-xl font-semibold text-viking-charcoal dark:text-gray-100"></h3>
+        <div className="grid min-h-[220px] sm:min-h-[300px] xl:min-h-[360px] grid-cols-1 gap-y-4 px-4 lg:grid-cols-2 lg:gap-y-0 lg:px-0">
+          <Link
+            href="/booster"
+            className="group relative flex h-full min-h-[170px] items-stretch overflow-hidden rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-charcoal/80 dark:focus-visible:ring-offset-viking-charcoal sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
+            aria-label="Explore the Vikings Booster Club"
+          >
+            <div className="relative flex-1">
+              <picture className="relative block h-full w-full">
+                <source
+                  media="(max-width: 1023px)"
+                  srcSet="/images/sponsors/Booster-Tile(770x200).png"
+                />
+                <Image
+                  src="/images/sponsors/Booster-Tile.png"
+                  alt="Vikings Booster Club"
+                  fill
+                  className="object-contain object-center lg:object-cover"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  priority={false}
+                />
+              </picture>
+              <div className="absolute inset-0 bg-black/45" />
             </div>
 
-            <div className="relative flex-1 overflow-hidden">
-              {norskTippingCard ? (
-                <iframe
-                  title="Norsk Tipping Grasrotandelen Card"
-                  srcDoc={norskTippingCard.srcDoc}
-                  className="h-full min-h-[200px] w-full border-0"
-                  loading="lazy"
-                  sandbox="allow-scripts allow-same-origin allow-popups"
-                  scrolling="no"
-                />
-              ) : (
-                <iframe
-                  title="Norsk Tipping Grasrotandelen Card"
-                  src="https://www.norsk-tipping.no/grasrotandelen/statistikk/iframe/887798052"
-                  className="h-full min-h-[160px] w-full border-0 remove-scroll"
-                  loading="lazy"
-                  scrolling="no"
-                />
-              )}
-              <Button
-                asChild
-                size="sm"
-                className="absolute bottom-4 z-10 bg-viking-red text-white shadow-md hover:bg-viking-gold hover:text-viking-charcoal"
-              >
-                <Link
-                  href="https://www.norsk-tipping.no/grasrotandelen/din-mottaker/887798052"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Support via Norsk Tipping
-                </Link>
-              </Button>
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-viking-charcoal/80 p-6 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-100">
+              <p className="text-lg font-semibold uppercase tracking-wide">
+                Discover the Vikings Booster Club
+              </p>
             </div>
-            <p className="text-sm text-viking-charcoal/70 dark:text-gray-300">
-              Live stats from Norsk Tipping&apos;s grassroots program.
-            </p>
-          </div>
+          </Link>
+
+          <Link
+            href="https://www.norsk-tipping.no/grasrotandelen/din-mottaker/887798052"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative flex h-full min-h-[180px] items-stretch overflow-hidden rounded-xl bg-white px-2 transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-charcoal/80 dark:focus-visible:ring-offset-viking-charcoal sm:min-h-[220px] lg:px-8"
+            aria-label="Become a Grasrot supporter"
+          >
+            <div className="relative flex-1">
+              <picture className="relative block h-full w-full">
+                <source
+                  media="(max-width: 1023px)"
+                  srcSet="/images/sponsors/mobileGrasrots.png"
+                />
+                <Image
+                  src="/images/sponsors/grasrots.png"
+                  alt="Vikings Grasrot support"
+                  fill
+                  className="object-contain object-center lg:object-cover"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  priority={false}
+                />
+              </picture>
+              <div className="absolute inset-0 bg-black/45" />
+            </div>
+
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-viking-charcoal/80 p-6 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-100">
+              <p className="text-lg font-semibold uppercase tracking-wide">
+                Click here to become a Grasrot supporter today!
+              </p>
+            </div>
+          </Link>
         </div>
       </section>
 
