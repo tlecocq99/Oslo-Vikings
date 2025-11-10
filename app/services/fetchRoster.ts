@@ -4,6 +4,30 @@ import { fetchSheetRows } from "./googleSheets";
 // -------- Player helpers --------
 
 const PLAYER_RANGE = "A2:I200"; // includes Nationality (column I)
+
+function isValidPlayerRow(row: any[]): boolean {
+  if (!row || row.length < 3) return false;
+
+  const [rawName, rawPosition, rawNumber] = row;
+
+  const hasName = typeof rawName === "string" && rawName.trim().length > 0;
+  const hasPosition =
+    typeof rawPosition === "string" && rawPosition.trim().length > 0;
+
+  let hasValidNumber = false;
+  if (typeof rawNumber === "number") {
+    hasValidNumber = Number.isFinite(rawNumber);
+  } else if (typeof rawNumber === "string") {
+    const cleaned = rawNumber.trim().replace(/^#/, "");
+    if (cleaned !== "") {
+      const parsed = parseInt(cleaned, 10);
+      hasValidNumber = !Number.isNaN(parsed);
+    }
+  }
+
+  return hasName && hasPosition && hasValidNumber;
+}
+
 function mapPlayerRow(row: any[], index: number, namespace: string): Player {
   const [
     name = "",
@@ -40,7 +64,9 @@ function mapPlayerRow(row: any[], index: number, namespace: string): Player {
 
 export async function fetchRoster(tab: string): Promise<Player[]> {
   const rows = await fetchSheetRows(tab, PLAYER_RANGE);
-  return rows.map((row, index) => mapPlayerRow(row, index, tab));
+  return rows
+    .filter(isValidPlayerRow)
+    .map((row, index) => mapPlayerRow(row, index, tab));
 }
 
 export async function fetchPlayers(): Promise<Player[]> {
