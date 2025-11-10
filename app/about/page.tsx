@@ -1,32 +1,48 @@
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import { Shield, Target, Users, Trophy, Heart, Star } from "lucide-react";
+import {
+  Shield,
+  Target,
+  Users,
+  Trophy,
+  Heart,
+  Star,
+  Dumbbell,
+  Badge,
+} from "lucide-react";
+import { JourneyTimeline } from "../components/JourneyTimeline";
 
 export default function AboutPage() {
   const values = [
     {
-      icon: Shield,
-      title: "Honor",
+      icon: Heart,
+      title: "Inclusivity",
       description:
-        "We play with integrity and respect, representing Norwegian values on and off the field.",
+        "We strive to provide an athletic experience that all can partake in and enjoy, including both kids and adults of all fitness levels and physiques.",
     },
     {
-      icon: Target,
-      title: "Excellence",
+      icon: Shield,
+      title: "Sportsmanship",
       description:
-        "Striving for perfection in every practice, every play, and every game.",
+        "We respect our fellow athletes, the Club, and the game of American Football whether on or off the field.",
     },
     {
       icon: Users,
-      title: "Brotherhood",
+      title: "Community",
       description:
-        "United as one team, one family, supporting each other through victory and challenge.",
+        "As Vikings we actively engage with the Club to have fun, to support and celebrate the accomplishments of our athletes, and to form lasting bonds",
     },
     {
-      icon: Heart,
-      title: "Passion",
+      icon: Target,
+      title: "Drive",
       description:
-        "Fueled by love for the game and pride in representing Oslo and Norway.",
+        "We strive to be champions by dedicating ourselves to perform at our best and by motivating each other to do the same",
+    },
+    {
+      icon: Dumbbell,
+      title: "Development",
+      description:
+        "We are all committed to become the best athlete, person, and club we can be through continuous learning and improvement",
     },
   ];
 
@@ -79,10 +95,6 @@ export default function AboutPage() {
     },
   ];
 
-  const midpoint = Math.ceil(milestones.length / 2);
-  const firstRowMilestones = milestones.slice(0, midpoint);
-  const secondRowMilestones = milestones.slice(midpoint);
-
   return (
     <>
       <Navigation />
@@ -92,10 +104,37 @@ export default function AboutPage() {
         <section className="dark:bg-gray-800 py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
-              About the Oslo Vikings
+              Overview
             </h1>
-            <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-3xl mx-auto">
-              Discover the story behind Norway’s premier American football team
+            <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-10xl mx-auto">
+              Founded in 1986, the Oslo Vikings are members of the Norwegian
+              American Football and Cheerleading Federation and the European
+              Federation of American Football. In addition, the Vikings are
+              members of both the Norwegian National Federation of Sports and
+              the Oslo City Sports Association. As Vikings we continually aspire
+              to make our sports program attractive to all types of players,
+              both elite and novice, and both large and small. During recent
+              years, we have made a concerted effort to increase the access of
+              our programs, especially in our youth program where we believe we
+              are uniquely equipped to offer athletic activities and
+              organizational support that alternative sports cannot provide. We
+              enable players that often do not perfectly fit the mold of usual
+              Norwegian sports such as Soccer or Handball to participate in an
+              athletically challenging, competitive team environment that is
+              exceptionally rewarding and most importantly, fun! In our efforts
+              to serve our players and community we are an organization that is
+              committed to continuous development and, as such, believe there is
+              always room to improve our player offering and our reach within
+              the greater community. Leading the club’s efforts, is our highest
+              governing body, the board of directors (Styre), which is comprised
+              of ten volunteers elected annually for one-year terms during the
+              annual members meeting. The board, led by an elected President
+              (Leder), is responsible for day-to-day administration, football
+              operations, the annual budget, and long-term planning for the
+              club. Reporting to the board, are a senior department led by the
+              club’s Head Coach and a junior department led by the Junior
+              Manager. The junior department consists of separate U14 (12-14),
+              U17 (15-17) and U19 (18-19) teams.
             </p>
           </div>
         </section>
@@ -107,11 +146,10 @@ export default function AboutPage() {
               Our Mission
             </h2>
             <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-              The Oslo Vikings are dedicated to excellence in American football
-              while promoting Norwegian values of teamwork, perseverance, and
-              community. We strive to be champions both on the field and in our
-              commitment to developing young athletes and giving back to our
-              community.
+              The Oslo Vikings&apos; mission is to be the leading sports club in
+              Norway through providing a fun, demanding American Football
+              experience founded on Community, Sportsmanship, Development,
+              Drive, and Inclusivity.
             </p>
           </div>
         </section>
@@ -129,11 +167,11 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-6">
               {values.map((value, index) => (
                 <div
                   key={index}
-                  className="bg-white dark:bg-viking-charcoal/70 rounded-lg p-6 text-center shadow-lg hover:shadow-xl transition-shadow border border-gray-200 dark:border-gray-700"
+                  className="bg-white dark:bg-viking-charcoal/70 rounded-lg p-6 text-center shadow-lg hover:shadow-xl transition-shadow border border-gray-200 dark:border-gray-700 lg:p-5"
                 >
                   <div className="w-16 h-16 bg-viking-red rounded-full flex items-center justify-center mx-auto mb-4">
                     <value.icon className="w-8 h-8 text-white" />
@@ -158,55 +196,11 @@ export default function AboutPage() {
                 Our Journey
               </h2>
               <p className="text-gray-600 dark:text-gray-300">
-                From humble beginnings to championship glory
+                From humble beginnings to championship glory.
               </p>
             </div>
 
-            <div className="hidden lg:flex flex-col gap-14">
-              <div className="relative flex w-full items-end gap-8 pb-12">
-                <div className="pointer-events-none absolute bottom-4 left-0 right-0 h-0.5 bg-viking-red/50 dark:bg-viking-red/60" />
-                {firstRowMilestones.map((milestone, index) => (
-                  <div key={index} className="relative flex-1 min-w-[180px]">
-                    <div className="mx-auto flex max-w-xs flex-col items-center rounded-xl border border-gray-200 bg-white p-6 text-center shadow-md dark:border-gray-700 dark:bg-viking-charcoal/70">
-                      <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-viking-gold">
-                        <span className="text-lg font-bold text-viking-charcoal">
-                          {milestone.year}
-                        </span>
-                      </div>
-                      <h3 className="text-lg font-bold text-viking-charcoal dark:text-gray-100 mb-2">
-                        {milestone.event}
-                      </h3>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">
-                        {milestone.description}
-                      </p>
-                    </div>
-                    <span className="pointer-events-none absolute left-1/2 bottom-4 h-4 w-4 -translate-x-1/2 translate-y-1/2 rounded-full border-4 border-white bg-viking-red dark:border-viking-charcoal" />
-                  </div>
-                ))}
-              </div>
-
-              <div className="relative flex w-full items-start gap-8 pt-12">
-                <div className="pointer-events-none absolute top-4 left-0 right-0 h-0.5 bg-viking-red/50 dark:bg-viking-red/60" />
-                {secondRowMilestones.map((milestone, index) => (
-                  <div key={index} className="relative flex-1 min-w-[180px]">
-                    <span className="pointer-events-none absolute left-1/2 top-4 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-white bg-viking-red dark:border-viking-charcoal" />
-                    <div className="mx-auto mt-6 flex max-w-xs flex-col items-center rounded-xl border border-gray-200 bg-white p-6 text-center shadow-md dark:border-gray-700 dark:bg-viking-charcoal/70">
-                      <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-viking-gold">
-                        <span className="text-lg font-bold text-viking-charcoal">
-                          {milestone.year}
-                        </span>
-                      </div>
-                      <h3 className="text-lg font-bold text-viking-charcoal dark:text-gray-100 mb-2">
-                        {milestone.event}
-                      </h3>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">
-                        {milestone.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <JourneyTimeline milestones={milestones} />
 
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:hidden">
               {milestones.map((milestone, index) => (
@@ -241,57 +235,54 @@ export default function AboutPage() {
                 Leadership
               </h2>
               <p className="text-gray-600 dark:text-gray-300">
-                Meet the people who make the Oslo Vikings organization
-                successful
+                Meet the people who help make the Oslo Vikings organization
+                successful.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+              <div className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg p-6 text-center border border-gray-200 dark:border-gray-700">
+                <div className="w-20 h-20 bg-viking-red rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <Star className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-2">
+                  Anton Pettersen
+                </h3>
+                <p className="text-viking-red font-semibold mb-3">President</p>
+              </div>
+              <div className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg p-6 text-center border border-gray-200 dark:border-gray-700">
+                <div className="w-20 h-20 bg-viking-gold rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <Badge className="w-10 h-10 text-viking-charcoal" />
+                </div>
+                <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-2">
+                  Lotta Begby
+                </h3>
+                <p className="text-viking-red font-semibold mb-3">
+                  Vice President
+                </p>
+              </div>
+
               <div className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg p-6 text-center border border-gray-200 dark:border-gray-700">
                 <div className="w-20 h-20 bg-viking-red rounded-full mx-auto mb-4 flex items-center justify-center">
                   <Trophy className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-2">
-                  Astrid Larsen
+                  Adam Lukasiewicz
                 </h3>
                 <p className="text-viking-red font-semibold mb-3">
-                  Team President
-                </p>
-                <p className="text-gray-700 dark:text-gray-300 text-sm">
-                  Visionary leader driving the strategic direction and growth of
-                  the Oslo Vikings organization.
+                  Head of Sport
                 </p>
               </div>
 
               <div className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg p-6 text-center border border-gray-200 dark:border-gray-700">
                 <div className="w-20 h-20 bg-viking-gold rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Star className="w-10 h-10 text-viking-charcoal" />
+                  <Users className="w-10 h-10 text-viking-charcoal" />
                 </div>
                 <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-2">
-                  Gunnar Pedersen
+                  Joachim Løvf
                 </h3>
                 <p className="text-viking-red font-semibold mb-3">
-                  General Manager
-                </p>
-                <p className="text-gray-700 dark:text-gray-300 text-sm">
-                  Experienced sports executive managing team operations, player
-                  acquisition, and strategic planning.
-                </p>
-              </div>
-
-              <div className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg p-6 text-center border border-gray-200 dark:border-gray-700">
-                <div className="w-20 h-20 bg-viking-red rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Users className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-2">
-                  Ingrid Haugen
-                </h3>
-                <p className="text-viking-red font-semibold mb-3">
-                  Director of Operations
-                </p>
-                <p className="text-gray-700 dark:text-gray-300 text-sm">
-                  Ensuring smooth daily operations and coordinating all team
-                  activities and logistics.
+                  Junior Responsible
                 </p>
               </div>
             </div>
