@@ -5,18 +5,18 @@ import { Facebook, Instagram, Mail, MapPin, Twitter } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="bg-viking-charcoal text-white">
-      <div className="w-full px-4 sm:px-8 lg:px-14 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
+      <div className="w-full px-4 sm:px-7 lg:px-12 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 lg:gap-9">
           {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-start space-x-3 mb-4">
-              <div className="w-14 h-14 rounded-lg flex items-center justify-center">
+            <div className="flex items-start space-x-2.5 mb-3.5">
+              <div className="w-12 h-12 rounded-lg flex items-center justify-center">
                 <Image
                   src="/images/logo.png"
                   alt="Oslo Vikings Logo"
                   width={48}
                   height={48}
-                  className="w-18 h-18"
+                  className="w-16 h-16"
                 />
               </div>
               <div>
@@ -26,7 +26,7 @@ export default function Footer() {
                     Vikings
                   </span>
                 </div>
-                <div className="mt-3 flex items-center space-x-4">
+                <div className="mt-2.5 flex items-center space-x-3">
                   <Link
                     href="https://x.com/OsloVikings"
                     target="_blank"
@@ -34,7 +34,7 @@ export default function Footer() {
                     aria-label="Oslo Vikings on X"
                     className="text-gray-300 transition-colors hover:text-viking-red"
                   >
-                    <Twitter className="h-7 w-7" />
+                    <Twitter className="h-6 w-6" />
                   </Link>
                   <Link
                     href="https://www.facebook.com/OsloVikings"
@@ -43,7 +43,7 @@ export default function Footer() {
                     aria-label="Oslo Vikings on Facebook"
                     className="text-gray-300 transition-colors hover:text-viking-red"
                   >
-                    <Facebook className="h-7 w-7" />
+                    <Facebook className="h-6 w-6" />
                   </Link>
                   <Link
                     href="https://www.instagram.com/oslovikings/"
@@ -52,7 +52,7 @@ export default function Footer() {
                     aria-label="Oslo Vikings on Instagram"
                     className="text-gray-300 transition-colors hover:text-viking-red"
                   >
-                    <Instagram className="h-7 w-7" />
+                    <Instagram className="h-6 w-6" />
                   </Link>
                 </div>
               </div>
@@ -61,8 +61,8 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
+            <ul className="space-y-1.5">
               <li>
                 <Link
                   href="/team"
@@ -100,8 +100,8 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact</h3>
-            <div className="space-y-3">
+            <h3 className="text-lg font-semibold mb-3">Contact</h3>
+            <div className="space-y-2.5">
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-viking-red" />
                 <span className="text-gray-300 text-sm">Oslo, Norway</span>
@@ -116,7 +116,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-6 pt-6 text-center">
+        <div className="border-t border-gray-700 mt-4 pt-4 text-center">
           <p className="text-gray-400">
             © {new Date().getFullYear()} Oslo Vikings. All rights reserved.
           </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -30,10 +30,14 @@ const teamLinks = [
   { name: "Flag Football", href: "/team/flag-football" },
 ];
 
+const DEFAULT_NAV_HEIGHT = 96;
+
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isTeamsMobileOpen, setIsTeamsMobileOpen] = useState(false);
   const pathname = usePathname();
+  const navRef = useRef<HTMLElement | null>(null);
+  const [navHeight, setNavHeight] = useState(DEFAULT_NAV_HEIGHT);
 
   const navItems = useMemo(() => navigation, []);
   const mobileTeamsMenuId = "mobile-team-links";
@@ -48,9 +52,44 @@ export default function Navigation() {
     setIsTeamsMobileOpen(false);
   };
 
+  useEffect(() => {
+    const navElement = navRef.current;
+    if (!navElement || typeof window === "undefined") {
+      return;
+    }
+
+    const updateHeight = () => {
+      setNavHeight(navElement.offsetHeight || DEFAULT_NAV_HEIGHT);
+    };
+
+    updateHeight();
+
+    let resizeObserver: ResizeObserver | undefined;
+    if ("ResizeObserver" in window) {
+      resizeObserver = new ResizeObserver(() => updateHeight());
+      resizeObserver.observe(navElement);
+    }
+
+    window.addEventListener("resize", updateHeight, { passive: true });
+
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+      resizeObserver?.disconnect();
+    };
+  }, [isOpen, isTeamsMobileOpen]);
+
   return (
-    <nav className="shadow-lg sticky top-0 z-[100] w-full overflow-visible bg-white dark:bg-viking-charcoal/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-viking-charcoal/70 transition-colors">
-      <div className="container-fluid flex relative h-24 items-center px-4 sm:px-6 lg:px-12">
+    <>
+      <div
+        aria-hidden="true"
+        className="w-full"
+        style={{ height: `${navHeight}px` }}
+      />
+      <nav
+        ref={navRef}
+        className="shadow-lg fixed top-0 left-0 right-0 z-[150] w-full overflow-visible bg-white dark:bg-viking-charcoal/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-viking-charcoal/70 transition-colors"
+      >
+      <div className="flex w-full relative h-24 items-center px-4 sm:px-6 lg:px-14">
         {/* Logo on the far left */}
         <Link href="/" className="flex items-center h-full group mr-4">
           <Image
@@ -226,6 +265,7 @@ export default function Navigation() {
           </div>
         </div>
       )}
-    </nav>
+      </nav>
+    </>
   );
 }
