@@ -1,3 +1,10 @@
+/**
+ * Temporarily disabled while the Grasrot section uses a static screenshot.
+ *
+ * Original implementation retained below for future reference.
+ */
+
+/*
 import * as cheerio from "cheerio";
 
 const NORSK_TIPPING_URL =
@@ -31,6 +38,20 @@ export async function fetchNorskTippingCard(): Promise<NorskTippingCardResult | 
     }
 
     card.find("script").remove();
+
+    const container = card.find("#root > div.container.p-4").first();
+    const desiredSection = card
+      .find("#root > div.container.p-4 > div:nth-child(1) > div")
+      .first();
+
+    if (container.length && desiredSection.length) {
+      const desiredHtml = $.html(desiredSection);
+      container.empty();
+      container.append(desiredHtml);
+    } else {
+      card.find("#root > div.container.p-4 > div.w-full.flex.mb-8").remove();
+      card.find("#root > div.container.p-4 > div:nth-child(3)").remove();
+    }
 
     const styles: string[] = [];
     $("style").each((_, element) => {
@@ -79,3 +100,4 @@ export async function fetchNorskTippingCard(): Promise<NorskTippingCardResult | 
     return null;
   }
 }
+*/
