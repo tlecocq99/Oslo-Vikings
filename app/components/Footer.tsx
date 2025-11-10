@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Mail, MapPin, Twitter } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin } from "lucide-react";
+import { TikTokIcon } from "./TikTokIcon";
 
 export default function Footer() {
   return (
@@ -28,13 +29,13 @@ export default function Footer() {
                 </div>
                 <div className="mt-2.5 flex items-center space-x-3">
                   <Link
-                    href="https://x.com/OsloVikings"
+                    href="https://www.tiktok.com/@oslovikings"
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Oslo Vikings on X"
+                    aria-label="Oslo Vikings on TikTok"
                     className="text-gray-300 transition-colors hover:text-viking-red"
                   >
-                    <Twitter className="h-6 w-6" />
+                    <TikTokIcon className="h-6 w-6" />
                   </Link>
                   <Link
                     href="https://www.facebook.com/OsloVikings"

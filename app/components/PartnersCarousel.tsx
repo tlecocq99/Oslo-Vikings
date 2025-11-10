@@ -19,12 +19,20 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [currentMobileSlide, setCurrentMobileSlide] = useState(0);
+  const [isMobileDragging, setIsMobileDragging] = useState(false);
+  const [mobileDragOffset, setMobileDragOffset] = useState(0);
 
   const viewportRef = useRef<HTMLDivElement>(null);
+  const mobileSlidesContainerRef = useRef<HTMLDivElement>(null);
   const startXRef = useRef(0);
   const startScrollLeftRef = useRef(0);
   const lastTimestampRef = useRef<number | null>(null);
   const scrollRemainderRef = useRef(0);
+  const mobileDragStateRef = useRef<{
+    startX: number;
+    viewportWidth: number;
+    pointerId: number | null;
+  }>({ startX: 0, viewportWidth: 1, pointerId: null });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -120,13 +128,23 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
       return;
     }
 
+    if (activeKey || isMobileDragging) {
+      return;
+    }
+
     const timeout = window.setTimeout(() => {
       setActiveKey(null);
       setCurrentMobileSlide((prev) => (prev + 1) % mobileSlides.length);
     }, 3000);
 
     return () => window.clearTimeout(timeout);
-  }, [currentMobileSlide, isMobile, mobileSlides.length]);
+  }, [
+    activeKey,
+    currentMobileSlide,
+    isMobile,
+    isMobileDragging,
+    mobileSlides.length,
+  ]);
 
   useEffect(() => {
     if (!mobileSlides.length) {
@@ -230,13 +248,128 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
     }
   };
 
+  const handleMobilePointerDown = (
+    event: ReactPointerEvent<HTMLDivElement>
+  ) => {
+    if (!isMobile || mobileSlides.length <= 1) {
+      return;
+    }
+
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
+
+    const target = event.target as HTMLElement | null;
+    if (target?.closest("a, button")) {
+      return;
+    }
+
+    const container = mobileSlidesContainerRef.current;
+    if (!container) return;
+
+    container.setPointerCapture(event.pointerId);
+    const viewportWidth =
+      container.parentElement?.getBoundingClientRect().width ??
+      container.getBoundingClientRect().width ??
+      1;
+    mobileDragStateRef.current = {
+      startX: event.clientX,
+      viewportWidth,
+      pointerId: event.pointerId,
+    };
+    setIsMobileDragging(true);
+    setMobileDragOffset(0);
+    setActiveKey(null);
+  };
+
+  const handleMobilePointerMove = (
+    event: ReactPointerEvent<HTMLDivElement>
+  ) => {
+    if (!isMobileDragging) return;
+    const container = mobileSlidesContainerRef.current;
+    if (!container) return;
+
+    event.preventDefault();
+    const { startX } = mobileDragStateRef.current;
+    const delta = event.clientX - startX;
+    setMobileDragOffset(delta);
+  };
+
+  const finishMobileDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!isMobileDragging) return;
+
+    const container = mobileSlidesContainerRef.current;
+    const { pointerId, viewportWidth } = mobileDragStateRef.current;
+
+    if (
+      container &&
+      pointerId !== null &&
+      container.hasPointerCapture(pointerId)
+    ) {
+      container.releasePointerCapture(pointerId);
+    }
+
+    let nextSlide = currentMobileSlide;
+    if (mobileSlides.length > 1 && viewportWidth > 0) {
+      const threshold = viewportWidth * 0.1;
+      if (mobileDragOffset > threshold) {
+        nextSlide =
+          (currentMobileSlide - 1 + mobileSlides.length) % mobileSlides.length;
+      } else if (mobileDragOffset < -threshold) {
+        nextSlide = (currentMobileSlide + 1) % mobileSlides.length;
+      }
+    }
+
+    setCurrentMobileSlide(nextSlide);
+    setIsMobileDragging(false);
+    setMobileDragOffset(0);
+  };
+
+  const handleMobilePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    finishMobileDrag(event);
+  };
+
+  const handleMobilePointerLeave = (
+    event: ReactPointerEvent<HTMLDivElement>
+  ) => {
+    if (!isMobileDragging) return;
+    finishMobileDrag(event);
+  };
+
+  const handleMobilePointerCancel = (
+    event: ReactPointerEvent<HTMLDivElement>
+  ) => {
+    finishMobileDrag(event);
+  };
+
+  const mobileDragPercent = useMemo(() => {
+    if (!isMobileDragging) return 0;
+    const { viewportWidth } = mobileDragStateRef.current;
+    if (!viewportWidth) return 0;
+    return (mobileDragOffset / viewportWidth) * 100;
+  }, [isMobileDragging, mobileDragOffset]);
+
   if (isMobile) {
+    const effectiveTranslate =
+      -(currentMobileSlide * 100) + (isMobileDragging ? mobileDragPercent : 0);
+
     return (
       <div className="relative">
         <div className="overflow-hidden">
           <div
-            className="flex transition-transform duration-700 ease-out"
-            style={{ transform: `translateX(-${currentMobileSlide * 100}%)` }}
+            ref={mobileSlidesContainerRef}
+            className="flex touch-pan-y select-none"
+            style={{
+              transform: `translateX(${effectiveTranslate}%)`,
+              transition: isMobileDragging
+                ? "none"
+                : "transform 700ms ease-out",
+            }}
+            onPointerDown={handleMobilePointerDown}
+            onPointerMove={handleMobilePointerMove}
+            onPointerUp={handleMobilePointerUp}
+            onPointerLeave={handleMobilePointerLeave}
+            onPointerCancel={handleMobilePointerCancel}
           >
             {mobileSlides.map((slide, slideIndex) => (
               <div
@@ -277,52 +410,55 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                         onKeyDown={(event) =>
                           handleMobileCardKeyDown(event, cardKey)
                         }
-                        className={`relative flex h-full flex-col items-center rounded-2xl border border-gray-200/70 bg-white/95 px-3 py-4 text-center shadow-sm transition-shadow duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 dark:border-white/10 dark:bg-viking-charcoal/70 ${
+                        className={`relative flex h-full flex-col items-center overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-3 py-16 text-center shadow-sm transition-shadow duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 dark:border-white/10 dark:bg-viking-charcoal/70 ${
                           isActive ? "shadow-lg" : ""
                         }`}
                       >
-                        <div className="relative mb-3 flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-charcoal/80">
-                          {partner.logoSrc ? (
-                            <Image
-                              src={partner.logoSrc}
-                              alt={partner.logoAlt || partner.name}
-                              fill
-                              sizes="(min-width: 1024px) 200px, (min-width: 640px) 180px, 45vw"
-                              style={{
-                                objectFit: "contain",
-                                padding: "0.75rem",
-                              }}
-                            />
-                          ) : (
-                            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 text-base font-semibold text-viking-charcoal dark:bg-gray-600 dark:text-white">
-                              {partner.name
-                                .split(" ")
-                                .map((word) => word[0])
-                                .join("")
-                                .slice(0, 2)}
-                            </div>
-                          )}
+                        <div className="relative z-[1] flex w-full flex-col items-center">
+                          <div className="relative mb-3 flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-charcoal/80">
+                            {partner.logoSrc ? (
+                              <Image
+                                src={partner.logoSrc}
+                                alt={partner.logoAlt || partner.name}
+                                fill
+                                sizes="(min-width: 1024px) 200px, (min-width: 640px) 180px, 45vw"
+                                style={{
+                                  objectFit: "contain",
+                                  padding: "0.75rem",
+                                }}
+                              />
+                            ) : (
+                              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 text-base font-semibold text-viking-charcoal dark:bg-gray-600 dark:text-white">
+                                {partner.name
+                                  .split(" ")
+                                  .map((word) => word[0])
+                                  .join("")
+                                  .slice(0, 2)}
+                              </div>
+                            )}
+                          </div>
+
+                          <h3 className="text-base font-semibold text-viking-charcoal dark:text-gray-100">
+                            {partner.name}
+                          </h3>
                         </div>
 
-                        <h3 className="text-base font-semibold text-viking-charcoal dark:text-gray-100">
-                          {partner.name}
-                        </h3>
-
                         <div
-                          className={`mt-1 w-full overflow-hidden transition-all duration-300 ease-out ${
+                          className={`absolute inset-0 z-[2] flex max-h-full flex-col items-center justify-center gap-4 overflow-y-auto rounded-2xl bg-black/70 px-4 py-6 text-center text-white transition-opacity duration-300 ease-out ${
                             isActive
-                              ? "max-h-96 opacity-100 mt-3"
-                              : "max-h-0 opacity-0"
+                              ? "opacity-100 pointer-events-auto"
+                              : "opacity-0 pointer-events-none"
                           }`}
+                          aria-hidden={!isActive}
                         >
-                          <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                          <p className="text-sm font-medium leading-relaxed">
                             {partner.description}
                           </p>
                           {partner.website ? (
                             <Button
                               asChild
-                              variant="outline"
-                              className="mt-4 border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
+                              variant="secondary"
+                              className="bg-white/90 text-viking-red hover:bg-white"
                             >
                               <a
                                 href={partner.website}

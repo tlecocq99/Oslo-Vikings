@@ -4,9 +4,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Facebook, Instagram, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+import { TikTokIcon } from "./TikTokIcon";
 
 type NavItem = {
   name: string;
@@ -29,6 +30,24 @@ const teamLinks = [
   { name: "U14", href: "/team/u14" },
   { name: "Flag Football", href: "/team/flag-football" },
 ];
+
+const socialLinks = [
+  {
+    name: "TikTok",
+    href: "https://www.tiktok.com/@oslovikings",
+    Icon: TikTokIcon,
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/OsloVikings",
+    Icon: Facebook,
+  },
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/oslovikings/",
+    Icon: Instagram,
+  },
+] as const;
 
 const DEFAULT_NAV_HEIGHT = 96;
 
@@ -105,6 +124,21 @@ export default function Navigation() {
             <span className="sr-only">Home</span>
           </Link>
 
+          <div className="hidden sm:flex items-center gap-3 text-viking-red dark:text-viking-gold/90 mr-2">
+            {socialLinks.map(({ name, href, Icon }) => (
+              <Link
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Oslo Vikings on ${name}`}
+                className="transition-transform duration-150 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-viking-gold/60 dark:focus:ring-offset-viking-charcoal"
+              >
+                <Icon className="h-5 w-5" />
+              </Link>
+            ))}
+          </div>
+
           {/* Desktop Navigation (pipe-separated) */}
           <div className="hidden md:flex flex-1 items-center justify-center h-full select-none">
             {navItems.map((item, idx) => {
@@ -171,7 +205,21 @@ export default function Navigation() {
           </div>
 
           {/* Mobile actions */}
-          <div className="md:hidden flex items-center ml-auto space-x-2">
+          <div className="md:hidden flex items-center ml-auto space-x-3">
+            <div className="flex items-center gap-2 text-viking-red dark:text-viking-gold/90">
+              {socialLinks.map(({ name, href, Icon }) => (
+                <Link
+                  key={`mobile-${name}`}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Oslo Vikings on ${name}`}
+                  className="p-1 rounded-full transition-colors hover:bg-white/80 hover:text-viking-red-dark dark:hover:bg-white/10"
+                >
+                  <Icon className="h-5 w-5" />
+                </Link>
+              ))}
+            </div>
             <ThemeToggle />
             <Button
               variant="ghost"
