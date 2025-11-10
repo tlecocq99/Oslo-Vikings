@@ -14,6 +14,9 @@ import {
   CA,
   ES,
   IT,
+  NL,
+  PL,
+  UA,
 } from "country-flag-icons/react/3x2";
 
 // Loosen the flag component type to align with library signature
@@ -31,6 +34,9 @@ const CODE_MAP: Record<string, FlagComponent> = {
   CA,
   ES,
   IT,
+  NL,
+  PL,
+  UA,
 };
 
 // Map common nationality strings (case-insensitive) to ISO alpha-2 codes
@@ -58,6 +64,12 @@ const NAME_TO_CODE: Record<string, string> = {
   spanish: "ES",
   italy: "IT",
   italian: "IT",
+  netherlands: "NL",
+  dutch: "NL",
+  poland: "PL",
+  polish: "PL",
+  ukraine: "UA",
+  ukrainian: "UA",
 };
 
 export interface FlagIconProps {

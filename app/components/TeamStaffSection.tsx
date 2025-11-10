@@ -15,8 +15,8 @@ export function TeamStaffSection({ teamName, staff }: TeamStaffSectionProps) {
 
   return (
     <section className="bg-white dark:bg-viking-charcoal/30 border-b border-gray-200/60 dark:border-gray-800/60">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <header className="text-center mb-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <header className="text-center mb-8">
           <p className="text-xs uppercase tracking-[0.35em] text-viking-gold mb-2">
             Staff
           </p>
@@ -24,7 +24,7 @@ export function TeamStaffSection({ teamName, staff }: TeamStaffSectionProps) {
             {teamName} Coaching Staff
           </h2>
         </header>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {staff.map((member) => (
             <StaffCard key={member.id} member={member} />
           ))}
@@ -38,8 +38,8 @@ function StaffCard({ member }: { member: StaffMember }) {
   const initials = getInitials(member.name);
 
   return (
-    <article className="rounded-3xl border border-gray-200/60 dark:border-gray-800/80 bg-white/95 dark:bg-viking-charcoal/60 shadow-sm hover:shadow-md transition-shadow duration-200">
-      <div className="p-8 flex flex-col sm:flex-row sm:items-center gap-6">
+    <article className="rounded-2xl border border-gray-200/60 dark:border-gray-800/80 bg-white/95 dark:bg-viking-charcoal/60 shadow-sm hover:shadow-md transition-shadow duration-200">
+      <div className="p-6 flex flex-col sm:flex-row sm:items-center gap-4">
         <div className="shrink-0">
           <Avatar
             image={member.image}
@@ -48,13 +48,13 @@ function StaffCard({ member }: { member: StaffMember }) {
           />
         </div>
         <div className="flex-1 text-center sm:text-left">
-          <h3 className="text-xl font-semibold text-viking-charcoal dark:text-white">
+          <h3 className="text-lg font-semibold text-viking-charcoal dark:text-white">
             {member.name}
           </h3>
-          <p className="text-sm uppercase tracking-wide text-viking-red/80 dark:text-viking-gold/80 mt-2">
+          <p className="text-xs uppercase tracking-wide text-viking-red/80 dark:text-viking-gold/80 mt-2">
             {member.role}
           </p>
-          <div className="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+          <div className="mt-3 space-y-1.5 text-sm text-gray-600 dark:text-gray-300">
             {member.email && (
               <p>
                 <a
@@ -99,7 +99,7 @@ function Avatar({
       : `${fallback || "Oslo Vikings"} placeholder portrait`);
 
   return (
-    <div className="relative w-28 h-28 md:w-32 md:h-32">
+    <div className="relative w-24 h-24 md:w-28 md:h-28">
       <Image
         src={src}
         alt={altText}
