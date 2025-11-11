@@ -355,7 +355,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
 
     return (
       <div className="relative">
-        <div className="overflow-hidden">
+        <div className="overflow-hidden touch-pan-y select-none">
           <div
             ref={mobileSlidesContainerRef}
             className="flex touch-pan-y select-none"
