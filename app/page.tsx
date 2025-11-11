@@ -359,11 +359,13 @@ export default async function Home() {
         <div className="grid min-h-[220px] sm:min-h-[300px] xl:min-h-[360px] grid-cols-1 gap-y-4 px-4 lg:grid-cols-2 lg:gap-y-0 lg:px-0">
           <Link
             href="/booster"
-            className="group relative flex h-full min-h-[170px] items-stretch overflow-hidden rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-charcoal/80 dark:focus-visible:ring-offset-viking-charcoal sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative flex h-full min-h-[220px] items-stretch overflow-hidden rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-charcoal/80 dark:focus-visible:ring-offset-viking-charcoal sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
             aria-label="Explore the Vikings Booster Club"
           >
             <div className="relative flex-1">
-              <picture className="relative block h-full w-full">
+              <picture className="relative block h-full w-full items-center justify-center overflow-hidden bg-white dark:bg-black/60">
                 <source
                   media="(max-width: 1023px)"
                   srcSet="/images/sponsors/Booster-Tile(770x200).png"
@@ -372,8 +374,8 @@ export default async function Home() {
                   src="/images/sponsors/Booster-Tile.png"
                   alt="Vikings Booster Club"
                   fill
-                  className="object-contain object-center lg:object-cover"
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-contain object-center lg:object-contain"
+                  sizes="(min-width: 600px) 50vw, 100vw"
                   priority={false}
                 />
               </picture>
@@ -391,11 +393,11 @@ export default async function Home() {
             href="https://www.norsk-tipping.no/grasrotandelen/din-mottaker/887798052"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex h-full min-h-[180px] items-stretch overflow-hidden rounded-xl bg-white px-2 transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-charcoal/80 dark:focus-visible:ring-offset-viking-charcoal sm:min-h-[220px] lg:px-8"
+            className="group relative flex h-full min-h-[170px] items-stretch rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-charcoal/80 dark:focus-visible:ring-offset-viking-charcoal sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
             aria-label="Become a Grasrot supporter"
           >
             <div className="relative flex-1">
-              <picture className="relative block h-full w-full">
+              <picture className="relative flex h-full w-full items-center justify-center overflow-hidden bg-white dark:bg-black/60">
                 <source
                   media="(max-width: 1023px)"
                   srcSet="/images/sponsors/mobileGrasrots.png"
@@ -404,8 +406,8 @@ export default async function Home() {
                   src="/images/sponsors/grasrots.png"
                   alt="Vikings Grasrot support"
                   fill
-                  className="object-contain object-center lg:object-cover"
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-contain object-center lg:object-contain"
+                  sizes="(min-width: 600px) 50vw, 100vw"
                   priority={false}
                 />
               </picture>
@@ -418,32 +420,6 @@ export default async function Home() {
               </p>
             </div>
           </Link>
-        </div>
-      </section>
-
-      {/* Next Game Section */}
-      <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
-              Next Game
-            </h2>
-          </div>
-          <div className="max-w-md mx-auto">
-            <GameCard {...upcomingGame} />
-          </div>
-
-          <div className="text-center mt-8">
-            <Button
-              asChild
-              variant="outline"
-              className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white"
-            >
-              <Link href="/schedule">
-                View Full Schedule <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </Button>
-          </div>
         </div>
       </section>
 
