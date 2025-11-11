@@ -1,12 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 
+interface HeroImage {
+  filename: string;
+  alt?: string;
+  mobileFilename?: string;
+  mobileAlt?: string;
+}
+
 interface HeroProps {
   title?: string;
   subtitle?: string;
-  background_image?: {
+  background_image?: HeroImage;
+  mobile_background_image?: {
     filename: string;
-    alt: string;
+    alt?: string;
   };
   cta_text?: string;
   cta_link?: {
@@ -18,12 +26,17 @@ export default function Hero({
   title,
   subtitle,
   background_image,
+  mobile_background_image,
   cta_text,
   cta_link,
 }: HeroProps) {
   const heroImageSrc =
     background_image?.filename ?? "/images/backgrounds/testBG1.png";
   const heroImageAlt = background_image?.alt ?? title ?? "Oslo Vikings";
+  const heroMobileImageSrc =
+    background_image?.mobileFilename ??
+    mobile_background_image?.filename ??
+    "/images/backgrounds/mobileHero.png";
   const href = cta_link?.url ?? "/recruitment";
   const ariaLabel =
     cta_text || subtitle || "Explore Oslo Vikings recruitment opportunities";
@@ -32,18 +45,21 @@ export default function Hero({
     <Link
       href={href}
       aria-label={ariaLabel}
-      className="group relative isolate block min-h-[50vh] md:min-h-[70vh] xl:min-h-screen overflow-hidden bg-viking-red-950 focus:outline-none focus-visible:ring-4 focus-visible:ring-viking-red/60"
+      className="group relative isolate block min-h-[35vh] sm:min-h-[55vh] md:min-h-[70vh] xl:min-h-screen overflow-hidden bg-viking-red-950 focus:outline-none focus-visible:ring-4 focus-visible:ring-viking-red/60"
     >
       <span className="sr-only">{ariaLabel}</span>
 
-      <Image
-        src={heroImageSrc}
-        alt={heroImageAlt}
-        fill
-        priority
-        sizes="100vw"
-        className="absolute inset-0 h-full w-full object-cover object-center 2xl:object-contain transition-transform duration-700 ease-out group-hover:scale-105 group-focus-visible:scale-105"
-      />
+      <picture className="absolute inset-0 block h-full w-full">
+        <source media="(max-width: 767px)" srcSet={heroMobileImageSrc} />
+        <Image
+          src={heroImageSrc}
+          alt={heroImageAlt}
+          fill
+          priority
+          sizes="100vw"
+          className="absolute inset-0 h-full w-full object-contain object-top sm:object-cover sm:object-center md:object-contain 2xl:object-contain transition-transform duration-700 ease-out group-hover:scale-105 group-focus-visible:scale-105"
+        />
+      </picture>
 
       <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-60 group-focus-visible:opacity-60" />
 
