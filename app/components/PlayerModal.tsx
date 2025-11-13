@@ -91,7 +91,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
           <div className="sm:w-1/2 relative bg-gray-900 text-white flex items-stretch justify-center min-h-[200px] sm:min-h-[360px]">
             {/* Background image */}
             <div
-              className="absolute inset-0 bg-cover bg-center opacity-40"
+              className="absolute inset-0 bg-cover bg-center opacity-40 pointer-events-none"
               style={{
                 backgroundImage: `url(${
                   image || "/images/players/playerFiller.png"
