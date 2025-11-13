@@ -15,10 +15,10 @@ import { JourneyTimeline } from "../components/JourneyTimeline";
 export default function AboutPage() {
   const values = [
     {
-      icon: Heart,
-      title: "Inclusivity",
+      icon: Users,
+      title: "Community",
       description:
-        "We strive to provide an athletic experience that all can partake in and enjoy, including both kids and adults of all fitness levels and physiques.",
+        "As Vikings we actively engage with the Club to have fun, to support and celebrate the accomplishments of our athletes, and to form lasting bonds",
     },
     {
       icon: Shield,
@@ -27,10 +27,10 @@ export default function AboutPage() {
         "We respect our fellow athletes, the Club, and the game of American Football whether on or off the field.",
     },
     {
-      icon: Users,
-      title: "Community",
+      icon: Dumbbell,
+      title: "Development",
       description:
-        "As Vikings we actively engage with the Club to have fun, to support and celebrate the accomplishments of our athletes, and to form lasting bonds",
+        "We are all committed to become the best athlete, person, and club we can be through continuous learning and improvement",
     },
     {
       icon: Target,
@@ -39,10 +39,10 @@ export default function AboutPage() {
         "We strive to be champions by dedicating ourselves to perform at our best and by motivating each other to do the same",
     },
     {
-      icon: Dumbbell,
-      title: "Development",
+      icon: Heart,
+      title: "Inclusivity",
       description:
-        "We are all committed to become the best athlete, person, and club we can be through continuous learning and improvement",
+        "We strive to provide an athletic experience that all can partake in and enjoy, including both kids and adults of all fitness levels and physiques.",
     },
   ];
 

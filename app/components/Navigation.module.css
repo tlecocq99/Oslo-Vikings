@@ -1,0 +1,500 @@
+.navPlaceholder {
+  width: 100%;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 30px -12px rgba(var(--color-viking-charcoal-rgb), 0.35);
+}
+
+:global(.dark) .nav {
+  background-color: rgba(var(--color-viking-charcoal-rgb), 0.9);
+}
+
+.navInner {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 6rem;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .navInner {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navInner {
+    padding: 0 3.5rem;
+  }
+}
+
+.brandLink {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 1rem;
+}
+
+.brandImage {
+  height: 6rem;
+  width: auto;
+  filter: drop-shadow(0 12px 18px rgba(var(--color-viking-charcoal-rgb), 0.25));
+  transition: transform 0.25s ease;
+  max-height: 96px;
+}
+
+.brandLink:hover .brandImage,
+.brandLink:focus-visible .brandImage {
+  transform: scale(1.1);
+}
+
+.desktopSocial {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .desktopSocial {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-right: 0.5rem;
+    color: var(--color-viking-red);
+  }
+}
+
+:global(.dark) .desktopSocial {
+  color: rgba(var(--color-viking-gold-rgb), 0.9);
+}
+
+.desktopSocialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+  outline: none;
+}
+
+.desktopSocialLink:hover,
+.desktopSocialLink:focus-visible {
+  transform: scale(1.1);
+}
+
+.desktopSocialLink:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-viking-red), 0 0 0 4px hsl(var(--card));
+}
+
+:global(.dark) .desktopSocialLink:focus-visible {
+  box-shadow: 0 0 0 2px rgba(var(--color-viking-gold-rgb), 0.6),
+    0 0 0 4px rgba(var(--color-viking-charcoal-rgb), 1);
+}
+
+.desktopSocialIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.desktopNav {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktopNav {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    user-select: none;
+  }
+}
+
+.desktopNavItem {
+  display: flex;
+  align-items: center;
+}
+
+.desktopDivider {
+  padding: 0 0.75rem;
+  color: var(--color-viking-red);
+  font-weight: 300;
+  font-size: 2.25rem;
+}
+
+.desktopLinkGroup {
+  position: relative;
+}
+
+.desktopLink {
+  font-family: var(--font-teko);
+  font-weight: 600;
+  font-size: 2.5rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  transition: transform 0.2s ease;
+  outline: none;
+  color: var(--color-viking-red);
+}
+
+.desktopLink:hover,
+.desktopLink:focus-visible {
+  transform: scale(1.2);
+}
+
+.desktopLink:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-viking-red), 0 0 0 4px hsl(var(--card));
+}
+
+.desktopLinkActive {
+  color: var(--color-viking-red);
+  transform: scale(1.05);
+}
+
+:global(.dark) .desktopLink {
+  color: var(--color-viking-red);
+}
+
+.desktopLinkIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.desktopLinkGroup:hover .desktopLinkIcon,
+.desktopLinkGroup:focus-within .desktopLinkIcon {
+  transform: rotate(180deg);
+}
+
+.desktopDropdownWrapper {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 0.25rem);
+  z-index: 70;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+.desktopLinkGroup:hover .desktopDropdownWrapper,
+.desktopLinkGroup:focus-within .desktopDropdownWrapper {
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.desktopDropdown {
+  margin-top: 0.25rem;
+  width: 14rem;
+  border-radius: 0.75rem;
+  background-color: hsl(var(--card));
+  box-shadow: 0 20px 40px -16px rgba(var(--color-viking-charcoal-rgb), 0.35);
+  border: 1px solid rgba(var(--color-viking-red-rgb), 0.2);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+:global(.dark) .desktopDropdown {
+  background-color: var(--color-viking-charcoal);
+  border-color: rgba(var(--color-viking-red-rgb), 0.2);
+}
+
+.desktopDropdownLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-teko);
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  color: var(--color-viking-charcoal);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.desktopDropdownLink:hover,
+.desktopDropdownLink:focus-visible {
+  background-color: var(--color-viking-red);
+  color: hsl(var(--primary-foreground));
+}
+
+:global(.dark) .desktopDropdownLink {
+  color: hsl(var(--foreground));
+}
+
+:global(.dark) .desktopDropdownLink:hover,
+:global(.dark) .desktopDropdownLink:focus-visible {
+  background-color: var(--color-viking-red-dark);
+  color: hsl(var(--primary-foreground));
+}
+
+.desktopActions {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktopActions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+}
+
+.mobileActions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .mobileActions {
+    display: none;
+  }
+}
+
+.mobileSocial {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-viking-red);
+}
+
+:global(.dark) .mobileSocial {
+  color: rgba(var(--color-viking-gold-rgb), 0.9);
+}
+
+.mobileSocialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mobileSocialLink:hover,
+.mobileSocialLink:focus-visible {
+  background-color: color-mix(in srgb, hsl(var(--primary-foreground)) 80%, transparent);
+  color: var(--color-viking-red-dark);
+}
+
+:global(.dark) .mobileSocialLink:hover,
+:global(.dark) .mobileSocialLink:focus-visible {
+  background-color: color-mix(in srgb, hsl(var(--primary-foreground)) 15%, transparent);
+  color: var(--color-viking-charcoal);
+}
+
+.mobileSocialIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.mobileMenuButton {
+  border: 1px solid rgba(var(--color-viking-red-rgb), 0.5);
+  background-color: hsl(var(--card));
+  color: var(--color-viking-red);
+  border-radius: 0.5rem;
+  box-shadow: 0 6px 16px -12px rgba(var(--color-viking-charcoal-rgb), 0.35);
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.mobileMenuButton:hover,
+.mobileMenuButton:focus-visible {
+  background-color: var(--color-viking-red);
+  color: hsl(var(--primary-foreground));
+  border-color: var(--color-viking-red);
+}
+
+:global(.dark) .mobileMenuButton {
+  background-color: var(--color-viking-charcoal);
+  border-color: rgba(var(--color-viking-red-rgb), 0.5);
+  color: var(--color-viking-red);
+}
+
+:global(.dark) .mobileMenuButton:hover,
+:global(.dark) .mobileMenuButton:focus-visible {
+  background-color: var(--color-viking-red-dark);
+  color: var(--color-viking-charcoal);
+  border-color: var(--color-viking-red-dark);
+}
+
+.mobileMenuButtonIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.mobileMenu {
+  display: block;
+  background-color: var(--color-viking-red);
+  position: relative;
+  z-index: 10;
+  transition: background-color 0.3s ease;
+}
+
+:global(.dark) .mobileMenu {
+  background-color: var(--color-viking-charcoal);
+}
+
+@media (min-width: 768px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+.mobileMenuInner {
+  padding: 0.5rem 0.5rem 2rem;
+  border-top: 1px solid rgba(var(--color-viking-red-rgb), 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .mobileMenuInner {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+.mobileLink {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5rem;
+  border-radius: 0.75rem;
+  border: 2px solid hsl(var(--primary-foreground));
+  font-family: var(--font-teko);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  color: hsl(var(--primary-foreground));
+  background-color: var(--color-viking-red);
+}
+
+.mobileLinkActive {
+  background-color: hsl(var(--primary-foreground));
+  color: var(--color-viking-red);
+}
+
+.mobileLink:hover,
+.mobileLink:focus-visible {
+  background-color: hsl(var(--primary-foreground));
+  color: var(--color-viking-red);
+}
+
+:global(.dark) .mobileLink {
+  background-color: var(--color-viking-charcoal);
+  border-color: rgba(var(--color-viking-gold-rgb), 1);
+  color: rgba(var(--color-viking-gold-rgb), 1);
+}
+
+:global(.dark) .mobileLinkActive,
+:global(.dark) .mobileLink:hover,
+:global(.dark) .mobileLink:focus-visible {
+  background-color: rgba(var(--color-viking-gold-rgb), 1);
+  color: var(--color-viking-charcoal);
+}
+
+.mobileTeamsToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mobileTeamsIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.mobileTeamsIconOpen {
+  transform: rotate(180deg);
+}
+
+.mobileTeamsGrid {
+  display: grid;
+  gap: 0.5rem;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+.mobileTeamsGridOpen {
+  max-height: 600px;
+  opacity: 1;
+  margin-top: 0.5rem;
+  pointer-events: auto;
+}
+
+.mobileTeamsGridClosed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  pointer-events: none;
+}
+
+.mobileTeamLink {
+  display: block;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--primary-foreground));
+  padding: 0.75rem 1rem;
+  font-family: var(--font-teko);
+  font-size: 1.5rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+  color: hsl(var(--primary-foreground));
+  background-color: var(--color-viking-red);
+}
+
+.mobileTeamLink:hover,
+.mobileTeamLink:focus-visible {
+  background-color: hsl(var(--primary-foreground));
+  color: var(--color-viking-red);
+}
+
+:global(.dark) .mobileTeamLink {
+  background-color: var(--color-viking-charcoal);
+  border-color: rgba(var(--color-viking-gold-rgb), 1);
+  color: rgba(var(--color-viking-gold-rgb), 1);
+}
+
+:global(.dark) .mobileTeamLink:hover,
+:global(.dark) .mobileTeamLink:focus-visible {
+  background-color: rgba(var(--color-viking-gold-rgb), 1);
+  color: var(--color-viking-charcoal);
+}
+
+.mobileDivider {
+  border-bottom: 1px solid rgba(var(--color-viking-red-rgb), 0.5);
+  margin: 0.5rem 0;
+}
+
+:global(.dark) .mobileDivider {
+  border-color: rgba(201, 162, 39, 0.3);
+}

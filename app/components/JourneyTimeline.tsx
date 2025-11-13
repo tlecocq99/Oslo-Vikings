@@ -1,6 +1,8 @@
 "use client";
 
+import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
+import styles from "./JourneyTimeline.module.css";
 
 type Milestone = {
   year: string;
@@ -8,7 +10,7 @@ type Milestone = {
   description: string;
 };
 
-const DISPLAY_DURATION = 5000;
+const DISPLAY_DURATION = 3000;
 const TRANSITION_DURATION = 800;
 const CYCLE_DURATION = DISPLAY_DURATION + TRANSITION_DURATION;
 
@@ -129,9 +131,9 @@ export function JourneyTimeline({ milestones }: JourneyTimelineProps) {
   const renderMilestoneCard = (
     milestone: Milestone,
     globalIndex: number,
-    options: { extraClasses?: string; connector?: "top" | "bottom" } = {}
+    options: { offset?: boolean; connector?: "top" | "bottom" } = {}
   ) => {
-    const { extraClasses = "", connector = "bottom" } = options;
+    const { offset = false, connector = "bottom" } = options;
     const isActive = activeIndex === globalIndex;
     const transformForCard =
       isActive && activeTransform?.index === globalIndex
@@ -144,9 +146,12 @@ export function JourneyTimeline({ milestones }: JourneyTimelineProps) {
         ref={(node) => {
           cardRefs.current[globalIndex] = node;
         }}
-        className={`relative flex-none basis-[240px] transition-transform duration-500 ease-in-out ${
-          isActive ? "z-30" : "z-10"
-        } ${activeIndex !== null && !isActive ? "opacity-60" : "opacity-100"}`}
+        className={clsx(
+          styles.cardWrapper,
+          isActive && styles.cardWrapperActive,
+          activeIndex !== null && !isActive && styles.cardWrapperDimmed,
+          offset && styles.cardOffset
+        )}
         style={{
           transform: transformForCard
             ? `translate3d(${transformForCard.translateX}px, ${transformForCard.translateY}px, 0) scale(1.15)`
@@ -154,31 +159,18 @@ export function JourneyTimeline({ milestones }: JourneyTimelineProps) {
           transitionDuration: `${TRANSITION_DURATION}ms`,
         }}
       >
-        <div
-          className={`mx-auto flex h-full w-full max-w-[240px] min-h-[240px] flex-col items-center justify-between rounded-xl border bg-white p-6 text-center shadow-md transition-all duration-500 dark:bg-viking-charcoal/70 ${
-            isActive
-              ? "border-viking-red shadow-xl brightness-110"
-              : "border-gray-200 dark:border-gray-700"
-          } ${extraClasses}`.trim()}
-        >
-          <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-viking-gold">
-            <span className="text-lg font-bold text-viking-charcoal">
-              {milestone.year}
-            </span>
+        <div className={clsx(styles.card, isActive && styles.cardActive)}>
+          <div className={styles.badge}>
+            <span className={styles.badgeText}>{milestone.year}</span>
           </div>
-          <h3 className="text-lg font-bold text-viking-charcoal dark:text-gray-100 mb-2">
-            {milestone.event}
-          </h3>
-          <p className="text-sm text-gray-700 dark:text-gray-300">
-            {milestone.description}
-          </p>
+          <h3 className={styles.cardTitle}>{milestone.event}</h3>
+          <p className={styles.cardDescription}>{milestone.description}</p>
         </div>
         <span
-          className={`pointer-events-none absolute left-1/2 h-4 w-4 -translate-x-1/2 rounded-full border-4 border-white bg-viking-red transition-transform dark:border-viking-charcoal ${
-            connector === "top"
-              ? "-translate-y-1/2 top-4"
-              : "translate-y-1/2 bottom-4"
-          }`}
+          className={clsx(
+            styles.connector,
+            connector === "top" ? styles.connectorTop : styles.connectorBottom
+          )}
           style={{
             opacity: isActive ? 0 : 1,
             transitionDuration: `${TRANSITION_DURATION}ms`,
@@ -189,19 +181,19 @@ export function JourneyTimeline({ milestones }: JourneyTimelineProps) {
   };
 
   return (
-    <div ref={containerRef} className="hidden lg:flex flex-col gap-14 relative">
-      <div className="relative flex w-full items-end justify-center gap-8 pb-12">
-        <div className="pointer-events-none absolute bottom-4 left-0 right-0 h-0.5 bg-viking-red/50 dark:bg-viking-red/60" />
+    <div ref={containerRef} className={styles.wrapper}>
+      <div className={clsx(styles.row, styles.rowTop)}>
+        <div className={clsx(styles.timelineLine, styles.timelineLineBottom)} />
         {firstRow.map((milestone, index) =>
           renderMilestoneCard(milestone, index, { connector: "bottom" })
         )}
       </div>
 
-      <div className="relative flex w-full items-start justify-center gap-8 pt-12">
-        <div className="pointer-events-none absolute top-4 left-0 right-0 h-0.5 bg-viking-red/50 dark:bg-viking-red/60" />
+      <div className={clsx(styles.row, styles.rowBottom)}>
+        <div className={clsx(styles.timelineLine, styles.timelineLineTop)} />
         {secondRow.map((milestone, index) =>
           renderMilestoneCard(milestone, index + firstRow.length, {
-            extraClasses: "mt-6",
+            offset: true,
             connector: "top",
           })
         )}

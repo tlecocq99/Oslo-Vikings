@@ -1,7 +1,9 @@
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, User } from "lucide-react";
 import type { NewsImagePlacement } from "@/app/types/news";
+import styles from "./NewsCardContent.module.css";
 
 export interface NewsCardProps {
   title?: string;
@@ -37,41 +39,33 @@ export function NewsCardContent({
         src={image?.src as string}
         alt={image?.alt || title || "News image"}
         fill
-        className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+        className={styles.imageElement}
         sizes="(max-width:768px) 100vw, 400px"
         priority={false}
       />
-      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
+      <div className={styles.imageOverlay} />
     </>
   ) : (
-    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-viking-red to-viking-charcoal text-white text-xl font-semibold">
-      {category || "News"}
-    </div>
+    <div className={styles.imagePlaceholder}>{category || "News"}</div>
   );
 
   const imageSection = (
-    <div className="relative ">
-      <div className="relative h-48 overflow-hidden">{imageContent}</div>
-      {category && (
-        <span className="absolute top-3 left-3 bg-viking-red text-white text-xs font-semibold px-2 py-1 rounded shadow">
-          {category}
-        </span>
-      )}
+    <div className={styles.topImage}>
+      <div className={styles.topImageInner}>{imageContent}</div>
+      {category && <span className={styles.categoryBadge}>{category}</span>}
     </div>
   );
 
   const renderSideImageSection = (side: "left" | "right") => (
     <div
-      className={`relative w-full lg:w-5/12 xl:w-4/12 min-h-[14rem] overflow-hidden ${
-        side === "left"
-          ? "rounded-t-lg lg:rounded-l-2xl lg:rounded-tr-none"
-          : "rounded-b-lg lg:rounded-r-2xl lg:rounded-bl-none"
-      }`}
+      className={clsx(
+        styles.sideImage,
+        side === "left" ? styles.sideImageLeft : styles.sideImageRight
+      )}
     >
-      <div className="absolute inset-0" />
-      <div className="relative h-full w-full">{imageContent}</div>
+      <div className={styles.sideImageInner}>{imageContent}</div>
       {category && (
-        <span className="absolute top-4 left-4 bg-viking-red text-white text-xs font-semibold px-2 py-1 rounded shadow">
+        <span className={clsx(styles.categoryBadge, styles.categoryBadgeSide)}>
           {category}
         </span>
       )}
@@ -87,50 +81,35 @@ export function NewsCardContent({
     : undefined;
 
   const Content = (
-    <div className="p-6 flex flex-col h-full">
-      <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-3 line-clamp-2">
-        {title || "Untitled Article"}
-      </h3>
-      {excerpt && (
-        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
-          {excerpt}
-        </p>
-      )}
+    <div className={styles.content}>
+      <h3 className={styles.title}>{title || "Untitled Article"}</h3>
+      {excerpt && <p className={styles.excerpt}>{excerpt}</p>}
 
-      <div className="mt-auto flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-        <span className="flex items-center gap-1">
-          <User className="w-4 h-4 text-viking-red" />
+      <div className={styles.meta}>
+        <span className={styles.metaItem}>
+          <User className={styles.metaIcon} />
           {author || "Oslo Vikings"}
         </span>
         {date && (
-          <span className="flex items-center gap-1">
-            <Calendar className="w-4 h-4 text-viking-red" />
+          <span className={styles.metaItem}>
+            <Calendar className={styles.metaIcon} />
             {date}
           </span>
         )}
       </div>
 
-      <span className="mt-4 inline-flex items-center text-viking-red font-semibold group-hover:underline">
-        Read full story →
-      </span>
-      {image?.credit && (
-        <p className="mt-4 text-[11px] uppercase tracking-wide text-gray-400 dark:text-gray-500">
-          Photo: {image.credit}
-        </p>
-      )}
+      <span className={styles.readMore}>Read full story →</span>
+      {image?.credit && <p className={styles.credit}>Photo: {image.credit}</p>}
     </div>
   );
 
   if (placement === "background") {
     const article = (
       <article
-        className="relative bg-white/90 dark:bg-viking-charcoal/80 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700"
+        className={clsx(styles.article, styles.articleBackground)}
         style={backgroundImageStyles}
       >
-        <div className="absolute inset-0" />
-        <div className="relative z-10 backdrop-blur-sm bg-white/80 dark:bg-viking-charcoal/70">
-          {Content}
-        </div>
+        <div className={styles.articleBackgroundInner}>{Content}</div>
       </article>
     );
     return wrapWithLink(article);
@@ -138,11 +117,11 @@ export function NewsCardContent({
 
   if (placement === "left" || placement === "right") {
     const article = (
-      <article className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700 flex flex-col lg:flex-row">
+      <article className={clsx(styles.article, styles.articleSide)}>
         {placement === "left" && hasImage
           ? renderSideImageSection("left")
           : null}
-        <div className="flex-1">{Content}</div>
+        <div className={styles.articleBody}>{Content}</div>
         {placement === "right" && hasImage
           ? renderSideImageSection("right")
           : null}
@@ -153,16 +132,12 @@ export function NewsCardContent({
 
   if (placement === "none" || !hasImage) {
     const article = (
-      <article className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700">
-        <div className="relative h-48 overflow-hidden">
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-viking-red to-viking-charcoal text-white text-xl font-semibold">
+      <article className={styles.article}>
+        <div className={styles.noImageBanner}>
+          <div className={styles.noImageBannerContent}>
             {category || "News"}
           </div>
-          {category && (
-            <span className="absolute top-3 left-3 bg-viking-red text-white text-xs font-semibold px-2 py-1 rounded shadow">
-              {category}
-            </span>
-          )}
+          {category && <span className={styles.categoryBadge}>{category}</span>}
         </div>
         {Content}
       </article>
@@ -172,7 +147,7 @@ export function NewsCardContent({
 
   // default to top placement
   const article = (
-    <article className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-gray-200 dark:border-gray-700">
+    <article className={styles.article}>
       {imageSection}
       {Content}
     </article>
@@ -188,7 +163,7 @@ export function NewsCardContent({
     return (
       <Link
         href={href}
-        className="group block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-viking-charcoal/70 rounded-lg"
+        className={styles.link}
         aria-label={`Read full story: ${title || slug}`}
       >
         {articleNode}

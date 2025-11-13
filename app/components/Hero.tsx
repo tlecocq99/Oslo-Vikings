@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import styles from "./Hero.module.css";
 
 interface HeroImage {
   filename: string;
@@ -42,14 +43,10 @@ export default function Hero({
     cta_text || subtitle || "Explore Oslo Vikings recruitment opportunities";
 
   return (
-    <Link
-      href={href}
-      aria-label={ariaLabel}
-      className="group relative isolate block min-h-[35vh] sm:min-h-[55vh] md:min-h-[70vh] xl:min-h-screen overflow-hidden bg-viking-red-950 focus:outline-none focus-visible:ring-4 focus-visible:ring-viking-red/60"
-    >
+    <Link href={href} aria-label={ariaLabel} className={styles.link}>
       <span className="sr-only">{ariaLabel}</span>
 
-      <picture className="absolute inset-0 block h-full w-full">
+      <picture className={styles.picture}>
         <source media="(max-width: 767px)" srcSet={heroMobileImageSrc} />
         <Image
           src={heroImageSrc}
@@ -57,22 +54,20 @@ export default function Hero({
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 h-full w-full object-contain object-top sm:object-cover sm:object-center md:object-contain 2xl:object-contain transition-transform duration-700 ease-out group-hover:scale-105 group-focus-visible:scale-105"
+          className={styles.image}
         />
       </picture>
 
-      <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-500 group-hover:opacity-60 group-focus-visible:opacity-60" />
+      <div className={styles.overlay} />
 
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <p className="text-center text-white font-bold uppercase tracking-widest opacity-0 translate-y-6 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-y-0 text-2xl sm:text-3xl md:text-5xl px-6">
+      <div className={styles.ctaContainer}>
+        <p className={styles.ctaText}>
           What are you waiting for?
-          <span className="block text-4xl sm:text-5xl md:text-7xl">
-            Click to join OV Now.
-          </span>
+          <span className={styles.ctaHighlight}>Click to join OV Now.</span>
         </p>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
+      <div className={styles.gradient} />
     </Link>
   );
 }

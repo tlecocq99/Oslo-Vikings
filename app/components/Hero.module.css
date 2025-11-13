@@ -1,0 +1,153 @@
+.link {
+  position: relative;
+  display: block;
+  min-height: 35vh;
+  overflow: hidden;
+  background-color: color-mix(in srgb, var(--color-viking-red) 85%, black 15%);
+  isolation: isolate;
+  transition: transform 0.6s ease;
+}
+
+.link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(var(--color-viking-red-rgb), 0.6);
+}
+
+@media (min-width: 640px) {
+  .link {
+    min-height: 55vh;
+  }
+}
+
+@media (min-width: 768px) {
+  .link {
+    min-height: 70vh;
+  }
+}
+
+@media (min-width: 1280px) {
+  .link {
+    min-height: 100vh;
+  }
+}
+
+.picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top;
+  transition: transform 0.7s ease-out;
+}
+
+@media (min-width: 640px) {
+  .image {
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .image {
+    object-fit: contain;
+  }
+}
+
+.link:hover .image,
+.link:focus-visible .image {
+  transform: scale(1.05);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(var(--color-viking-charcoal-rgb), 0.4);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.link:hover .overlay,
+.link:focus-visible .overlay {
+  opacity: 0.6;
+}
+
+.ctaContainer {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ctaText {
+  text-align: center;
+  color: hsl(var(--primary-foreground));
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4rem;
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  font-size: 1.5rem;
+  padding: 0 1.5rem;
+  font-family: var(--font-teko), sans-serif;
+}
+
+@media (min-width: 640px) {
+  .ctaText {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .ctaText {
+    font-size: 3rem;
+  }
+}
+
+.ctaHighlight {
+  display: block;
+  font-size: 2.5rem;
+  letter-spacing: 0.1rem;
+}
+
+@media (min-width: 640px) {
+  .ctaHighlight {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .ctaHighlight {
+    font-size: 4.5rem;
+  }
+}
+
+.link:hover .ctaText,
+.link:focus-visible .ctaText {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6rem;
+  background: linear-gradient(
+    to top,
+    rgba(var(--color-viking-charcoal-rgb), 0.4),
+    transparent
+  );
+}

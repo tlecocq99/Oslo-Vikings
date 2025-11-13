@@ -2,58 +2,57 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Mail, MapPin } from "lucide-react";
 import { TikTokIcon } from "./TikTokIcon";
+import styles from "./Footer.module.css";
 
 export default function Footer() {
   return (
-    <footer className="bg-viking-charcoal text-white">
-      <div className="w-full px-4 sm:px-7 lg:px-12 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 lg:gap-9">
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <div className={styles.grid}>
           {/* Logo and Description */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-start space-x-2.5 mb-3.5">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center">
+          <div className={styles.brandColumn}>
+            <div className={styles.brandHeader}>
+              <div className={styles.logoWrapper}>
                 <Image
                   src="/images/logo.png"
                   alt="Oslo Vikings Logo"
                   width={48}
                   height={48}
-                  className="w-16 h-16"
+                  className={styles.logoImage}
                 />
               </div>
-              <div>
+              <div className={styles.logoText}>
                 <div>
-                  <span className="text-xl font-bold text-white">Oslo</span>
-                  <span className="text-xl font-bold text-viking-red ml-1">
-                    Vikings
-                  </span>
+                  <span className={styles.logoPrimary}>Oslo</span>
+                  <span className={styles.logoAccent}>Vikings</span>
                 </div>
-                <div className="mt-2.5 flex items-center space-x-3">
+                <div className={styles.socialLinks}>
                   <Link
                     href="https://www.tiktok.com/@oslovikings"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Oslo Vikings on TikTok"
-                    className="text-gray-300 transition-colors hover:text-viking-red"
+                    className={styles.socialLink}
                   >
-                    <TikTokIcon className="h-6 w-6" />
+                    <TikTokIcon className={styles.socialLinkIcon} />
                   </Link>
                   <Link
                     href="https://www.facebook.com/OsloVikings"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Oslo Vikings on Facebook"
-                    className="text-gray-300 transition-colors hover:text-viking-red"
+                    className={styles.socialLink}
                   >
-                    <Facebook className="h-6 w-6" />
+                    <Facebook className={styles.socialLinkIcon} />
                   </Link>
                   <Link
                     href="https://www.instagram.com/oslovikings/"
                     target="_blank"
                     rel="noreferrer"
                     aria-label="Oslo Vikings on Instagram"
-                    className="text-gray-300 transition-colors hover:text-viking-red"
+                    className={styles.socialLink}
                   >
-                    <Instagram className="h-6 w-6" />
+                    <Instagram className={styles.socialLinkIcon} />
                   </Link>
                 </div>
               </div>
@@ -62,37 +61,25 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
-            <ul className="space-y-1.5">
+            <h3 className={styles.sectionTitle}>Quick Links</h3>
+            <ul className={styles.linksList}>
               <li>
-                <Link
-                  href="/team"
-                  className="text-gray-300 hover:text-viking-red transition-colors"
-                >
+                <Link href="/team" className={styles.link}>
                   Team Roster
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/schedule"
-                  className="text-gray-300 hover:text-viking-red transition-colors"
-                >
+                <Link href="/schedule" className={styles.link}>
                   Game Schedule
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/news"
-                  className="text-gray-300 hover:text-viking-red transition-colors"
-                >
+                <Link href="/news" className={styles.link}>
                   Latest News
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/about"
-                  className="text-gray-300 hover:text-viking-red transition-colors"
-                >
+                <Link href="/about" className={styles.link}>
                   About Us
                 </Link>
               </li>
@@ -101,15 +88,15 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Contact</h3>
-            <div className="space-y-2.5">
-              <div className="flex items-center space-x-2">
-                <MapPin className="w-4 h-4 text-viking-red" />
-                <span className="text-gray-300 text-sm">Oslo, Norway</span>
+            <h3 className={styles.sectionTitle}>Contact</h3>
+            <div className={styles.contactList}>
+              <div className={styles.contactItem}>
+                <MapPin className={styles.contactIcon} />
+                <span className={styles.contactText}>Oslo, Norway</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4 text-viking-red" />
-                <span className="text-gray-300 text-sm">
+              <div className={styles.contactItem}>
+                <Mail className={styles.contactIcon} />
+                <span className={styles.contactText}>
                   styret@oslovikings.com
                 </span>
               </div>
@@ -117,8 +104,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-4 pt-4 text-center">
-          <p className="text-gray-400">
+        <div className={styles.divider}>
+          <p className={styles.dividerText}>
             © {new Date().getFullYear()} Oslo Vikings. All rights reserved.
           </p>
         </div>
