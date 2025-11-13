@@ -23,6 +23,17 @@
   --input: 215 27.9% 89.8%;
   --ring: 346 84% 61%;
   --radius: 0.5rem;
+  --color-viking-red: #ac1416;
+  --color-viking-red-rgb: 172, 20, 22;
+  --color-viking-red-dark: #7c0f11;
+  --color-viking-gold: #c9a227;
+  --color-viking-gold-rgb: 201, 162, 39;
+  --color-viking-charcoal: #1f2937;
+  --color-viking-charcoal-rgb: 31, 41, 55;
+  --color-success: #22c55e;
+  --color-success-rgb: 34, 197, 94;
+  --color-danger: #dc2626;
+  --color-danger-rgb: 220, 38, 38;
 }
 
 .dark {
@@ -49,13 +60,24 @@
 
 @layer base {
   html {
-    @apply h-full w-full overflow-x-hidden;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
   }
-  * {
-    @apply border-border;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border-color: hsl(var(--border));
   }
+
   body {
-    @apply m-0 bg-background text-foreground max-w-full overflow-x-hidden;
+    margin: 0;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    max-width: 100%;
+    overflow-x: hidden;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
@@ -65,39 +87,7 @@
   }
 
   main {
-    @apply w-full overflow-x-hidden;
+    width: 100%;
+    overflow-x: hidden;
   }
-
-  .hero-text-shadow {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-@keyframes partners-marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.partners-marquee {
-  animation: partners-marquee 40s linear infinite;
-  will-change: transform;
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,6 +9,8 @@ import { ChevronDown, Facebook, Instagram, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { TikTokIcon } from "./TikTokIcon";
+import styles from "./Navigation.module.css";
+import TikTokHover from "./TikTokHoverLink";
 
 type NavItem = {
   name: string;
@@ -101,70 +104,75 @@ export default function Navigation() {
     <>
       <div
         aria-hidden="true"
-        className="w-full"
+        className={styles.navPlaceholder}
         style={{ height: `${navHeight}px` }}
       />
-      <nav
-        ref={navRef}
-        className="shadow-lg fixed top-0 left-0 right-0 z-[150] w-full overflow-visible bg-white dark:bg-viking-charcoal/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-viking-charcoal/70 transition-colors"
-      >
-        <div className="flex w-full relative h-24 items-center px-4 sm:px-6 lg:px-14">
+      <nav ref={navRef} className={styles.nav}>
+        <div className={styles.navInner}>
           {/* Logo on the far left */}
-          <Link href="/" className="flex items-center h-full group mr-4">
+          <Link href="/" className={styles.brandLink}>
             <Image
               src="/images/logo.png"
               alt="Oslo Vikings logo"
               width={120}
               height={120}
               priority
-              className="h-24 w-auto drop-shadow-lg transition-transform group-hover:scale-110"
-              style={{ maxHeight: 96 }}
+              className={styles.brandImage}
               draggable={false}
             />
             <span className="sr-only">Home</span>
           </Link>
-
-          <div className="hidden sm:flex items-center gap-3 text-viking-red dark:text-viking-gold/90 mr-2">
-            {socialLinks.map(({ name, href, Icon }) => (
-              <Link
-                key={name}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`Oslo Vikings on ${name}`}
-                className="transition-transform duration-150 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-viking-gold/60 dark:focus:ring-offset-viking-charcoal"
-              >
-                <Icon className="h-5 w-5" />
-              </Link>
-            ))}
+          <div className={styles.desktopSocial}>
+            {socialLinks.map(({ name, href, Icon }) =>
+              name === "TikTok" ? (
+                <TikTokHover
+                  key={name}
+                  profileUrl={href} // "https://www.tiktok.com/@oslovikings"
+                  uniqueId="oslovikings" // without the @
+                  placement="bottom"
+                  width={360}
+                  className={styles.desktopSocialLink}
+                  linkTarget="_blank"
+                  linkRel="noreferrer"
+                >
+                  <span aria-label={`Oslo Vikings on ${name}`} role="img">
+                    <Icon className={styles.desktopSocialIcon} />
+                  </span>
+                </TikTokHover>
+              ) : (
+                <Link
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Oslo Vikings on ${name}`}
+                  className={styles.desktopSocialLink}
+                >
+                  <Icon className={styles.desktopSocialIcon} />
+                </Link>
+              )
+            )}
           </div>
-
           {/* Desktop Navigation (pipe-separated) */}
-          <div className="hidden md:flex flex-1 items-center justify-center h-full select-none">
+          <div className={styles.desktopNav}>
             {navItems.map((item, idx) => {
               const isTeam = item.name === "TEAMS";
               const active =
                 item.href === "/"
                   ? pathname === "/"
                   : pathname.startsWith(item.href);
-              const desktopLinkClasses = [
-                "font-teko font-semibold text-4xl tracking-wide uppercase focus:outline-none focus:ring-2 focus:ring-viking-red focus:ring-offset-2 focus:ring-offset-white",
-                "transition-transform duration-200 ease-out transform-gpu flex items-center justify-center gap-1 text-center whitespace-nowrap",
-                active
-                  ? "text-viking-red"
-                  : "text-viking-red hover:scale-[1.20]",
-              ].join(" ");
+              const desktopLinkClasses = clsx(
+                styles.desktopLink,
+                active && styles.desktopLinkActive
+              );
               return (
-                <div key={item.name} className="flex items-center">
+                <div key={item.name} className={styles.desktopNavItem}>
                   {idx > 0 && (
-                    <span
-                      aria-hidden="true"
-                      className="px-3 text-viking-red font-light text-4xl"
-                    >
+                    <span aria-hidden="true" className={styles.desktopDivider}>
                       |
                     </span>
                   )}
-                  <div className="relative group">
+                  <div className={styles.desktopLinkGroup}>
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
@@ -174,18 +182,18 @@ export default function Navigation() {
                     >
                       {item.name}
                       {isTeam && (
-                        <ChevronDown className="h-6 w-6 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" />
+                        <ChevronDown className={styles.desktopLinkIcon} />
                       )}
                     </Link>
 
                     {isTeam && (
-                      <div className="pointer-events-none absolute left-1/2 top-full z-[70] -translate-x-1/2 translate-y-1 opacity-0 invisible group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto transition-all duration-200 ease-out">
-                        <div className="mt-1 w-56 rounded-xl bg-white dark:bg-viking-charcoal shadow-2xl ring-1 ring-black/5 border border-viking-red/20 dark:border-viking-red-dark/20 p-2 space-y-1">
+                      <div className={styles.desktopDropdownWrapper}>
+                        <div className={styles.desktopDropdown}>
                           {teamLinks.map((team) => (
                             <Link
                               key={team.name}
                               href={team.href}
-                              className="flex items-center justify-between px-3 py-2 rounded-lg text-lg font-teko uppercase tracking-wide transition-colors text-viking-charcoal dark:text-gray-100 hover:bg-viking-red hover:text-white dark:hover:bg-viking-red-dark dark:hover:text-white"
+                              className={styles.desktopDropdownLink}
                             >
                               <span>{team.name}</span>
                             </Link>
@@ -198,15 +206,13 @@ export default function Navigation() {
               );
             })}
           </div>
-
           {/* Right side actions (desktop) */}
-          <div className="hidden md:flex items-center ml-auto">
+          <div className={styles.desktopActions}>
             <ThemeToggle />
           </div>
-
           {/* Mobile actions */}
-          <div className="md:hidden flex items-center ml-auto space-x-3">
-            <div className="flex items-center gap-2 text-viking-red dark:text-viking-gold/90">
+          <div className={styles.mobileActions}>
+            <div className={styles.mobileSocial}>
               {socialLinks.map(({ name, href, Icon }) => (
                 <Link
                   key={`mobile-${name}`}
@@ -214,9 +220,9 @@ export default function Navigation() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`Oslo Vikings on ${name}`}
-                  className="p-1 rounded-full transition-colors hover:bg-white/80 hover:text-viking-red-dark dark:hover:bg-white/10"
+                  className={styles.mobileSocialLink}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className={styles.mobileSocialIcon} />
                 </Link>
               ))}
             </div>
@@ -226,12 +232,12 @@ export default function Navigation() {
               size="sm"
               onClick={toggleMobileMenu}
               aria-label="Toggle menu"
-              className="text-viking-red dark:text-viking-red-dark border border-viking-red/50 dark:border-viking-red-dark/50 bg-white dark:bg-viking-charcoal hover:bg-viking-red hover:text-white dark:hover:bg-viking-red-dark dark:hover:text-viking-charcoal focus:ring-2 focus:ring-viking-red dark:focus:ring-viking-red-dark focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-viking-charcoal rounded-md shadow-sm transition-colors"
+              className={styles.mobileMenuButton}
             >
               {isOpen ? (
-                <X className="h-6 w-6" />
+                <X className={styles.mobileMenuButtonIcon} />
               ) : (
-                <Menu className="h-6 w-6" />
+                <Menu className={styles.mobileMenuButtonIcon} />
               )}
             </Button>
           </div>
@@ -239,9 +245,9 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden bg-red-700 dark:bg-viking-charcoal relative z-10 transition-colors">
+          <div className={styles.mobileMenu}>
             <div
-              className="px-2 pt-2 pb-8 sm:pb-10 space-y-2 sm:px-3 border-t border-red-600 dark:border-viking-gold/30"
+              className={styles.mobileMenuInner}
               style={{
                 paddingBottom:
                   "calc(env(safe-area-inset-bottom, 0px) + 0.75rem)",
@@ -250,13 +256,10 @@ export default function Navigation() {
               {navItems.map((item, index) => {
                 const isTeam = item.name === "TEAMS";
                 const isActive = pathname.startsWith(item.href);
-                const mobileLinkClasses = [
-                  "w-full text-center block rounded-md font-teko font-semibold text-3xl uppercase transition-all duration-200 border-2",
-                  "h-20 flex items-center justify-center",
-                  isActive
-                    ? "bg-white dark:bg-viking-gold text-viking-red dark:text-viking-charcoal border-white dark:border-viking-gold"
-                    : "text-white dark:text-viking-gold border-white dark:border-viking-gold bg-red-700 dark:bg-viking-charcoal hover:bg-white hover:text-viking-red hover:border-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal dark:hover:border-viking-gold",
-                ].join(" ");
+                const mobileLinkClasses = clsx(
+                  styles.mobileLink,
+                  isActive && styles.mobileLinkActive
+                );
                 return (
                   <div key={item.name}>
                     {isTeam ? (
@@ -269,29 +272,31 @@ export default function Navigation() {
                           aria-controls={mobileTeamsMenuId}
                           style={{ pointerEvents: "auto" }}
                         >
-                          <span className="flex items-center gap-2">
+                          <span className={styles.mobileTeamsToggle}>
                             {item.name}
                             <ChevronDown
-                              className={`h-6 w-6 transition-transform duration-200 ${
-                                isTeamsMobileOpen ? "rotate-180" : ""
-                              }`}
+                              className={clsx(
+                                styles.mobileTeamsIcon,
+                                isTeamsMobileOpen && styles.mobileTeamsIconOpen
+                              )}
                             />
                           </span>
                         </button>
                         <div
                           id={mobileTeamsMenuId}
-                          className={`grid gap-2 overflow-hidden transition-[max-height,opacity,margin] duration-300 ${
+                          className={clsx(
+                            styles.mobileTeamsGrid,
                             isTeamsMobileOpen
-                              ? "max-h-[600px] opacity-100 mt-2 pointer-events-auto"
-                              : "max-h-0 opacity-0 mt-0 pointer-events-none"
-                          }`}
+                              ? styles.mobileTeamsGridOpen
+                              : styles.mobileTeamsGridClosed
+                          )}
                         >
                           {teamLinks.map((team) => (
                             <Link
                               key={`mobile-${team.name}`}
                               href={team.href}
                               onClick={closeMobileMenu}
-                              className="block rounded-md border px-4 py-3 text-xl font-teko uppercase tracking-wide transition-colors text-white dark:text-viking-gold border-white dark:border-viking-gold bg-red-700 dark:bg-viking-charcoal hover:bg-white hover:text-viking-red hover:border-white dark:hover:bg-viking-gold dark:hover:text-viking-charcoal dark:hover:border-viking-gold"
+                              className={styles.mobileTeamLink}
                             >
                               {team.name}
                             </Link>
@@ -306,13 +311,13 @@ export default function Navigation() {
                         onClick={closeMobileMenu}
                         style={{ pointerEvents: "auto" }}
                       >
-                        <span className="flex items-center gap-2">
+                        <span className={styles.mobileTeamsToggle}>
                           {item.name}
                         </span>
                       </Link>
                     )}
                     {index < navigation.length - 1 && (
-                      <div className="border-b border-red-600/50 dark:border-viking-gold/30 my-1"></div>
+                      <div className={styles.mobileDivider}></div>
                     )}
                   </div>
                 );

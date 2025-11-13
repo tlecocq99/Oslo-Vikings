@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import styles from "./SplashScreen.module.css";
 
 // Adjust the logo path as needed (should be in public/images/)
 const LOGO_SRC = "/images/logo.png"; // Replace with your logo file if different
@@ -24,13 +25,8 @@ export default function SplashScreen() {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-700"
-      style={{
-        background: "#f8fafc",
-        opacity: visible ? 1 : 0,
-        pointerEvents: "none",
-        transition: "opacity 0.7s cubic-bezier(0.4,0,0.2,1)",
-      }}
+      className={styles.container}
+      style={{ opacity: visible ? 1 : 0 }}
       aria-label="Oslo Vikings splash screen"
     >
       <Image
@@ -39,7 +35,7 @@ export default function SplashScreen() {
         width={224}
         height={224}
         priority
-        className="w-56 h-56 object-contain drop-shadow-2xl animate-pulse"
+        className={styles.logo}
         draggable={false}
       />
     </div>

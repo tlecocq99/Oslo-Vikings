@@ -275,11 +275,32 @@ export async function fetchNewsArticles({
     ? articles
     : articles.filter((article) => article.visibility === "published");
 
-  const sorted = published.sort((a, b) => {
-    const aDate = a.publishedAt || a.date || "";
-    const bDate = b.publishedAt || b.date || "";
-    return bDate.localeCompare(aDate);
-  });
+  const getTimestamp = (value?: string): number => {
+    if (!value) return Number.NaN;
+    const parsed = Date.parse(value);
+    return Number.isNaN(parsed) ? Number.NaN : parsed;
+  };
+
+  const sorted = published
+    .map((article, index) => ({ article, index }))
+    .sort((a, b) => {
+      const aTime = getTimestamp(a.article.publishedAt || a.article.date);
+      const bTime = getTimestamp(b.article.publishedAt || b.article.date);
+
+      const aValid = Number.isFinite(aTime);
+      const bValid = Number.isFinite(bTime);
+
+      if (aValid && bValid) {
+        if (aTime === bTime) {
+          return a.index - b.index;
+        }
+        return bTime - aTime;
+      }
+      if (aValid) return -1;
+      if (bValid) return 1;
+      return a.index - b.index;
+    })
+    .map(({ article }) => article);
 
   return typeof limit === "number" ? sorted.slice(0, limit) : sorted;
 }
