@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type {
   PointerEvent as ReactPointerEvent,
   MouseEvent as ReactMouseEvent,
   KeyboardEvent as ReactKeyboardEvent,
+  TouchEvent as ReactTouchEvent,
 } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,8 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   const [currentMobileSlide, setCurrentMobileSlide] = useState(0);
   const [isMobileDragging, setIsMobileDragging] = useState(false);
   const [mobileDragOffset, setMobileDragOffset] = useState(0);
+  const [mobileLoopIndex, setMobileLoopIndex] = useState(0);
+  const [suppressMobileTransition, setSuppressMobileTransition] = useState(false);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const mobileSlidesContainerRef = useRef<HTMLDivElement>(null);
@@ -33,6 +36,20 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
     viewportWidth: number;
     pointerId: number | null;
   }>({ startX: 0, viewportWidth: 1, pointerId: null });
+  const mobileTouchStateRef = useRef<{
+    startX: number;
+    startY: number;
+    viewportWidth: number;
+    isTracking: boolean;
+    isSwiping: boolean;
+  }>({
+    startX: 0,
+    startY: 0,
+    viewportWidth: 1,
+    isTracking: false,
+    isSwiping: false,
+  });
+  const pendingLoopIndexRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -75,6 +92,39 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   const baseLength = partners.length || 1;
   const shouldPause = isDragging || activeKey !== null;
   const autoScrollSpeed = isMobile ? 28 : 40; // pixels per second
+  const mobileSlidesLength = mobileSlides.length;
+  const hasMultipleMobileSlides = mobileSlidesLength > 1;
+
+  const advanceMobileSlide = useCallback(
+    (delta: number) => {
+      if (!mobileSlidesLength) return;
+      if (delta === 0) return;
+
+      setCurrentMobileSlide((prev) => {
+        const base = mobileSlidesLength;
+        return (prev + delta + base) % base;
+      });
+
+      if (hasMultipleMobileSlides) {
+        setMobileLoopIndex((prev) => prev + delta);
+      }
+    },
+    [hasMultipleMobileSlides, mobileSlidesLength]
+  );
+
+  const goToMobileSlide = useCallback(
+    (index: number) => {
+      if (!mobileSlidesLength) return;
+
+      const normalized = ((index % mobileSlidesLength) + mobileSlidesLength) % mobileSlidesLength;
+      setCurrentMobileSlide(normalized);
+
+      if (hasMultipleMobileSlides) {
+        setMobileLoopIndex(mobileSlidesLength + normalized);
+      }
+    },
+    [hasMultipleMobileSlides, mobileSlidesLength]
+  );
 
   useEffect(() => {
     if (isMobile) {
@@ -124,7 +174,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   }, [autoScrollSpeed, isMobile, partners.length, shouldPause]);
 
   useEffect(() => {
-    if (!isMobile || mobileSlides.length <= 1) {
+    if (!isMobile || !hasMultipleMobileSlides) {
       return;
     }
 
@@ -134,34 +184,99 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
 
     const timeout = window.setTimeout(() => {
       setActiveKey(null);
-      setCurrentMobileSlide((prev) => (prev + 1) % mobileSlides.length);
+      advanceMobileSlide(1);
     }, 3000);
 
     return () => window.clearTimeout(timeout);
   }, [
     activeKey,
+    advanceMobileSlide,
     currentMobileSlide,
     isMobile,
     isMobileDragging,
-    mobileSlides.length,
+    hasMultipleMobileSlides,
   ]);
 
   useEffect(() => {
-    if (!mobileSlides.length) {
+    if (mobileSlidesLength === 0) {
       setCurrentMobileSlide(0);
+      setMobileLoopIndex(0);
       setActiveKey(null);
-    } else if (currentMobileSlide >= mobileSlides.length) {
-      setCurrentMobileSlide(0);
-      setActiveKey(null);
+      return;
     }
-  }, [currentMobileSlide, mobileSlides.length]);
+
+    setCurrentMobileSlide((prev) => prev % mobileSlidesLength);
+    if (hasMultipleMobileSlides) {
+      setMobileLoopIndex((prev) => {
+        const normalized = ((prev % mobileSlidesLength) + mobileSlidesLength) % mobileSlidesLength;
+        return mobileSlidesLength + normalized;
+      });
+    } else {
+      setMobileLoopIndex(0);
+    }
+  }, [mobileSlidesLength, hasMultipleMobileSlides]);
 
   useEffect(() => {
     if (isMobile) {
       setCurrentMobileSlide(0);
       setActiveKey(null);
+      if (hasMultipleMobileSlides) {
+        setMobileLoopIndex(mobileSlidesLength);
+      } else {
+        setMobileLoopIndex(0);
+      }
     }
-  }, [isMobile]);
+  }, [isMobile, hasMultipleMobileSlides, mobileSlidesLength]);
+
+  useEffect(() => {
+    if (!hasMultipleMobileSlides) {
+      pendingLoopIndexRef.current = null;
+      return;
+    }
+
+    const base = mobileSlidesLength;
+    const minIndex = base;
+    const maxIndex = base * 2 - 1;
+
+    if (mobileLoopIndex < minIndex) {
+      pendingLoopIndexRef.current = mobileLoopIndex + base;
+    } else if (mobileLoopIndex > maxIndex) {
+      pendingLoopIndexRef.current = mobileLoopIndex - base;
+    } else {
+      pendingLoopIndexRef.current = null;
+    }
+  }, [mobileLoopIndex, hasMultipleMobileSlides, mobileSlidesLength]);
+
+  useEffect(() => {
+    if (!hasMultipleMobileSlides) return;
+
+    const container = mobileSlidesContainerRef.current;
+    if (!container) return;
+
+    const handleTransitionEnd = (event: TransitionEvent) => {
+      if (event.propertyName !== "transform") return;
+      const targetIndex = pendingLoopIndexRef.current;
+      if (targetIndex == null) return;
+
+      setSuppressMobileTransition(true);
+      setMobileLoopIndex(targetIndex);
+      pendingLoopIndexRef.current = null;
+    };
+
+    container.addEventListener("transitionend", handleTransitionEnd);
+
+    return () => {
+      container.removeEventListener("transitionend", handleTransitionEnd);
+    };
+  }, [hasMultipleMobileSlides]);
+
+  useEffect(() => {
+    if (!suppressMobileTransition) return;
+    const handle = window.requestAnimationFrame(() => {
+      setSuppressMobileTransition(false);
+    });
+    return () => window.cancelAnimationFrame(handle);
+  }, [suppressMobileTransition]);
 
   const wrapScrollPosition = (node: HTMLDivElement) => {
     const halfWidth = node.scrollWidth / 2;
@@ -251,6 +366,9 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   const handleMobilePointerDown = (
     event: ReactPointerEvent<HTMLDivElement>
   ) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
     if (!isMobile || mobileSlides.length <= 1) {
       return;
     }
@@ -286,6 +404,9 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
     event: ReactPointerEvent<HTMLDivElement>
   ) => {
     if (!isMobileDragging) return;
+    if (event.pointerType === "touch") {
+      return;
+    }
     const container = mobileSlidesContainerRef.current;
     if (!container) return;
 
@@ -296,10 +417,13 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   };
 
   const finishMobileDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
     if (!isMobileDragging) return;
 
     const container = mobileSlidesContainerRef.current;
-    const { pointerId, viewportWidth } = mobileDragStateRef.current;
+    const { pointerId } = mobileDragStateRef.current;
 
     if (
       container &&
@@ -308,21 +432,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
     ) {
       container.releasePointerCapture(pointerId);
     }
-
-    let nextSlide = currentMobileSlide;
-    if (mobileSlides.length > 1 && viewportWidth > 0) {
-      const threshold = viewportWidth * 0.1;
-      if (mobileDragOffset > threshold) {
-        nextSlide =
-          (currentMobileSlide - 1 + mobileSlides.length) % mobileSlides.length;
-      } else if (mobileDragOffset < -threshold) {
-        nextSlide = (currentMobileSlide + 1) % mobileSlides.length;
-      }
-    }
-
-    setCurrentMobileSlide(nextSlide);
-    setIsMobileDragging(false);
-    setMobileDragOffset(0);
+    resolveMobileDrag();
   };
 
   const handleMobilePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -342,6 +452,119 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
     finishMobileDrag(event);
   };
 
+  const resetTouchState = () => {
+    mobileTouchStateRef.current = {
+      startX: 0,
+      startY: 0,
+      viewportWidth: 1,
+      isTracking: false,
+      isSwiping: false,
+    };
+  };
+
+  const resolveMobileDrag = (finalOffset?: number) => {
+    const { viewportWidth } = mobileDragStateRef.current;
+    const effectiveOffset = finalOffset ?? mobileDragOffset;
+    let delta = 0;
+
+    if (hasMultipleMobileSlides && viewportWidth > 0) {
+      const threshold = viewportWidth * 0.1;
+      if (effectiveOffset > threshold) {
+        delta = -1;
+      } else if (effectiveOffset < -threshold) {
+        delta = 1;
+      }
+    }
+
+    if (delta !== 0) {
+      advanceMobileSlide(delta);
+    }
+
+    setIsMobileDragging(false);
+    setMobileDragOffset(0);
+    mobileDragStateRef.current.pointerId = null;
+    resetTouchState();
+  };
+
+  const handleMobileTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
+    if (!isMobile || mobileSlides.length <= 1) {
+      return;
+    }
+
+    const firstTouch = event.touches[0];
+    if (!firstTouch) return;
+
+    const container = mobileSlidesContainerRef.current;
+    if (!container) return;
+
+    const viewportWidth =
+      container.parentElement?.getBoundingClientRect().width ??
+      container.getBoundingClientRect().width ??
+      1;
+
+    mobileTouchStateRef.current = {
+      startX: firstTouch.clientX,
+      startY: firstTouch.clientY,
+      viewportWidth,
+      isTracking: true,
+      isSwiping: false,
+    };
+    mobileDragStateRef.current.viewportWidth = viewportWidth;
+    setActiveKey(null);
+    setMobileDragOffset(0);
+  };
+
+  const handleMobileTouchMove = (event: ReactTouchEvent<HTMLDivElement>) => {
+    const touchState = mobileTouchStateRef.current;
+    if (!touchState.isTracking) {
+      return;
+    }
+
+    const touch = event.touches[0];
+    if (!touch) return;
+
+    const deltaX = touch.clientX - touchState.startX;
+    const deltaY = Math.abs(touch.clientY - touchState.startY);
+    const absDeltaX = Math.abs(deltaX);
+
+    if (!touchState.isSwiping) {
+      if (absDeltaX > 6 && absDeltaX > deltaY) {
+        touchState.isSwiping = true;
+        setIsMobileDragging(true);
+      } else if (deltaY > absDeltaX) {
+        touchState.isTracking = false;
+        resetTouchState();
+        return;
+      } else {
+        return;
+      }
+    }
+
+    event.preventDefault();
+    setMobileDragOffset(deltaX);
+  };
+
+  const handleMobileTouchEnd = () => {
+    const { isSwiping } = mobileTouchStateRef.current;
+    if (isSwiping) {
+      resolveMobileDrag();
+    } else {
+      setIsMobileDragging(false);
+      setMobileDragOffset(0);
+      resetTouchState();
+    }
+  };
+
+  const handleMobileTouchCancel = () => {
+    if (mobileTouchStateRef.current.isSwiping) {
+      resolveMobileDrag();
+    } else {
+      setIsMobileDragging(false);
+      setMobileDragOffset(0);
+      resetTouchState();
+    }
+  };
+
   const mobileDragPercent = useMemo(() => {
     if (!isMobileDragging) return 0;
     const { viewportWidth } = mobileDragStateRef.current;
@@ -350,8 +573,17 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   }, [isMobileDragging, mobileDragOffset]);
 
   if (isMobile) {
+    const baseTranslateIndex = hasMultipleMobileSlides
+      ? mobileLoopIndex
+      : currentMobileSlide;
     const effectiveTranslate =
-      -(currentMobileSlide * 100) + (isMobileDragging ? mobileDragPercent : 0);
+      -(baseTranslateIndex * 100) +
+      (isMobileDragging ? mobileDragPercent : 0);
+
+    const mobileRenderSlides = hasMultipleMobileSlides
+      ? [...mobileSlides, ...mobileSlides, ...mobileSlides]
+      : mobileSlides;
+    const loopOffset = hasMultipleMobileSlides ? mobileSlidesLength : 0;
 
     return (
       <div className="relative">
@@ -361,7 +593,8 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
             className="flex touch-pan-y select-none"
             style={{
               transform: `translateX(${effectiveTranslate}%)`,
-              transition: isMobileDragging
+              transition:
+                isMobileDragging || suppressMobileTransition
                 ? "none"
                 : "transform 700ms ease-out",
             }}
@@ -370,13 +603,20 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
             onPointerUp={handleMobilePointerUp}
             onPointerLeave={handleMobilePointerLeave}
             onPointerCancel={handleMobilePointerCancel}
+            onTouchStart={handleMobileTouchStart}
+            onTouchMove={handleMobileTouchMove}
+            onTouchEnd={handleMobileTouchEnd}
+            onTouchCancel={handleMobileTouchCancel}
           >
-            {mobileSlides.map((slide, slideIndex) => (
+            {mobileRenderSlides.map((slide, slideIndex) => (
               <div
                 key={`mobile-slide-${slideIndex}`}
                 className="min-w-full px-2"
                 aria-hidden={
-                  mobileSlides.length > 1
+                  hasMultipleMobileSlides
+                    ? ((slideIndex - loopOffset + mobileRenderSlides.length) %
+                        mobileSlidesLength) !== currentMobileSlide
+                    : mobileSlidesLength > 1
                     ? slideIndex !== currentMobileSlide
                     : undefined
                 }
@@ -494,7 +734,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                 aria-current={index === currentMobileSlide}
                 onClick={() => {
                   setActiveKey(null);
-                  setCurrentMobileSlide(index);
+                  goToMobileSlide(index);
                 }}
               />
             ))}
