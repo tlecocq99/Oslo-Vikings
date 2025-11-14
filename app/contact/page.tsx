@@ -70,7 +70,7 @@ const ContactDirectory = ({
   const hasContacts = sanitizedContacts.length > 0;
 
   return (
-    <div className="w-full max-w-none rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm bg-white dark:bg-viking-charcoal/60">
+    <div className="w-full max-w-none rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm bg-white dark:bg-viking-surface">
       {isLoading ? (
         <div className="p-4 text-center text-sm text-gray-600 dark:text-gray-300">
           Loading directory…
@@ -161,7 +161,7 @@ const ContactDirectory = ({
           {/* Original table for md+ screens */}
           <div className="hidden md:block w-full overflow-x-auto">
             <table className="w-full table-auto border-collapse">
-              <thead className="bg-gray-100 text-left text-sm font-semibold text-viking-charcoal dark:bg-viking-charcoal/50 dark:text-gray-200">
+              <thead className="bg-gray-100 text-left text-sm font-semibold text-viking-charcoal dark:bg-viking-surface dark:text-gray-200">
                 <tr>
                   <th scope="col" className="px-4 py-3">
                     Position
@@ -185,8 +185,8 @@ const ContactDirectory = ({
                     }-${index}`}
                     className={`${
                       index % 2 === 1
-                        ? "bg-gray-50 dark:bg-viking-charcoal/60"
-                        : "bg-white dark:bg-viking-charcoal/70"
+                        ? "bg-gray-50 dark:bg-viking-surface"
+                        : "bg-white dark:bg-viking-surface-alt"
                     }`}
                   >
                     <td className="border-b border-gray-200 px-4 py-3 text-sm font-medium dark:border-gray-700">
@@ -341,10 +341,10 @@ function ContactPageContent() {
         </section>
 
         {/* Contact Content */}
-        <section className="py-6 bg-white dark:bg-viking-charcoal/80 transition-colors">
+        <section className="py-6 bg-white dark:bg-viking-surface-alt transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 space-y-6">
             <div className="grid gap-4 lg:grid-cols-2">
-              <Card className="w-full bg-white dark:bg-viking-charcoal/70 border border-gray-200 dark:border-gray-700 transition-colors">
+              <Card className="w-full bg-white dark:bg-viking-surface border border-gray-200 dark:border-gray-700 transition-colors">
                 <CardHeader className="border-b border-gray-200 dark:border-gray-700 px-4 py-3 text-left">
                   <CardTitle className="text-2xl font-semibold text-viking-red dark:text-viking-red">
                     Board
@@ -360,7 +360,7 @@ function ContactPageContent() {
                 </CardContent>
               </Card>
 
-              <Card className="w-full bg-white dark:bg-viking-charcoal/70 border border-gray-200 dark:border-gray-700 transition-colors">
+              <Card className="w-full bg-white dark:bg-viking-surface border border-gray-200 dark:border-gray-700 transition-colors">
                 <CardHeader className="border-b border-gray-200 dark:border-gray-700 px-4 py-3 text-left">
                   <CardTitle className="text-2xl font-semibold text-viking-red dark:text-viking-red">
                     Central Functions
@@ -382,7 +382,7 @@ function ContactPageContent() {
                 <ContactForm />
               </div>
 
-              <Card className="bg-white dark:bg-viking-charcoal/70 border border-gray-200 dark:border-gray-700 transition-colors">
+              <Card className="bg-white dark:bg-viking-surface border border-gray-200 dark:border-gray-700 transition-colors">
                 <CardHeader className="px-4 py-3">
                   <CardTitle className="text-xl text-viking-charcoal dark:text-gray-100">
                     Quick Links
@@ -451,7 +451,7 @@ function ContactPageContent() {
         <section
           id="map"
           ref={mapSectionRef}
-          className="py-16 bg-gray-100 dark:bg-viking-charcoal/60 transition-colors"
+          className="py-16 bg-gray-100 dark:bg-background transition-colors"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">

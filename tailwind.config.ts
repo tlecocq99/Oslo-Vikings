@@ -1,7 +1,6 @@
 import { Lato } from "next/font/google";
 import type { Config } from "tailwindcss";
 
-
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -16,11 +15,10 @@ const config: Config = {
         viking: {
           red: "#AC1416", // updated brand red
           "red-dark": "#7C0F11", // adjusted darker variant
-          // Refined antique gold tones (less yellow)
-          gold: "#C9A227", // antique gold
-          "gold-dark": "#8A6B16", // deep accent gold
           silver: "#C0C0C0",
-          charcoal: "#1F2937",
+          charcoal: "#2C2C2C",
+          surface: "#2C2C2C",
+          "surface-alt": "#333333",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

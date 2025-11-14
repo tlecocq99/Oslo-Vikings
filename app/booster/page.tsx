@@ -93,7 +93,7 @@ export default function BoosterPage() {
                   >
                     PLATINUM BOOSTER
                   </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-gold text-center">
+                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
                     5000 kr
                   </td>
                   <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
@@ -107,7 +107,7 @@ export default function BoosterPage() {
                   >
                     GOLD BOOSTER
                   </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-gold text-center">
+                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
                     3500 kr
                   </td>
                   <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
@@ -121,7 +121,7 @@ export default function BoosterPage() {
                   >
                     SILVER BOOSTER
                   </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-gold text-center">
+                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
                     2500 kr
                   </td>
                   <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
@@ -135,7 +135,7 @@ export default function BoosterPage() {
                   >
                     BRONZE BOOSTER
                   </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-gold text-center">
+                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
                     1500 kr
                   </td>
                   <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
@@ -149,7 +149,7 @@ export default function BoosterPage() {
                   >
                     ENTRY LEVEL
                   </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-gold text-center">
+                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
                     500 kr
                   </td>
                   <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
@@ -161,7 +161,7 @@ export default function BoosterPage() {
           </div>
 
           <div className="space-y-4 rounded-2xl bg-gray-50 p-6 text-center shadow-sm dark:bg-viking-charcoal/60">
-            <p className="text-base font-semibold uppercase tracking-wide text-viking-red dark:text-viking-gold">
+            <p className="text-base font-semibold uppercase tracking-wide text-viking-red dark:text-viking-red">
               All Booster levels receive season tickets to all home games played
               at Frogner stadion! (includes all teams)
             </p>
@@ -169,7 +169,7 @@ export default function BoosterPage() {
               Need an invoice for tax purposes? Any other questions? Email{" "}
               <Link
                 href="mailto:booster@oslovikings.com"
-                className="font-semibold text-viking-red underline decoration-2 underline-offset-4 transition hover:text-viking-red/80 dark:text-viking-gold dark:hover:text-viking-gold/80"
+                className="font-semibold text-viking-red underline decoration-2 underline-offset-4 transition hover:text-viking-red/80 dark:text-viking-red dark:hover:text-viking-red/80"
               >
                 booster@oslovikings.com
               </Link>

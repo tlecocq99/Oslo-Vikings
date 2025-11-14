@@ -93,13 +93,13 @@ export default async function NewsArticlePage({
             ) : null}
             {displayDate ? (
               <span className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-viking-gold" />
+                <Calendar className="h-4 w-4 text-viking-red" />
                 {displayDate}
               </span>
             ) : null}
             {readTimeLabel ? (
               <span className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-viking-gold" />
+                <Clock className="h-4 w-4 text-viking-red" />
                 {readTimeLabel}
               </span>
             ) : null}
@@ -111,7 +111,7 @@ export default async function NewsArticlePage({
 
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/80">
             <span className="flex items-center gap-2">
-              <User className="h-4 w-4 text-viking-gold" />
+              <User className="h-4 w-4 text-viking-red" />
               {article.author ?? "Oslo Vikings"}
             </span>
           </div>

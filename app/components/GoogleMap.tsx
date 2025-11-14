@@ -355,7 +355,7 @@ export default function GoogleMap({
     <div className="space-y-3">
       <div className="flex items-center gap-2 flex-wrap">
         <select
-          className="border rounded-md px-2 py-1 text-sm bg-white dark:bg-viking-charcoal/70 dark:text-gray-100"
+          className="border rounded-md px-2 py-1 text-sm bg-white dark:bg-viking-surface dark:text-gray-100"
           value={selectedId ?? ""}
           onChange={(e) => setSelectedId(e.target.value)}
         >
@@ -372,7 +372,7 @@ export default function GoogleMap({
           Use my location
         </button>
         <button
-          className="px-3 py-1.5 rounded-md bg-viking-gold text-viking-charcoal text-sm hover:bg-viking-gold/90"
+          className="px-3 py-1.5 rounded-md bg-viking-red-dark text-white text-sm hover:bg-viking-red"
           onClick={renderRoute}
         >
           Route

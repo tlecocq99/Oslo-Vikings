@@ -30,7 +30,7 @@ export function TeamScheduleSection({
         </div>
 
         {!hasSchedule ? (
-          <div className="bg-white/80 dark:bg-viking-charcoal/90 border border-dashed border-viking-red/40 dark:border-viking-gold/30 rounded-xl p-10 text-center shadow-inner">
+          <div className="bg-white/80 dark:bg-viking-charcoal/90 border border-dashed border-viking-red/40 dark:border-viking-red/40 rounded-xl p-10 text-center shadow-inner">
             <p className="text-lg text-gray-600 dark:text-gray-300">
               Schedule data will be posted soon. Check back for the latest
               fixtures.

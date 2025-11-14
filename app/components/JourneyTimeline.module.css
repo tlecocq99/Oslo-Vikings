@@ -90,7 +90,11 @@
 
 :global(.dark) .card {
   background-color: rgba(var(--color-viking-charcoal-rgb), 0.7);
-  border-color: color-mix(in srgb, rgb(var(--color-viking-charcoal-rgb)) 85%, white 15%);
+  border-color: color-mix(
+    in srgb,
+    rgb(var(--color-viking-charcoal-rgb)) 85%,
+    white 15%
+  );
 }
 
 .cardActive {
@@ -107,13 +111,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-viking-gold);
+  background-color: var(--color-viking-red);
 }
 
 .badgeText {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--color-viking-charcoal);
+  color: hsl(var(--primary-foreground));
 }
 
 .cardTitle {
