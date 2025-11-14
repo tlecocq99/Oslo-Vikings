@@ -283,6 +283,14 @@ export default async function Home() {
       logoSrc: "/images/sponsors/al-asaliLogo.png",
       logoAlt: "Al-Asali Rørfix logo",
     },
+    {
+      name: "ShotbyAnika",
+      description:
+        "Anika Temple does more than just make us look good on the field. She is an ultra talented photographer experienced in portraits, weddings and a wide range of other events. Book before it's too late!",
+      website: "https://www.anikatemple.photography/",
+      logoSrc: "/images/sponsors/shotbyAnika.png",
+      logoAlt: "ShotbyAnika logo",
+    },
   ];
 
   return (
