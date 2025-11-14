@@ -305,11 +305,7 @@
 
 :global(.dark) .mobileSocialLink:hover,
 :global(.dark) .mobileSocialLink:focus-visible {
-  background-color: color-mix(
-    in srgb,
-    hsl(var(--foreground)) 15%,
-    transparent
-  );
+  background-color: color-mix(in srgb, hsl(var(--foreground)) 15%, transparent);
   color: hsl(var(--foreground));
 }
 

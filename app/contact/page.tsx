@@ -70,7 +70,7 @@ const ContactDirectory = ({
   const hasContacts = sanitizedContacts.length > 0;
 
   return (
-  <div className="w-full max-w-none rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm bg-white dark:bg-viking-surface">
+    <div className="w-full max-w-none rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm bg-white dark:bg-viking-surface">
       {isLoading ? (
         <div className="p-4 text-center text-sm text-gray-600 dark:text-gray-300">
           Loading directory…
@@ -341,7 +341,7 @@ function ContactPageContent() {
         </section>
 
         {/* Contact Content */}
-  <section className="py-6 bg-white dark:bg-viking-surface-alt transition-colors">
+        <section className="py-6 bg-white dark:bg-viking-surface-alt transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 space-y-6">
             <div className="grid gap-4 lg:grid-cols-2">
               <Card className="w-full bg-white dark:bg-viking-surface border border-gray-200 dark:border-gray-700 transition-colors">

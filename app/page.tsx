@@ -305,7 +305,7 @@ export default async function Home() {
       <Hero {...heroData} />
 
       {/* Quick Stats Section */}
-  <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
+      <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             <div className="text-center">
@@ -346,7 +346,7 @@ export default async function Home() {
       </section>
 
       {/* Partners Section */}
-  <section className="py-10 bg-gray-100 dark:bg-viking-surface-alt transition-colors">
+      <section className="py-10 bg-gray-100 dark:bg-viking-surface-alt transition-colors">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-white mb-4">
@@ -363,7 +363,7 @@ export default async function Home() {
       </section>
 
       {/* Booster & Grasrot Support Section */}
-  <section className="bg-white dark:bg-viking-surface transition-colors">
+      <section className="bg-white dark:bg-viking-surface transition-colors">
         <div className="grid min-h-[220px] sm:min-h-[300px] xl:min-h-[360px] grid-cols-1 gap-y-4 px-4 lg:grid-cols-2 lg:gap-y-0 lg:px-0">
           <Link
             href="/booster"
@@ -432,7 +432,7 @@ export default async function Home() {
       </section>
 
       {/* Latest News Section */}
-  <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
+      <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">

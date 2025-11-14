@@ -81,7 +81,7 @@ export default function RosterClient({ players }: RosterClientProps) {
             );
           })}
         </div>
-  <div className="flex items-center bg-gray-100 dark:bg-viking-surface rounded-lg p-1">
+        <div className="flex items-center bg-gray-100 dark:bg-viking-surface rounded-lg p-1">
           <button
             onClick={() => setViewMode("grid")}
             className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors dark:bg-viking-surface ${

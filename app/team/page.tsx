@@ -43,7 +43,7 @@ function Hero() {
 
 function TeamsOverview() {
   return (
-  <section className="py-16 bg-white dark:bg-viking-surface transition-colors">
+    <section className="py-16 bg-white dark:bg-viking-surface transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-100 mb-4">
@@ -101,7 +101,7 @@ function TeamsOverview() {
 
 function CoachingStaff() {
   return (
-  <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
+    <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-viking-charcoal mb-4 dark:text-gray-200">

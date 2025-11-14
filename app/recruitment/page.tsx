@@ -78,7 +78,7 @@ export default function RecruitmentPage() {
           </div>
         </section>
 
-  <section className="py-16 bg-white dark:bg-viking-surface-alt transition-colors">
+        <section className="py-16 bg-white dark:bg-viking-surface-alt transition-colors">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
               {benefits.map((b, i) => (

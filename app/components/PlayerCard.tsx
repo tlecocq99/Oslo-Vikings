@@ -36,7 +36,7 @@ export default function PlayerCard(props: PlayerCardProps) {
   if (variant === "list") {
     const listContent = (
       <div
-  className={`flex items-center bg-white dark:bg-viking-surface rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-viking-red-dark hover:shadow-lg transition-shadow p-4 gap-4 cursor-pointer ${
+        className={`flex items-center bg-white dark:bg-viking-surface rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-viking-red-dark hover:shadow-lg transition-shadow p-4 gap-4 cursor-pointer ${
           highlight ? "ring-2 ring-viking-red" : ""
         }`}
       >
@@ -127,7 +127,7 @@ export default function PlayerCard(props: PlayerCardProps) {
     );
     const desktop = (
       <div
-  className={`hidden md:flex md:flex-col md:h-full bg-white dark:bg-viking-surface dark:border-viking-red-dark rounded-lg shadow-lg overflow-hidden transform-gpu transition-shadow duration-300 ease-out md:hover:scale-[1.06] md:hover:-translate-y-1 md:hover:shadow-2xl ${
+        className={`hidden md:flex md:flex-col md:h-full bg-white dark:bg-viking-surface dark:border-viking-red-dark rounded-lg shadow-lg overflow-hidden transform-gpu transition-shadow duration-300 ease-out md:hover:scale-[1.06] md:hover:-translate-y-1 md:hover:shadow-2xl ${
           highlight ? "ring-2 ring-viking-red" : ""
         }`}
       >

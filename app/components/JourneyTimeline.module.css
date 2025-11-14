@@ -90,7 +90,11 @@
 
 :global(.dark) .card {
   background-color: rgba(var(--color-viking-charcoal-rgb), 0.7);
-  border-color: color-mix(in srgb, rgb(var(--color-viking-charcoal-rgb)) 85%, white 15%);
+  border-color: color-mix(
+    in srgb,
+    rgb(var(--color-viking-charcoal-rgb)) 85%,
+    white 15%
+  );
 }
 
 .cardActive {
