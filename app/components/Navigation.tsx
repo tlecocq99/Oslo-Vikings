@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -63,6 +69,10 @@ export default function Navigation() {
 
   const navItems = useMemo(() => navigation, []);
   const mobileTeamsMenuId = "mobile-team-links";
+  const mobileMenuStyle = useMemo<CSSProperties>(
+    () => ({ "--nav-height": `${navHeight}px` } as CSSProperties),
+    [navHeight]
+  );
 
   const toggleMobileMenu = () => {
     setIsTeamsMobileOpen(false);
@@ -245,7 +255,7 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className={styles.mobileMenu}>
+          <div className={styles.mobileMenu} style={mobileMenuStyle}>
             <div
               className={styles.mobileMenuInner}
               style={{

@@ -349,17 +349,33 @@
   height: 1.5rem;
 }
 
+
 .mobileMenu {
   display: block;
+  position: fixed;
+  top: var(--nav-height, 6rem);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
   background-color: var(--color-viking-red);
-  position: relative;
-  z-index: 10;
   transition: background-color 0.3s ease;
-  max-height: calc(100vh - 6rem);
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
+}
+
+@supports (height: 100dvh) {
+  .mobileMenu {
+    height: calc(100dvh - var(--nav-height, 6rem));
+  }
+}
+
+@supports not (height: 100dvh) {
+  .mobileMenu {
+    height: calc(100vh - var(--nav-height, 6rem));
+  }
 }
 
 :global(.dark) .mobileMenu {
