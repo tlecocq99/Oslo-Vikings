@@ -295,13 +295,21 @@
 
 .mobileSocialLink:hover,
 .mobileSocialLink:focus-visible {
-  background-color: color-mix(in srgb, hsl(var(--primary-foreground)) 80%, transparent);
+  background-color: color-mix(
+    in srgb,
+    hsl(var(--primary-foreground)) 80%,
+    transparent
+  );
   color: var(--color-viking-red-dark);
 }
 
 :global(.dark) .mobileSocialLink:hover,
 :global(.dark) .mobileSocialLink:focus-visible {
-  background-color: color-mix(in srgb, hsl(var(--primary-foreground)) 15%, transparent);
+  background-color: color-mix(
+    in srgb,
+    hsl(var(--primary-foreground)) 15%,
+    transparent
+  );
   color: var(--color-viking-charcoal);
 }
 
@@ -351,6 +359,11 @@
   position: relative;
   z-index: 10;
   transition: background-color 0.3s ease;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 :global(.dark) .mobileMenu {

@@ -253,7 +253,9 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   }, [mobileLoopIndex, hasMultipleMobileSlides, mobileSlidesLength]);
 
   useEffect(() => {
-    if (!hasMultipleMobileSlides) return;
+    if (!hasMultipleMobileSlides || !isMobile) {
+      return;
+    }
 
     const container = mobileSlidesContainerRef.current;
     if (!container) return;
@@ -273,7 +275,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
     return () => {
       container.removeEventListener("transitionend", handleTransitionEnd);
     };
-  }, [hasMultipleMobileSlides]);
+  }, [hasMultipleMobileSlides, isMobile, mobileSlidesLength]);
 
   useEffect(() => {
     if (!suppressMobileTransition) return;
