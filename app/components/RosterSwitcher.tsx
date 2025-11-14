@@ -40,7 +40,7 @@ function RosterSwitcherInner({ rosters }: RosterSwitcherProps) {
   const hasMultipleRosters = rosterKeys.length > 1;
 
   return (
-    <section className="py-16 bg-white dark:bg-viking-charcoal/50 transition-colors relative">
+  <section className="py-16 bg-white dark:bg-viking-surface transition-colors relative">
       {/* Mobile floating filter button */}
       <div className="md:hidden fixed bottom-4 right-4 z-40">
         <Sheet>

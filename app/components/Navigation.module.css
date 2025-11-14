@@ -75,7 +75,7 @@
 }
 
 :global(.dark) .desktopSocial {
-  color: rgba(var(--color-viking-gold-rgb), 0.9);
+  color: rgba(var(--color-viking-red-rgb), 0.9);
 }
 
 .desktopSocialLink {
@@ -96,7 +96,7 @@
 }
 
 :global(.dark) .desktopSocialLink:focus-visible {
-  box-shadow: 0 0 0 2px rgba(var(--color-viking-gold-rgb), 0.6),
+  box-shadow: 0 0 0 2px rgba(var(--color-viking-red-rgb), 0.6),
     0 0 0 4px rgba(var(--color-viking-charcoal-rgb), 1);
 }
 
@@ -214,8 +214,8 @@
 }
 
 :global(.dark) .desktopDropdown {
-  background-color: var(--color-viking-charcoal);
-  border-color: rgba(var(--color-viking-red-rgb), 0.2);
+  background-color: hsl(var(--card));
+  border-color: color-mix(in srgb, hsl(var(--border)) 85%, transparent 15%);
 }
 
 .desktopDropdownLink {
@@ -281,7 +281,7 @@
 }
 
 :global(.dark) .mobileSocial {
-  color: rgba(var(--color-viking-gold-rgb), 0.9);
+  color: rgba(var(--color-viking-red-rgb), 0.85);
 }
 
 .mobileSocialLink {
@@ -307,10 +307,10 @@
 :global(.dark) .mobileSocialLink:focus-visible {
   background-color: color-mix(
     in srgb,
-    hsl(var(--primary-foreground)) 15%,
+    hsl(var(--foreground)) 15%,
     transparent
   );
-  color: var(--color-viking-charcoal);
+  color: hsl(var(--foreground));
 }
 
 .mobileSocialIcon {
@@ -336,15 +336,15 @@
 }
 
 :global(.dark) .mobileMenuButton {
-  background-color: var(--color-viking-charcoal);
-  border-color: rgba(var(--color-viking-red-rgb), 0.5);
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
   color: var(--color-viking-red);
 }
 
 :global(.dark) .mobileMenuButton:hover,
 :global(.dark) .mobileMenuButton:focus-visible {
   background-color: var(--color-viking-red-dark);
-  color: var(--color-viking-charcoal);
+  color: hsl(var(--foreground));
   border-color: var(--color-viking-red-dark);
 }
 
@@ -367,7 +367,7 @@
 }
 
 :global(.dark) .mobileMenu {
-  background-color: var(--color-viking-charcoal);
+  background-color: hsl(var(--background));
 }
 
 @media (min-width: 768px) {
@@ -421,16 +421,16 @@
 }
 
 :global(.dark) .mobileLink {
-  background-color: var(--color-viking-charcoal);
-  border-color: rgba(var(--color-viking-gold-rgb), 1);
-  color: rgba(var(--color-viking-gold-rgb), 1);
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
 }
 
 :global(.dark) .mobileLinkActive,
 :global(.dark) .mobileLink:hover,
 :global(.dark) .mobileLink:focus-visible {
-  background-color: rgba(var(--color-viking-gold-rgb), 1);
-  color: var(--color-viking-charcoal);
+  background-color: var(--color-viking-red);
+  color: hsl(var(--primary-foreground));
 }
 
 .mobileTeamsToggle {
@@ -492,15 +492,15 @@
 }
 
 :global(.dark) .mobileTeamLink {
-  background-color: var(--color-viking-charcoal);
-  border-color: rgba(var(--color-viking-gold-rgb), 1);
-  color: rgba(var(--color-viking-gold-rgb), 1);
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
 }
 
 :global(.dark) .mobileTeamLink:hover,
 :global(.dark) .mobileTeamLink:focus-visible {
-  background-color: rgba(var(--color-viking-gold-rgb), 1);
-  color: var(--color-viking-charcoal);
+  background-color: var(--color-viking-red);
+  color: hsl(var(--primary-foreground));
 }
 
 .mobileDivider {
@@ -509,5 +509,5 @@
 }
 
 :global(.dark) .mobileDivider {
-  border-color: rgba(201, 162, 39, 0.3);
+  border-color: rgba(var(--color-viking-red-rgb), 0.35);
 }

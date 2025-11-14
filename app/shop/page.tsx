@@ -33,7 +33,7 @@ export default function ShopPage() {
     <>
       <Navigation />
 
-      <main className="min-h-screen bg-white dark:bg-viking-charcoal/85 transition-colors">
+  <main className="min-h-screen bg-white dark:bg-background transition-colors">
         <section className="py-20 sm:py-24">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
             <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-100">
@@ -45,7 +45,7 @@ export default function ShopPage() {
               meantime, feel free to check out what&apos;s currently available
               for purchase at our merchandise stands on game day.
             </p>
-            <div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-viking-charcoal/70 px-6 py-8 shadow-sm">
+            <div className="inline-flex flex-col items-center gap-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-viking-surface px-6 py-8 shadow-sm">
               <p className="text-base text-gray-600 dark:text-gray-300">
                 Want to stay in the loop? Follow us on social for restock alerts
                 and online shop updates.
@@ -83,9 +83,9 @@ export default function ShopPage() {
                   key={item.src}
                   type="button"
                   onClick={() => setActiveItem(item)}
-                  className="group h-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-viking-charcoal"
+                  className="group h-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#1a1a1a]"
                 >
-                  <figure className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-viking-charcoal shadow-sm transition-transform group-hover:-translate-y-1">
+                  <figure className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-viking-surface shadow-sm transition-transform group-hover:-translate-y-1">
                     <div className="relative aspect-[4/5] w-full overflow-hidden">
                       <Image
                         src={item.src}
@@ -117,7 +117,7 @@ export default function ShopPage() {
       >
         <DialogContent className="w-full max-w-[90vw] md:max-w-4xl border-none bg-transparent p-0 shadow-none">
           {activeItem && (
-            <figure className="overflow-hidden rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-viking-charcoal">
+            <figure className="overflow-hidden rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-viking-surface">
               <DialogTitle className="sr-only">{activeItem.alt}</DialogTitle>
               <DialogDescription className="sr-only">
                 Expanded view of our current game day merchandise.

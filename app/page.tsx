@@ -305,14 +305,14 @@ export default async function Home() {
       <Hero {...heroData} />
 
       {/* Quick Stats Section */}
-      <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
+  <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-[#ac1416] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-viking-red rounded-full flex items-center justify-center mx-auto mb-4">
                 <Trophy className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-gold mb-2">
+              <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-red mb-2">
                 15
               </h3>
               <p className="text-gray-600 dark:text-gray-200">
@@ -321,8 +321,8 @@ export default async function Home() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-viking-gold rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-viking-charcoal" />
+              <div className="w-16 h-16 bg-viking-red-dark rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-red mb-2">
                 Over 100
@@ -334,7 +334,7 @@ export default async function Home() {
               <div className="w-16 h-16 bg-viking-red rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calendar className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-gold mb-2">
+              <h3 className="text-2xl font-bold text-viking-charcoal dark:text-viking-red mb-2">
                 39
               </h3>
               <p className="text-gray-600 dark:text-gray-200">
@@ -346,7 +346,7 @@ export default async function Home() {
       </section>
 
       {/* Partners Section */}
-      <section className="py-10 bg-gray-100 dark:bg-viking-charcoal/90 transition-colors">
+  <section className="py-10 bg-gray-100 dark:bg-viking-surface-alt transition-colors">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-white mb-4">
@@ -363,13 +363,13 @@ export default async function Home() {
       </section>
 
       {/* Booster & Grasrot Support Section */}
-      <section className="bg-white dark:bg-viking-charcoal/70 transition-colors">
+  <section className="bg-white dark:bg-viking-surface transition-colors">
         <div className="grid min-h-[220px] sm:min-h-[300px] xl:min-h-[360px] grid-cols-1 gap-y-4 px-4 lg:grid-cols-2 lg:gap-y-0 lg:px-0">
           <Link
             href="/booster"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex h-full min-h-[220px] items-stretch overflow-hidden rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-charcoal/80 dark:focus-visible:ring-offset-viking-charcoal sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
+            className="group relative flex h-full min-h-[220px] items-stretch overflow-hidden rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-surface-alt dark:focus-visible:ring-offset-[#1a1a1a] sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
             aria-label="Explore the Vikings Booster Club"
           >
             <div className="relative flex-1">
@@ -390,7 +390,7 @@ export default async function Home() {
               <div className="absolute inset-0 bg-black/45" />
             </div>
 
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-viking-charcoal/80 p-6 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-100">
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-viking-surface-alt/90 p-6 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-100">
               <p className="text-lg font-semibold uppercase tracking-wide">
                 Discover the Vikings Booster Club
               </p>
@@ -401,7 +401,7 @@ export default async function Home() {
             href="https://www.norsk-tipping.no/grasrotandelen/din-mottaker/887798052"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex h-full min-h-[170px] items-stretch rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-charcoal/80 dark:focus-visible:ring-offset-viking-charcoal sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
+            className="group relative flex h-full min-h-[170px] items-stretch rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-surface-alt dark:focus-visible:ring-offset-[#1a1a1a] sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
             aria-label="Become a Grasrot supporter"
           >
             <div className="relative flex-1">
@@ -422,7 +422,7 @@ export default async function Home() {
               <div className="absolute inset-0 bg-black/45" />
             </div>
 
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-viking-charcoal/80 p-6 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-100">
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-viking-surface-alt/90 p-6 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-100">
               <p className="text-lg font-semibold uppercase tracking-wide">
                 Click here to become a Grasrot supporter today!
               </p>
@@ -432,7 +432,7 @@ export default async function Home() {
       </section>
 
       {/* Latest News Section */}
-      <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
+  <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">

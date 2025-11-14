@@ -215,7 +215,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
                       event.locationHref ? (
                         <Link
                           href={event.locationHref}
-                          className="font-semibold text-viking-red hover:underline dark:text-viking-gold"
+                          className="font-semibold text-viking-red hover:underline dark:text-viking-red"
                         >
                           {event.location}
                         </Link>

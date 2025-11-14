@@ -36,7 +36,7 @@ export default function PlayerCard(props: PlayerCardProps) {
   if (variant === "list") {
     const listContent = (
       <div
-        className={`flex items-center bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-viking-red-dark hover:shadow-lg transition-shadow p-4 gap-4 cursor-pointer ${
+  className={`flex items-center bg-white dark:bg-viking-surface rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-viking-red-dark hover:shadow-lg transition-shadow p-4 gap-4 cursor-pointer ${
           highlight ? "ring-2 ring-viking-red" : ""
         }`}
       >
@@ -52,7 +52,7 @@ export default function PlayerCard(props: PlayerCardProps) {
             unoptimized
           />
           {nationality && (
-            <div className="absolute -bottom-1 -right-1 bg-white dark:bg-viking-charcoal rounded-sm p-[2px] shadow ring-1 ring-black/5 dark:ring-white/10">
+            <div className="absolute -bottom-1 -right-1 bg-white dark:bg-viking-surface-alt rounded-sm p-[2px] shadow ring-1 ring-black/5 dark:ring-white/10">
               <FlagIcon
                 nationality={nationality}
                 className="w-5 h-4 rounded-[2px]"
@@ -106,7 +106,7 @@ export default function PlayerCard(props: PlayerCardProps) {
             />
           </div>
           {nationality && (
-            <div className="absolute bottom-2 right-3 translate-x-1/4 translate-y-1/4 w-7 h-5 rounded-[3px] bg-white dark:bg-viking-charcoal shadow ring-1 ring-black/10 dark:ring-white/10 flex items-center justify-center">
+            <div className="absolute bottom-2 right-3 translate-x-1/4 translate-y-1/4 w-7 h-5 rounded-[3px] bg-white dark:bg-viking-surface-alt shadow ring-1 ring-black/10 dark:ring-white/10 flex items-center justify-center">
               <FlagIcon
                 nationality={nationality}
                 className="w-full h-full rounded-[2px]"
@@ -127,7 +127,7 @@ export default function PlayerCard(props: PlayerCardProps) {
     );
     const desktop = (
       <div
-        className={`hidden md:flex md:flex-col md:h-full bg-white dark:bg-viking-charcoal/70 dark:border-viking-red-dark rounded-lg shadow-lg overflow-hidden transform-gpu transition-shadow duration-300 ease-out md:hover:scale-[1.06] md:hover:-translate-y-1 md:hover:shadow-2xl ${
+  className={`hidden md:flex md:flex-col md:h-full bg-white dark:bg-viking-surface dark:border-viking-red-dark rounded-lg shadow-lg overflow-hidden transform-gpu transition-shadow duration-300 ease-out md:hover:scale-[1.06] md:hover:-translate-y-1 md:hover:shadow-2xl ${
           highlight ? "ring-2 ring-viking-red" : ""
         }`}
       >
@@ -147,7 +147,7 @@ export default function PlayerCard(props: PlayerCardProps) {
               </div>
             )}
           </div>
-          <div className="absolute top-4 right-4 bg-viking-gold text-viking-charcoal px-2 py-1 rounded font-bold shadow-lg z-20">
+          <div className="absolute top-4 right-4 bg-viking-red-dark text-white px-2 py-1 rounded font-bold shadow-lg z-20">
             {displayNumber}
           </div>
         </div>
@@ -157,7 +157,7 @@ export default function PlayerCard(props: PlayerCardProps) {
               <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100">
                 {name || "Player Name"}
               </h3>
-              <p className="text-viking-red dark:text-viking-gold font-semibold mt-1">
+              <p className="text-viking-red dark:text-viking-red font-semibold mt-1">
                 {position || "Position"}
               </p>
             </div>

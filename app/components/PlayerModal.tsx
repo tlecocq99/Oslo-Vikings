@@ -111,7 +111,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
                   />
                 )}
               </div>
-              <p className="uppercase text-xs tracking-widest font-semibold text-viking-gold">
+              <p className="uppercase text-xs tracking-widest font-semibold text-viking-red">
                 {position}
               </p>
             </div>

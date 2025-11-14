@@ -131,7 +131,7 @@ export default function SchedulePage() {
         </section>
 
         {/* Schedule Content */}
-        <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
+  <section className="py-16 bg-white dark:bg-viking-surface-alt transition-colors">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <Tabs defaultValue="upcoming" className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-8">
@@ -181,7 +181,7 @@ export default function SchedulePage() {
         </section>
 
         {/* Standings */}
-        <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
+  <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">

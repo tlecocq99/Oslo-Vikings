@@ -64,10 +64,9 @@ Set the following secrets in your hosting platform to enable live data integrati
 
 - **Viking Red**: `#AC1416` – Primary brand color
 - **Viking Red Dark**: `#7C0F11` – Depth variant for hover/active states
-- **Viking Gold**: `#FFD700` – Accent for highlights and CTAs
-- **Viking Gold Dark**: `#B8860B` – Complementary gold tone
 - **Viking Silver**: `#C0C0C0` – Secondary accent for UI chrome
-- **Viking Charcoal**: `#1F2937` – Base text/contrast color
+- **Viking Charcoal**: `#2C2C2C` – Base neutral for dark surfaces
+- **Viking Surface Alt**: `#333333` – Elevated dark surfaces/cards
 
 ### Typography
 

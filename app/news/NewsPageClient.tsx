@@ -228,7 +228,7 @@ function FeaturedArticleCard({ article }: FeaturedProps) {
   const href = article.slug ? `/news/${article.slug}` : undefined;
   const displayDate = formatDisplayDate(article.date ?? article.publishedAt);
   const baseClasses =
-    "bg-gray-50 dark:bg-viking-charcoal/70 rounded-lg overflow-hidden shadow-lg border border-gray-200 dark:border-viking-gold/20";
+  "bg-gray-50 dark:bg-viking-charcoal/70 rounded-lg overflow-hidden shadow-lg border border-gray-200 dark:border-viking-red/30";
 
   if (placement === "left" || placement === "right") {
     const imageFirst = placement === "left";

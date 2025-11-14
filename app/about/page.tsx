@@ -208,8 +208,8 @@ export default function AboutPage() {
                   key={index}
                   className="flex flex-col sm:flex-row items-start sm:space-x-6 space-y-4 sm:space-y-0"
                 >
-                  <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 bg-viking-gold rounded-full flex items-center justify-center">
-                    <span className="text-viking-charcoal font-bold text-sm sm:text-base">
+                  <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 bg-viking-red-dark rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-sm sm:text-base">
                       {milestone.year}
                     </span>
                   </div>
@@ -251,8 +251,8 @@ export default function AboutPage() {
                 <p className="text-viking-red font-semibold mb-3">President</p>
               </div>
               <div className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg p-6 text-center border border-gray-200 dark:border-gray-700">
-                <div className="w-20 h-20 bg-viking-gold rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Badge className="w-10 h-10 text-viking-charcoal" />
+                <div className="w-20 h-20 bg-viking-red-dark rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <Badge className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-2">
                   Lotta Begby
@@ -275,8 +275,8 @@ export default function AboutPage() {
               </div>
 
               <div className="bg-white dark:bg-viking-charcoal/70 rounded-lg shadow-lg p-6 text-center border border-gray-200 dark:border-gray-700">
-                <div className="w-20 h-20 bg-viking-gold rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <Users className="w-10 h-10 text-viking-charcoal" />
+                <div className="w-20 h-20 bg-viking-red-dark rounded-full mx-auto mb-4 flex items-center justify-center">
+                  <Users className="w-10 h-10 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-2">
                   Joachim Løvf

@@ -78,7 +78,7 @@ export default function RecruitmentPage() {
           </div>
         </section>
 
-        <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
+  <section className="py-16 bg-white dark:bg-viking-surface-alt transition-colors">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
               {benefits.map((b, i) => (
@@ -111,7 +111,7 @@ export default function RecruitmentPage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-viking-gold hover:bg-viking-gold-dark text-viking-charcoal font-semibold px-10 py-6 text-lg"
+                className="bg-viking-red hover:bg-viking-red-dark text-white font-semibold px-10 py-6 text-lg"
               >
                 <Link
                   href="https://club.spond.com/landing/signup/ov/form/0F5B063376B34A10A885A137A46F817B"

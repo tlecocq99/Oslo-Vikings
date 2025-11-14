@@ -81,17 +81,17 @@ export default function RosterClient({ players }: RosterClientProps) {
             );
           })}
         </div>
-        <div className="flex items-center bg-gray-100 dark:bg-viking-charcoal/60 rounded-lg p-1">
+  <div className="flex items-center bg-gray-100 dark:bg-viking-surface rounded-lg p-1">
           <button
             onClick={() => setViewMode("grid")}
-            className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors dark:bg-viking-charcoal ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors dark:bg-viking-surface ${
               viewMode === "grid"
                 ? "bg-white text-viking-red shadow-sm"
                 : "text-gray-600 dark:text-gray-200 hover:text-viking-red"
             }`}
             aria-label="Grid view"
           >
-            <Grid3X3 className="w-4 h-4 dark:bg-viking-charcoal" /> Grid
+            <Grid3X3 className="w-4 h-4 dark:bg-viking-surface" /> Grid
           </button>
           <button
             onClick={() => setViewMode("list")}

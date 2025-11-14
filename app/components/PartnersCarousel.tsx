@@ -657,12 +657,12 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                         onKeyDown={(event) =>
                           handleMobileCardKeyDown(event, cardKey)
                         }
-                        className={`relative flex h-full flex-col items-center overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-3 py-16 text-center shadow-sm transition-shadow duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 dark:border-white/10 dark:bg-viking-charcoal/70 ${
+                        className={`relative flex h-full flex-col items-center overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-3 py-16 text-center shadow-sm transition-shadow duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 dark:border-white/10 dark:bg-viking-surface ${
                           isActive ? "shadow-lg" : ""
                         }`}
                       >
                         <div className="relative z-[1] flex w-full flex-col items-center">
-                          <div className="relative mb-3 flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-charcoal/80">
+                          <div className="relative mb-3 flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-surface-alt">
                             {partner.logoSrc ? (
                               <Image
                                 src={partner.logoSrc}
@@ -774,7 +774,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
           return (
             <div
               key={cardKey}
-              className={`group relative flex w-40 sm:w-56 lg:w-64 flex-shrink-0 transform flex-col items-center justify-between overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-4 py-6 sm:px-6 sm:py-6 mb-6 text-center transition-all duration-300 ease-out dark:border-white/10 dark:bg-viking-charcoal/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 ${
+              className={`group relative flex w-40 sm:w-56 lg:w-64 flex-shrink-0 transform flex-col items-center justify-between overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-4 py-6 sm:px-6 sm:py-6 mb-6 text-center transition-all duration-300 ease-out dark:border-white/10 dark:bg-viking-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 ${
                 isActive ? "scale-105 shadow-2xl z-10" : "scale-100"
               } ${isDimmed ? "opacity-30" : "opacity-100"}`}
               onMouseEnter={() => setActiveKey(cardKey)}
@@ -789,7 +789,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
               tabIndex={0}
               aria-expanded={isActive}
             >
-              <div className="relative mb-3 flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-charcoal/80">
+              <div className="relative mb-3 flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-surface-alt">
                 {partner.logoSrc ? (
                   <Image
                     src={partner.logoSrc}

@@ -17,7 +17,7 @@ export function TeamStaffSection({ teamName, staff }: TeamStaffSectionProps) {
     <section className="bg-white dark:bg-viking-charcoal/30 border-b border-gray-200/60 dark:border-gray-800/60">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <header className="text-center mb-8">
-          <p className="text-xs uppercase tracking-[0.35em] text-viking-gold mb-2">
+          <p className="text-xs uppercase tracking-[0.35em] text-viking-red mb-2">
             Staff
           </p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-viking-charcoal dark:text-white">
@@ -51,7 +51,7 @@ function StaffCard({ member }: { member: StaffMember }) {
           <h3 className="text-lg font-semibold text-viking-charcoal dark:text-white">
             {member.name}
           </h3>
-          <p className="text-xs uppercase tracking-wide text-viking-red/80 dark:text-viking-gold/80 mt-2">
+          <p className="text-xs uppercase tracking-wide text-viking-red/80 dark:text-viking-red/80 mt-2">
             {member.role}
           </p>
           <div className="mt-3 space-y-1.5 text-sm text-gray-600 dark:text-gray-300">
@@ -59,7 +59,7 @@ function StaffCard({ member }: { member: StaffMember }) {
               <p>
                 <a
                   href={`mailto:${member.email}`}
-                  className="hover:text-viking-red dark:hover:text-viking-gold underline-offset-4 hover:underline"
+                  className="hover:text-viking-red dark:hover:text-viking-red underline-offset-4 hover:underline"
                 >
                   {member.email}
                 </a>
@@ -69,7 +69,7 @@ function StaffCard({ member }: { member: StaffMember }) {
               <p>
                 <a
                   href={`tel:${member.phone}`}
-                  className="hover:text-viking-red dark:hover:text-viking-gold"
+                  className="hover:text-viking-red dark:hover:text-viking-red"
                 >
                   {member.phone}
                 </a>

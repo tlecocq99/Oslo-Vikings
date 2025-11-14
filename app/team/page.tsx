@@ -43,7 +43,7 @@ function Hero() {
 
 function TeamsOverview() {
   return (
-    <section className="py-16 bg-white dark:bg-viking-charcoal/70 transition-colors">
+  <section className="py-16 bg-white dark:bg-viking-surface transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-100 mb-4">
@@ -59,7 +59,7 @@ function TeamsOverview() {
             <Link
               key={team.slug}
               href={`/team/${team.slug}`}
-              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-viking-red/20 dark:border-viking-gold/20 bg-gradient-to-tr from-white to-viking-red/5 dark:from-viking-charcoal dark:to-viking-charcoal/60"
+              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-viking-red/20 dark:border-viking-red/30 bg-gradient-to-tr from-white to-viking-red/5 dark:from-viking-charcoal dark:to-viking-charcoal/60"
             >
               <div
                 className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity"
@@ -72,7 +72,7 @@ function TeamsOverview() {
                 }}
               />
               <div className="relative p-8 flex flex-col gap-4">
-                <p className="text-xs uppercase tracking-[0.4em] text-viking-gold">
+                <p className="text-xs uppercase tracking-[0.4em] text-viking-red">
                   Oslo Vikings
                 </p>
                 <h3 className="text-2xl font-bold text-viking-charcoal dark:text-gray-100">
@@ -81,7 +81,7 @@ function TeamsOverview() {
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   {team.description}
                 </p>
-                <span className="mt-auto inline-flex items-center gap-2 text-viking-red dark:text-viking-gold font-semibold">
+                <span className="mt-auto inline-flex items-center gap-2 text-viking-red dark:text-viking-red font-semibold">
                   View roster
                   <span
                     aria-hidden="true"
@@ -101,7 +101,7 @@ function TeamsOverview() {
 
 function CoachingStaff() {
   return (
-    <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
+  <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-viking-charcoal mb-4 dark:text-gray-200">
@@ -117,21 +117,21 @@ function CoachingStaff() {
             name="Stein Eriksen"
             title="Head Coach"
             desc="15 years of coaching experience with a championship-winning background"
-            accent="red"
+            accent="solid"
           />
           <StaffCard
             code="OC"
             name="Thor Hansen"
             title="Offensive Coordinator"
             desc="Innovative strategist specializing in high-powered passing attacks"
-            accent="gold"
+            accent="subtle"
           />
           <StaffCard
             code="DC"
             name="Ragnar Olsen"
             title="Defensive Coordinator"
             desc="Defensive mastermind known for disciplined, adaptive schemes"
-            accent="red"
+            accent="solid"
           />
         </div>
       </div>
@@ -150,16 +150,16 @@ function StaffCard({
   name: string;
   title: string;
   desc: string;
-  accent: "red" | "gold";
+  accent: "solid" | "subtle";
 }) {
-  const bg =
-    accent === "red"
+  const badgeClasses =
+    accent === "solid"
       ? "bg-viking-red text-white"
-      : "bg-viking-gold text-viking-charcoal";
+      : "bg-viking-red/15 text-viking-red dark:bg-viking-red/25 dark:text-viking-red";
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg dark:border dark:border-viking-red shadow-lg p-6 text-center transition-colors">
       <div
-        className={`w-20 h-20 ${bg} rounded-full mx-auto mb-4 flex items-center justify-center`}
+        className={`w-20 h-20 ${badgeClasses} rounded-full mx-auto mb-4 flex items-center justify-center`}
       >
         <span className="font-bold text-xl">{code}</span>
       </div>
