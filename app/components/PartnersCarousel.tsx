@@ -23,7 +23,8 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   const [isMobileDragging, setIsMobileDragging] = useState(false);
   const [mobileDragOffset, setMobileDragOffset] = useState(0);
   const [mobileLoopIndex, setMobileLoopIndex] = useState(0);
-  const [suppressMobileTransition, setSuppressMobileTransition] = useState(false);
+  const [suppressMobileTransition, setSuppressMobileTransition] =
+    useState(false);
 
   const viewportRef = useRef<HTMLDivElement>(null);
   const mobileSlidesContainerRef = useRef<HTMLDivElement>(null);
@@ -116,7 +117,9 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
     (index: number) => {
       if (!mobileSlidesLength) return;
 
-      const normalized = ((index % mobileSlidesLength) + mobileSlidesLength) % mobileSlidesLength;
+      const normalized =
+        ((index % mobileSlidesLength) + mobileSlidesLength) %
+        mobileSlidesLength;
       setCurrentMobileSlide(normalized);
 
       if (hasMultipleMobileSlides) {
@@ -208,7 +211,9 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
     setCurrentMobileSlide((prev) => prev % mobileSlidesLength);
     if (hasMultipleMobileSlides) {
       setMobileLoopIndex((prev) => {
-        const normalized = ((prev % mobileSlidesLength) + mobileSlidesLength) % mobileSlidesLength;
+        const normalized =
+          ((prev % mobileSlidesLength) + mobileSlidesLength) %
+          mobileSlidesLength;
         return mobileSlidesLength + normalized;
       });
     } else {
@@ -577,8 +582,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
       ? mobileLoopIndex
       : currentMobileSlide;
     const effectiveTranslate =
-      -(baseTranslateIndex * 100) +
-      (isMobileDragging ? mobileDragPercent : 0);
+      -(baseTranslateIndex * 100) + (isMobileDragging ? mobileDragPercent : 0);
 
     const mobileRenderSlides = hasMultipleMobileSlides
       ? [...mobileSlides, ...mobileSlides, ...mobileSlides]
@@ -595,8 +599,8 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
               transform: `translateX(${effectiveTranslate}%)`,
               transition:
                 isMobileDragging || suppressMobileTransition
-                ? "none"
-                : "transform 700ms ease-out",
+                  ? "none"
+                  : "transform 700ms ease-out",
             }}
             onPointerDown={handleMobilePointerDown}
             onPointerMove={handleMobilePointerMove}
@@ -614,8 +618,9 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                 className="min-w-full px-2"
                 aria-hidden={
                   hasMultipleMobileSlides
-                    ? ((slideIndex - loopOffset + mobileRenderSlides.length) %
-                        mobileSlidesLength) !== currentMobileSlide
+                    ? (slideIndex - loopOffset + mobileRenderSlides.length) %
+                        mobileSlidesLength !==
+                      currentMobileSlide
                     : mobileSlidesLength > 1
                     ? slideIndex !== currentMobileSlide
                     : undefined
