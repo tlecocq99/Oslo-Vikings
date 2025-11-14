@@ -4,14 +4,16 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true,
+    formats: ["image/avif", "image/webp"],
+    deviceSizes: [320, 640, 768, 1024, 1280, 1536, 1920, 2560],
+    imageSizes: [256, 384, 640, 750, 828, 1080],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+    ],
   },
-  // Performance optimizations
-  experimental: {
-    optimizeCss: true,
-  },
-  // Compression
-  compress: true,
   webpack: (config) => {
     // Workaround for intermittent Windows ENOENT rename errors in webpack persistent cache
     if (config.cache && config.cache.type === "filesystem") {

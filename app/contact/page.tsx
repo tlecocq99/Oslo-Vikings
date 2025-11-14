@@ -70,7 +70,7 @@ const ContactDirectory = ({
   const hasContacts = sanitizedContacts.length > 0;
 
   return (
-    <div className="w-full max-w-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+    <div className="w-full max-w-none rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm bg-white dark:bg-viking-charcoal/60">
       {isLoading ? (
         <div className="p-4 text-center text-sm text-gray-600 dark:text-gray-300">
           Loading directory…
@@ -84,75 +84,151 @@ const ContactDirectory = ({
           {emptyMessage}
         </div>
       ) : (
-        <div className="w-full overflow-x-auto">
-          <table className="w-full table-auto border-collapse">
-            <thead className="bg-gray-100 text-left text-sm font-semibold text-viking-charcoal dark:bg-viking-charcoal/50 dark:text-gray-200">
-              <tr>
-                <th scope="col" className="px-4 py-3">
-                  Position
-                </th>
-                <th scope="col" className="px-4 py-3">
-                  Name
-                </th>
-                <th scope="col" className="px-4 py-3">
-                  Mobile
-                </th>
-                <th scope="col" className="px-4 py-3">
-                  Email
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {sanitizedContacts.map((contact, index) => (
-                <tr
-                  key={`${contact.position}-${
-                    contact.name ?? "unknown"
-                  }-${index}`}
-                  className={`${
-                    index % 2 === 1
-                      ? "bg-gray-50 dark:bg-viking-charcoal/60"
-                      : "bg-white dark:bg-viking-charcoal/70"
-                  }`}
-                >
-                  <td className="border-b border-gray-200 px-4 py-3 text-sm font-medium black dark:border-gray-700">
-                    {contact.position || "—"}
-                  </td>
-                  <td className="border-b border-gray-200 px-4 py-3 text-sm text-viking-charcoal dark:border-gray-700 dark:text-gray-100">
+        <>
+          {/* Stacked cards for small screens to avoid table clipping */}
+          <div className="md:hidden divide-y divide-gray-200 dark:divide-gray-700">
+            {sanitizedContacts.map((contact, index) => (
+              <div
+                key={`${contact.position}-${
+                  contact.name ?? "unknown"
+                }-${index}`}
+                className="p-4 space-y-2"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                      Position
+                    </p>
+                    <p className="text-sm font-semibold text-viking-charcoal dark:text-gray-100">
+                      {contact.position || "—"}
+                    </p>
+                  </div>
+                  {contact.email ? (
+                    <a
+                      className="text-sm font-medium text-viking-red hover:text-viking-red/80 transition-colors"
+                      href={`mailto:${contact.email}`}
+                    >
+                      Email
+                    </a>
+                  ) : null}
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    Name
+                  </p>
+                  <p className="text-sm text-gray-800 dark:text-gray-200">
                     {contact.name || "—"}
-                  </td>
-                  <td className="border-b border-gray-200 px-4 py-3 text-sm text-gray-700 dark:border-gray-700 dark:text-gray-200 whitespace-nowrap">
-                    {contact.phone ? (
-                      <a
-                        className="transition-colors hover:text-viking-red"
-                        href={`tel:${formatPhoneHref(contact.phone)}`}
-                      >
-                        {contact.phone}
-                      </a>
-                    ) : (
-                      <span className="text-gray-400 dark:text-gray-500">
-                        —
-                      </span>
-                    )}
-                  </td>
-                  <td className="border-b border-gray-200 px-4 py-3 text-sm text-gray-700 dark:border-gray-700 dark:text-gray-200">
-                    {contact.email ? (
-                      <a
-                        className="break-words transition-colors hover:text-viking-red"
-                        href={`mailto:${contact.email}`}
-                      >
-                        {contact.email}
-                      </a>
-                    ) : (
-                      <span className="text-gray-400 dark:text-gray-500">
-                        —
-                      </span>
-                    )}
-                  </td>
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    Mobile
+                  </p>
+                  {contact.phone ? (
+                    <a
+                      className="text-sm text-gray-800 dark:text-gray-200 underline-offset-2 hover:underline"
+                      href={`tel:${formatPhoneHref(contact.phone)}`}
+                    >
+                      {contact.phone}
+                    </a>
+                  ) : (
+                    <span className="text-sm text-gray-400 dark:text-gray-500">
+                      —
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    Email
+                  </p>
+                  {contact.email ? (
+                    <a
+                      className="text-sm break-words text-gray-800 dark:text-gray-200 underline-offset-2 hover:underline"
+                      href={`mailto:${contact.email}`}
+                    >
+                      {contact.email}
+                    </a>
+                  ) : (
+                    <span className="text-sm text-gray-400 dark:text-gray-500">
+                      —
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Original table for md+ screens */}
+          <div className="hidden md:block w-full overflow-x-auto">
+            <table className="w-full table-auto border-collapse">
+              <thead className="bg-gray-100 text-left text-sm font-semibold text-viking-charcoal dark:bg-viking-charcoal/50 dark:text-gray-200">
+                <tr>
+                  <th scope="col" className="px-4 py-3">
+                    Position
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    Name
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    Mobile
+                  </th>
+                  <th scope="col" className="px-4 py-3">
+                    Email
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {sanitizedContacts.map((contact, index) => (
+                  <tr
+                    key={`${contact.position}-${
+                      contact.name ?? "unknown"
+                    }-${index}`}
+                    className={`${
+                      index % 2 === 1
+                        ? "bg-gray-50 dark:bg-viking-charcoal/60"
+                        : "bg-white dark:bg-viking-charcoal/70"
+                    }`}
+                  >
+                    <td className="border-b border-gray-200 px-4 py-3 text-sm font-medium dark:border-gray-700">
+                      {contact.position || "—"}
+                    </td>
+                    <td className="border-b border-gray-200 px-4 py-3 text-sm text-viking-charcoal dark:border-gray-700 dark:text-gray-100">
+                      {contact.name || "—"}
+                    </td>
+                    <td className="border-b border-gray-200 px-4 py-3 text-sm text-gray-700 dark:border-gray-700 dark:text-gray-200 whitespace-nowrap">
+                      {contact.phone ? (
+                        <a
+                          className="transition-colors hover:text-viking-red"
+                          href={`tel:${formatPhoneHref(contact.phone)}`}
+                        >
+                          {contact.phone}
+                        </a>
+                      ) : (
+                        <span className="text-gray-400 dark:text-gray-500">
+                          —
+                        </span>
+                      )}
+                    </td>
+                    <td className="border-b border-gray-200 px-4 py-3 text-sm text-gray-700 dark:border-gray-700 dark:text-gray-200">
+                      {contact.email ? (
+                        <a
+                          className="break-words transition-colors hover:text-viking-red"
+                          href={`mailto:${contact.email}`}
+                        >
+                          {contact.email}
+                        </a>
+                      ) : (
+                        <span className="text-gray-400 dark:text-gray-500">
+                          —
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </div>
   );

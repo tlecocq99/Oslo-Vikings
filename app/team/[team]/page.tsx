@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { fetchRoster } from "@/app/services/fetchRoster";
 import { fetchSchedule } from "@/app/services/fetchSchedule";
 import { fetchStaffForTeam } from "@/app/services/fetchStaff";
+import Image from "next/image";
 import { getTeamBySlug, TEAM_CONFIG, type TeamSlug } from "../team-config";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -74,6 +75,7 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
           description={team.description}
           backgroundImage={team.heroImage}
           backgroundImageMobile={team.heroImageMobile}
+          blurDataURL={team.heroBlurDataURL}
           tagline={team.heroTagline}
         />
         <nav
@@ -108,29 +110,63 @@ function TeamHero({
   description,
   backgroundImage,
   backgroundImageMobile,
+  blurDataURL,
   tagline,
 }: {
   title: string;
   description: string;
   backgroundImage?: string;
   backgroundImageMobile?: string;
+  blurDataURL?: string;
   tagline?: string;
 }) {
   const desktopImage = backgroundImage ?? "/images/backgrounds/teamClose.avif";
   const mobileImage = backgroundImageMobile ?? desktopImage;
   const subheading = tagline ?? "Oslo Vikings Football";
+  const placeholder =
+    blurDataURL ??
+    "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3Crect%20width='1'%20height='1'%20fill='%230b0e12'/%3E%3C/svg%3E";
+  const hasDistinctMobileImage = desktopImage !== mobileImage;
 
   return (
     <section className="relative w-full overflow-hidden bg-black aspect-[16/9] lg:aspect-auto lg:min-h-[60vh]">
-      <picture className="pointer-events-none absolute inset-0 block h-full w-full">
-        <source media="(min-width: 1024px)" srcSet={desktopImage} />
-        <img
-          src={mobileImage}
-          alt={`${title} background`}
-          className="h-full w-full object-cover"
-          loading="lazy"
-        />
-      </picture>
+      <div className="pointer-events-none absolute inset-0 block h-full w-full">
+        {hasDistinctMobileImage ? (
+          <>
+            <Image
+              src={mobileImage}
+              alt={`${title} background`}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover lg:hidden"
+              placeholder="blur"
+              blurDataURL={placeholder}
+            />
+            <Image
+              src={desktopImage}
+              alt={`${title} background`}
+              fill
+              priority
+              sizes="100vw"
+              className="hidden lg:block object-cover"
+              placeholder="blur"
+              blurDataURL={placeholder}
+            />
+          </>
+        ) : (
+          <Image
+            src={desktopImage}
+            alt={`${title} background`}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+            placeholder="blur"
+            blurDataURL={placeholder}
+          />
+        )}
+      </div>
       <div className="absolute inset-0 bg-black/55" />
       <div className="absolute inset-0 z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center px-4 text-center sm:px-6 lg:px-8">
         <h1 className="sr-only">{title}</h1>
