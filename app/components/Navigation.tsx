@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type CSSProperties,
-} from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -69,10 +63,6 @@ export default function Navigation() {
 
   const navItems = useMemo(() => navigation, []);
   const mobileTeamsMenuId = "mobile-team-links";
-  const mobileMenuStyle = useMemo<CSSProperties>(
-    () => ({ "--nav-height": `${navHeight}px` } as CSSProperties),
-    [navHeight]
-  );
 
   const toggleMobileMenu = () => {
     setIsTeamsMobileOpen(false);
@@ -124,45 +114,14 @@ export default function Navigation() {
             <Image
               src="/images/logo.png"
               alt="Oslo Vikings logo"
-              width={120}
-              height={120}
+              width={100}
+              height={100}
               priority
               className={styles.brandImage}
               draggable={false}
             />
             <span className="sr-only">Home</span>
           </Link>
-          <div className={styles.desktopSocial}>
-            {socialLinks.map(({ name, href, Icon }) =>
-              name === "TikTok" ? (
-                <TikTokHover
-                  key={name}
-                  profileUrl={href} // "https://www.tiktok.com/@oslovikings"
-                  uniqueId="oslovikings" // without the @
-                  placement="bottom"
-                  width={360}
-                  className={styles.desktopSocialLink}
-                  linkTarget="_blank"
-                  linkRel="noreferrer"
-                >
-                  <span aria-label={`Oslo Vikings on ${name}`} role="img">
-                    <Icon className={styles.desktopSocialIcon} />
-                  </span>
-                </TikTokHover>
-              ) : (
-                <Link
-                  key={name}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Oslo Vikings on ${name}`}
-                  className={styles.desktopSocialLink}
-                >
-                  <Icon className={styles.desktopSocialIcon} />
-                </Link>
-              )
-            )}
-          </div>
           {/* Desktop Navigation (pipe-separated) */}
           <div className={styles.desktopNav}>
             {navItems.map((item, idx) => {
@@ -218,6 +177,37 @@ export default function Navigation() {
           </div>
           {/* Right side actions (desktop) */}
           <div className={styles.desktopActions}>
+            <div className={styles.desktopSocial}>
+              {socialLinks.map(({ name, href, Icon }) =>
+                name === "TikTok" ? (
+                  <TikTokHover
+                    key={name}
+                    profileUrl={href} // "https://www.tiktok.com/@oslovikings"
+                    uniqueId="oslovikings" // without the @
+                    placement="bottom"
+                    width={360}
+                    className={styles.desktopSocialLink}
+                    linkTarget="_blank"
+                    linkRel="noreferrer"
+                  >
+                    <span aria-label={`Oslo Vikings on ${name}`} role="img">
+                      <Icon className={styles.desktopSocialIcon} />
+                    </span>
+                  </TikTokHover>
+                ) : (
+                  <Link
+                    key={name}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Oslo Vikings on ${name}`}
+                    className={styles.desktopSocialLink}
+                  >
+                    <Icon className={styles.desktopSocialIcon} />
+                  </Link>
+                )
+              )}
+            </div>
             <ThemeToggle />
           </div>
           {/* Mobile actions */}
@@ -255,7 +245,7 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className={styles.mobileMenu} style={mobileMenuStyle}>
+          <div className={styles.mobileMenu}>
             <div
               className={styles.mobileMenuInner}
               style={{

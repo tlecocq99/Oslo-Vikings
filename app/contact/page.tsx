@@ -343,7 +343,7 @@ function ContactPageContent() {
         {/* Contact Content */}
         <section className="py-6 bg-white dark:bg-viking-surface-alt transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-5 lg:px-8 space-y-6">
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid gap-4">
               <Card className="w-full bg-white dark:bg-viking-surface border border-gray-200 dark:border-gray-700 transition-colors">
                 <CardHeader className="border-b border-gray-200 dark:border-gray-700 px-4 py-3 text-left">
                   <CardTitle className="text-2xl font-semibold text-viking-red dark:text-viking-red">
