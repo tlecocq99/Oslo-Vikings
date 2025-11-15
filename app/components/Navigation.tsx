@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -36,6 +42,11 @@ const teamLinks = [
 
 const socialLinks = [
   {
+    name: "Instagram",
+    href: "https://www.instagram.com/oslovikings/",
+    Icon: Instagram,
+  },
+  {
     name: "TikTok",
     href: "https://www.tiktok.com/@oslovikings",
     Icon: TikTokIcon,
@@ -44,11 +55,6 @@ const socialLinks = [
     name: "Facebook",
     href: "https://www.facebook.com/OsloVikings",
     Icon: Facebook,
-  },
-  {
-    name: "Instagram",
-    href: "https://www.instagram.com/oslovikings/",
-    Icon: Instagram,
   },
 ] as const;
 
@@ -63,6 +69,57 @@ export default function Navigation() {
 
   const navItems = useMemo(() => navigation, []);
   const mobileTeamsMenuId = "mobile-team-links";
+
+  const mobileMenuStyle = useMemo<CSSProperties>(
+    () => ({ "--nav-height": `${navHeight}px` } as CSSProperties),
+    [navHeight]
+  );
+
+  const renderSocialLinks = (variant: "desktop" | "mobile") =>
+    socialLinks.map(({ name, href, Icon }) => {
+      const key = `${variant}-${name}`;
+      const ariaLabel = `Oslo Vikings on ${name}`;
+      const linkClass =
+        variant === "desktop"
+          ? styles.desktopSocialLink
+          : styles.mobileSocialLink;
+      const iconClass =
+        variant === "desktop"
+          ? styles.desktopSocialIcon
+          : styles.mobileSocialIcon;
+
+      if (variant === "desktop" && name === "TikTok") {
+        return (
+          <TikTokHover
+            key={key}
+            profileUrl={href}
+            uniqueId="oslovikings"
+            placement="bottom"
+            width={360}
+            className={linkClass}
+            linkTarget="_blank"
+            linkRel="noreferrer"
+          >
+            <span aria-label={ariaLabel} role="img">
+              <Icon className={iconClass} />
+            </span>
+          </TikTokHover>
+        );
+      }
+
+      return (
+        <Link
+          key={key}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={ariaLabel}
+          className={linkClass}
+        >
+          <Icon className={iconClass} />
+        </Link>
+      );
+    });
 
   const toggleMobileMenu = () => {
     setIsTeamsMobileOpen(false);
@@ -178,53 +235,14 @@ export default function Navigation() {
           {/* Right side actions (desktop) */}
           <div className={styles.desktopActions}>
             <div className={styles.desktopSocial}>
-              {socialLinks.map(({ name, href, Icon }) =>
-                name === "TikTok" ? (
-                  <TikTokHover
-                    key={name}
-                    profileUrl={href} // "https://www.tiktok.com/@oslovikings"
-                    uniqueId="oslovikings" // without the @
-                    placement="bottom"
-                    width={360}
-                    className={styles.desktopSocialLink}
-                    linkTarget="_blank"
-                    linkRel="noreferrer"
-                  >
-                    <span aria-label={`Oslo Vikings on ${name}`} role="img">
-                      <Icon className={styles.desktopSocialIcon} />
-                    </span>
-                  </TikTokHover>
-                ) : (
-                  <Link
-                    key={name}
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`Oslo Vikings on ${name}`}
-                    className={styles.desktopSocialLink}
-                  >
-                    <Icon className={styles.desktopSocialIcon} />
-                  </Link>
-                )
-              )}
+              {renderSocialLinks("desktop")}
             </div>
             <ThemeToggle />
           </div>
           {/* Mobile actions */}
           <div className={styles.mobileActions}>
             <div className={styles.mobileSocial}>
-              {socialLinks.map(({ name, href, Icon }) => (
-                <Link
-                  key={`mobile-${name}`}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Oslo Vikings on ${name}`}
-                  className={styles.mobileSocialLink}
-                >
-                  <Icon className={styles.mobileSocialIcon} />
-                </Link>
-              ))}
+              {renderSocialLinks("mobile")}
             </div>
             <ThemeToggle />
             <Button
@@ -245,7 +263,7 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className={styles.mobileMenu}>
+          <div className={styles.mobileMenu} style={mobileMenuStyle}>
             <div
               className={styles.mobileMenuInner}
               style={{

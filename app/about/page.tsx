@@ -101,7 +101,7 @@ export default function AboutPage() {
 
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="dark:bg-gray-800 py-24">
+        <section className="dark:bg-gray-800 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               Overview
@@ -140,7 +140,7 @@ export default function AboutPage() {
         </section>
 
         {/* Mission Statement */}
-        <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
+        <section className="py-12 bg-white dark:bg-viking-charcoal/80 transition-colors">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-8">
               Our Mission
@@ -155,7 +155,7 @@ export default function AboutPage() {
         </section>
 
         {/* Values Section */}
-        <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
+        <section className="py-12 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
@@ -189,7 +189,7 @@ export default function AboutPage() {
         </section>
 
         {/* History Timeline */}
-        <section className="py-16 bg-white dark:bg-viking-charcoal/80 transition-colors">
+        <section className="py-12 bg-white dark:bg-viking-charcoal/80 transition-colors">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
@@ -228,7 +228,7 @@ export default function AboutPage() {
         </section>
 
         {/* Leadership */}
-        <section className="py-16 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
+        <section className="py-12 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">

@@ -47,7 +47,7 @@ export default function RecruitmentPage() {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-          className="dark:bg-gray-800 py-24"
+          className="dark:bg-gray-800 py-12"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1

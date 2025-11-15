@@ -118,7 +118,7 @@ export default function SchedulePage() {
 
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="dark:bg-gray-800 py-24">
+        <section className="dark:bg-gray-800 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               Season Schedule

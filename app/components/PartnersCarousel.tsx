@@ -645,7 +645,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                     const cardKey = `${partner.name}-${originalIndex}-mobile`;
                     const isActive = activeKey === cardKey;
 
-                    return (
+return (
                       <div
                         key={cardKey}
                         role="button"
@@ -657,12 +657,13 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                         onKeyDown={(event) =>
                           handleMobileCardKeyDown(event, cardKey)
                         }
-                        className={`relative flex h-full flex-col items-center overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-3 py-16 text-center shadow-sm transition-shadow duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 dark:border-white/10 dark:bg-viking-surface ${
-                          isActive ? "shadow-lg" : ""
-                        }`}
+className={`relative flex h-full min-h-[14.5rem] flex-col justify-between overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-3 pb-0.5 text-center shadow-sm transition-shadow duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 dark:border-white/10 dark:bg-viking-surface ${
+                           isActive ? "shadow-lg" : ""
+                         }`}
                       >
-                        <div className="relative z-[1] flex w-full flex-col items-center">
-                          <div className="relative mb-3 flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-surface-alt">
+
+<div className="relative z-[1] flex flex-1 flex-col items-center justify-between gap-6">
+<div className="relative flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-surface-alt">
                             {partner.logoSrc ? (
                               <Image
                                 src={partner.logoSrc}
@@ -691,14 +692,14 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                         </div>
 
                         <div
-                          className={`absolute inset-0 z-[2] flex max-h-full flex-col items-center justify-center gap-4 overflow-y-auto rounded-2xl bg-black/70 px-4 py-6 text-center text-white transition-opacity duration-300 ease-out ${
+                          className={`absolute inset-0 z-[2] flex max-h-full flex-col items-center justify-center gap-4 overflow-y-auto rounded-2xl bg-black/70 px-1 text-center text-white transition-opacity duration-300 ease-out ${
                             isActive
                               ? "opacity-100 pointer-events-auto"
                               : "opacity-0 pointer-events-none"
                           }`}
                           aria-hidden={!isActive}
                         >
-                          <p className="text-sm font-medium leading-relaxed">
+                          <p className="text-sm font-medium">
                             {partner.description}
                           </p>
                           {partner.website ? (
@@ -821,7 +822,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                 }`}
                 aria-hidden={!isActive}
               >
-                <p className="text-sm font-bold leading-relaxed">
+                <p className="text-sm font-bold">
                   {partner.description}
                 </p>
                 {partner.website ? (

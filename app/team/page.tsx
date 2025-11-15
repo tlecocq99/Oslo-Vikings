@@ -24,7 +24,7 @@ export default function TeamPage() {
 function Hero() {
   return (
     <section
-      className="py-20 md:py-24 bg-cover bg-center bg-no-repeat relative min-h-[50vh] md:min-h-[60vh] flex items-center"
+      className="py-20 md:py-12 bg-cover bg-center bg-no-repeat relative min-h-[50vh] md:min-h-[60vh] flex items-center"
       style={{ backgroundImage: "url('/images/backgrounds/teamClose.avif')" }}
     >
       <div className="absolute inset-0 bg-black/50" />

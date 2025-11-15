@@ -230,7 +230,7 @@ export default async function Home() {
     {
       name: "RevisionsBureauet AS",
       description:
-        "RevisionsBureauet AS is more than just your accountant. That is their motto, and they have been much more for the Oslo Vikings. They are our biggest, most generous supporter and their services are unmatched.",
+        "'More than just your accountant.' For over a decade, RevisionsBureauet has been the biggest and most generous supporters of the Oslo Vikings.",
       website: "https://revisionsbureauet.no",
       logoSrc: "/images/sponsors/RBlogo.svg",
       logoAlt: "RevisionsBureauet AS logo",
@@ -238,7 +238,7 @@ export default async function Home() {
     {
       name: "SpareBank 1 Østlandet",
       description:
-        "Sparebank 1 Østlandet is Norway's fourth largest savings bank, but they are much more with their work in the community. We love collaborating at their Verdens Kuleste Dag, and appreciate their generous partnership.",
+        "Sparebank 1 Østlandet's impact goes far beyond banking. We value our partnership and love collaborating with them at Verdens Kuleste Dag activity day.",
       website: "https://www.sparebank1.no/nb/ostlandet/privat.html",
       logoSrc: "/images/sponsors/sparebank1Logo.svg",
       logoAlt: "SpareBank 1 Østlandet logo",
@@ -246,7 +246,7 @@ export default async function Home() {
     {
       name: "Wang Toppidrett",
       description:
-        "Founded in 1907, WANG is a leading sports and academic institution. They have been a crucial service partner of the Oslo Vikings for over a decade, providing access to their best in class gym facility.",
+        "WANG is a leading sports and academic institution. They've been a crucial partner of the Oslo Vikings for over a decade, providing us best in class gym facilities.",
       website: "https://www.wang.no/",
       logoSrc: "/images/sponsors/wangLogo.svg",
       logoAlt: "Wang Toppidrett logo",
@@ -254,7 +254,7 @@ export default async function Home() {
     {
       name: "Hopstock Helse",
       description:
-        "Hopstock Helse is a Norwegian health clinic network offering physiotherapy, chiropractic care, osteopathy, and naprapathy, with additional services like personal training, massage, ultrasound diagnostics, and shockwave treatment.",
+        "Let Hopstock help you like they help us. Physiotherapy, chiropractor, osteopathy, naprapathy, PT, massage, and other services - you name it, they got it!",
       website: "https://hopstockhelse.no/",
       logoSrc: "/images/sponsors/hopstockhelseLogo.png",
       logoAlt: "Hopstock Helse logo",
@@ -262,7 +262,7 @@ export default async function Home() {
     {
       name: "TanTan Barber",
       description:
-        "TanTan Barber is a highly rated barber in central Oslo, and is the official barber of the Oslo Vikings.",
+        "TanTan Barber is a highly rated barber in central Oslo, and is the official barber of the Oslo Vikings. ",
       website: "https://www.tantanbarbers.no/",
       logoSrc: "/images/sponsors/tantanLogo.webp",
       logoAlt: "TanTan Barber logo",
@@ -270,7 +270,7 @@ export default async function Home() {
     {
       name: "&Partners",
       description:
-        "&Partners turns local insight into real value, and the Oslo Vikings are proud to have them as an official partner.",
+        "&Partners turns local insight into real value, and the Oslo Vikings are proud to have them as an official partner. ",
       website: "https://www.partners.no/",
       logoSrc: "/images/sponsors/schalaPartnersLogo.svg",
       logoAlt: "Schala & Partners logo",
@@ -286,7 +286,7 @@ export default async function Home() {
     {
       name: "ShotbyAnika",
       description:
-        "Anika Temple does more than just make us look good on the field. She is an ultra talented photographer experienced in portraits, weddings and a wide range of other events. Book before it's too late!",
+        "In addition to making us look good on and off the field, Anika is an ultra talented photographer experienced in portraits, weddings and a wide range of other events.",
       website: "https://www.anikatemple.photography/",
       logoSrc: "/images/sponsors/shotbyAnika.png",
       logoAlt: "ShotbyAnika logo",
@@ -305,7 +305,7 @@ export default async function Home() {
       <Hero {...heroData} />
 
       {/* Quick Stats Section */}
-      <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
+      <section className="py-12 bg-gray-50 dark:bg-background transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             <div className="text-center">
@@ -364,12 +364,12 @@ export default async function Home() {
 
       {/* Booster & Grasrot Support Section */}
       <section className="bg-white dark:bg-viking-surface transition-colors">
-        <div className="grid min-h-[220px] sm:min-h-[300px] xl:min-h-[360px] grid-cols-1 gap-y-4 px-4 lg:grid-cols-2 lg:gap-y-0 lg:px-0">
+        <div className="grid min-h-[140px] sm:min-h-[300px] xl:min-h-[360px] grid-cols-1 gap-y-4 px-4 lg:grid-cols-2 lg:gap-y-0 lg:px-0">
           <Link
             href="/booster"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex h-full min-h-[220px] items-stretch overflow-hidden rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-surface-alt dark:focus-visible:ring-offset-[#1a1a1a] sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
+            className="group relative flex h-full min-h-[100px] items-stretch overflow-hidden rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-surface-alt dark:focus-visible:ring-offset-[#1a1a1a] sm:min-h-[140px] lg:min-h-[320px] xl:min-h-[360px]"
             aria-label="Explore the Vikings Booster Club"
           >
             <div className="relative flex-1">
@@ -391,7 +391,7 @@ export default async function Home() {
             </div>
 
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-viking-surface-alt/90 p-6 text-center text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-100">
-              <p className="text-lg font-semibold uppercase tracking-wide">
+              <p className="mx-auto max-w-[15.5rem] text-center text-lg font-semibold uppercase tracking-wide leading-tight sm:max-w-none">
                 Discover the Vikings Booster Club
               </p>
             </div>
@@ -401,14 +401,14 @@ export default async function Home() {
             href="https://www.norsk-tipping.no/grasrotandelen/din-mottaker/887798052"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex h-full min-h-[170px] items-stretch rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-surface-alt dark:focus-visible:ring-offset-[#1a1a1a] sm:min-h-[220px] lg:min-h-[320px] xl:min-h-[360px]"
+            className="group relative flex h-full min-h-[100px] items-stretch rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-surface-alt dark:focus-visible:ring-offset-[#1a1a1a] sm:min-h-[100px] lg:min-h-[320px] xl:min-h-[360px]"
             aria-label="Become a Grasrot supporter"
           >
             <div className="relative flex-1">
               <picture className="relative flex h-full w-full items-center justify-center overflow-hidden bg-white dark:bg-black/60">
                 <source
                   media="(max-width: 1023px)"
-                  srcSet="/images/sponsors/mobileGrasrots.png"
+                  srcSet="/images/sponsors/grasrots-mobile-banner.png"
                 />
                 <Image
                   src="/images/sponsors/grasrots.png"
@@ -432,7 +432,7 @@ export default async function Home() {
       </section>
 
       {/* Latest News Section */}
-      <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
+      <section className="py-12 bg-gray-50 dark:bg-background transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
