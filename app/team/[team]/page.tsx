@@ -3,7 +3,9 @@ import Footer from "@/app/components/Footer";
 import RosterSwitcher from "@/app/components/RosterSwitcher";
 import { TeamStaffSection } from "@/app/components/TeamStaffSection";
 import { TeamScheduleSection } from "@/app/components/TeamScheduleSection";
-import { Button } from "@/components/ui/button";
+import TeamTableOfContents, {
+  type TeamTableOfContentsItem,
+} from "@/app/components/TeamTableOfContents";
 import { fetchRoster } from "@/app/services/fetchRoster";
 import { fetchSchedule } from "@/app/services/fetchSchedule";
 import { fetchStaffForTeam } from "@/app/services/fetchStaff";
@@ -51,6 +53,8 @@ export async function generateMetadata({
 export default async function TeamDetailPage({ params }: TeamPageProps) {
   const { team: teamSlug } = await params;
   const team = getTeamBySlug(teamSlug);
+  const staffAnchorId = "team-staff";
+  const rosterAnchorId = "team-roster";
   const scheduleAnchorId = "team-schedule";
 
   if (!team) {
@@ -58,6 +62,11 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
   }
 
   const teamName = team.name;
+  const tableOfContents: TeamTableOfContentsItem[] = [
+    { id: staffAnchorId, label: "Staff" },
+    { id: rosterAnchorId, label: "Roster" },
+    { id: scheduleAnchorId, label: "Schedule" },
+  ];
 
   const [players, schedule, staff] = await Promise.all([
     fetchRoster(team.sheetTab),
@@ -78,27 +87,20 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
           blurDataURL={team.heroBlurDataURL}
           tagline={team.heroTagline}
         />
-        <nav
-          aria-label="Team shortcuts"
-          className="bg-white/90 dark:bg-viking-charcoal/75 border-b border-gray-200/60 dark:border-gray-700/60"
-        >
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-center">
-            <Button
-              asChild
-              variant="secondary"
-              className="uppercase tracking-wide font-semibold text-sm"
-            >
-              <a href={`#${scheduleAnchorId}`}>Jump to Schedule</a>
-            </Button>
-          </div>
-        </nav>
-        <TeamStaffSection teamName={teamName} staff={staff} />
-        <RosterSwitcher rosters={rosters} />
-        <TeamScheduleSection
-          teamName={teamName}
-          schedule={schedule}
-          anchorId={scheduleAnchorId}
-        />
+        <TeamTableOfContents items={tableOfContents} />
+        <div className="lg:pl-64">
+          <TeamStaffSection
+            teamName={teamName}
+            staff={staff}
+            anchorId={staffAnchorId}
+          />
+          <RosterSwitcher rosters={rosters} anchorId={rosterAnchorId} />
+          <TeamScheduleSection
+            teamName={teamName}
+            schedule={schedule}
+            anchorId={scheduleAnchorId}
+          />
+        </div>
       </main>
       <Footer />
     </>

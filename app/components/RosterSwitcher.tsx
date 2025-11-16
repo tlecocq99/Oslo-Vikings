@@ -15,18 +15,22 @@ import { ROSTER_SIDES } from "@/app/config/positions";
 
 interface RosterSwitcherProps {
   rosters: Record<string, Player[]>;
+  anchorId?: string;
 }
 
-export default function RosterSwitcher({ rosters }: RosterSwitcherProps) {
+export default function RosterSwitcher({
+  rosters,
+  anchorId,
+}: RosterSwitcherProps) {
   const rosterKeys = Object.keys(rosters);
   return (
     <RosterUIProvider rosterKeys={rosterKeys}>
-      <RosterSwitcherInner rosters={rosters} />
+      <RosterSwitcherInner rosters={rosters} anchorId={anchorId} />
     </RosterUIProvider>
   );
 }
 
-function RosterSwitcherInner({ rosters }: RosterSwitcherProps) {
+function RosterSwitcherInner({ rosters, anchorId }: RosterSwitcherProps) {
   const {
     selectedRoster,
     setSelectedRoster,
@@ -40,7 +44,10 @@ function RosterSwitcherInner({ rosters }: RosterSwitcherProps) {
   const hasMultipleRosters = rosterKeys.length > 1;
 
   return (
-    <section className="py-16 bg-white dark:bg-viking-surface transition-colors relative">
+    <section
+      id={anchorId ?? "team-roster"}
+      className="py-16 bg-white dark:bg-viking-surface transition-colors relative scroll-mt-32"
+    >
       {/* Mobile floating filter button */}
       <div className="md:hidden fixed bottom-4 right-4 z-40">
         <Sheet>

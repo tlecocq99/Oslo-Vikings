@@ -17,7 +17,7 @@ export function TeamScheduleSection({
   return (
     <section
       id={anchorId ?? "team-schedule"}
-      className="py-16 bg-gray-50 dark:bg-viking-charcoal/70 transition-colors"
+      className="py-16 bg-gray-50 dark:bg-viking-charcoal/70 transition-colors scroll-mt-32"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">

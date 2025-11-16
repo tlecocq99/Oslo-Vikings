@@ -6,15 +6,25 @@ const FALLBACK_HEADSHOT = "/images/players/playerFiller.png";
 interface TeamStaffSectionProps {
   teamName: string;
   staff: StaffMember[];
+  anchorId?: string;
 }
 
-export function TeamStaffSection({ teamName, staff }: TeamStaffSectionProps) {
+export function TeamStaffSection({
+  teamName,
+  staff,
+  anchorId,
+}: TeamStaffSectionProps) {
   if (!staff.length) {
     return null;
   }
 
+  const sectionId = anchorId ?? "team-staff";
+
   return (
-    <section className="bg-white dark:bg-viking-charcoal/30 border-b border-gray-200/60 dark:border-gray-800/60">
+    <section
+      id={sectionId}
+      className="bg-white dark:bg-viking-charcoal/30 border-b border-gray-200/60 dark:border-gray-800/60 scroll-mt-32"
+    >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <header className="text-center mb-8">
           <p className="text-xs uppercase tracking-[0.35em] text-viking-red mb-2">
