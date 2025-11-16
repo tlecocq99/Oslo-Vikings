@@ -15,6 +15,33 @@ const TEAM_OPTIONS: Array<{ value: "All" | GameTeam; label: string }> = [
   { value: "flag", label: "FLAG FOOTBALL" },
 ];
 const DEFAULT_TIMEZONE = "Europe/Oslo";
+const DATE_FORMAT_CACHE = new Map<string, Intl.DateTimeFormat>();
+
+function getDateFormatter(timeZone: string) {
+  if (!DATE_FORMAT_CACHE.has(timeZone)) {
+    DATE_FORMAT_CACHE.set(
+      timeZone,
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone,
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+      })
+    );
+  }
+  return DATE_FORMAT_CACHE.get(timeZone)!;
+}
+
+function buildDateLabel(date: Date, timeZone: string) {
+  const formatter = getDateFormatter(timeZone);
+  const parts = formatter.formatToParts(date);
+  const weekday = parts.find((part) => part.type === "weekday")?.value;
+  const day = parts.find((part) => part.type === "day")?.value;
+  const month = parts.find((part) => part.type === "month")?.value;
+
+  const tokens = [weekday, day, month].filter(Boolean);
+  return tokens.join(" ");
+}
 
 function formatDateLabel(event: UpcomingEvent) {
   const fallbackDate = event.date || event.originalDate || "";
@@ -37,12 +64,7 @@ function formatDateLabel(event: UpcomingEvent) {
 
     const timeZone = event.timeZone ?? DEFAULT_TIMEZONE;
 
-    const dateLabel = new Intl.DateTimeFormat("en-GB", {
-      timeZone,
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-    }).format(date);
+    const dateLabel = buildDateLabel(date, timeZone) || fallbackDate;
 
     const timeLabel = fallbackTime
       ? fallbackTime

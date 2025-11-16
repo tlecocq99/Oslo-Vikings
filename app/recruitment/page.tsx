@@ -42,12 +42,11 @@ export default function RecruitmentPage() {
       <main className="min-h-screen">
         <section
           style={{
-            backgroundImage:
-              "url('/images/backgrounds/recruitmentBackground.jpg')",
+            backgroundImage: "url('/images/backgrounds/team.avif')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-          className="dark:bg-gray-800 py-12"
+          className="relative flex items-center justify-center w-full overflow-hidden bg-black aspect-[16/9] lg:aspect-auto lg:min-h-[60vh]"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1
@@ -56,6 +55,10 @@ export default function RecruitmentPage() {
             >
               Join Oslo Vikings
             </h1>
+          </div>
+        </section>
+        <section className="bg-white dark:bg-viking-surface-alt transition-colors">
+          <div>
             <p
               className="text-xl text-white max-w-3xl mx-auto mb-6"
               style={{ textShadow: "1px 1px 6px rgba(0, 0, 0, 0.6)" }}
