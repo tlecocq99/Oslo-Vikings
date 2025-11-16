@@ -87,10 +87,7 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
           blurDataURL={team.heroBlurDataURL}
           tagline={team.heroTagline}
         />
-        <TeamTableOfContents
-          items={tableOfContents}
-          pinAfterId="team-hero"
-        />
+        <TeamTableOfContents items={tableOfContents} pinAfterId="team-hero" />
         <div className="lg:pl-64">
           <TeamStaffSection
             teamName={teamName}
