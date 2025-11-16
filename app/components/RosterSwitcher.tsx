@@ -9,28 +9,41 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetClose,
 } from "@/components/ui/sheet";
-import { Filter } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { ROSTER_SIDES } from "@/app/config/positions";
+import type { TeamTableOfContentsItem } from "./TeamTableOfContents";
+import { useScrollSpy } from "./TeamTableOfContents";
 
 interface RosterSwitcherProps {
   rosters: Record<string, Player[]>;
   anchorId?: string;
+  sections?: TeamTableOfContentsItem[];
 }
 
 export default function RosterSwitcher({
   rosters,
   anchorId,
+  sections = [],
 }: RosterSwitcherProps) {
   const rosterKeys = Object.keys(rosters);
   return (
     <RosterUIProvider rosterKeys={rosterKeys}>
-      <RosterSwitcherInner rosters={rosters} anchorId={anchorId} />
+      <RosterSwitcherInner
+        rosters={rosters}
+        anchorId={anchorId}
+        sections={sections}
+      />
     </RosterUIProvider>
   );
 }
 
-function RosterSwitcherInner({ rosters, anchorId }: RosterSwitcherProps) {
+function RosterSwitcherInner({
+  rosters,
+  anchorId,
+  sections = [],
+}: RosterSwitcherProps) {
   const {
     selectedRoster,
     setSelectedRoster,
@@ -41,20 +54,23 @@ function RosterSwitcherInner({ rosters, anchorId }: RosterSwitcherProps) {
     setViewMode,
   } = useRosterUI();
   const current = rosters[selectedRoster] || [];
+  const { activeId: activeSectionId, setActiveId: setActiveSectionId } =
+    useScrollSpy(sections, 112);
   const hasMultipleRosters = rosterKeys.length > 1;
+  const hasSections = sections.length > 0;
 
   return (
     <section
       id={anchorId ?? "team-roster"}
       className="py-16 bg-white dark:bg-viking-surface transition-colors relative scroll-mt-32"
     >
-      {/* Mobile floating filter button */}
-      <div className="md:hidden fixed bottom-4 right-4 z-40">
+      {/* Mobile floating menu button */}
+      <div className="md:hidden fixed top-1/2 right-0 z-40 -translate-y-1/2">
         <Sheet>
           <SheetTrigger asChild>
-            <button className="p-4 rounded-full bg-viking-red text-white shadow-lg hover:bg-viking-red/90 focus:outline-none focus:ring-2 focus:ring-viking-red/50">
-              <Filter className="w-5 h-5" />
-              <span className="sr-only">Open roster filters</span>
+            <button className="flex h-10 w-6 items-center justify-center rounded-l-full rounded-r-none bg-viking-red text-white shadow-lg hover:bg-viking-red/90 focus:outline-none focus:ring-2 focus:ring-viking-red/40">
+              <ArrowLeft className="w-5 h-5" />
+              <span className="sr-only">Open team menu and filters</span>
             </button>
           </SheetTrigger>
           <SheetContent side="right" className="p-0 flex flex-col">
@@ -62,6 +78,33 @@ function RosterSwitcherInner({ rosters, anchorId }: RosterSwitcherProps) {
               <SheetTitle>Roster Filters</SheetTitle>
             </SheetHeader>
             <div className="p-6 space-y-10 overflow-y-auto">
+              {hasSections && (
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
+                    Page Sections
+                  </h3>
+                  <div className="flex flex-col gap-2">
+                    {sections.map((section) => {
+                      const active = section.id === activeSectionId;
+                      return (
+                        <SheetClose asChild key={`section-${section.id}`}>
+                          <a
+                            href={`#${section.id}`}
+                            onClick={() => setActiveSectionId(section.id)}
+                            className={`flex items-center justify-between rounded-lg border px-4 py-3 text-sm font-medium transition-colors ${
+                              active
+                                ? "bg-viking-red text-white border-viking-red shadow"
+                                : "bg-gray-100 dark:bg-gray-800 text-viking-charcoal dark:text-gray-200 border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700"
+                            }`}
+                          >
+                            {section.label}
+                          </a>
+                        </SheetClose>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
               {hasMultipleRosters && (
                 <div>
                   <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">

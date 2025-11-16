@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
 
 export interface TeamTableOfContentsItem {
@@ -12,23 +12,32 @@ interface TeamTableOfContentsProps {
   items: TeamTableOfContentsItem[];
   /** Pixels to offset when determining the active section */
   offset?: number;
+  /** Optional element id; TOC becomes sticky once this element leaves the viewport */
+  pinAfterId?: string;
+  /** Margin in pixels applied when checking pin trigger */
+  pinOffset?: number;
 }
 
 const DEFAULT_OFFSET = 128;
 
-export default function TeamTableOfContents({
-  items,
-  offset = DEFAULT_OFFSET,
-}: TeamTableOfContentsProps) {
-  const [activeId, setActiveId] = useState<string>(items[0]?.id ?? "");
+interface ScrollSpyState {
+  activeId: string;
+  setActiveId: (id: string) => void;
+}
+
+export function useScrollSpy(
+  items: TeamTableOfContentsItem[],
+  offset = DEFAULT_OFFSET
+): ScrollSpyState {
+  const [activeId, setActiveIdState] = useState<string>(items[0]?.id ?? "");
 
   useEffect(() => {
     if (!items.length) {
-      setActiveId("");
+      setActiveIdState("");
       return;
     }
     if (!items.some((item) => item.id === activeId)) {
-      setActiveId(items[0]?.id ?? "");
+      setActiveIdState(items[0]?.id ?? "");
     }
   }, [items, activeId]);
 
@@ -47,7 +56,7 @@ export default function TeamTableOfContents({
           currentId = item.id;
         }
       }
-      setActiveId((prev) => (prev !== currentId ? currentId : prev));
+      setActiveIdState((prev) => (prev !== currentId ? currentId : prev));
     };
 
     handleScroll();
@@ -57,6 +66,48 @@ export default function TeamTableOfContents({
     };
   }, [items, offset]);
 
+  const setActiveId = useCallback((id: string) => {
+    setActiveIdState(id);
+  }, []);
+
+  return { activeId, setActiveId };
+}
+
+export default function TeamTableOfContents({
+  items,
+  offset = DEFAULT_OFFSET,
+  pinAfterId,
+  pinOffset = offset,
+}: TeamTableOfContentsProps) {
+  const { activeId, setActiveId } = useScrollSpy(items, offset);
+  const [isPinned, setIsPinned] = useState<boolean>(!pinAfterId);
+
+  useEffect(() => {
+    if (!pinAfterId) {
+      setIsPinned(true);
+      return;
+    }
+
+    const target = document.getElementById(pinAfterId);
+    if (!target) {
+      setIsPinned(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsPinned(!entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: `-${pinOffset}px 0px 0px 0px`,
+      }
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [pinAfterId, pinOffset]);
+
   if (!items.length) {
     return null;
   }
@@ -65,34 +116,11 @@ export default function TeamTableOfContents({
     <>
       <nav
         aria-label="Page contents"
-        className="lg:hidden border-y border-gray-200/70 dark:border-gray-700/60 bg-white/95 dark:bg-viking-charcoal/85 backdrop-blur py-3"
-      >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ul className="flex items-center gap-3 overflow-x-auto text-sm font-medium">
-            {items.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  aria-current={activeId === item.id ? "location" : undefined}
-                  onClick={() => setActiveId(item.id)}
-                  className={clsx(
-                    "inline-flex items-center rounded-full px-3 py-1.5 transition-colors whitespace-nowrap",
-                    activeId === item.id
-                      ? "bg-viking-red text-white shadow"
-                      : "bg-gray-100 text-viking-charcoal dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  )}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-
-      <nav
-        aria-label="Page contents"
-        className="hidden lg:block fixed left-0 top-1/2 z-30 -translate-y-1/2"
+        className={clsx(
+          "hidden lg:block fixed left-0 top-1/2 z-30 -translate-y-1/2 transition-opacity duration-300", 
+          isPinned ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        aria-hidden={!isPinned}
       >
         <div className="w-56 rounded-2xl border border-gray-200/70 dark:border-gray-700/70 bg-white/95 dark:bg-viking-charcoal/90 shadow-lg backdrop-blur">
           <div className="px-5 pt-5 pb-4">

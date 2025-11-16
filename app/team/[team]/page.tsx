@@ -87,14 +87,21 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
           blurDataURL={team.heroBlurDataURL}
           tagline={team.heroTagline}
         />
-        <TeamTableOfContents items={tableOfContents} />
+        <TeamTableOfContents
+          items={tableOfContents}
+          pinAfterId="team-hero"
+        />
         <div className="lg:pl-64">
           <TeamStaffSection
             teamName={teamName}
             staff={staff}
             anchorId={staffAnchorId}
           />
-          <RosterSwitcher rosters={rosters} anchorId={rosterAnchorId} />
+          <RosterSwitcher
+            rosters={rosters}
+            anchorId={rosterAnchorId}
+            sections={tableOfContents}
+          />
           <TeamScheduleSection
             teamName={teamName}
             schedule={schedule}
@@ -131,7 +138,10 @@ function TeamHero({
   const hasDistinctMobileImage = desktopImage !== mobileImage;
 
   return (
-    <section className="relative w-full overflow-hidden bg-black aspect-[16/9] lg:aspect-auto lg:min-h-[60vh]">
+    <section
+      id="team-hero"
+      className="relative w-full overflow-hidden bg-black aspect-[16/9] lg:aspect-auto lg:min-h-[60vh]"
+    >
       <div className="pointer-events-none absolute inset-0 block h-full w-full">
         {hasDistinctMobileImage ? (
           <>
