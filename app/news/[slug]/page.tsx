@@ -7,6 +7,7 @@ import {
   fetchNewsArticleBySlug,
   fetchNewsArticles,
 } from "@/app/services/fetchNews";
+import { formatSheetDate } from "@/lib/date";
 
 export const revalidate = 300;
 
@@ -206,16 +207,7 @@ export default async function NewsArticlePage({
 
 function formatNewsDate(raw?: string | null): string | undefined {
   if (!raw) return undefined;
-  const parsed = new Date(raw);
-  if (Number.isNaN(parsed.getTime())) {
-    return undefined;
-  }
-
-  return Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(parsed);
+  return formatSheetDate(raw) ?? undefined;
 }
 
 function buildBodyBlocks(body?: string) {

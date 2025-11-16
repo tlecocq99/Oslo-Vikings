@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Search, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { formatSheetDate } from "@/lib/date";
 import type { NewsArticle } from "@/app/types/news";
 import type { NewsCardProps } from "../components/NewsCardContent";
 
@@ -28,17 +29,20 @@ function buildCategories(articles: NewsArticle[]): string[] {
   return Array.from(set);
 }
 
-function formatDisplayDate(raw?: string): string | undefined {
-  if (!raw) return undefined;
-  const date = new Date(raw);
-  if (Number.isNaN(date.getTime())) {
-    return raw;
+function formatDisplayDate(
+  primary?: string,
+  fallback?: string
+): string | undefined {
+  const primaryFormatted = formatSheetDate(primary);
+  if (primaryFormatted) {
+    return primaryFormatted;
   }
-  return Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(date);
+
+  if (fallback) {
+    return formatSheetDate(fallback);
+  }
+
+  return undefined;
 }
 
 function toNewsCardProps(article: NewsArticle): NewsCardProps {
@@ -47,7 +51,7 @@ function toNewsCardProps(article: NewsArticle): NewsCardProps {
     excerpt: article.excerpt,
     slug: article.slug,
     author: article.author,
-    date: formatDisplayDate(article.date ?? article.publishedAt),
+    date: formatDisplayDate(article.publishedAt, article.date),
     category: article.category,
     image: article.image
       ? {
@@ -226,7 +230,7 @@ interface FeaturedProps {
 function FeaturedArticleCard({ article }: FeaturedProps) {
   const placement = article.image?.placement ?? "background";
   const href = article.slug ? `/news/${article.slug}` : undefined;
-  const displayDate = formatDisplayDate(article.date ?? article.publishedAt);
+  const displayDate = formatDisplayDate(article.publishedAt, article.date);
   const baseClasses =
     "bg-gray-50 dark:bg-viking-charcoal/70 rounded-lg overflow-hidden shadow-lg border border-gray-200 dark:border-viking-red/30";
 

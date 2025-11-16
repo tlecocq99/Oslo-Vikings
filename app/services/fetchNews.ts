@@ -1,3 +1,4 @@
+import { parseSheetDate } from "@/lib/date";
 import { fetchSheetRows } from "./googleSheets";
 import type {
   NewsArticle,
@@ -275,17 +276,11 @@ export async function fetchNewsArticles({
     ? articles
     : articles.filter((article) => article.visibility === "published");
 
-  const getTimestamp = (value?: string): number => {
-    if (!value) return Number.NaN;
-    const parsed = Date.parse(value);
-    return Number.isNaN(parsed) ? Number.NaN : parsed;
-  };
-
   const sorted = published
     .map((article, index) => ({ article, index }))
     .sort((a, b) => {
-      const aTime = getTimestamp(a.article.publishedAt || a.article.date);
-      const bTime = getTimestamp(b.article.publishedAt || b.article.date);
+      const aTime = parseSheetDate(a.article.publishedAt || a.article.date);
+      const bTime = parseSheetDate(b.article.publishedAt || b.article.date);
 
       const aValid = Number.isFinite(aTime);
       const bValid = Number.isFinite(bTime);
