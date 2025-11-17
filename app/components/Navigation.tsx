@@ -94,7 +94,7 @@ export default function Navigation() {
             key={key}
             profileUrl={href}
             uniqueId="oslovikings"
-            placement="bottom"
+            placement="left"
             width={360}
             className={linkClass}
             linkTarget="_blank"
