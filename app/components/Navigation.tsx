@@ -26,10 +26,18 @@ const navigation: NavItem[] = [
   { name: "HOME", href: "/" },
   { name: "TEAMS", href: "/team" },
   { name: "NEWS", href: "/news" },
+
   { name: "JOIN OV", href: "/recruitment" },
   { name: "SHOP", href: "/shop" },
   { name: "ABOUT", href: "/about" },
   { name: "CONTACT", href: "/contact" },
+];
+const aboutLinks = [
+  { name: "Overview", href: "/about" },
+  { name: "History", href: "/about/history" },
+  { name: "Partners", href: "/about/partners" },
+  { name: "Boosters", href: "/about/boosters" },
+  { name: "Antidoping", href: "/about/antidoping" },
 ];
 
 const teamLinks = [
@@ -62,13 +70,16 @@ const DEFAULT_NAV_HEIGHT = 96;
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isTeamsMobileOpen, setIsTeamsMobileOpen] = useState(false);
+  const [openMobileSection, setOpenMobileSection] = useState<
+    null | "teams" | "about"
+  >(null);
   const pathname = usePathname();
   const navRef = useRef<HTMLElement | null>(null);
   const [navHeight, setNavHeight] = useState(DEFAULT_NAV_HEIGHT);
 
   const navItems = useMemo(() => navigation, []);
   const mobileTeamsMenuId = "mobile-team-links";
+  const mobileAboutMenuId = "mobile-about-links";
 
   const mobileMenuStyle = useMemo<CSSProperties>(
     () => ({ "--nav-height": `${navHeight}px` } as CSSProperties),
@@ -122,13 +133,13 @@ export default function Navigation() {
     });
 
   const toggleMobileMenu = () => {
-    setIsTeamsMobileOpen(false);
+    setOpenMobileSection(null);
     setIsOpen((prev) => !prev);
   };
 
   const closeMobileMenu = () => {
     setIsOpen(false);
-    setIsTeamsMobileOpen(false);
+    setOpenMobileSection(null);
   };
 
   useEffect(() => {
@@ -155,7 +166,7 @@ export default function Navigation() {
       window.removeEventListener("resize", updateHeight);
       resizeObserver?.disconnect();
     };
-  }, [isOpen, isTeamsMobileOpen]);
+  }, [isOpen, openMobileSection]);
 
   return (
     <>
@@ -183,6 +194,7 @@ export default function Navigation() {
           <div className={styles.desktopNav}>
             {navItems.map((item, idx) => {
               const isTeam = item.name === "TEAMS";
+              const isAbout = item.name === "ABOUT";
               const active =
                 item.href === "/"
                   ? pathname === "/"
@@ -202,12 +214,12 @@ export default function Navigation() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      aria-haspopup={isTeam ? "menu" : undefined}
+                      aria-haspopup={isTeam || isAbout ? "menu" : undefined}
                       className={desktopLinkClasses}
                       style={{ pointerEvents: "auto" }}
                     >
                       {item.name}
-                      {isTeam && (
+                      {(isTeam || isAbout) && (
                         <ChevronDown className={styles.desktopLinkIcon} />
                       )}
                     </Link>
@@ -222,6 +234,21 @@ export default function Navigation() {
                               className={styles.desktopDropdownLink}
                             >
                               <span>{team.name}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {isAbout && (
+                      <div className={styles.desktopDropdownWrapper}>
+                        <div className={styles.desktopDropdown}>
+                          {aboutLinks.map((about) => (
+                            <Link
+                              key={about.name}
+                              href={about.href}
+                              className={styles.desktopDropdownLink}
+                            >
+                              <span>{about.name}</span>
                             </Link>
                           ))}
                         </div>
@@ -273,6 +300,7 @@ export default function Navigation() {
             >
               {navItems.map((item, index) => {
                 const isTeam = item.name === "TEAMS";
+                const isAbout = item.name === "ABOUT";
                 const isActive = pathname.startsWith(item.href);
                 const mobileLinkClasses = clsx(
                   styles.mobileLink,
@@ -285,8 +313,12 @@ export default function Navigation() {
                         <button
                           type="button"
                           className={mobileLinkClasses}
-                          onClick={() => setIsTeamsMobileOpen((prev) => !prev)}
-                          aria-expanded={isTeamsMobileOpen}
+                          onClick={() =>
+                            setOpenMobileSection((prev) =>
+                              prev === "teams" ? null : "teams"
+                            )
+                          }
+                          aria-expanded={openMobileSection === "teams"}
                           aria-controls={mobileTeamsMenuId}
                           style={{ pointerEvents: "auto" }}
                         >
@@ -295,7 +327,8 @@ export default function Navigation() {
                             <ChevronDown
                               className={clsx(
                                 styles.mobileTeamsIcon,
-                                isTeamsMobileOpen && styles.mobileTeamsIconOpen
+                                openMobileSection === "teams" &&
+                                  styles.mobileTeamsIconOpen
                               )}
                             />
                           </span>
@@ -304,7 +337,7 @@ export default function Navigation() {
                           id={mobileTeamsMenuId}
                           className={clsx(
                             styles.mobileTeamsGrid,
-                            isTeamsMobileOpen
+                            openMobileSection === "teams"
                               ? styles.mobileTeamsGridOpen
                               : styles.mobileTeamsGridClosed
                           )}
@@ -317,6 +350,52 @@ export default function Navigation() {
                               className={styles.mobileTeamLink}
                             >
                               {team.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    ) : isAbout ? (
+                      <>
+                        <button
+                          type="button"
+                          className={mobileLinkClasses}
+                          onClick={() =>
+                            setOpenMobileSection((prev) =>
+                              prev === "about" ? null : "about"
+                            )
+                          }
+                          aria-expanded={openMobileSection === "about"}
+                          aria-controls={mobileAboutMenuId}
+                          style={{ pointerEvents: "auto" }}
+                        >
+                          <span className={styles.mobileTeamsToggle}>
+                            {item.name}
+                            <ChevronDown
+                              className={clsx(
+                                styles.mobileTeamsIcon,
+                                openMobileSection === "about" &&
+                                  styles.mobileTeamsIconOpen
+                              )}
+                            />
+                          </span>
+                        </button>
+                        <div
+                          id={mobileAboutMenuId}
+                          className={clsx(
+                            styles.mobileTeamsGrid,
+                            openMobileSection === "about"
+                              ? styles.mobileTeamsGridOpen
+                              : styles.mobileTeamsGridClosed
+                          )}
+                        >
+                          {aboutLinks.map((about) => (
+                            <Link
+                              key={`mobile-about-${about.name}`}
+                              href={about.href}
+                              onClick={closeMobileMenu}
+                              className={styles.mobileTeamLink}
+                            >
+                              {about.name}
                             </Link>
                           ))}
                         </div>

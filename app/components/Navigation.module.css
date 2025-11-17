@@ -349,11 +349,12 @@
 .mobileLink:hover,
 .mobileLink:focus-visible,
 .mobileLinkActive {
-  background-color: hsl(var(--primary-foreground));
+  background: #ffffff;
+  background-image: none;
+  background-clip: padding-box;
   color: var(--color-viking-red);
-  border-color: rgba(255, 255, 255, 0.85);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.45);
+  border-color: #ffffff;
+  box-shadow: none;
 }
 
 :global(.dark) .mobileSocial {
@@ -550,11 +551,12 @@
 :global(.dark) .mobileLinkActive,
 :global(.dark) .mobileLink:hover,
 :global(.dark) .mobileLink:focus-visible {
-  background-color: rgb(var(--color-viking-red-rgb));
-  color: hsl(var(--primary-foreground));
-  border-color: rgba(255, 255, 255, 0.6);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+  background: #ffffff;
+  background-image: none;
+  background-clip: padding-box;
+  color: var(--color-viking-red);
+  border-color: #ffffff;
+  box-shadow: none;
 }
 
 .mobileTeamsToggle {
