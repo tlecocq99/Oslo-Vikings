@@ -5,6 +5,44 @@ import Footer from "../../components/Footer";
 const boosterHeroDesktop = "/images/backgrounds/boosterBanner.png";
 const boosterHeroMobile = "/images/backgrounds/boosterBanner.png";
 
+const boosterPackages = [
+  {
+    level: "Platinum Booster",
+    contribution: "5000 kr",
+    headlinePerk: "30% off all kiosk and merch",
+    includesPrevious: true,
+    color: "rgb(129, 217, 221)",
+  },
+  {
+    level: "Gold Booster",
+    contribution: "3500 kr",
+    headlinePerk: "Free pølse + brus per game",
+    includesPrevious: true,
+    color: "rgb(252, 211, 77)",
+  },
+  {
+    level: "Silver Booster",
+    contribution: "2500 kr",
+    headlinePerk: "Free hoody",
+    includesPrevious: true,
+    color: "rgb(226, 232, 240)",
+  },
+  {
+    level: "Bronze Booster",
+    contribution: "1500 kr",
+    headlinePerk: "Free cap",
+    includesPrevious: true,
+    color: "rgb(253, 186, 116)",
+  },
+  {
+    level: "Entry Level",
+    contribution: "500 kr",
+    headlinePerk: "Free booster t-shirt",
+    includesPrevious: false,
+    color: "rgb(186, 230, 253)",
+  },
+];
+
 export default function BoostersPage() {
   return (
     <>
@@ -57,107 +95,42 @@ export default function BoostersPage() {
               </p>
             </div>
           </div>
-
-          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-white/10 dark:bg-viking-charcoal/70">
-            <table className="min-w-full divide-y divide-gray-200 text-left dark:divide-white/10">
-              <caption className="sr-only">
-                Booster Club membership levels, contributions, and perks
-              </caption>
-              <thead className="bg-gray-50 dark:bg-white/5">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-200 text-center"
-                  >
-                    Level
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-200 text-center"
-                  >
-                    Contribution
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-4 text-sm font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-200 text-center"
-                  >
-                    Perks
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-white/5">
-                <tr>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-base font-semibold text-viking-charcoal dark:text-white text-center"
-                  >
-                    PLATINUM BOOSTER
-                  </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
-                    5000 kr
-                  </td>
-                  <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
-                    30% off all kiosk and merch, plus all perks below!
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-base font-semibold text-viking-charcoal dark:text-white text-center"
-                  >
-                    GOLD BOOSTER
-                  </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
-                    3500 kr
-                  </td>
-                  <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
-                    Free pølse + brus per game, plus all perks below!
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-base font-semibold text-viking-charcoal dark:text-white text-center"
-                  >
-                    SILVER BOOSTER
-                  </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
-                    2500 kr
-                  </td>
-                  <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
-                    Free hoody, plus all perks below!
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-base font-semibold text-viking-charcoal dark:text-white text-center"
-                  >
-                    BRONZE BOOSTER
-                  </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
-                    1500 kr
-                  </td>
-                  <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
-                    Free cap, plus all perks below!
-                  </td>
-                </tr>
-                <tr>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-base font-semibold text-viking-charcoal dark:text-white text-center"
-                  >
-                    ENTRY LEVEL
-                  </th>
-                  <td className="px-6 py-4 text-base font-medium text-viking-red dark:text-viking-red text-center">
-                    500 kr
-                  </td>
-                  <td className="px-6 py-4 text-base text-gray-700 dark:text-gray-200 text-center">
-                    Free booster t-shirt
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {boosterPackages.map((pkg) => (
+              <div
+                key={pkg.level}
+                role="listitem"
+                className={`flex w-full min-h-[20px] flex-col items-center justify-center gap-3 rounded-[9px] px-2 py-4 text-center shadow-[0px_1px_12px_4px_rgba(0,0,0,0.25)] ${
+                  pkg.level === "Platinum Booster"
+                    ? "sm:col-span-2 sm:mx-auto sm:max-w-sm xl:col-start-2"
+                    : ""
+                }`}
+                style={{
+                  backgroundColor: pkg.color,
+                  boxShadow:
+                    pkg.level === "Platinum Booster"
+                      ? "0px 10px 35px rgba(0, 0, 0, 0.25), 0 0 45px rgba(129, 217, 221, 0.55), 0 0 90px rgba(129, 217, 221, 0.35)"
+                      : undefined,
+                }}
+              >
+                <span className="text-sm font-semibold uppercase tracking-[0.35em] text-viking-charcoal">
+                  {pkg.contribution}
+                </span>
+                <h3 className="text-2xl font-bold text-viking-charcoal">
+                  {pkg.level}
+                </h3>
+                <div className="flex flex-col gap-2 text-sm font-medium text-viking-charcoal/80">
+                  <p className="text-base font-semibold text-viking-charcoal">
+                    {pkg.headlinePerk}
+                  </p>
+                  {pkg.includesPrevious ? (
+                    <p className="uppercase tracking-wide text-xs text-viking-charcoal/70">
+                      Plus all perks from previous tier!
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className="space-y-4 rounded-2xl bg-gray-50 p-6 text-center shadow-sm dark:bg-viking-charcoal/60">

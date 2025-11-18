@@ -366,8 +366,7 @@ export default async function Home() {
       <section className="bg-white dark:bg-viking-surface transition-colors">
         <div className="grid min-h-[140px] sm:min-h-[300px] xl:min-h-[360px] grid-cols-1 gap-y-4 px-4 lg:grid-cols-2 lg:gap-y-0 lg:px-0">
           <Link
-            href="/booster"
-            target="_blank"
+            href="/about/boosters"
             rel="noopener noreferrer"
             className="group relative flex h-full min-h-[100px] items-stretch overflow-hidden rounded-xl bg-white transition-shadow duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white hover:shadow-lg dark:bg-viking-surface-alt dark:focus-visible:ring-offset-[#1a1a1a] sm:min-h-[140px] lg:min-h-[320px] xl:min-h-[360px]"
             aria-label="Explore the Vikings Booster Club"

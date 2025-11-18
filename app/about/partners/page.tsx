@@ -108,16 +108,16 @@ export default function PartnersPage() {
     <>
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-viking-charcoal/80 transition-colors">
-        <section className="relative isolate overflow-hidden bg-[url('/images/backgrounds/team.avif')] bg-cover bg-center">
+        <section className="relative isolate overflow-hidden">
           <div className="absolute inset-0 bg-black/65" aria-hidden />
-          <div className="relative mx-auto flex min-h-[60vh] max-w-5xl flex-col items-center justify-center px-4 py-24 text-center sm:px-6 lg:px-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.4em] text-viking-red">
+          <div className="relative mx-auto flex min-h-[40vh] max-w-5xl flex-col items-center justify-center px-4 py-4 text-center sm:px-6 lg:px-8">
+            <p className="text-lg font-semibold uppercase tracking-[0.4em] text-viking-red">
               Partners & Sponsors
             </p>
-            <h1 className="mt-4 font-Anton_SC text-4xl font-bold text-white sm:text-5xl">
+            <h1 className="mt-4 font-Anton_SC text-4xl font-bold text-viking-charcoal sm:text-5xl">
               Fueling Oslo Vikings Together
             </h1>
-            <p className="mt-6 max-w-3xl text-base text-gray-200 sm:text-lg">
+            <p className="mt-6 max-w-3xl text-base text-viking-charcoal sm:text-lg">
               Partnerships enable us to compete at the highest level, invest in
               future athletes, and create unforgettable gameday experiences.
               Thank you for standing with the shield.
@@ -126,7 +126,7 @@ export default function PartnersPage() {
         </section>
 
         <section className="bg-white dark:bg-viking-charcoal/90">
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl px-4 py-2 sm:px-6 lg:px-8">
             <h2 className="text-center text-3xl font-bold text-viking-charcoal dark:text-gray-100">
               Partnership Pillars
             </h2>

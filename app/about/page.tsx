@@ -106,35 +106,22 @@ export default function AboutPage() {
             <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               Overview
             </h1>
-            <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-10xl mx-auto">
-              Founded in 1986, the Oslo Vikings are members of the Norwegian
-              American Football and Cheerleading Federation and the European
-              Federation of American Football. In addition, the Vikings are
-              members of both the Norwegian National Federation of Sports and
-              the Oslo City Sports Association. As Vikings we continually aspire
-              to make our sports program attractive to all types of players,
-              both elite and novice, and both large and small. During recent
-              years, we have made a concerted effort to increase the access of
-              our programs, especially in our youth program where we believe we
-              are uniquely equipped to offer athletic activities and
-              organizational support that alternative sports cannot provide. We
-              enable players that often do not perfectly fit the mold of usual
-              Norwegian sports such as Soccer or Handball to participate in an
-              athletically challenging, competitive team environment that is
-              exceptionally rewarding and most importantly, fun! In our efforts
-              to serve our players and community we are an organization that is
-              committed to continuous development and, as such, believe there is
-              always room to improve our player offering and our reach within
-              the greater community. Leading the club’s efforts, is our highest
-              governing body, the board of directors (Styre), which is comprised
-              of ten volunteers elected annually for one-year terms during the
-              annual members meeting. The board, led by an elected President
-              (Leder), is responsible for day-to-day administration, football
-              operations, the annual budget, and long-term planning for the
-              club. Reporting to the board, are a senior department led by the
-              club’s Head Coach and a junior department led by the Junior
-              Manager. The junior department consists of separate U14 (12-14),
-              U17 (15-17) and U19 (18-19) teams.
+            <p>
+              Founded in 1986, the Oslo Vikings are proud members of Norway’s
+              American Sports Federation (NAIF), the International Federation of
+              American Football (IFAF), and the broader Norwegian Sports
+              Federation (NIF). </p> <p> We’re passionate about making football
+              accessible and exciting for everyone — elite athletes, total
+              beginners, big players, small players, and everyone in between. In
+              recent years we’ve focused heavily on expanding opportunities for
+              youth, offering a competitive, supportive, and incredibly fun team
+              environment for kids who may not feel at home in more traditional
+              Norwegian sports like soccer or handball. </p><p> We’re always pushing to grow, improve, and strengthen our impact in the community. Our
+              volunteer Board of Directors leads the way, managing daily
+              operations, long-term planning, and the overall direction of the
+              club. Supporting them is our senior department, led by the Head
+              Coach, and our junior department, led by the Junior Manager, which
+              includes our U14, U17, and U19 teams.
             </p>
           </div>
         </section>
@@ -186,46 +173,7 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        </section>
-
-        {/* History Timeline */}
-        <section className="py-12 bg-white dark:bg-viking-charcoal/80 transition-colors">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
-                Our Journey
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                From humble beginnings to championship glory.
-              </p>
-            </div>
-
-            <JourneyTimeline milestones={milestones} />
-
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:hidden">
-              {milestones.map((milestone, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col sm:flex-row items-start sm:space-x-6 space-y-4 sm:space-y-0"
-                >
-                  <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 bg-viking-red-dark rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-sm sm:text-base">
-                      {milestone.year}
-                    </span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-lg sm:text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-2">
-                      {milestone.event}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-                      {milestone.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        </section> 
 
         {/* Leadership */}
         <section className="py-12 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
