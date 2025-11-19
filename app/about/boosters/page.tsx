@@ -1,9 +1,15 @@
 import Link from "next/link";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
+import { cn } from "@/lib/utils";
 
 const boosterHeroDesktop = "/images/backgrounds/boosterBanner.png";
 const boosterHeroMobile = "/images/backgrounds/boosterBanner.png";
+
+const PLATINUM_LEVEL = "Platinum Booster";
+const CARD_BOX_SHADOW = "0px 1px 12px 4px rgba(0, 0, 0, 0.25)";
+const PLATINUM_GLOW_SHADOW =
+  "0 0 36px 14px rgba(235, 20, 22, 0.25), 0 0 70px 24px rgba(235, 20, 22, 0.18)";
 
 const boosterPackages = [
   {
@@ -11,7 +17,7 @@ const boosterPackages = [
     contribution: "5000 kr",
     headlinePerk: "30% off all kiosk and merch",
     includesPrevious: true,
-    color: "rgb(129, 217, 221)",
+    color: "rgb(172, 20, 22, 0.80)",
   },
   {
     level: "Gold Booster",
@@ -23,7 +29,7 @@ const boosterPackages = [
   {
     level: "Silver Booster",
     contribution: "2500 kr",
-    headlinePerk: "Free hoody",
+    headlinePerk: "Free hoodie",
     includesPrevious: true,
     color: "rgb(226, 232, 240)",
   },
@@ -43,7 +49,16 @@ const boosterPackages = [
   },
 ];
 
+type BoosterPackage = (typeof boosterPackages)[number];
+
 export default function BoostersPage() {
+  const platinumTier = boosterPackages.find(
+    (pkg) => pkg.level === PLATINUM_LEVEL
+  );
+  const supportingTiers = boosterPackages.filter(
+    (pkg) => pkg.level !== PLATINUM_LEVEL
+  );
+
   return (
     <>
       <Navigation />
@@ -95,42 +110,20 @@ export default function BoostersPage() {
               </p>
             </div>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {boosterPackages.map((pkg) => (
-              <div
-                key={pkg.level}
-                role="listitem"
-                className={`flex w-full min-h-[20px] flex-col items-center justify-center gap-3 rounded-[9px] px-2 py-4 text-center shadow-[0px_1px_12px_4px_rgba(0,0,0,0.25)] ${
-                  pkg.level === "Platinum Booster"
-                    ? "sm:col-span-2 sm:mx-auto sm:max-w-sm xl:col-start-2"
-                    : ""
-                }`}
-                style={{
-                  backgroundColor: pkg.color,
-                  boxShadow:
-                    pkg.level === "Platinum Booster"
-                      ? "0px 10px 35px rgba(0, 0, 0, 0.25), 0 0 45px rgba(129, 217, 221, 0.55), 0 0 90px rgba(129, 217, 221, 0.35)"
-                      : undefined,
-                }}
-              >
-                <span className="text-sm font-semibold uppercase tracking-[0.35em] text-viking-charcoal">
-                  {pkg.contribution}
-                </span>
-                <h3 className="text-2xl font-bold text-viking-charcoal">
-                  {pkg.level}
-                </h3>
-                <div className="flex flex-col gap-2 text-sm font-medium text-viking-charcoal/80">
-                  <p className="text-base font-semibold text-viking-charcoal">
-                    {pkg.headlinePerk}
-                  </p>
-                  {pkg.includesPrevious ? (
-                    <p className="uppercase tracking-wide text-xs text-viking-charcoal/70">
-                      Plus all perks from previous tier!
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-            ))}
+          <div className="flex flex-col gap-8">
+            {platinumTier ? (
+              <BoosterCard
+                key={platinumTier.level}
+                pkg={platinumTier}
+                isPlatinum
+                className="mx-auto w-full max-w-md sm:max-w-lg dark:border-white/70"
+              />
+            ) : null}
+            <div className="grid gap-6 sm:grid-cols-2">
+              {supportingTiers.map((pkg) => (
+                <BoosterCard key={pkg.level} pkg={pkg} />
+              ))}
+            </div>
           </div>
 
           <div className="space-y-4 rounded-2xl bg-gray-50 p-6 text-center shadow-sm dark:bg-viking-charcoal/60">
@@ -152,6 +145,53 @@ export default function BoostersPage() {
       </main>
       <Footer />
     </>
+  );
+}
+
+function BoosterCard({
+  pkg,
+  isPlatinum = false,
+  className,
+}: {
+  pkg: BoosterPackage;
+  isPlatinum?: boolean;
+  className?: string;
+}) {
+  const baseShadow = isPlatinum
+    ? "0 0 20px 8px rgba(235, 20, 22, 0.38)"
+    : CARD_BOX_SHADOW;
+  const boxShadow = isPlatinum
+    ? `${baseShadow}, ${PLATINUM_GLOW_SHADOW}`
+    : baseShadow;
+
+  return (
+    <div
+      role="listitem"
+      className={cn(
+        "flex min-h-[220px] w-full flex-col items-center justify-center gap-3 rounded-[9px] px-4 py-8 text-center",
+        className
+      )}
+      style={{
+        backgroundColor: pkg.color,
+        boxShadow,
+        border: "2px solid rgba(255,255,255,0.6)",
+      }}
+    >
+      <span className="text-sm font-semibold uppercase tracking-[0.35em] text-viking-charcoal">
+        {pkg.contribution}
+      </span>
+      <h3 className="text-2xl font-bold text-viking-charcoal">{pkg.level}</h3>
+      <div className="flex flex-col gap-2 text-sm font-medium text-viking-charcoal/80">
+        <p className="text-base font-semibold text-viking-charcoal">
+          {pkg.headlinePerk}
+        </p>
+        {pkg.includesPrevious ? (
+          <p className="uppercase tracking-wide text-xs text-viking-charcoal/70">
+            Plus all perks from previous tier!
+          </p>
+        ) : null}
+      </div>
+    </div>
   );
 }
 

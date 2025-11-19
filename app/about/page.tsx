@@ -102,37 +102,43 @@ export default function AboutPage() {
       <main className="min-h-screen">
         {/* Hero Section */}
         <section className="dark:bg-gray-800 py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="space-y-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               Overview
             </h1>
-            <p>
+            <p className="text-lg">
               Founded in 1986, the Oslo Vikings are proud members of Norway’s
               American Sports Federation (NAIF), the International Federation of
               American Football (IFAF), and the broader Norwegian Sports
-              Federation (NIF). </p> <p> We’re passionate about making football
-              accessible and exciting for everyone — elite athletes, total
-              beginners, big players, small players, and everyone in between. In
-              recent years we’ve focused heavily on expanding opportunities for
-              youth, offering a competitive, supportive, and incredibly fun team
-              environment for kids who may not feel at home in more traditional
-              Norwegian sports like soccer or handball. </p><p> We’re always pushing to grow, improve, and strengthen our impact in the community. Our
-              volunteer Board of Directors leads the way, managing daily
-              operations, long-term planning, and the overall direction of the
-              club. Supporting them is our senior department, led by the Head
-              Coach, and our junior department, led by the Junior Manager, which
-              includes our U14, U17, and U19 teams.
+              Federation (NIF).
+            </p>
+            <p className="text-lg">
+              We’re passionate about making football accessible and exciting for
+              everyone — elite athletes, total beginners, big players, small
+              players, and everyone in between. In recent years we’ve focused
+              heavily on expanding opportunities for youth, offering a
+              competitive, supportive, and incredibly fun team environment for
+              kids who may not feel at home in more traditional Norwegian sports
+              like soccer or handball.
+            </p>
+            <p className="text-lg">
+              We’re always pushing to grow, improve, and strengthen our impact
+              in the community. Our volunteer Board of Directors leads the way,
+              managing daily operations, long-term planning, and the overall
+              direction of the club. Supporting them is our senior department,
+              led by the Head Coach, and our junior department, led by the
+              Junior Manager, which includes our U14, U17, and U19 teams.
             </p>
           </div>
         </section>
 
         {/* Mission Statement */}
-        <section className="py-12 bg-white dark:bg-viking-charcoal/80 transition-colors">
+        <section className="py-4 bg-white dark:bg-viking-charcoal/80 transition-colors">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-8">
+            <h2 className="text-4xl font-bold text-viking-charcoal dark:text-gray-200 mb-8">
               Our Mission
             </h2>
-            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
               The Oslo Vikings&apos; mission is to be the leading sports club in
               Norway through providing a fun, demanding American Football
               experience founded on Community, Sportsmanship, Development,
@@ -173,7 +179,7 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        </section> 
+        </section>
 
         {/* Leadership */}
         <section className="py-12 bg-gray-50 dark:bg-viking-charcoal/60 transition-colors">
