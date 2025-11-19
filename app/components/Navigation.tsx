@@ -76,6 +76,7 @@ export default function Navigation() {
   const pathname = usePathname();
   const navRef = useRef<HTMLElement | null>(null);
   const [navHeight, setNavHeight] = useState(DEFAULT_NAV_HEIGHT);
+  const [supportsHoverPreview, setSupportsHoverPreview] = useState(false);
 
   const navItems = useMemo(() => navigation, []);
   const mobileTeamsMenuId = "mobile-team-links";
@@ -85,6 +86,40 @@ export default function Navigation() {
     () => ({ "--nav-height": `${navHeight}px` } as CSSProperties),
     [navHeight]
   );
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const hoverQuery = window.matchMedia("(hover: hover)");
+    const pointerQuery = window.matchMedia("(pointer: fine)");
+
+    const update = () =>
+      setSupportsHoverPreview(hoverQuery.matches && pointerQuery.matches);
+
+    update();
+
+    const attach = (mq: MediaQueryList) => {
+      if (typeof mq.addEventListener === "function") {
+        mq.addEventListener("change", update);
+        return () => mq.removeEventListener("change", update);
+      }
+      if (typeof mq.addListener === "function") {
+        mq.addListener(update);
+        return () => mq.removeListener(update);
+      }
+      return () => undefined;
+    };
+
+    const cleanupHover = attach(hoverQuery);
+    const cleanupPointer = attach(pointerQuery);
+
+    return () => {
+      cleanupHover();
+      cleanupPointer();
+    };
+  }, []);
 
   const renderSocialLinks = (variant: "desktop" | "mobile") =>
     socialLinks.map(({ name, href, Icon }) => {
@@ -108,6 +143,7 @@ export default function Navigation() {
             placement="left"
             width={360}
             className={linkClass}
+            disabled={!supportsHoverPreview}
             linkTarget="_blank"
             linkRel="noreferrer"
           >

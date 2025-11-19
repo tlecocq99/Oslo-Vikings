@@ -17,6 +17,8 @@ export type TikTokHoverProps = {
   placement?: Placement;
   width?: number;
   className?: string;
+  wrapperClassName?: string;
+  disabled?: boolean;
   linkTarget?: "_blank" | "_self";
   linkRel?: string;
   /** How long to wait for hydration before showing fallback */
@@ -31,6 +33,8 @@ export default function TikTokHover({
   placement = "bottom",
   width = 360,
   className,
+  wrapperClassName,
+  disabled = false,
   linkTarget = "_blank",
   linkRel = "noreferrer",
   detectTimeoutMs = 1500,
@@ -48,7 +52,7 @@ export default function TikTokHover({
 
   // Load TikTok script once; mark as blocked if it fails
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (disabled || typeof window === "undefined") return;
 
     const existing = document.querySelector<HTMLScriptElement>(
       'script[src="https://www.tiktok.com/embed.js"]'
@@ -67,7 +71,7 @@ export default function TikTokHover({
       setBlockedLikely(true);
     });
     document.body.appendChild(s);
-  }, []);
+  }, [disabled]);
 
   // Ask TikTok to hydrate when script is ready / popup opens
   const triggerTikTokLoad = () => {
@@ -79,16 +83,18 @@ export default function TikTokHover({
   };
 
   useEffect(() => {
+    if (disabled) return;
     if (scriptReady) triggerTikTokLoad();
-  }, [scriptReady]);
+  }, [scriptReady, disabled]);
 
   useEffect(() => {
+    if (disabled) return;
     if (open && scriptReady) triggerTikTokLoad();
-  }, [open, scriptReady]);
+  }, [open, scriptReady, disabled]);
 
   // Detect whether an iframe appears (hydrated). If not, assume blocked.
   useLayoutEffect(() => {
-    if (!open) return;
+    if (disabled || !open) return;
 
     const checkHydration = () => {
       const popup = popupRef.current;
@@ -125,7 +131,7 @@ export default function TikTokHover({
       obs.disconnect();
       if (detectionTimer.current) window.clearTimeout(detectionTimer.current);
     };
-  }, [open, detectTimeoutMs]);
+  }, [open, detectTimeoutMs, disabled]);
 
   // Base popup styles (always mounted; just hidden/visible)
   const basePopupStyle: React.CSSProperties = {
@@ -161,11 +167,13 @@ export default function TikTokHover({
   };
 
   const openPopup = () => {
+    if (disabled) return;
     cancelCloseTimer();
     setOpen(true);
   };
 
   const scheduleClose = () => {
+    if (disabled) return;
     cancelCloseTimer();
     closeTimer.current = window.setTimeout(() => setOpen(false), 120);
   };
@@ -180,7 +188,10 @@ export default function TikTokHover({
   return (
     <div
       ref={wrapperRef}
-      className={["relative inline-block align-middle", className]
+      className={[
+        "relative inline-flex align-middle cursor-pointer",
+        wrapperClassName,
+      ]
         .filter(Boolean)
         .join(" ")}
       onPointerEnter={openPopup}
@@ -201,7 +212,12 @@ export default function TikTokHover({
         rel={linkRel}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="underline underline-offset-4 hover:no-underline focus:outline-none"
+        className={[
+          "underline underline-offset-4 hover:no-underline focus:outline-none",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
         style={{ cursor: "pointer" }}
       >
         {children}
@@ -211,7 +227,12 @@ export default function TikTokHover({
         ref={popupRef}
         role="dialog"
         aria-label="TikTok profile preview"
-        style={{ ...basePopupStyle, ...placementStyle }}
+        aria-hidden={disabled}
+        style={{
+          ...basePopupStyle,
+          ...placementStyle,
+          pointerEvents: disabled ? "none" : basePopupStyle.pointerEvents,
+        }}
         onPointerEnter={openPopup}
         onPointerLeave={(event) => {
           if (shouldKeepOpen(event.relatedTarget)) return;

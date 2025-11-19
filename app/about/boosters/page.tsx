@@ -9,7 +9,7 @@ const boosterHeroMobile = "/images/backgrounds/boosterBanner.png";
 const PLATINUM_LEVEL = "Platinum Booster";
 const CARD_BOX_SHADOW = "0px 1px 12px 4px rgba(0, 0, 0, 0.25)";
 const PLATINUM_GLOW_SHADOW =
-  "0 0 36px 14px rgba(235, 20, 22, 0.25), 0 0 70px 24px rgba(235, 20, 22, 0.18)";
+  "0 0 20px 14px rgba(235, 20, 22, 0.1), 0 0 20px 6px rgba(235, 20, 22, 0.1)";
 
 const boosterPackages = [
   {
@@ -174,7 +174,7 @@ function BoosterCard({
       style={{
         backgroundColor: pkg.color,
         boxShadow,
-        border: "2px solid rgba(255,255,255,0.6)",
+        border: "4px solid rgba(255,255,255,0.8)",
       }}
     >
       <span className="text-sm font-semibold uppercase tracking-[0.35em] text-viking-charcoal">
