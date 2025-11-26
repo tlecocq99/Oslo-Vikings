@@ -127,11 +127,11 @@ export default function NewsPageClient({ articles }: NewsPageClientProps) {
       <Navigation />
 
       <main className="min-h-screen">
-        <section className="dark:bg-gray-800 py-12">
+        <section className="dark:bg-gray-950 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-200 mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               Vikings News
-            </h1>
+            </h1>+
             <p className="text-xl text-viking-charcoal/80 dark:text-gray-300/80 max-w-3xl mx-auto">
               Stay updated with the latest Oslo Vikings news, game recaps, and
               team announcements

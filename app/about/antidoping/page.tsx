@@ -36,7 +36,7 @@ const resources = [
     title: "WADA Prohibited List",
     description:
       "Up-to-date overview of substances and methods banned in sport.",
-    href: "https://www.wada-ama.org/en/resources/prohibited-list",
+    href: "https://www.antidoping.no/medisinsk/dopinglisten",
   },
   {
     title: "Clean Sport Education Portal",
@@ -46,7 +46,7 @@ const resources = [
   {
     title: "Report a Concern",
     description: "Confidential whistleblowing channel via Antidoping Norway.",
-    href: "https://www.antidoping.no/tips",
+    href: "https://dopingvarsel.whistleblowernetwork.net/",
   },
 ];
 
