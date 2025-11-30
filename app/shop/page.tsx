@@ -86,7 +86,7 @@ export default function ShopPage() {
                   className="group h-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#1a1a1a]"
                 >
                   <figure className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-viking-surface shadow-sm transition-transform group-hover:-translate-y-1">
-                    <div className="relative aspect-[4/5] w-full overflow-hidden">
+                    <div className="relative aspect-[22/23] w-full overflow-hidden">
                       <Image
                         src={item.src}
                         alt={item.alt}

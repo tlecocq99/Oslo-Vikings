@@ -26,6 +26,34 @@ const nextConfig = {
     }
     return config;
   },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Permissions-Policy",
+            value: [
+              "accelerometer=(self)",
+              "autoplay=()",
+              "camera=()",
+              "display-capture=()",
+              "encrypted-media=()",
+              "fullscreen=(self)",
+              "geolocation=()",
+              "gyroscope=(self)",
+              "magnetometer=(self)",
+              "microphone=()",
+              "midi=()",
+              "payment=()",
+              "usb=()",
+              "unload=(self)",
+            ].join(", "),
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
