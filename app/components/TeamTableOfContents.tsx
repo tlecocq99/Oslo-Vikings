@@ -134,7 +134,17 @@ export default function TeamTableOfContents({
                 <a
                   href={`#${item.id}`}
                   aria-current={activeId === item.id ? "location" : undefined}
-                  onClick={() => setActiveId(item.id)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setActiveId(item.id);
+                    const target = document.getElementById(item.id);
+                    if (target) {
+                      target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }
+                  }}
                   className={clsx(
                     "block px-5 py-3 text-sm font-semibold transition-all border-l-2",
                     activeId === item.id
