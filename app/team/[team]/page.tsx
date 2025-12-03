@@ -2,11 +2,13 @@ import Navigation from "@/app/components/Navigation";
 import Footer from "@/app/components/Footer";
 import RosterSwitcher from "@/app/components/RosterSwitcher";
 import { TeamStaffSection } from "@/app/components/TeamStaffSection";
+import { TeamRecruitsSection } from "@/app/components/TeamRecruitsSection";
 import { TeamScheduleSection } from "@/app/components/TeamScheduleSection";
 import TeamTableOfContents, {
   type TeamTableOfContentsItem,
 } from "@/app/components/TeamTableOfContents";
 import { fetchRoster } from "@/app/services/fetchRoster";
+import { fetchSeniorRecruits } from "@/app/services/fetchRecruits";
 import { fetchSchedule } from "@/app/services/fetchSchedule";
 import { fetchStaffForTeam } from "@/app/services/fetchStaff";
 import Image from "next/image";
@@ -55,6 +57,7 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
   const team = getTeamBySlug(teamSlug);
   const staffAnchorId = "team-staff";
   const rosterAnchorId = "team-roster";
+  const recruitsAnchorId = "team-recruits";
   const scheduleAnchorId = "team-schedule";
 
   if (!team) {
@@ -62,16 +65,28 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
   }
 
   const teamName = team.name;
+  const shouldShowRecruits = team.slug === "senior-elite";
+
   const tableOfContents: TeamTableOfContentsItem[] = [
     { id: staffAnchorId, label: "Staff" },
     { id: rosterAnchorId, label: "Roster" },
-    { id: scheduleAnchorId, label: "Schedule" },
   ];
 
-  const [players, schedule, staff] = await Promise.all([
+  if (shouldShowRecruits) {
+    tableOfContents.push({ id: recruitsAnchorId, label: "Recruits" });
+  }
+
+  tableOfContents.push({ id: scheduleAnchorId, label: "Schedule" });
+
+  const recruitsPromise = shouldShowRecruits
+    ? fetchSeniorRecruits()
+    : Promise.resolve<Awaited<ReturnType<typeof fetchSeniorRecruits>>>([]);
+
+  const [players, schedule, staff, recruits] = await Promise.all([
     fetchRoster(team.sheetTab),
     fetchSchedule(team.sheetTab),
     fetchStaffForTeam(team),
+    recruitsPromise,
   ]);
   const rosters = { [teamName]: players } as const;
 
@@ -99,6 +114,13 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
             anchorId={rosterAnchorId}
             sections={tableOfContents}
           />
+          {shouldShowRecruits && (
+            <TeamRecruitsSection
+              teamName={teamName}
+              recruits={recruits}
+              anchorId={recruitsAnchorId}
+            />
+          )}
           <TeamScheduleSection
             teamName={teamName}
             schedule={schedule}

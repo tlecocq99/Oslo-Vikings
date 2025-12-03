@@ -27,6 +27,15 @@ export default function Footer() {
                 </div>
                 <div className={styles.socialLinks}>
                   <Link
+                    href="https://www.instagram.com/oslovikings/"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Oslo Vikings on Instagram"
+                    className={styles.socialLink}
+                  >
+                    <Instagram className={styles.socialLinkIcon} />
+                  </Link>
+                  <Link
                     href="https://www.tiktok.com/@oslovikings"
                     target="_blank"
                     rel="noreferrer"
@@ -45,15 +54,6 @@ export default function Footer() {
                     className={styles.socialLink}
                   >
                     <Facebook className={styles.socialLinkIcon} />
-                  </Link>
-                  <Link
-                    href="https://www.instagram.com/oslovikings/"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Oslo Vikings on Instagram"
-                    className={styles.socialLink}
-                  >
-                    <Instagram className={styles.socialLinkIcon} />
                   </Link>
                 </div>
               </div>

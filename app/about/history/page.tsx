@@ -85,7 +85,7 @@ export default function HistoryPage() {
     <>
       <Navigation />
       <main className="min-h-screen bg-white dark:bg-viking-charcoal/80 transition-colors">
-        <section className="relative isolate overflow-hidden bg-[url('/images/backgrounds/teamClose.avif')] bg-cover bg-center">
+        <section className="relative isolate overflow-hidden bg-[url('/images/backgrounds/history-bg.jpg')] bg-cover bg-center">
           <div
             className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70"
             aria-hidden
