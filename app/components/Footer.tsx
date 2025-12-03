@@ -14,7 +14,7 @@ export default function Footer() {
             <div className={styles.brandHeader}>
               <div className={styles.logoWrapper}>
                 <Image
-                  src="/images/logo.png"
+                  src="/images/logo-white.png"
                   alt="Oslo Vikings Logo"
                   width={48}
                   height={48}
@@ -23,8 +23,7 @@ export default function Footer() {
               </div>
               <div className={styles.logoText}>
                 <div>
-                  <span className={styles.logoPrimary}>Oslo</span>
-                  <span className={styles.logoAccent}>Vikings</span>
+                  <span className={styles.logoPrimary}>Oslo Vikings</span>
                 </div>
                 <div className={styles.socialLinks}>
                   <Link
@@ -34,7 +33,9 @@ export default function Footer() {
                     aria-label="Oslo Vikings on TikTok"
                     className={styles.socialLink}
                   >
-                    <TikTokIcon className={styles.socialLinkIcon} />
+                    <TikTokIcon
+                      className={`${styles.socialLinkIcon} ${styles.socialLinkIconTikTok}`}
+                    />
                   </Link>
                   <Link
                     href="https://www.facebook.com/OsloVikings"
@@ -64,18 +65,22 @@ export default function Footer() {
             <h3 className={styles.sectionTitle}>Quick Links</h3>
             <ul className={styles.linksList}>
               <li>
-                <Link href="/team" className={styles.link}>
-                  Team Roster
-                </Link>
-              </li>
-              <li>
-                <Link href="/schedule" className={styles.link}>
-                  Game Schedule
-                </Link>
-              </li>
-              <li>
                 <Link href="/news" className={styles.link}>
                   Latest News
+                </Link>
+              </li>
+              <li>
+                <Link href="/team" className={styles.link}>
+                  Teams Info Hub
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://amerikanskeidretter.no/amerikansk-fotball/"
+                  className={styles.link}
+                  target="_blank"
+                >
+                  Amerikansk Fotball Norge
                 </Link>
               </li>
               <li>

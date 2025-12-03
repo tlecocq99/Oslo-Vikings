@@ -1,12 +1,12 @@
 .footer {
-  background-color: var(--color-viking-charcoal);
-  color: hsl(var(--primary-foreground));
+  background-color: var(--color-viking-red);
+  color: white;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 1.5rem 1rem;
 }
 
 @media (min-width: 640px) {
@@ -65,11 +65,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
+  background: transparent;
 }
 
 .logoImage {
@@ -105,7 +101,7 @@
 }
 
 .socialLink {
-  color: color-mix(in srgb, white 70%, var(--color-viking-charcoal) 30%);
+  color: rgba(255, 255, 255, 0.82);
   transition: color 0.2s ease;
 }
 
@@ -117,6 +113,17 @@
 .socialLinkIcon {
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.socialLinkIconTikTok {
+  filter: brightness(0) saturate(100%) invert(100%);
+  transition: filter 0.2s ease;
+}
+
+.socialLink:hover .socialLinkIconTikTok,
+.socialLink:focus-visible .socialLinkIconTikTok {
+  filter: brightness(0) saturate(100%) invert(23%) sepia(94%) saturate(5481%)
+    hue-rotate(-4deg) brightness(93%) contrast(105%);
 }
 
 .sectionTitle {
@@ -132,7 +139,7 @@
 }
 
 .link {
-  color: color-mix(in srgb, white 70%, var(--color-viking-charcoal) 30%);
+  color: rgba(255, 255, 255, 0.82);
   transition: color 0.2s ease;
 }
 
@@ -160,18 +167,17 @@
 }
 
 .contactText {
-  color: color-mix(in srgb, white 70%, var(--color-viking-charcoal) 30%);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 0.875rem;
 }
 
 .divider {
-  border-top: 1px solid
-    color-mix(in srgb, var(--color-viking-charcoal) 85%, white 15%);
-  margin-top: 2rem;
-  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin-top: 1.5rem;
+  padding-top: 0.75rem;
   text-align: center;
 }
 
 .dividerText {
-  color: color-mix(in srgb, white 60%, var(--color-viking-charcoal) 40%);
+  color: rgba(255, 255, 255, 0.75);
 }
