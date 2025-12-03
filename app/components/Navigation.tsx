@@ -17,6 +17,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { TikTokIcon } from "./TikTokIcon";
 import styles from "./Navigation.module.css";
 import TikTokHover from "./TikTokHoverLink";
+import InstagramHover from "./InstagramHoverLink";
 
 type NavItem = {
   name: string;
@@ -151,6 +152,26 @@ export default function Navigation() {
               <Icon className={iconClass} />
             </span>
           </TikTokHover>
+        );
+      }
+
+      if (variant === "desktop" && name === "Instagram") {
+        return (
+          <InstagramHover
+            key={key}
+            profileUrl={href}
+            embedPermalink="https://www.instagram.com/oslovikings/?utm_source=ig_embed&utm_campaign=loading"
+            placement="left"
+            width={360}
+            className={linkClass}
+            disabled={!supportsHoverPreview}
+            linkTarget="_blank"
+            linkRel="noreferrer"
+          >
+            <span aria-label={ariaLabel} role="img">
+              <Icon className={iconClass} />
+            </span>
+          </InstagramHover>
         );
       }
 
