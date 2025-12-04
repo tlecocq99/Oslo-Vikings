@@ -111,7 +111,7 @@
 
 .socialLink:hover,
 .socialLink:focus-visible {
-  color: var(--color-viking-red);
+  color: var(--color-viking-charcoal);
 }
 
 .socialLinkIcon {
@@ -126,8 +126,8 @@
 
 .socialLink:hover .socialLinkIconTikTok,
 .socialLink:focus-visible .socialLinkIconTikTok {
-  filter: brightness(0) saturate(100%) invert(23%) sepia(94%) saturate(5481%)
-    hue-rotate(-4deg) brightness(93%) contrast(105%);
+  filter: brightness(0) saturate(100%) invert(12%) sepia(5%) saturate(487%)
+    hue-rotate(170deg) brightness(92%) contrast(86%);
 }
 
 .sectionTitle {
@@ -149,7 +149,7 @@
 
 .link:hover,
 .link:focus-visible {
-  color: var(--color-viking-red);
+  color: var(--color-viking-charcoal);
 }
 
 .contactList {
