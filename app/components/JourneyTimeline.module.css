@@ -95,6 +95,12 @@
     padding 0.5s ease;
 }
 
+.cardMobile {
+  min-height: auto;
+  max-height: none;
+  padding: 1.25rem 1.5rem;
+}
+
 :global(.dark) .card {
   background-color: rgba(var(--color-viking-charcoal-rgb), 0.7);
   border-color: color-mix(
@@ -174,4 +180,57 @@
 .connectorBottom {
   bottom: 1rem;
   transform: translate(-50%, 50%);
+}
+
+.mobileContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobileViewport {
+  overflow: hidden;
+  touch-action: pan-y;
+  border-radius: 1rem;
+}
+
+.mobileSlides {
+  display: flex;
+}
+
+.mobileSlide {
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  padding: 0.5rem 1.25rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 641px) {
+  .mobileSlide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.mobileDots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.mobileDot {
+  height: 0.6rem;
+  width: 0.6rem;
+  border-radius: 9999px;
+  background: rgba(var(--color-viking-charcoal-rgb), 0.3);
+  transition: background 0.3s ease;
+}
+
+:global(.dark) .mobileDot {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.mobileDotActive {
+  background: var(--color-viking-red);
 }
