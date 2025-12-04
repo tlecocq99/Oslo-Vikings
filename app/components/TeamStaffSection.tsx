@@ -49,22 +49,22 @@ function StaffCard({ member }: { member: StaffMember }) {
 
   return (
     <article className="rounded-2xl border border-gray-200/60 dark:border-gray-800/80 bg-white/95 dark:bg-viking-charcoal/60 shadow-sm hover:shadow-md transition-shadow duration-200">
-      <div className="p-6 flex flex-col sm:flex-row sm:items-center gap-4">
-        <div className="shrink-0">
+      <div className="flex items-start gap-3 p-4 sm:items-center sm:gap-5 sm:p-6">
+        <div className="shrink-0 pt-1 sm:pt-0">
           <Avatar
             image={member.image}
             alt={member.imageAlt}
             fallback={initials}
           />
         </div>
-        <div className="flex-1 text-center sm:text-left">
-          <h3 className="text-lg font-semibold text-viking-charcoal dark:text-white">
+        <div className="flex-1 text-left">
+          <h3 className="text-lg font-semibold text-viking-charcoal dark:text-white leading-snug">
             {member.name}
           </h3>
-          <p className="text-xs uppercase tracking-wide text-viking-red/80 dark:text-viking-red/80 mt-2">
+          <p className="mt-1 text-[0.7rem] uppercase tracking-wide text-viking-red/80 dark:text-viking-red/80">
             {member.role}
           </p>
-          <div className="mt-3 space-y-1.5 text-sm text-gray-600 dark:text-gray-300">
+          <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-300">
             {member.email && (
               <p>
                 <a
