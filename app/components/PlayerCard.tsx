@@ -49,7 +49,6 @@ export default function PlayerCard(props: PlayerCardProps) {
             className="w-16 h-16 rounded-full object-cover"
             loading="lazy"
             sizes="64px"
-            unoptimized
           />
           {nationality && (
             <div className="absolute -bottom-1 -right-1 bg-white dark:bg-viking-surface-alt rounded-sm p-[2px] shadow ring-1 ring-black/5 dark:ring-white/10">
@@ -102,7 +101,6 @@ export default function PlayerCard(props: PlayerCardProps) {
               className="w-full h-full object-cover"
               loading="lazy"
               sizes="112px"
-              unoptimized
             />
           </div>
           {nationality && (
@@ -132,18 +130,20 @@ export default function PlayerCard(props: PlayerCardProps) {
         }`}
       >
         <div className="relative">
-          <div
-            className="h-48 bg-cover bg-no-repeat flex items-center justify-center relative"
-            style={{
-              backgroundImage: `url(${image || fallbackImage})`,
-              backgroundPosition: "center 42%",
-            }}
-            aria-label={name || imageAlt}
-          >
-            <div className="absolute inset-0" />
+          <div className="relative h-48 w-full overflow-hidden">
+            <Image
+              src={imageSrc}
+              alt={imageAltText}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1023px) 60vw, 320px"
+              loading="lazy"
+            />
             {!image && (
-              <div className="relative z-10 text-white text-6xl font-bold drop-shadow-lg md:translate-y-14">
-                {displayNumber}
+              <div className="absolute inset-0 flex items-center justify-center bg-black/45">
+                <span className="text-white text-6xl font-bold drop-shadow-lg">
+                  {displayNumber}
+                </span>
               </div>
             )}
           </div>

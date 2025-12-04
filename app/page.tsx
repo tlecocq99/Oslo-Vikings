@@ -1,4 +1,5 @@
 import type { UpcomingEvent } from "@/app/types/event";
+import dynamic from "next/dynamic";
 import Navigation from "./components/Navigation";
 import SplashScreen from "./components/SplashScreen";
 import UpcomingEventsBar from "./components/UpcomingEventsBar";
@@ -6,7 +7,6 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import NewsCard from "./components/NewsCard";
 import GameCard, { type GameCardProps } from "./components/GameCard";
-import PartnersCarousel from "./components/PartnersCarousel";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,6 +17,13 @@ import { fetchNewsArticles } from "./services/fetchNews";
 import type { Partner } from "./types/partner";
 import type { NewsCardProps } from "./components/NewsCardContent";
 import type { NewsArticle } from "./types/news";
+
+const PartnersCarousel = dynamic(
+  () => import("./components/PartnersCarousel"),
+  {
+    loading: () => <PartnersCarouselSkeleton />,
+  }
+);
 
 const teko = Teko({ subsets: ["latin"] });
 
@@ -465,5 +472,18 @@ export default async function Home() {
 
       <Footer />
     </>
+  );
+}
+
+function PartnersCarouselSkeleton() {
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div
+          key={`partner-skeleton-${index}`}
+          className="h-40 rounded-2xl border border-gray-200/60 bg-white/70 shadow-sm dark:border-white/10 dark:bg-viking-surface animate-pulse"
+        />
+      ))}
+    </div>
   );
 }

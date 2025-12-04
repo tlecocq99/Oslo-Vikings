@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { Player } from "@/app/types/player";
 import {
   Dialog,
@@ -13,7 +14,7 @@ import { FlagIcon } from "./FlagIcon";
 
 interface PlayerModalProps {
   player: Player;
-  trigger: React.ReactNode; // usually the card body
+  trigger: React.ReactNode;
 }
 
 export function PlayerModal({ player, trigger }: PlayerModalProps) {
@@ -28,6 +29,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
     height,
     weight,
   } = player;
+
   const rawNumberValue =
     typeof number === "number" || typeof number === "string"
       ? String(number).trim().replace(/^#/, "")
@@ -35,7 +37,6 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
   const displayNumber = rawNumberValue ? `#${rawNumberValue}` : undefined;
   const displayNumberFallback = displayNumber ?? "#00";
 
-  // Append units if raw values are plain numbers (no existing letters or symbols)
   const normalizedHeight = height
     ? /[a-zA-Z]/.test(height) || /cm|ft|in|'|”|″|’/.test(height)
       ? height
@@ -47,7 +48,6 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
       : `${weight} kg`
     : undefined;
 
-  // Resolve a human-friendly country name from a 2-letter code or pass through a full name
   function countryDisplay(n: string): string {
     const raw = n.trim();
     const upper = raw.toUpperCase();
@@ -65,39 +65,49 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
       ES: "Spain",
       IT: "Italy",
     };
+
     if (SPECIAL[upper]) return SPECIAL[upper];
+
     if (
       /^[A-Z]{2}$/.test(upper) &&
       typeof (Intl as any).DisplayNames !== "undefined"
     ) {
       try {
-        const dn = new (Intl as any).DisplayNames(["en"], { type: "region" });
-        const name = dn.of(upper);
-        if (name) return name as string;
-      } catch {}
+        const displayNames = new (Intl as any).DisplayNames(["en"], {
+          type: "region",
+        });
+        const resolved = displayNames.of(upper);
+        if (resolved) {
+          return resolved as string;
+        }
+      } catch {
+        // ignore – fall back to raw string
+      }
     }
+
     return raw;
   }
+
   const displayNationality = nationality
     ? countryDisplay(nationality)
     : undefined;
+  const imageSrc = image || "/images/players/playerFiller.png";
 
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-w-3xl w-[95vw] sm:w-full p-0 overflow-hidden">
         <div className="flex flex-col sm:flex-row">
-          {/* Left / Top visual section */}
           <div className="sm:w-1/2 relative bg-gray-900 text-white flex items-stretch justify-center min-h-[200px] sm:min-h-[360px]">
-            {/* Background image */}
-            <div
-              className="absolute inset-0 bg-cover bg-center opacity-40 pointer-events-none"
-              style={{
-                backgroundImage: `url(${
-                  image || "/images/players/playerFiller.png"
-                })`,
-              }}
+            <Image
+              src={imageSrc}
+              alt={imageAlt || name || "Player image"}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 480px"
+              priority={false}
             />
+            <div className="absolute inset-0 bg-black/45" />
             <div className="relative z-10 flex h-full w-full flex-col items-center justify-end px-6 pt-8 pb-4 sm:pt-10 sm:pb-5 text-center space-y-2">
               <div className="text-5xl font-extrabold drop-shadow-lg">
                 {displayNumberFallback}
@@ -116,7 +126,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
               </p>
             </div>
           </div>
-          {/* Right / Bottom details */}
+
           <div className="sm:w-1/2 p-6 space-y-4">
             <DialogHeader>
               <DialogTitle className="text-xl font-bold">{name}</DialogTitle>
@@ -174,7 +184,6 @@ function InfoBlock({ label, value }: { label: string; value: string }) {
   );
 }
 
-// Utility HOC to wrap an existing PlayerCard trigger element
 export function withPlayerModal<T extends Player>(
   player: T,
   card: React.ReactElement
