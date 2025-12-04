@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import styles from "./JourneyTimeline.module.css";
 
 type Milestone = {
@@ -135,6 +136,7 @@ export function JourneyTimeline({ milestones }: JourneyTimelineProps) {
   ) => {
     const { offset = false, connector = "bottom" } = options;
     const isActive = activeIndex === globalIndex;
+    const scaleValue = isActive ? 1.15 : 0.92;
     const transformForCard =
       isActive && activeTransform?.index === globalIndex
         ? activeTransform
@@ -154,8 +156,8 @@ export function JourneyTimeline({ milestones }: JourneyTimelineProps) {
         )}
         style={{
           transform: transformForCard
-            ? `translate3d(${transformForCard.translateX}px, ${transformForCard.translateY}px, 0) scale(1.15)`
-            : "translate3d(0,0,0) scale(1)",
+            ? `translate3d(${transformForCard.translateX}px, ${transformForCard.translateY}px, 0) scale(${scaleValue})`
+            : `translate3d(0,0,0) scale(${scaleValue})`,
           transitionDuration: `${TRANSITION_DURATION}ms`,
         }}
       >
@@ -182,14 +184,20 @@ export function JourneyTimeline({ milestones }: JourneyTimelineProps) {
 
   return (
     <div ref={containerRef} className={styles.wrapper}>
-      <div className={clsx(styles.row, styles.rowTop)}>
+      <div
+        className={clsx(styles.row, styles.rowTop)}
+        style={{ "--cards-per-row": String(firstRow.length) } as CSSProperties}
+      >
         <div className={clsx(styles.timelineLine, styles.timelineLineBottom)} />
         {firstRow.map((milestone, index) =>
           renderMilestoneCard(milestone, index, { connector: "bottom" })
         )}
       </div>
 
-      <div className={clsx(styles.row, styles.rowBottom)}>
+      <div
+        className={clsx(styles.row, styles.rowBottom)}
+        style={{ "--cards-per-row": String(secondRow.length) } as CSSProperties}
+      >
         <div className={clsx(styles.timelineLine, styles.timelineLineTop)} />
         {secondRow.map((milestone, index) =>
           renderMilestoneCard(milestone, index + firstRow.length, {

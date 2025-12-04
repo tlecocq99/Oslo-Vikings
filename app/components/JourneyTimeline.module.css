@@ -16,12 +16,14 @@
   display: flex;
   width: 100%;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
+  --cards-per-row: 4;
+  padding-inline: clamp(1rem, 6vw, 4rem);
 }
 
 .rowTop {
   align-items: flex-end;
-  padding-bottom: 3rem;
+  padding-bottom: 2rem;
 }
 
 .rowBottom {
@@ -52,8 +54,12 @@
 
 .cardWrapper {
   position: relative;
-  flex: none;
-  flex-basis: 240px;
+  flex: 0 0
+    clamp(
+      160px,
+      calc((100% - (var(--cards-per-row) - 1) * 1.5rem) / var(--cards-per-row)),
+      220px
+    );
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
   z-index: 10;
 }
@@ -63,7 +69,7 @@
 }
 
 .cardWrapperDimmed {
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
 .cardOffset {
@@ -75,17 +81,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  min-height: 240px;
+  justify-content: flex-start;
+  min-height: 220px;
+  max-height: 300px;
   width: 100%;
-  max-width: 240px;
   border-radius: 0.75rem;
   border: 1px solid hsl(var(--border));
   background-color: hsl(var(--card));
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
   box-shadow: 0 15px 30px -18px rgba(var(--color-viking-charcoal-rgb), 0.4);
-  transition: border-color 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease,
+    padding 0.5s ease;
 }
 
 :global(.dark) .card {
@@ -105,8 +112,8 @@
 
 .badge {
   margin-bottom: 0.75rem;
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 9999px;
   display: flex;
   align-items: center;
@@ -124,7 +131,7 @@
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--color-viking-charcoal);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   font-family: var(--font-teko), sans-serif;
 }
 
@@ -134,7 +141,7 @@
 
 .cardDescription {
   font-size: 0.9rem;
-  line-height: 1.5;
+  line-height: 1.2;
   color: color-mix(in srgb, var(--color-viking-charcoal) 65%, white 35%);
 }
 

@@ -26,6 +26,11 @@ const milestones = [
     description: "First Norwegian team to compete internationally",
   },
   {
+    year: "1997",
+    event: "Expansion",
+    description: "Club expands; win Spring Bowl II; debut in Eurocup.",
+  },
+  {
     year: "1998",
     event: "Eurocup participant",
     description: "Vikings take on Europe's best teams",
@@ -33,7 +38,48 @@ const milestones = [
   {
     year: "1999",
     event: "Dynasty Begins",
-    description: "6th ranked club in Europe",
+    description: "Undefeated champions; Eurocup finalists; ranked #6 in Europe",
+  },
+  {
+    year: "2000",
+    event: "Three-Peat",
+    description: "Three-peat title; first Eurobowl appearance.",
+  },
+  {
+    year: "2001",
+    event: "Finals Loss",
+    description:
+      "Lose finals to Eidsvoll; Viqueens win first cheer championship.",
+  },
+  {
+    year: "2002",
+    event: "7th Title",
+    description: "Vikings win 7th title, beating Trolls 24–21.",
+  },
+  {
+    year: "2003",
+    event: "Shift",
+    description: "Seniors miss finals; juniors win Norwegian Championship.",
+  },
+  {
+    year: "2004",
+    event: "Missed Finals",
+    description: "Miss finals again; Viqueens win Moskva Cup.",
+  },
+  {
+    year: "2005",
+    event: "Setback",
+    description: "Third straight year missing the championship.",
+  },
+  {
+    year: "2006",
+    event: "Return",
+    description: "Val Gunn returns; Vikings reach finals; join 2007 EFAF Cup.",
+  },
+  {
+    year: "2023",
+    event: "Consistency Established",
+    description: "15th NM championship title won",
   },
   {
     year: "2023",
