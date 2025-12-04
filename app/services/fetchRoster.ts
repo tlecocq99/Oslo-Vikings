@@ -16,11 +16,9 @@ function getCell(row: any[], index: number): string {
 function isValidPlayerRow(row: any[]): boolean {
   if (!row || row.length < 3) return false;
 
-  const [rawName, rawPosition, rawNumber] = row;
+  const [rawName, _rawPosition, rawNumber] = row;
 
   const hasName = typeof rawName === "string" && rawName.trim().length > 0;
-  const hasPosition =
-    typeof rawPosition === "string" && rawPosition.trim().length > 0;
 
   let hasValidNumber = false;
   if (typeof rawNumber === "number") {
@@ -33,7 +31,7 @@ function isValidPlayerRow(row: any[]): boolean {
     }
   }
 
-  return hasName && hasPosition && hasValidNumber;
+  return hasName && hasValidNumber;
 }
 
 function mapPlayerRow(row: any[], index: number, namespace: string): Player {
