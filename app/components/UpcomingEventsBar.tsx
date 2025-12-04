@@ -170,7 +170,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
         </button>
         <div
           ref={scrollRef}
-          className="flex-1 overflow-x-auto scrollbar-hide flex gap-4 h-48"
+          className="flex-1 overflow-x-auto scrollbar-hide flex gap-4 h-38"
           style={{ scrollSnapType: "x mandatory" }}
         >
           {filteredEvents.length === 0 ? (
