@@ -142,12 +142,12 @@ export default function PlayerCard(props: PlayerCardProps) {
           >
             <div className="absolute inset-0" />
             {!image && (
-              <div className="relative z-10 text-white text-6xl font-bold drop-shadow-lg">
+              <div className="relative z-10 text-white text-6xl font-bold drop-shadow-lg md:translate-y-14">
                 {displayNumber}
               </div>
             )}
           </div>
-          <div className="absolute top-4 right-4 bg-viking-red text-white px-2 py-1 rounded font-bold shadow-lg z-20">
+          <div className="absolute top-8 right-4 bg-viking-red text-white px-2 py-1 rounded font-bold shadow-lg z-20">
             {displayNumber}
           </div>
         </div>
