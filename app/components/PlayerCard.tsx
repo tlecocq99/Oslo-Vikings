@@ -147,7 +147,7 @@ export default function PlayerCard(props: PlayerCardProps) {
               </div>
             )}
           </div>
-          <div className="absolute top-4 right-4 bg-viking-red-dark text-white px-2 py-1 rounded font-bold shadow-lg z-20">
+          <div className="absolute top-4 right-4 bg-viking-red text-white px-2 py-1 rounded font-bold shadow-lg z-20">
             {displayNumber}
           </div>
         </div>
