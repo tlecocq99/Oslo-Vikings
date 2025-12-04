@@ -113,6 +113,17 @@ export default function Footer() {
           <p className={styles.dividerText}>
             © {new Date().getFullYear()} Oslo Vikings. All rights reserved.
           </p>
+          <p className={styles.watermark}>
+            Powered by{" "}
+            <Link
+              href="https://thomaslecocq.com"
+              target="_blank"
+              rel="noreferrer"
+              className={styles.watermarkLink}
+            >
+              Thomas Lecocq
+            </Link>
+          </p>
         </div>
       </div>
     </footer>

@@ -185,3 +185,23 @@
 .dividerText {
   color: rgba(255, 255, 255, 0.75);
 }
+
+.watermark {
+  margin-top: 0.35rem;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.watermark a,
+.watermarkLink {
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.watermark a:hover,
+.watermark a:focus-visible,
+.watermarkLink:hover,
+.watermarkLink:focus-visible {
+  color: var(--color-viking-charcoal);
+}

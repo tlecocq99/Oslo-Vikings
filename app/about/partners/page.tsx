@@ -157,7 +157,7 @@ export default function PartnersPage() {
         </section>
 
         <section className="bg-gray-50 dark:bg-viking-charcoal/70">
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
             <h2 className="text-center text-3xl font-bold text-viking-charcoal dark:text-gray-100">
               Partners in the Huddle
             </h2>
@@ -204,7 +204,7 @@ export default function PartnersPage() {
         </section>
 
         <section className="bg-white dark:bg-viking-charcoal/90">
-          <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8 text-center">
+          <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-100">
               Become a Partner
             </h2>
