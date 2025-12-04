@@ -53,7 +53,8 @@ export function TeamRecruitsSection({
                         {recruit.name}
                       </h3>
                       <span
-                        className="mt-1 block h-0.5 w-20 bg-viking-red"
+                        className="mt-1 block h-0.5 bg-viking-red flex-none"
+                        style={{ width: "15rem" }}
                         aria-hidden="true"
                       />
                     </div>

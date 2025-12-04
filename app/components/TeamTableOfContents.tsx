@@ -117,7 +117,7 @@ export default function TeamTableOfContents({
       <nav
         aria-label="Page contents"
         className={clsx(
-          "hidden lg:block fixed left-0 top-1/2 z-30 -translate-y-1/2 transition-opacity duration-300",
+          "hidden lg:block fixed left-4 top-1/2 z-30 -translate-y-1/2 transition-opacity duration-300",
           isPinned ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
         aria-hidden={!isPinned}
