@@ -167,7 +167,7 @@ export default function HistoryPage() {
         </section>
 
         <section className="bg-white dark:bg-viking-charcoal/90">
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-100 mb-8 text-center">
               Key Milestones
             </h2>
@@ -175,7 +175,7 @@ export default function HistoryPage() {
           </div>
         </section>
         <section className="bg-white dark:bg-viking-charcoal/90">
-          <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8 text-center">
+          <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-100">
               Share Your Viking Story
             </h2>
@@ -194,7 +194,7 @@ export default function HistoryPage() {
           </div>
         </section>
         <section className="bg-gray-50 dark:bg-viking-charcoal/70">
-          <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="mb-12 text-center">
               <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-100">
                 Legacy Highlights
@@ -226,7 +226,7 @@ export default function HistoryPage() {
         </section>
 
         <section className="bg-white dark:bg-viking-charcoal/85">
-          <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <p className="text-xs uppercase tracking-[0.4em] text-viking-red">
                 Honors

@@ -15,9 +15,10 @@ type Milestone = {
   description: string;
 };
 
-const DISPLAY_DURATION = 3000;
+const DISPLAY_DURATION = 2000;
 const TRANSITION_DURATION = 800;
 const CYCLE_DURATION = DISPLAY_DURATION + TRANSITION_DURATION;
+const COMPACT_VIEW_MULTIPLIER = 2;
 
 interface JourneyTimelineProps {
   milestones: Milestone[];
@@ -73,12 +74,18 @@ function MilestoneCardContent({
 }
 
 export function JourneyTimeline({ milestones }: JourneyTimelineProps) {
-  const isCompactView = useMediaQuery("(max-width: 1624px)");
+  const isCompactView = useMediaQuery("(max-width: 1474px)");
   const isMobileView = useMediaQuery("(max-width: 640px)");
-  const chunkSize = isMobileView ? 1 : 2;
+  const chunkSize = isMobileView ? 2 : 4;
 
   if (isCompactView) {
-    return <TimelineCarousel milestones={milestones} chunkSize={chunkSize} />;
+    return (
+      <TimelineCarousel
+        milestones={milestones}
+        chunkSize={chunkSize}
+        cycleDuration={CYCLE_DURATION * COMPACT_VIEW_MULTIPLIER}
+      />
+    );
   }
 
   return <DesktopTimeline milestones={milestones} />;
@@ -276,9 +283,14 @@ function DesktopTimeline({ milestones }: JourneyTimelineProps) {
 interface TimelineCarouselProps {
   milestones: Milestone[];
   chunkSize: number;
+  cycleDuration?: number;
 }
 
-function TimelineCarousel({ milestones, chunkSize }: TimelineCarouselProps) {
+function TimelineCarousel({
+  milestones,
+  chunkSize,
+  cycleDuration = CYCLE_DURATION,
+}: TimelineCarouselProps) {
   const slides = useMemo(() => {
     const size = Math.max(1, chunkSize);
     const chunks: Milestone[][] = [];
@@ -326,10 +338,10 @@ function TimelineCarousel({ milestones, chunkSize }: TimelineCarouselProps) {
     if (!hasMultipleSlides || isDragging) return;
     const timer = window.setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % slideCount);
-    }, 3500);
+    }, cycleDuration);
 
     return () => window.clearTimeout(timer);
-  }, [currentSlide, hasMultipleSlides, isDragging, slideCount]);
+  }, [currentSlide, hasMultipleSlides, isDragging, slideCount, cycleDuration]);
 
   useEffect(() => {
     if (currentSlide >= slideCount) {
@@ -535,7 +547,10 @@ function TimelineCarousel({ milestones, chunkSize }: TimelineCarouselProps) {
     <div className={styles.mobileContainer}>
       <div
         ref={viewportRef}
-        className={styles.mobileViewport}
+        className={clsx(
+          styles.mobileViewport,
+          isDragging && styles.mobileViewportDragging
+        )}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -554,7 +569,13 @@ function TimelineCarousel({ milestones, chunkSize }: TimelineCarouselProps) {
           }}
         >
           {slides.map((slide, index) => (
-            <div key={`timeline-slide-${index}`} className={styles.mobileSlide}>
+            <div
+              key={`timeline-slide-${index}`}
+              className={clsx(
+                styles.mobileSlide,
+                slide.length === 1 && styles.mobileSlideSingle
+              )}
+            >
               {slide.map((milestone, cardIndex) => (
                 <MilestoneCardContent
                   key={`${milestone.year}-${milestone.event}-${cardIndex}`}
