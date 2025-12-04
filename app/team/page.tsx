@@ -14,7 +14,6 @@ export default function TeamPage() {
       <main className="min-h-screen">
         <Hero />
         <TeamsOverview />
-        <CoachingStaff />
       </main>
       <Footer />
     </>
@@ -93,46 +92,6 @@ function TeamsOverview() {
               </div>
             </Link>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CoachingStaff() {
-  return (
-    <section className="py-16 bg-gray-50 dark:bg-background transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-viking-charcoal mb-4 dark:text-gray-200">
-            Coaching Staff
-          </h2>
-          <p className="text-gray-600 dark:text-gray-200">
-            Experienced leadership guiding our team to victory
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <StaffCard
-            code="HC"
-            name="Stein Eriksen"
-            title="Head Coach"
-            desc="15 years of coaching experience with a championship-winning background"
-            accent="solid"
-          />
-          <StaffCard
-            code="OC"
-            name="Thor Hansen"
-            title="Offensive Coordinator"
-            desc="Innovative strategist specializing in high-powered passing attacks"
-            accent="subtle"
-          />
-          <StaffCard
-            code="DC"
-            name="Ragnar Olsen"
-            title="Defensive Coordinator"
-            desc="Defensive mastermind known for disciplined, adaptive schemes"
-            accent="solid"
-          />
         </div>
       </div>
     </section>
