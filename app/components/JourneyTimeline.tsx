@@ -2,7 +2,11 @@
 
 import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
+import type {
+  CSSProperties,
+  PointerEvent as ReactPointerEvent,
+  TouchEvent as ReactTouchEvent,
+} from "react";
 import styles from "./JourneyTimeline.module.css";
 
 type Milestone = {
@@ -294,6 +298,13 @@ function TimelineCarousel({ milestones, chunkSize }: TimelineCarouselProps) {
   const startXRef = useRef(0);
   const pointerIdRef = useRef<number | null>(null);
   const [viewportWidth, setViewportWidth] = useState(1);
+  const touchStateRef = useRef({
+    startX: 0,
+    startY: 0,
+    viewportWidth: 1,
+    isTracking: false,
+    isSwiping: false,
+  });
 
   const slideCount = slides.length;
   const hasMultipleSlides = slideCount > 1;
@@ -326,14 +337,33 @@ function TimelineCarousel({ milestones, chunkSize }: TimelineCarouselProps) {
     }
   }, [currentSlide, slideCount]);
 
-  const finishDrag = () => {
-    if (!isDragging) return;
+  const resetTouchState = () => {
+    touchStateRef.current = {
+      startX: 0,
+      startY: 0,
+      viewportWidth: 1,
+      isTracking: false,
+      isSwiping: false,
+    };
+  };
 
-    const threshold = viewportWidth * 0.15;
+  const resolveDrag = (finalOffset?: number) => {
+    if (!isDragging) {
+      resetTouchState();
+      return;
+    }
+
+    const touchState = touchStateRef.current;
+    const activeViewportWidth = touchState.isSwiping
+      ? touchState.viewportWidth || viewportWidth
+      : viewportWidth;
+    const threshold = (activeViewportWidth || 1) * 0.15;
+
+    const effectiveOffset = finalOffset ?? dragOffset;
     let nextSlide = currentSlide;
-    if (dragOffset > threshold) {
+    if (effectiveOffset > threshold) {
       nextSlide = (currentSlide - 1 + slideCount) % slideCount;
-    } else if (dragOffset < -threshold) {
+    } else if (effectiveOffset < -threshold) {
       nextSlide = (currentSlide + 1) % slideCount;
     }
 
@@ -350,9 +380,14 @@ function TimelineCarousel({ milestones, chunkSize }: TimelineCarouselProps) {
       viewport.releasePointerCapture(pointerIdRef.current);
     }
     pointerIdRef.current = null;
+    resetTouchState();
   };
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+
     if (event.pointerType === "mouse" && event.button !== 0) {
       return;
     }
@@ -372,20 +407,120 @@ function TimelineCarousel({ milestones, chunkSize }: TimelineCarouselProps) {
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+
     if (!isDragging) return;
     setDragOffset(event.clientX - startXRef.current);
   };
 
-  const handlePointerUp = () => {
-    finishDrag();
+  const handlePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+    resolveDrag();
   };
 
-  const handlePointerLeave = () => {
-    finishDrag();
+  const handlePointerLeave = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+    resolveDrag();
   };
 
-  const handlePointerCancel = () => {
-    finishDrag();
+  const handlePointerCancel = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+    resolveDrag();
+  };
+
+  const handleTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
+    if (slideCount <= 1) {
+      return;
+    }
+
+    const firstTouch = event.touches[0];
+    if (!firstTouch) return;
+
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    const width =
+      viewport.parentElement?.getBoundingClientRect().width ??
+      viewport.getBoundingClientRect().width ??
+      1;
+
+    touchStateRef.current = {
+      startX: firstTouch.clientX,
+      startY: firstTouch.clientY,
+      viewportWidth: width,
+      isTracking: true,
+      isSwiping: false,
+    };
+    setViewportWidth(width);
+    setDragOffset(0);
+    setIsDragging(false);
+  };
+
+  const handleTouchMove = (event: ReactTouchEvent<HTMLDivElement>) => {
+    const touchState = touchStateRef.current;
+    if (!touchState.isTracking) {
+      return;
+    }
+
+    const touch = event.touches[0];
+    if (!touch) return;
+
+    const deltaX = touch.clientX - touchState.startX;
+    const deltaY = Math.abs(touch.clientY - touchState.startY);
+    const absDeltaX = Math.abs(deltaX);
+
+    if (!touchState.isSwiping) {
+      if (absDeltaX > 6 && absDeltaX > deltaY) {
+        touchState.isSwiping = true;
+        touchState.viewportWidth =
+          viewportRef.current?.getBoundingClientRect().width ??
+          touchState.viewportWidth ??
+          1;
+        setViewportWidth(touchState.viewportWidth);
+        setIsDragging(true);
+      } else if (deltaY > absDeltaX) {
+        touchState.isTracking = false;
+        setIsDragging(false);
+        setDragOffset(0);
+        resetTouchState();
+        return;
+      } else {
+        return;
+      }
+    }
+
+    event.preventDefault();
+    setDragOffset(deltaX);
+  };
+
+  const handleTouchEnd = () => {
+    const touchState = touchStateRef.current;
+    if (touchState.isSwiping) {
+      resolveDrag();
+    } else {
+      setIsDragging(false);
+      setDragOffset(0);
+      resetTouchState();
+    }
+  };
+
+  const handleTouchCancel = () => {
+    const touchState = touchStateRef.current;
+    if (touchState.isSwiping) {
+      resolveDrag();
+    } else {
+      setIsDragging(false);
+      setDragOffset(0);
+      resetTouchState();
+    }
   };
 
   if (slideCount === 0) {
@@ -406,6 +541,10 @@ function TimelineCarousel({ milestones, chunkSize }: TimelineCarouselProps) {
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerLeave}
         onPointerCancel={handlePointerCancel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchCancel}
       >
         <div
           className={styles.mobileSlides}
