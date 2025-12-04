@@ -140,7 +140,7 @@ export default function PlayerCard(props: PlayerCardProps) {
             }}
             aria-label={name || imageAlt}
           >
-            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0" />
             {!image && (
               <div className="relative z-10 text-white text-6xl font-bold drop-shadow-lg">
                 {displayNumber}
