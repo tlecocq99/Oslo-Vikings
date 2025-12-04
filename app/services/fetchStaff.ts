@@ -11,7 +11,16 @@ const HEADER_KEYS = {
   role: ["role", "position", "title", "job"],
   email: ["email", "mail", "e-mail"],
   phone: ["phone", "mobile", "cell", "contact", "tel", "telephone"],
-  image: ["image", "photo", "headshot", "picture", "avatar"],
+  image: [
+    "image",
+    "photo",
+    "headshot",
+    "picture",
+    "avatar",
+    "ImageUrl",
+    "photo url",
+    "image url",
+  ],
   imageAlt: ["imagealt", "imgalt", "alt", "image description"],
   teams: ["teams", "team", "program", "squad", "unit", "group"],
 } as const;
