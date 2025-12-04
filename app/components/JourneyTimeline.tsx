@@ -73,7 +73,7 @@ function MilestoneCardContent({
 }
 
 export function JourneyTimeline({ milestones }: JourneyTimelineProps) {
-  const isCompactView = useMediaQuery("(max-width: 1249px)");
+  const isCompactView = useMediaQuery("(max-width: 1624px)");
   const isMobileView = useMediaQuery("(max-width: 640px)");
   const chunkSize = isMobileView ? 1 : 2;
 

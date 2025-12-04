@@ -82,11 +82,6 @@ const milestones = [
     description: "15th NM championship title won",
   },
   {
-    year: "2023",
-    event: "Consistency Established",
-    description: "15th NM championship title won",
-  },
-  {
     year: "2024",
     event: "Crossing Borders",
     description: "Elite team joins Swedish Superseries for a two season quest",
