@@ -2,79 +2,9 @@ import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { Award, TrendingUp, Users, HeartHandshake } from "lucide-react";
-
-const partnerTiers = [
-  {
-    name: "Premier Partners",
-    blurb:
-      "Strategic collaborations that power club-wide initiatives and long-term player development.",
-    partners: [
-      {
-        name: "Nordic Energy",
-        description:
-          "Sustainable power solutions keeping the lights on across our facilities.",
-        url: "https://example.com/nordic-energy",
-      },
-      {
-        name: "Oslo Sports Council",
-        description:
-          "Key municipal supporter investing in youth sport participation.",
-        url: "https://example.com/oslo-sports",
-      },
-    ],
-  },
-  {
-    name: "Elite Sponsors",
-    blurb:
-      "Brands standing on the sideline with our Senior Elite and Junior programs every match day.",
-    partners: [
-      {
-        name: "Viking Logistics",
-        description:
-          "Official travel partner ensuring teams and equipment reach every fixture on time.",
-        url: "https://example.com/viking-logistics",
-      },
-      {
-        name: "Stronghold Fitness",
-        description:
-          "High-performance strength & conditioning support for athletes at all levels.",
-        url: "https://example.com/stronghold",
-      },
-      {
-        name: "Northern Brew",
-        description:
-          "Match-day hospitality provider bringing fans together in the stands.",
-        url: "https://example.com/northern-brew",
-      },
-    ],
-  },
-  {
-    name: "Community Champions",
-    blurb:
-      "Local businesses and families backing grassroots growth, scholarship funds, and equipment drives.",
-    partners: [
-      {
-        name: "Frogner Hardware",
-        description:
-          "Neighborhood supplier donating materials for field upkeep and improvements.",
-        url: "https://example.com/frogner-hardware",
-      },
-      {
-        name: "Oslo Vikings Booster Club",
-        description:
-          "Volunteers and alumni raising resources and rallying support every season.",
-        url: "/about/boosters",
-      },
-      {
-        name: "Community Backers",
-        description:
-          "Hundreds of individual donors whose recurring gifts keep programs accessible.",
-        url: "/about/boosters",
-      },
-    ],
-  },
-];
+import { partners } from "@/app/data/partners";
 
 const partnershipPillars = [
   {
@@ -165,40 +95,77 @@ export default function PartnersPage() {
               We proudly collaborate with organisations that believe in
               sport-driven growth, equity, and excellence.
             </p>
-            <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-3">
-              {partnerTiers.map((tier) => (
-                <div
-                  key={tier.name}
-                  className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-lg dark:border-white/10 dark:bg-viking-charcoal/80"
-                >
-                  <div className="mb-4">
-                    <h3 className="text-2xl font-bold text-viking-charcoal dark:text-gray-100">
-                      {tier.name}
-                    </h3>
-                    <p className="mt-2 text-gray-600 dark:text-gray-300">
-                      {tier.blurb}
-                    </p>
-                  </div>
-                  <ul className="mt-4 space-y-4">
-                    {tier.partners.map((partner) => (
-                      <li
+            <div className="mt-12 overflow-x-auto">
+              <table className="w-full min-w-[720px] divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:divide-white/10 dark:border-white/10 dark:bg-viking-charcoal/80">
+                <thead className="bg-gray-100 text-left dark:bg-white/10">
+                  <tr>
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-300">
+                      Partner
+                    </th>
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-300">
+                      Description
+                    </th>
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-300">
+                      Site Link
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-white/5">
+                  {partners.map((partner) => {
+                    const isExternal = partner.website?.startsWith("http");
+
+                    return (
+                      <tr
                         key={partner.name}
-                        className="rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-white/5 dark:bg-white/5"
+                        className="bg-white transition-colors hover:bg-gray-50 dark:bg-viking-charcoal/70 dark:hover:bg-viking-charcoal/60"
                       >
-                        <Link
-                          href={partner.url}
-                          className="text-lg font-semibold text-viking-red underline decoration-2 underline-offset-4 hover:text-viking-red/80"
-                        >
-                          {partner.name}
-                        </Link>
-                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                        <td className="px-4 py-4 align-top">
+                          <div className="flex items-center gap-4">
+                            {partner.logoSrc ? (
+                              <div className="relative h-16 w-32 overflow-hidden rounded-md bg-white dark:bg-white/5">
+                                <Image
+                                  src={partner.logoSrc}
+                                  alt={
+                                    partner.logoAlt ?? `${partner.name} logo`
+                                  }
+                                  fill
+                                  sizes="128px"
+                                  className="object-contain object-center"
+                                />
+                              </div>
+                            ) : null}
+                            <span className="text-base font-semibold text-viking-charcoal dark:text-gray-100">
+                              {partner.name}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 align-top text-sm text-gray-600 dark:text-gray-200">
                           {partner.description}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+                        </td>
+                        <td className="px-4 py-4 align-top text-sm">
+                          {partner.website ? (
+                            <Link
+                              href={partner.website}
+                              target={isExternal ? "_blank" : undefined}
+                              rel={isExternal ? "noreferrer" : undefined}
+                              className="inline-flex items-center gap-2 font-semibold text-viking-red underline underline-offset-4 hover:text-viking-red/80"
+                            >
+                              Visit site
+                              <span aria-hidden className="text-base">
+                                ↗
+                              </span>
+                            </Link>
+                          ) : (
+                            <span className="text-gray-400 dark:text-gray-500">
+                              Contact for details
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
