@@ -155,7 +155,7 @@
 }
 
 .desktopDivider {
-  padding: clamp(0.35rem, 0.60vw, 0.65rem);
+  padding: clamp(0.35rem, 0.6vw, 0.65rem);
   color: var(--color-viking-red);
   font-weight: 300;
   font-size: clamp(1.75rem, 1.9vw, 2.25rem);
@@ -315,7 +315,7 @@
   .desktopActions {
     display: flex;
     align-items: center;
-    gap: clamp(0.2rem, .4vw, 2.25rem);
+    gap: clamp(0.2rem, 0.4vw, 2.25rem);
     justify-self: flex-end;
     margin-left: clamp(1rem, 2vw, 2rem);
     position: relative;
@@ -376,15 +376,12 @@
   padding: 0.25rem;
   border-radius: 9999px;
   transition: background-color 0.2s ease, color 0.2s ease;
+  color: var(--color-viking-red);
 }
 
 .mobileSocialLink:hover,
 .mobileSocialLink:focus-visible {
-  background-color: color-mix(
-    in srgb,
-    hsl(var(--primary-foreground)) 80%,
-    transparent
-  );
+  background-color: var(--color-viking-red);
   color: var(--color-viking-red-dark);
 }
 
@@ -392,6 +389,10 @@
 :global(.dark) .mobileSocialLink:focus-visible {
   background-color: color-mix(in srgb, hsl(var(--foreground)) 15%, transparent);
   color: hsl(var(--foreground));
+}
+
+:global(.dark) .mobileSocialLink {
+  color: rgba(var(--color-viking-red-rgb), 0.9);
 }
 
 .mobileSocialIcon {

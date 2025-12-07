@@ -547,7 +547,9 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
       }
     }
 
-    event.preventDefault();
+    if (event.cancelable) {
+      event.preventDefault();
+    }
     setMobileDragOffset(deltaX);
   };
 
