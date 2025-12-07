@@ -647,7 +647,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                     const cardKey = `${partner.name}-${originalIndex}-mobile`;
                     const isActive = activeKey === cardKey;
 
-return (
+                    return (
                       <div
                         key={cardKey}
                         role="button"
@@ -659,13 +659,12 @@ return (
                         onKeyDown={(event) =>
                           handleMobileCardKeyDown(event, cardKey)
                         }
-className={`relative flex h-full min-h-[14.5rem] flex-col justify-between overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-3 pb-0.5 text-center shadow-sm transition-shadow duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 dark:border-white/10 dark:bg-viking-surface ${
-                           isActive ? "shadow-lg" : ""
-                         }`}
+                        className={`relative flex h-full min-h-[14.5rem] flex-col justify-between overflow-hidden rounded-2xl border border-gray-200/70 bg-white/95 px-3 pb-0.5 text-center shadow-sm transition-shadow duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-viking-red/80 dark:border-white/10 dark:bg-viking-surface ${
+                          isActive ? "shadow-lg" : ""
+                        }`}
                       >
-
-<div className="relative z-[1] flex flex-1 flex-col items-center justify-between gap-6">
-<div className="relative flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-surface-alt">
+                        <div className="relative z-[1] flex flex-1 flex-col items-center justify-between gap-6">
+                          <div className="relative flex w-full aspect-square items-center justify-center overflow-hidden rounded-xl bg-white dark:bg-viking-surface-alt">
                             {partner.logoSrc ? (
                               <Image
                                 src={partner.logoSrc}
@@ -824,9 +823,7 @@ className={`relative flex h-full min-h-[14.5rem] flex-col justify-between overfl
                 }`}
                 aria-hidden={!isActive}
               >
-                <p className="text-sm font-bold">
-                  {partner.description}
-                </p>
+                <p className="text-sm font-bold">{partner.description}</p>
                 {partner.website ? (
                   <Button
                     asChild
