@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
@@ -140,6 +141,22 @@ export default function BoostersPage() {
                 booster@oslovikings.com
               </Link>
             </p>
+            <div className="mt-8 flex flex-col items-center gap-6">
+              <p className="text-lg font-semibold text-viking-charcoal dark:text-gray-100">
+                Become a Booster today! Purchase your preferred package on the
+                Vipps OV Store and our Booster representative will be in touch!
+              </p>
+              <div className="max-w-sm">
+                <Image
+                  src="/images/vippscard.png"
+                  alt="Vipps store QR code for Oslo Vikings merchandise"
+                  className="h-auto w-full rounded-lg shadow-md"
+                  width={768}
+                  height={512}
+                  priority={false}
+                />
+              </div>
+            </div>
           </div>
         </section>
       </main>

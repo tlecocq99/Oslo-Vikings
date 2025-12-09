@@ -105,6 +105,22 @@ export default function ShopPage() {
             </div>
           </div>
         </section>
+        <div className="mb-12 flex w-full flex-col items-center gap-6 text-center sm:px-0">
+          <p className="text-lg font-semibold text-viking-charcoal dark:text-gray-100">
+            Want to beat us to it? OV merch can be purchased on the Vipps OV
+            Store!
+          </p>
+          <div className="w-full max-w-xs sm:max-w-sm">
+            <Image
+              src="/images/vippscard.png"
+              alt="Vipps store QR code for Oslo Vikings merchandise"
+              className="h-auto w-full rounded-lg shadow-md"
+              width={768}
+              height={512}
+              priority={false}
+            />
+          </div>
+        </div>
       </main>
 
       <Dialog
