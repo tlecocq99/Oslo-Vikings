@@ -209,7 +209,10 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
             style={{ scrollSnapType: "x mandatory" }}
           >
             {filteredEvents.length === 0 ? (
-              <div className="min-w-[220px] max-w-xs bg-white dark:bg-black rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-4 flex flex-col justify-center items-center text-center text-sm text-gray-600 dark:text-gray-300" style={{ scrollSnapAlign: "start" }}>
+              <div
+                className="min-w-[220px] max-w-xs bg-white dark:bg-black rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-4 flex flex-col justify-center items-center text-center text-sm text-gray-600 dark:text-gray-300"
+                style={{ scrollSnapAlign: "start" }}
+              >
                 No upcoming events found. Check back soon!
               </div>
             ) : (
