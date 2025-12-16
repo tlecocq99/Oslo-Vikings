@@ -120,14 +120,44 @@ const legacyHighlights = [
   },
 ];
 
-const hallOfFameNames = [
-  "Henrik Dahl",
-  "Finn-Jarle Mathisen",
-  "Nicolay Aslaksen",
-  "Gaute Moseby Engebretsen",
+type HallOfFameMember = {
+  name: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  caption?: string;
+};
+
+const hallOfFameMembers: HallOfFameMember[] = [
+  {
+    name: "Henrik Dahl",
+    imageSrc: "/images/oldSchool/HOF-Dahl.png",
+    imageAlt: "",
+    caption:
+      "Coach Henrik Dahl helped lay the foundation for Vikings football and a culture of excellence.",
+  },
+  {
+    name: "Finn-Jarle Mathisen",
+    imageSrc: "/images/oldSchool/HOF-FJ.png",
+    imageAlt: "",
+    caption:
+      "Coach Finn-Jarle Mathisen, one of the founding fathers, championed discipline and belief.",
+  },
+  {
+    name: "Nicolay Aslaksen",
+    imageSrc: "/images/oldSchool/HOF-Aslaksen.png",
+    imageAlt: "",
+    caption:
+      "Nicolay Aslaksen running wild and inspiring a new era of Vikings athletes.",
+  },
+  {
+    name: "Gaute Moseby Engebretsen",
+    imageSrc: "/images/oldSchool/HOF-Gaute.png",
+    caption:
+      "Gaute Moseby Engebretsen embodied Vikings spirit on and off the field as a tireless leader.",
+  },
 ];
 
-const hallOfFamePhotos = [
+const hallOfFameGallery = [
   {
     src: "/images/oldSchool/Coaches-Trophy.jpg",
     alt: "Oslo Vikings coaches celebrate with a trophy",
@@ -226,7 +256,7 @@ export default function HistoryPage() {
           </div>
         </section>
 
-        <section className="bg-white dark:bg-viking-charcoal/85">
+        <section className="bg-white dark:bg-viking-charcoal/70">
           <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <p className="text-xs uppercase tracking-[0.4em] text-viking-red">
@@ -241,41 +271,68 @@ export default function HistoryPage() {
               </p>
             </div>
 
-            <div className="mx-auto max-w-3xl">
-              <ul className="flex flex-wrap justify-center gap-5 rounded-3xl bg-gradient-to-br from-slate-200 via-gray-200 to-slate-300 p-6 shadow-2xl ring-1 ring-white/40 dark:from-[#1E232B] dark:via-[#151921] dark:to-[#101419] dark:ring-white/10">
-                {hallOfFameNames.map((name) => (
-                  <li
-                    key={name}
-                    className="inline-flex items-center rounded-full border border-black/10 bg-gradient-to-br from-gray-300 via-gray-100 to-gray-300 px-6 py-3 text-base font-semibold uppercase tracking-[0.35em] text-slate-700 shadow-[inset_2px_2px_5px_rgba(255,255,255,0.75),inset_-2px_-2px_6px_rgba(0,0,0,0.25)] transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[inset_1px_1px_3px_rgba(255,255,255,0.9),inset_-1px_-1px_5px_rgba(0,0,0,0.35)] dark:border-white/10 dark:bg-gradient-to-br dark:from-[#171B21] dark:via-[#101418] dark:to-[#0B0E12] dark:text-gray-200 dark:shadow-[inset_2px_2px_4px_rgba(255,255,255,0.06),inset_-3px_-3px_6px_rgba(0,0,0,0.65)] dark:hover:shadow-[inset_1px_1px_3px_rgba(255,255,255,0.12),inset_-1px_-1px_4px_rgba(0,0,0,0.7)]"
+            <div className="mx-auto max-w-5xl">
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+                {hallOfFameMembers.map((member) => (
+                  <article
+                    key={member.name}
+                    className="flex flex-col items-center rounded-[36px] border border-black/10 bg-gradient-to-b from-white via-slate-100 to-slate-200 p-6 text-center shadow-[0_20px_50px_rgba(15,23,42,0.15)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_rgba(15,23,42,0.22)] dark:border-white/10 dark:bg-gradient-to-b dark:from-[#171B21] dark:via-[#12161C] dark:to-[#0C1015] dark:shadow-[0_18px_40px_rgba(8,11,17,0.45)] dark:hover:shadow-[0_24px_55px_rgba(8,11,17,0.6)]"
                   >
-                    <span
-                      className="whitespace-nowrap text-sm sm:text-base"
-                      style={{
-                        textShadow:
-                          "1px 1px 1px rgba(255,255,255,0.7), -1px -1px 1px rgba(0,0,0,0.35)",
-                        letterSpacing: "0.4em",
-                      }}
-                    >
-                      {name.toUpperCase()}
-                    </span>
-                  </li>
+                    <div className="relative w-full overflow-hidden rounded-[28px] bg-slate-200 shadow-inner dark:bg-[#11161d]">
+                      {member.imageSrc ? (
+                        <>
+                          <div className="relative h-56 w-full">
+                            <Image
+                              src={member.imageSrc}
+                              alt={member.imageAlt ?? member.name}
+                              fill
+                              className="object-cover object-center saturate-0 dark:opacity-95"
+                              sizes="(max-width: 768px) 100vw, 320px"
+                            />
+                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-br from-viking-red/60 via-viking-red/15 to-white/25 dark:from-viking-red/28 dark:via-viking-red/12 dark:to-white/12" />
+                        </>
+                      ) : (
+                        <div className="flex h-56 w-full items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-300 dark:from-[#1D2128] dark:via-[#13171E] dark:to-[#0B0E12]">
+                          <span className="text-5xl font-black tracking-[0.35em] text-viking-red">
+                            {getInitials(member.name)}
+                          </span>
+                        </div>
+                      )}
+                      <div
+                        className="absolute inset-0 rounded-[28px] ring-1 ring-white/40 dark:ring-white/5"
+                        aria-hidden
+                      />
+                    </div>
+                    <div className="mt-6 w-full rounded-full border border-black/10 bg-gradient-to-b from-white via-slate-50 to-slate-200 px-6 py-3 text-center shadow-[inset_2px_2px_6px_rgba(255,255,255,0.9),inset_-3px_-3px_8px_rgba(15,23,42,0.25)] dark:border-white/10 dark:bg-gradient-to-b dark:from-[#141820] dark:via-[#12161d] dark:to-[#0C0F13] dark:shadow-[inset_1px_1px_3px_rgba(255,255,255,0.08),inset_-2px_-2px_5px_rgba(0,0,0,0.6)]">
+                      <span className="text-[0.75rem] font-semibold uppercase tracking-[0.5em] text-slate-700 dark:text-gray-100">
+                        {member.name.toUpperCase()}
+                      </span>
+                    </div>
+                    {member.caption && (
+                      <p className="mt-4 max-w-xs text-sm text-gray-600 dark:text-gray-300">
+                        {member.caption}
+                      </p>
+                    )}
+                  </article>
                 ))}
-              </ul>
+              </div>
             </div>
 
             <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">
-              {hallOfFamePhotos.map((photo) => (
+              {hallOfFameGallery.map((photo) => (
                 <figure
                   key={photo.src}
                   className="overflow-hidden rounded-2xl bg-gray-900/5 shadow-lg ring-1 ring-black/5 dark:bg-white/5 dark:ring-white/10"
                 >
-                  <div className="relative h-80 w-full">
+                  <div className="relative h-80 w-full flex items-center justify-center bg-slate-200 dark:bg-[#11161d]">
                     <Image
                       src={photo.src}
                       alt={photo.alt}
-                      fill
+                      width={800}
+                      height={800}
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover object-[center_30%]"
+                      className="h-full w-full object-contain"
                     />
                   </div>
                   <figcaption className="px-6 py-4 text-center text-sm text-gray-600 dark:text-gray-300">
