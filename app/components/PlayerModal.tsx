@@ -92,6 +92,8 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
     ? countryDisplay(nationality)
     : undefined;
   const imageSrc = image || "/images/players/playerFiller.png";
+  const isFallbackImage = imageSrc === "/images/players/playerFiller.png";
+  const overlayTextColor = isFallbackImage ? "text-white" : "text-viking-red";
 
   return (
     <Dialog>
@@ -109,11 +111,17 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
             />
             <div className="absolute inset-0 bg-black/45" />
             <div className="relative z-10 flex h-full w-full flex-col items-center justify-end px-6 pt-8 pb-4 sm:pt-10 sm:pb-5 text-center space-y-2">
-              <div className="text-5xl font-extrabold drop-shadow-lg">
+              <div
+                className={`text-5xl font-extrabold drop-shadow-lg ${overlayTextColor}`}
+              >
                 {displayNumberFallback}
               </div>
               <div className="flex items-center justify-center gap-2">
-                <h2 className="text-2xl font-bold tracking-wide">{name}</h2>
+                <h2
+                  className={`text-2xl font-bold tracking-wide ${overlayTextColor}`}
+                >
+                  {name}
+                </h2>
                 {nationality && (
                   <FlagIcon
                     nationality={nationality}
