@@ -3,9 +3,23 @@
   display: block;
   min-height: 35vh;
   overflow: hidden;
-  background-color: color-mix(in srgb, var(--color-viking-red) 85%, black 15%);
+  background-color: var(--color-viking-red-dark);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.85) 0%,
+    var(--color-viking-red-dark) 100%
+  );
   isolation: isolate;
   transition: transform 0.6s ease;
+}
+
+:global(.dark) .link {
+  background-color: #000;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.92) 0%,
+    var(--color-viking-red-dark) 100%
+  );
 }
 
 .link:focus-visible {
@@ -27,7 +41,7 @@
 
 @media (min-width: 1280px) {
   .link {
-    min-height: 100vh;
+    min-height: 77vh;
   }
 }
 
@@ -75,9 +89,19 @@
   transition: opacity 0.5s ease;
 }
 
+:global(.dark) .overlay {
+  background-color: rgba(0, 0, 0, 0.45);
+  opacity: 0.4;
+}
+
 .link:hover .overlay,
 .link:focus-visible .overlay {
   opacity: 0.6;
+}
+
+:global(.dark) .link:hover .overlay,
+:global(.dark) .link:focus-visible .overlay {
+  opacity: 0.7;
 }
 
 .ctaContainer {

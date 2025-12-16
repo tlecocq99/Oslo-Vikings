@@ -124,6 +124,7 @@ const hallOfFameNames = [
   "Henrik Dahl",
   "Finn-Jarle Mathisen",
   "Nicolay Aslaksen",
+  "Gaute Moseby Engebretsen",
 ];
 
 const hallOfFamePhotos = [
@@ -241,10 +242,22 @@ export default function HistoryPage() {
             </div>
 
             <div className="mx-auto max-w-3xl">
-              <ul className="grid gap-4 rounded-2xl bg-gray-50 p-6 text-center text-lg font-semibold text-viking-charcoal shadow-md dark:bg-viking-charcoal/60 dark:text-gray-100">
+              <ul className="flex flex-wrap justify-center gap-5 rounded-3xl bg-gradient-to-br from-slate-200 via-gray-200 to-slate-300 p-6 shadow-2xl ring-1 ring-white/40 dark:from-[#1E232B] dark:via-[#151921] dark:to-[#101419] dark:ring-white/10">
                 {hallOfFameNames.map((name) => (
-                  <li key={name} className="py-1">
-                    {name}
+                  <li
+                    key={name}
+                    className="inline-flex items-center rounded-full border border-black/10 bg-gradient-to-br from-gray-300 via-gray-100 to-gray-300 px-6 py-3 text-base font-semibold uppercase tracking-[0.35em] text-slate-700 shadow-[inset_2px_2px_5px_rgba(255,255,255,0.75),inset_-2px_-2px_6px_rgba(0,0,0,0.25)] transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[inset_1px_1px_3px_rgba(255,255,255,0.9),inset_-1px_-1px_5px_rgba(0,0,0,0.35)] dark:border-white/10 dark:bg-gradient-to-br dark:from-[#171B21] dark:via-[#101418] dark:to-[#0B0E12] dark:text-gray-200 dark:shadow-[inset_2px_2px_4px_rgba(255,255,255,0.06),inset_-3px_-3px_6px_rgba(0,0,0,0.65)] dark:hover:shadow-[inset_1px_1px_3px_rgba(255,255,255,0.12),inset_-1px_-1px_4px_rgba(0,0,0,0.7)]"
+                  >
+                    <span
+                      className="whitespace-nowrap text-sm sm:text-base"
+                      style={{
+                        textShadow:
+                          "1px 1px 1px rgba(255,255,255,0.7), -1px -1px 1px rgba(0,0,0,0.35)",
+                        letterSpacing: "0.4em",
+                      }}
+                    >
+                      {name.toUpperCase()}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -277,4 +290,15 @@ export default function HistoryPage() {
       <Footer />
     </>
   );
+}
+
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (!parts.length) {
+    return "OV";
+  }
+  const first = parts[0]?.[0] ?? "";
+  const second = parts.length > 1 ? parts[parts.length - 1]?.[0] ?? "" : "";
+  const initials = `${first}${second}`.toUpperCase();
+  return initials || "OV";
 }

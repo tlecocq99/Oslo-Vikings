@@ -3,6 +3,12 @@
   color: white;
 }
 
+:global(.dark) .footer {
+  background-color: rgba(var(--color-viking-surface-rgb), 0.96);
+  color: hsl(var(--foreground));
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -89,6 +95,10 @@
   transform: translateY(0.8rem);
 }
 
+:global(.dark) .logoPrimary {
+  color: hsl(var(--foreground));
+}
+
 .logoAccent {
   font-size: 1.25rem;
   font-weight: 700;
@@ -114,6 +124,15 @@
   color: var(--color-viking-charcoal);
 }
 
+:global(.dark) .socialLink {
+  color: var(--color-viking-red);
+}
+
+:global(.dark) .socialLink:hover,
+:global(.dark) .socialLink:focus-visible {
+  color: var(--color-viking-red-dark);
+}
+
 .socialLinkIcon {
   width: 1.5rem;
   height: 1.5rem;
@@ -128,6 +147,17 @@
 .socialLink:focus-visible .socialLinkIconTikTok {
   filter: brightness(0) saturate(100%) invert(12%) sepia(5%) saturate(487%)
     hue-rotate(170deg) brightness(92%) contrast(86%);
+}
+
+:global(.dark) .socialLinkIconTikTok {
+  filter: brightness(0) saturate(100%) invert(10%) sepia(73%) saturate(5794%)
+    hue-rotate(354deg) brightness(95%) contrast(122%);
+}
+
+:global(.dark) .socialLink:hover .socialLinkIconTikTok,
+:global(.dark) .socialLink:focus-visible .socialLinkIconTikTok {
+  filter: brightness(0) saturate(100%) invert(10%) sepia(73%) saturate(5794%)
+    hue-rotate(354deg) brightness(80%) contrast(122%);
 }
 
 .sectionTitle {
@@ -152,6 +182,15 @@
   color: var(--color-viking-charcoal);
 }
 
+:global(.dark) .link {
+  color: var(--color-viking-red);
+}
+
+:global(.dark) .link:hover,
+:global(.dark) .link:focus-visible {
+  color: var(--color-viking-red-dark);
+}
+
 .contactList {
   display: flex;
   flex-direction: column;
@@ -170,9 +209,17 @@
   color: var(--color-white);
 }
 
+:global(.dark) .contactIcon {
+  color: var(--color-viking-red);
+}
+
 .contactText {
   color: rgba(255, 255, 255, 0.82);
   font-size: 0.875rem;
+}
+
+:global(.dark) .contactText {
+  color: var(--color-viking-red);
 }
 
 .divider {
@@ -182,14 +229,26 @@
   text-align: center;
 }
 
+:global(.dark) .divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .dividerText {
   color: rgba(255, 255, 255, 0.75);
+}
+
+:global(.dark) .dividerText {
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .watermark {
   margin-top: 0.35rem;
   font-size: 0.8125rem;
   color: rgba(255, 255, 255, 0.65);
+}
+
+:global(.dark) .watermark {
+  color: rgba(255, 255, 255, 0.58);
 }
 
 .watermark a,
@@ -204,4 +263,16 @@
 .watermarkLink:hover,
 .watermarkLink:focus-visible {
   color: var(--color-viking-charcoal);
+}
+
+:global(.dark) .watermark a,
+:global(.dark) .watermarkLink {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+:global(.dark) .watermark a:hover,
+:global(.dark) .watermark a:focus-visible,
+:global(.dark) .watermarkLink:hover,
+:global(.dark) .watermarkLink:focus-visible {
+  color: var(--color-viking-red);
 }

@@ -39,186 +39,196 @@ export default function RecruitmentPage() {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen">
-        <section
-          style={{
-            backgroundImage: "url('/images/backgrounds/team.avif')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-          className="relative flex items-center justify-center w-full overflow-hidden bg-black aspect-[16/9] lg:aspect-auto lg:min-h-[60vh]"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1
-              className="font-Anton_SC text-4xl sm:text-5xl font-bold text-white mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4"
-              style={{ textShadow: "2px 2px 8px rgba(0, 0, 0, 0.7)" }}
-            >
-              Join Oslo Vikings
-            </h1>
-          </div>
-        </section>
-        <section className="bg-white dark:bg-viking-surface-alt transition-colors">
-          <div>
-            <p
-              className="text-xl text-white max-w-3xl mx-auto mb-6"
-              style={{ textShadow: "1px 1px 6px rgba(0, 0, 0, 0.6)" }}
-            ></p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              asChild
-              className="bg-viking-red hover:bg-viking-red-dark text-white px-8 py-6 text-lg font-semibold"
-            >
-              <Link href="#apply">Apply Now</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white px-8 py-6 text-lg font-semibold"
-            >
-              <Link href="#faq">Questions?</Link>
-            </Button>
-          </div>
-        </section>
-
-        <section className="py-16 bg-white dark:bg-viking-surface-alt transition-colors">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-              {benefits.map((b, i) => (
-                <div
-                  key={i}
-                  className="bg-gray-50 rounded-lg p-6 text-center  hover:shadow-lg transition"
-                >
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-viking-red flex items-center justify-center">
-                    <b.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-viking-charcoal mb-2">
-                    {b.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {b.desc}
-                  </p>
-                </div>
-              ))}
+      <main
+        className="relative min-h-screen overflow-hidden"
+        style={{
+          backgroundImage: "url('/images/backgrounds/team.avif')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 bg-white/40"
+          aria-hidden
+        />
+        <div className="relative flex flex-col gap-0">
+          <section className="relative flex items-center justify-center w-full overflow-hidden py-8 sm:py-28 lg:py-8">
+            <div
+              className="absolute inset-0 bg-white/40  dark:bg-viking-surface-alt/80 transition-colors"
+              aria-hidden
+            />
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <h1
+                className="font-Anton_SC text-4xl sm:text-5xl font-bold text-white mb-6 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4"
+                style={{ textShadow: "2px 2px 8px rgba(0, 0, 0, 0.7)" }}
+              >
+                Join Oslo Vikings
+              </h1>
             </div>
-
-            <div id="apply" className="max-w-3xl mx-auto mb-20 text-center">
-              <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
-                How to Join
-              </h2>
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
-                Fill out our short interest form and a team coordinator will
-                follow up with training times, equipment guidance, and next
-                steps.
-              </p>
+          </section>
+          <section className="bg-white/40 dark:bg-viking-surface-alt/80 transition-colors">
+            <div>
+              <p
+                className="text-xl text-white max-w-3xl mx-auto mb-6"
+                style={{ textShadow: "1px 1px 6px rgba(0, 0, 0, 0.6)" }}
+              ></p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 asChild
-                size="lg"
-                className="bg-viking-red hover:bg-viking-red-dark text-white font-semibold px-10 py-6 text-lg"
+                className="bg-viking-red hover:bg-viking-red-dark text-white px-8 py-6 text-lg font-semibold"
               >
-                <Link
-                  href="https://club.spond.com/landing/signup/ov/form/0F5B063376B34A10A885A137A46F817B"
-                  target="_blank"
-                >
-                  Open Interest Form
-                </Link>
+                <Link href="#apply">Apply Now</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white px-8 py-6 text-lg font-semibold"
+              >
+                <Link href="#faq">Questions?</Link>
               </Button>
             </div>
+          </section>
 
-            <div id="faq" className="max-w-5xl mx-auto">
-              <div className="text-center mb-10">
-                <h2 className="text-4xl font-bold text-viking-charcoal dark:text-gray-200 tracking-tight mb-4 relative inline-block after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
-                  Frequently Asked Questions
-                </h2>
-                <p className="text-viking-charcoal/70 dark:text-gray-300 max-w-2xl mx-auto text-sm sm:text-base">
-                  {/* Text here if you want it */}
-                </p>
+          <section className="py-8 bg-white/40 dark:bg-viking-surface-alt/80 transition-colors">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                {benefits.map((b, i) => (
+                  <div
+                    key={i}
+                    className="bg-white/95 dark:bg-viking-charcoal/75 rounded-lg p-6 text-center shadow-lg hover:shadow-xl transition-shadow border border-gray-200/70 dark:border-viking-red/25"
+                  >
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-viking-red flex items-center justify-center shadow-md shadow-viking-red/30">
+                      <b.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-viking-charcoal dark:text-gray-100 mb-2">
+                      {b.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                      {b.desc}
+                    </p>
+                  </div>
+                ))}
               </div>
-              <div className="bg-white/80 dark:bg-gray-800 backdrop-blur-sm border border-viking-red/10 shadow-xl rounded-xl p-4 sm:p-8">
-                <Accordion type="single" collapsible className="space-y-2">
-                  <AccordionItem
-                    value="item-1"
-                    className="rounded-lg border border-gray-200 bg-gray-50 dark:border-viking-red overflow-hidden"
+
+              <div id="apply" className="max-w-3xl mx-auto mb-20 text-center">
+                <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-200 mb-4">
+                  How to Join
+                </h2>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">
+                  Fill out our short interest form and a team coordinator will
+                  follow up with training times, equipment guidance, and next
+                  steps.
+                </p>
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-viking-red hover:bg-viking-red-dark text-white font-semibold px-10 py-6 text-lg"
+                >
+                  <Link
+                    href="https://club.spond.com/landing/signup/ov/form/0F5B063376B34A10A885A137A46F817B"
+                    target="_blank"
                   >
-                    <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-gray-800 dark:text-gray-200 font-semibold text-base sm:text-lg">
-                      Do I need prior experience?
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-white dark:bg-gray-800 text-sm leading-relaxed">
-                      No. We coach fundamentals for every player – beginners are
-                      welcome at all levels. Progression is structured and
-                      supportive.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem
-                    value="item-2"
-                    className="rounded-lg border border-gray-200 bg-gray-50 dark:border-viking-red overflow-hidden"
-                  >
-                    <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-gray-800 dark:text-gray-200 font-semibold text-base sm:text-lg">
-                      What equipment do I need?
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-white dark:bg-gray-800 text-sm leading-relaxed">
-                      Start with athletic wear and cleats. We’ll guide you on
-                      obtaining pads and a helmet once you’re registered. Loaner
-                      gear may be available for trial sessions.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem
-                    value="item-3"
-                    className="rounded-lg border border-gray-200 bg-gray-50 dark:border-viking-red overflow-hidden"
-                  >
-                    <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-gray-800 dark:text-gray-200 font-semibold text-base sm:text-lg">
-                      What does it cost?
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-white dark:bg-gray-800 text-sm leading-relaxed">
-                      Fees vary by level and season. Financial assistance and
-                      gear support options may be available—ask our coordinators
-                      when you apply.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem
-                    value="item-4"
-                    className="rounded-lg border border-gray-200 bg-gray-50 dark:border-viking-red overflow-hidden"
-                  >
-                    <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-gray-800 dark:text-gray-200 font-semibold text-base sm:text-lg">
-                      What ages can join?
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-white dark:bg-gray-800 text-sm leading-relaxed">
-                      We offer pathways for U14, U17, Senior D2, Senior Elite,
-                      and Flag. Each level is development-focused with
-                      opportunities to advance.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem
-                    value="item-5"
-                    className="rounded-lg border border-gray-200 bg-gray-50 dark:border-viking-red overflow-hidden"
-                  >
-                    <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-gray-800 dark:text-gray-200 font-semibold text-base sm:text-lg">
-                      How often do teams practice?
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-white dark:bg-gray-800 text-sm leading-relaxed">
-                      Most squads train 2–3 times per week in season with
-                      optional strength & conditioning sessions. Pre-season may
-                      include additional install days.
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem
-                    value="item-6"
-                    className="rounded-lg border border-gray-200 bg-gray-50 dark:border-viking-red overflow-hidden"
-                  >
-                    <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-gray-800 dark:text-gray-200 font-semibold text-base sm:text-lg">
-                      Can I try a session before committing?
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-white dark:bg-gray-800 text-sm leading-relaxed">
-                      Yes—prospective players can attend an intro or open
-                      training session. Register interest first so we can assign
-                      you a contact and date.
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                    Open Interest Form
+                  </Link>
+                </Button>
+              </div>
+
+              <div id="faq" className="max-w-5xl mx-auto">
+                <div className="text-center mb-10">
+                  <h2 className="text-4xl font-bold text-viking-charcoal dark:text-gray-200 tracking-tight mb-4 relative inline-block after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
+                    Frequently Asked Questions
+                  </h2>
+                  <p className="text-viking-charcoal/70 dark:text-gray-300 max-w-2xl mx-auto text-sm sm:text-base">
+                    {/* Text here if you want it */}
+                  </p>
+                </div>
+                <div className="bg-white/80 dark:bg-viking-surface-alt backdrop-blur-sm border border-viking-red/10 shadow-xl rounded-xl p-4 sm:p-8">
+                  <Accordion type="single" collapsible className="space-y-2">
+                    <AccordionItem
+                      value="item-1"
+                      className="rounded-lg border border-gray-200 bg-gray-50 dark:bg-viking-surface-alt dark:border-viking-red overflow-hidden"
+                    >
+                      <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-viking-surface-alt dark:text-gray-200 font-semibold text-base sm:text-lg">
+                        Do I need prior experience?
+                      </AccordionTrigger>
+                      <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-gray-200 dark:bg-viking-surface-alt text-sm leading-relaxed">
+                        No. We coach fundamentals for every player – beginners
+                        are welcome at all levels. Progression is structured and
+                        supportive.
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem
+                      value="item-2"
+                      className="rounded-lg border border-gray-200 bg-gray-50 dark:bg-viking-surface-alt dark:border-viking-red overflow-hidden"
+                    >
+                      <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-viking-surface-alt dark:text-gray-200 font-semibold text-base sm:text-lg">
+                        What equipment do I need?
+                      </AccordionTrigger>
+                      <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-gray-200 dark:bg-viking-surface-alt text-sm leading-relaxed">
+                        Start with athletic wear and cleats. We’ll guide you on
+                        obtaining pads and a helmet once you’re registered.
+                        Loaner gear may be available for trial sessions.
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem
+                      value="item-3"
+                      className="rounded-lg border border-gray-200 bg-gray-50 dark:bg-viking-surface-alt dark:border-viking-red overflow-hidden"
+                    >
+                      <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-viking-surface-alt dark:text-gray-200 font-semibold text-base sm:text-lg">
+                        What does it cost?
+                      </AccordionTrigger>
+                      <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-gray-200 dark:bg-viking-surface-alt text-sm leading-relaxed">
+                        Fees vary by level and season. Financial assistance and
+                        gear support options may be available—ask our
+                        coordinators when you apply.
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem
+                      value="item-4"
+                      className="rounded-lg border border-gray-200 bg-gray-50 dark:bg-viking-surface-alt dark:border-viking-red overflow-hidden"
+                    >
+                      <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-viking-surface-alt dark:text-gray-200 font-semibold text-base sm:text-lg">
+                        What ages can join?
+                      </AccordionTrigger>
+                      <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-gray-200 dark:bg-viking-surface-alt text-sm leading-relaxed">
+                        We offer pathways for U14, U17, Senior D2, Senior Elite,
+                        and Flag. Each level is development-focused with
+                        opportunities to advance.
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem
+                      value="item-5"
+                      className="rounded-lg border border-gray-200 bg-gray-50 dark:bg-viking-surface-alt dark:border-viking-red overflow-hidden"
+                    >
+                      <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-viking-surface-alt dark:text-gray-200 font-semibold text-base sm:text-lg">
+                        How often do teams practice?
+                      </AccordionTrigger>
+                      <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-gray-200 dark:bg-viking-surface-alt text-sm leading-relaxed">
+                        Most squads train 2–3 times per week in season with
+                        supplemental strength & conditioning sessions. There are regular offseason and preseason activities to keep players engaged.
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem
+                      value="item-6"
+                      className="rounded-lg border border-gray-200 bg-gray-50 dark:bg-viking-surface-alt dark:border-viking-red overflow-hidden"
+                    >
+                      <AccordionTrigger className="px-4 sm:px-6 text-left text-viking-charcoal dark:bg-viking-surface-alt dark:text-gray-200 font-semibold text-base sm:text-lg">
+                        Can I try a session before committing?
+                      </AccordionTrigger>
+                      <AccordionContent className="px-4 sm:px-6 text-gray-600 dark:text-gray-200 dark:bg-viking-surface-alt text-sm leading-relaxed">
+                        Yes—prospective players can attend an intro or open
+                        training session. Register interest first so we can
+                        assign you a contact and date.
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
       <Footer />
     </>

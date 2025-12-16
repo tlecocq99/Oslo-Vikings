@@ -44,10 +44,10 @@ export default function PartnersPage() {
             <p className="text-lg font-semibold uppercase tracking-[0.4em] text-viking-red">
               Partners & Sponsors
             </p>
-            <h1 className="mt-4 font-Anton_SC text-4xl font-bold text-viking-charcoal sm:text-5xl">
-              Fueling Oslo Vikings Together
+            <h1 className="mt-4 font-Anton_SC text-4xl font-bold text-viking-charcoal dark:text-white sm:text-5xl">
+              Fueling the Oslo Vikings Together
             </h1>
-            <p className="mt-6 max-w-3xl text-base text-viking-charcoal sm:text-lg">
+            <p className="mt-6 max-w-3xl text-base text-viking-charcoal dark:text-white sm:text-lg">
               Partnerships enable us to compete at the highest level, invest in
               future athletes, and create unforgettable gameday experiences.
               Thank you for standing with the shield.
@@ -57,10 +57,10 @@ export default function PartnersPage() {
 
         <section className="bg-white dark:bg-viking-charcoal/90">
           <div className="mx-auto max-w-6xl px-4 py-2 sm:px-6 lg:px-8">
-            <h2 className="text-center text-3xl font-bold text-viking-charcoal dark:text-gray-100">
+            <h2 className="text-center text-3xl font-bold text-viking-charcoal dark:text-white">
               Partnership Pillars
             </h2>
-            <p className="mx-auto mt-4 max-w-3xl text-center text-gray-700 dark:text-gray-300">
+            <p className="mx-auto mt-4 max-w-3xl text-center text-gray-700 dark:text-white">
               Every agreement is tailored, but the foundation is always the
               same: shared ambition, measurable value, and impact across the
               club.
@@ -74,10 +74,10 @@ export default function PartnersPage() {
                   <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-viking-red/90">
                     <pillar.icon className="h-6 w-6 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold text-viking-charcoal dark:text-gray-100">
+                  <h3 className="text-xl font-semibold text-viking-charcoal dark:text-white">
                     {pillar.title}
                   </h3>
-                  <p className="mt-2 text-gray-600 dark:text-gray-300">
+                  <p className="mt-2 text-gray-600 dark:text-white">
                     {pillar.description}
                   </p>
                 </div>
@@ -88,10 +88,10 @@ export default function PartnersPage() {
 
         <section className="bg-gray-50 dark:bg-viking-charcoal/70">
           <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-            <h2 className="text-center text-3xl font-bold text-viking-charcoal dark:text-gray-100">
+            <h2 className="text-center text-3xl font-bold text-viking-charcoal dark:text-white">
               Partners in the Huddle
             </h2>
-            <p className="mx-auto mt-4 max-w-3xl text-center text-gray-700 dark:text-gray-300">
+            <p className="mx-auto mt-4 max-w-3xl text-center text-gray-700 dark:text-white">
               We proudly collaborate with organisations that believe in
               sport-driven growth, equity, and excellence.
             </p>
@@ -99,13 +99,13 @@ export default function PartnersPage() {
               <table className="w-full min-w-[720px] divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg dark:divide-white/10 dark:border-white/10 dark:bg-viking-charcoal/80">
                 <thead className="bg-gray-100 text-left dark:bg-white/10">
                   <tr>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-300">
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-white">
                       Partner
                     </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-300">
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-white">
                       Description
                     </th>
-                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-300">
+                    <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-white">
                       Site Link
                     </th>
                   </tr>
@@ -134,12 +134,12 @@ export default function PartnersPage() {
                                 />
                               </div>
                             ) : null}
-                            <span className="text-base font-semibold text-viking-charcoal dark:text-gray-100">
+                            <span className="text-base font-semibold text-viking-charcoal dark:text-white">
                               {partner.name}
                             </span>
                           </div>
                         </td>
-                        <td className="px-4 py-4 align-top text-sm text-gray-600 dark:text-gray-200">
+                        <td className="px-4 py-4 align-top text-sm text-gray-600 dark:text-white">
                           {partner.description}
                         </td>
                         <td className="px-4 py-4 align-top text-sm">
@@ -156,7 +156,7 @@ export default function PartnersPage() {
                               </span>
                             </Link>
                           ) : (
-                            <span className="text-gray-400 dark:text-gray-500">
+                            <span className="text-gray-400 dark:text-white">
                               Contact for details
                             </span>
                           )}
@@ -172,10 +172,10 @@ export default function PartnersPage() {
 
         <section className="bg-white dark:bg-viking-charcoal/90">
           <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-viking-charcoal dark:text-gray-100">
+            <h2 className="text-3xl font-bold text-viking-charcoal dark:text-white">
               Become a Partner
             </h2>
-            <p className="mt-4 text-gray-700 dark:text-gray-300">
+            <p className="mt-4 text-gray-700 dark:text-white">
               Whether you represent a global brand or a local business, we can
               craft an activation package that meets your goals. Let’s map out
               how you can join the next chapter of Vikings football.

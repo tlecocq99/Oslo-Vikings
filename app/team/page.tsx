@@ -4,6 +4,7 @@ export const revalidate = 300;
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 import { ALL_TEAMS } from "./team-config";
 
 // Server component: fetch players securely (no bundling googleapis into client)
@@ -21,20 +22,65 @@ export default function TeamPage() {
 }
 
 function Hero() {
+  const desktopImage: string = "/images/backgrounds/TEAMS-hero.png";
+  const mobileImage: string = "/images/backgrounds/TEAMS-hero(16x9).png";
+  const hasDistinctMobileImage = desktopImage !== mobileImage;
+  const heroPlaceholder =
+    "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3Crect%20width='1'%20height='1'%20fill='%230b0e12'/%3E%3C/svg%3E";
+
   return (
     <section
-      className="py-20 md:py-12 bg-cover bg-center bg-no-repeat relative min-h-[50vh] md:min-h-[60vh] flex items-center"
-      style={{ backgroundImage: "url('/images/backgrounds/teamClose.avif')" }}
+      id="team-hero-overview"
+      className="relative w-full overflow-hidden bg-black aspect-[16/9] lg:aspect-auto lg:min-h-[60vh]"
     >
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl leading-tight">
-          Meet the Vikings
-        </h1>
-        <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto drop-shadow-lg">
-          Our roster of dedicated athletes representing Norwegian American
-          football excellence
-        </p>
+      <div className="pointer-events-none absolute inset-0 block h-full w-full">
+        {hasDistinctMobileImage ? (
+          <>
+            <Image
+              src={mobileImage}
+              alt="Oslo Vikings team hero (mobile)"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover lg:hidden"
+              placeholder="blur"
+              blurDataURL={heroPlaceholder}
+            />
+            <Image
+              src={desktopImage}
+              alt="Oslo Vikings team hero (desktop)"
+              fill
+              priority
+              sizes="100vw"
+              className="hidden lg:block object-cover"
+              placeholder="blur"
+              blurDataURL={heroPlaceholder}
+            />
+          </>
+        ) : (
+          <Image
+            src={desktopImage}
+            alt="Oslo Vikings team hero"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+            placeholder="blur"
+            blurDataURL={heroPlaceholder}
+          />
+        )}
+      </div>
+      <div className="absolute inset-0 hidden bg-gradient-to-b from-black/75 via-black/60 to-black/75 dark:block" />
+      <div className="absolute inset-x-0 bottom-0 z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-4 pb-16 text-center sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-viking-red/30 shadow-[0_25px_60px_-25px_rgba(172,20,22,0.65)] dark:bg-transparent dark:shadow-none dark:ring-0">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight drop-shadow-[0_0_32px_rgba(0,0,0,0.45)] dark:drop-shadow-[0_0_35px_rgba(0,0,0,0.65)]">
+            Meet the Vikings
+          </h1>
+          <p className="mt-6 text-lg sm:text-xl text-white/90 max-w-3xl mx-auto drop-shadow-[0_0_24px_rgba(0,0,0,0.35)] dark:drop-shadow-[0_0_25px_rgba(0,0,0,0.55)]">
+            Our roster of dedicated athletes representing Norwegian American
+            football excellence
+          </p>
+        </div>
       </div>
     </section>
   );

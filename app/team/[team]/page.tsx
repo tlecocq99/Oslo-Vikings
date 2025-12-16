@@ -12,11 +12,22 @@ import { fetchSeniorRecruits } from "@/app/services/fetchRecruits";
 import { fetchSchedule } from "@/app/services/fetchSchedule";
 import { fetchStaffForTeam } from "@/app/services/fetchStaff";
 import Image from "next/image";
+import Link from "next/link";
 import { getTeamBySlug, TEAM_CONFIG, type TeamSlug } from "../team-config";
+import type { StaffMember } from "@/app/types/staff";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const revalidate = 300;
+
+const STAFF_FALLBACK_HEADSHOT = "/images/players/playerFiller.png";
+const FLAG_CONTACT_FALLBACK: StaffMember = {
+  id: "flag-contact-fallback",
+  name: "Even Flom-Grundstrøm",
+  role: "Team Manager",
+  email: "evenflomgrundstrom@gmail.com",
+  teams: ["flag-football"],
+};
 
 interface TeamPageParams {
   team: string;
@@ -66,6 +77,51 @@ export default async function TeamDetailPage({ params }: TeamPageProps) {
 
   const teamName = team.name;
   const shouldShowRecruits = team.slug === "senior-elite";
+  const isUnderConstruction = team.slug === "flag-football";
+
+  if (isUnderConstruction) {
+    const staff = await fetchStaffForTeam(team);
+    const primaryContact = selectPrimaryContact(staff) ?? FLAG_CONTACT_FALLBACK;
+
+    return (
+      <>
+        <Navigation />
+        <main className="min-h-screen">
+          <section className="flex min-h-[60vh] items-center py-24">
+            <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center sm:px-6">
+              <span className="inline-flex items-center gap-2 rounded-full bg-viking-red/15 px-4 py-1 text-sm font-semibold uppercase tracking-[0.45em] text-viking-red">
+                Flag Football
+              </span>
+              <h2 className="text-3xl font-bold text-viking-charcoal dark:text-white sm:text-4xl">
+                This page is under construction
+              </h2>
+              <p className="text-base text-gray-600 dark:text-gray-300 sm:text-lg">
+                We&apos;re working on bringing you updated rosters, schedules,
+                and coaching staff details for the Oslo Vikings Flag Football
+                program. Check back soon or reach out to our club leadership for
+                the latest information.
+              </p>
+              <div className="w-full max-w-2xl text-left">
+                <p className="mb-3 text-xs uppercase tracking-[0.35em] text-viking-red">
+                  Flag football contact
+                </p>
+                <FlagStaffContactCard member={primaryContact} />
+              </div>
+              <div className="flex justify-center">
+                <Link
+                  href="/team"
+                  className="inline-flex items-center justify-center rounded-full border border-viking-red/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-viking-red transition-colors hover:border-viking-red hover:text-viking-red-dark dark:border-white/30 dark:text-white dark:hover:border-white/60"
+                >
+                  View other teams
+                </Link>
+              </div>
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   const tableOfContents: TeamTableOfContentsItem[] = [
     { id: staffAnchorId, label: "Staff" },
@@ -210,4 +266,95 @@ function TeamHero({
       </div>
     </section>
   );
+}
+
+function selectPrimaryContact(staff: StaffMember[]): StaffMember | null {
+  if (!staff.length) {
+    return null;
+  }
+
+  const preferredMatches = staff.filter((member) => {
+    const role = member.role.toLowerCase();
+    return /flag/.test(role) || /head/.test(role) || /coach/.test(role);
+  });
+
+  const candidates = preferredMatches.length ? preferredMatches : staff;
+  const withDirectContact = candidates.filter(
+    (member) => member.email || member.phone
+  );
+
+  return withDirectContact[0] ?? candidates[0] ?? null;
+}
+
+function FlagStaffContactCard({ member }: { member: StaffMember }) {
+  const initials = getInitials(member.name);
+  const imageSrc = member.image?.trim()
+    ? member.image
+    : STAFF_FALLBACK_HEADSHOT;
+  const altText = member.imageAlt
+    ? member.imageAlt
+    : member.image
+    ? `${member.name} headshot`
+    : `${initials || member.name || "Oslo Vikings"} placeholder portrait`;
+
+  return (
+    <article className="rounded-2xl border border-gray-200/60 dark:border-gray-800/80 bg-white/95 dark:bg-viking-charcoal/60 shadow-sm">
+      <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:gap-6">
+        <div className="relative mx-auto h-24 w-24 overflow-hidden rounded-full shadow-lg sm:mx-0 sm:h-28 sm:w-28">
+          <Image
+            src={imageSrc}
+            alt={altText}
+            fill
+            sizes="112px"
+            className="object-cover"
+          />
+        </div>
+        <div className="flex-1 text-center sm:text-left">
+          <h3 className="text-lg font-semibold text-viking-charcoal dark:text-white">
+            {member.name}
+          </h3>
+          <p className="mt-1 text-[0.7rem] uppercase tracking-[0.3em] text-viking-red/80 dark:text-viking-red/80">
+            {member.role}
+          </p>
+          {(member.email || member.phone) && (
+            <div className="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-300">
+              {member.email ? (
+                <p>
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="underline-offset-4 hover:text-viking-red hover:underline dark:hover:text-viking-red"
+                  >
+                    {member.email}
+                  </a>
+                </p>
+              ) : null}
+              {member.phone ? (
+                <p>
+                  <a
+                    href={`tel:${member.phone}`}
+                    className="hover:text-viking-red dark:hover:text-viking-red"
+                  >
+                    {member.phone}
+                  </a>
+                </p>
+              ) : null}
+            </div>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function getInitials(name: string): string {
+  const sanitized = name.replace(/\s+/g, " ").trim();
+  if (!sanitized) {
+    return "OV";
+  }
+
+  const parts = sanitized.split(" ").filter(Boolean);
+  const [first = "", second = ""] = parts;
+  const initials = `${first.charAt(0)}${second.charAt(0)}`.toUpperCase();
+
+  return initials || "OV";
 }

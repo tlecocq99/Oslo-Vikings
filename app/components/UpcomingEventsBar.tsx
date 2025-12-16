@@ -152,7 +152,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
             id="team-filter"
             value={teamFilter}
             onChange={(e) => setTeamFilter(e.target.value as any)}
-            className="block w-44 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 py-1 px-2 text-lg text-viking-red focus:outline-none focus:ring-2 focus:ring-viking-red font-teko"
+            className="block w-44 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-black py-1 px-2 text-lg text-viking-red focus:outline-none focus:ring-2 focus:ring-viking-red font-teko"
           >
             {TEAM_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
@@ -174,7 +174,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
           style={{ scrollSnapType: "x mandatory" }}
         >
           {filteredEvents.length === 0 ? (
-            <div className="min-w-[220px] max-w-xs h-full bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-3 flex flex-col justify-center items-center text-center text-sm text-gray-600 dark:text-gray-300">
+            <div className="min-w-[220px] max-w-xs h-full bg-white dark:bg-black rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-3 flex flex-col justify-center items-center text-center text-sm text-gray-600 dark:text-gray-300">
               No upcoming events found. Check back soon!
             </div>
           ) : (
@@ -185,7 +185,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
               return (
                 <div
                   key={event.id}
-                  className="min-w-[240px] max-w-xs h-full bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-3 flex flex-col gap-2 transition-colors"
+                  className="min-w-[240px] max-w-xs h-full bg-white dark:bg-black rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-3 flex flex-col gap-2 transition-colors"
                   style={{ scrollSnapAlign: "start" }}
                 >
                   <div className="flex items-center justify-between text-[15px] uppercase tracking-wide text-viking-red/80">

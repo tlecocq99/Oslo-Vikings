@@ -28,6 +28,10 @@
   --color-viking-red-dark: #7c0f11;
   --color-viking-charcoal: #2c2c2c;
   --color-viking-charcoal-rgb: 44, 44, 44;
+  --color-viking-surface: #2c2c2c;
+  --color-viking-surface-rgb: 44, 44, 44;
+  --color-viking-surface-alt: #333333;
+  --color-viking-surface-alt-rgb: 51, 51, 51;
   --color-success: #22c55e;
   --color-success-rgb: 34, 197, 94;
   --color-danger: #dc2626;
