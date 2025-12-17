@@ -119,13 +119,13 @@ export default async function NewsArticlePage({
         </div>
 
         {article.image?.src ? (
-          <div className="relative h-[320px] sm:h-[420px] lg:h-[520px]">
+          <div className="relative h-[320px] sm:h-[420px] lg:h-[520px] bg-white dark:bg-white/5">
             <Image
               src={article.image.src}
               alt={article.image.alt ?? article.title}
               fill
               priority
-              className="object-cover"
+              className="object-contain"
               sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-viking-charcoal via-viking-charcoal/60 to-transparent" />
@@ -164,13 +164,13 @@ export default async function NewsArticlePage({
               {article.gallery.map((image, index) => (
                 <div
                   key={`${image.src}-${index}`}
-                  className="relative h-64 overflow-hidden rounded-lg"
+                  className="relative h-64 overflow-hidden rounded-lg bg-white dark:bg-white/5"
                 >
                   <Image
                     src={image.src}
                     alt={image.alt ?? article.title}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(min-width: 1024px) 50vw, 100vw"
                   />
                 </div>
