@@ -73,7 +73,7 @@ function Hero() {
       <div className="absolute inset-0 hidden bg-gradient-to-b from-black/75 via-black/60 to-black/75 dark:block" />
       <div className="absolute inset-x-0 bottom-0 z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-4 pb-16 text-center sm:px-6 lg:px-8">
         <div className="rounded-3xl bg-viking-red/30 shadow-[0_25px_60px_-25px_rgba(172,20,22,0.65)] dark:bg-transparent dark:shadow-none dark:ring-0">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight drop-shadow-[0_0_32px_rgba(0,0,0,0.45)] dark:drop-shadow-[0_0_35px_rgba(0,0,0,0.65)]">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight drop-shadow-[0_0_32px_rgba(0,0,0,0.45)] dark:drop-shadow-[0_0_35px_rgba(0,0,0,0.65)] relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-6">
             Meet the Vikings
           </h1>
           <p className="mt-6 text-lg sm:text-xl text-white/90 max-w-3xl mx-auto drop-shadow-[0_0_24px_rgba(0,0,0,0.35)] dark:drop-shadow-[0_0_25px_rgba(0,0,0,0.55)]">

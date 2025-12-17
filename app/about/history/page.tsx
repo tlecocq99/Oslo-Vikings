@@ -185,7 +185,7 @@ export default function HistoryPage() {
             <p className="text-sm font-semibold uppercase tracking-[0.4em] text-viking-red">
               Our Story
             </p>
-            <h1 className="mt-4 font-Anton_SC text-4xl font-bold text-white sm:text-5xl">
+            <h1 className="mt-4 font-Anton_SC text-4xl font-bold text-white sm:text-5xl relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               Decades of Viking Football
             </h1>
             <p className="mt-6 max-w-3xl text-base text-gray-200 sm:text-lg">
@@ -263,7 +263,7 @@ export default function HistoryPage() {
                 Honors
               </p>
               <h2 className="mt-2 text-3xl font-bold text-viking-charcoal dark:text-gray-100">
-                VIKINGS’ MEMBERS OF THE NOAFF – HALL OF FAME
+                VIKINGS’ MEMBERS OF THE NAIF HALL OF FAME
               </h2>
               <p className="mt-4 text-gray-600 dark:text-gray-300">
                 Celebrating the pioneers whose dedication and excellence earned

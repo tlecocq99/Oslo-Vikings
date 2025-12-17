@@ -36,7 +36,7 @@ export default function ShopPage() {
       <main className="min-h-screen bg-white dark:bg-background transition-colors">
         <section className="py-20 sm:py-12">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-            <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-100">
+            <h1 className="text-4xl sm:text-5xl font-bold text-viking-charcoal dark:text-gray-100 relative after:content-[''] after:block after:h-1 after:w-24 after:bg-viking-red after:rounded-full after:mx-auto after:mt-4">
               You&apos;re here early!
             </h1>
             <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
