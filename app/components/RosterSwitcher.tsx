@@ -68,8 +68,8 @@ function RosterSwitcherInner({
       <div className="md:hidden fixed top-1/2 right-0 z-40 -translate-y-1/2">
         <Sheet>
           <SheetTrigger asChild>
-            <button className="flex h-10 w-6 items-center justify-center rounded-l-full rounded-r-none bg-viking-red text-white shadow-lg hover:bg-viking-red/90 focus:outline-none focus:ring-2 focus:ring-viking-red/40">
-              <ArrowLeft className="w-5 h-5" />
+            <button className="flex h-20 w-10 items-center justify-center rounded-l-full rounded-r-none bg-viking-red text-white shadow-lg hover:bg-viking-red/90 focus:outline-none focus:ring-2 focus:ring-viking-red/40">
+              <ArrowLeft className="w-8 h-8" />
               <span className="sr-only">Open team menu and filters</span>
             </button>
           </SheetTrigger>
