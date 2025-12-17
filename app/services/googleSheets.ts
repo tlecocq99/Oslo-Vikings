@@ -96,6 +96,24 @@ async function getSheetsClient(): Promise<SheetsClient | null> {
   return sheetsClientPromise;
 }
 
+function buildSheetRange(sheetName: string, range: string): string {
+  const trimmedSheet = sheetName.trim();
+  const trimmedRange = range.trim();
+
+  if (!trimmedSheet) {
+    return trimmedRange;
+  }
+
+  if (trimmedSheet.includes("!")) {
+    return trimmedSheet;
+  }
+
+  const escapedSheet = trimmedSheet.replace(/'/g, "''");
+  const sheetReference = `'${escapedSheet}'`;
+
+  return trimmedRange ? `${sheetReference}!${trimmedRange}` : sheetReference;
+}
+
 export async function fetchSheetRows(
   sheetName: string,
   range: string
@@ -103,17 +121,16 @@ export async function fetchSheetRows(
   const client = await getSheetsClient();
   if (!client) return [];
 
+  const sheetRange = buildSheetRange(sheetName, range);
+
   try {
     const resp = await client.sheets.spreadsheets.values.get({
       spreadsheetId: client.sheetId,
-      range: `${sheetName}!${range}`,
+      range: sheetRange,
     });
     return resp.data.values || [];
   } catch (err) {
-    console.error(
-      `[sheets] Failed to fetch range '${sheetName}!${range}':`,
-      err
-    );
+    console.error(`[sheets] Failed to fetch range '${sheetRange}':`, err);
     return [];
   }
 }
