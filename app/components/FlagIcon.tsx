@@ -17,6 +17,7 @@ import {
   NL,
   PL,
   UA,
+  TR,
 } from "country-flag-icons/react/3x2";
 
 // Loosen the flag component type to align with library signature
@@ -37,6 +38,7 @@ const CODE_MAP: Record<string, FlagComponent> = {
   NL,
   PL,
   UA,
+  TR,
 };
 
 // Map common nationality strings (case-insensitive) to ISO alpha-2 codes
@@ -70,6 +72,10 @@ const NAME_TO_CODE: Record<string, string> = {
   polish: "PL",
   ukraine: "UA",
   ukrainian: "UA",
+  turkey: "TR",
+  turkish: "TR",
+  turkiye: "TR",
+  trkiye: "TR",
 };
 
 export interface FlagIconProps {
