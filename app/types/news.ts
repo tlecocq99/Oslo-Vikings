@@ -7,6 +7,8 @@ export type NewsImagePlacement =
 
 export type NewsVisibility = "draft" | "published" | "archived";
 
+export type NewsArticleLayoutVariant = "default" | "spotlight" | "gallery";
+
 export interface NewsImage {
   src: string;
   alt?: string;
@@ -32,5 +34,6 @@ export interface NewsArticle {
   body?: string;
   tags?: string[];
   sources?: string[];
+  layoutVariant?: NewsArticleLayoutVariant;
   raw?: Record<string, string>;
 }

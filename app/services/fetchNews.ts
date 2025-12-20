@@ -5,10 +5,11 @@ import type {
   NewsImage,
   NewsImagePlacement,
   NewsVisibility,
+  NewsArticleLayoutVariant,
 } from "@/app/types/news";
 
 const DEFAULT_NEWS_SHEET = process.env.GOOGLE_NEWS_SHEET ?? "News";
-const DEFAULT_NEWS_RANGE = process.env.GOOGLE_NEWS_RANGE ?? "A1:N400";
+const DEFAULT_NEWS_RANGE = process.env.GOOGLE_NEWS_RANGE ?? "A1:Z400";
 
 const HEADER_KEYS = {
   title: ["title", "headline", "name"],
@@ -29,6 +30,7 @@ const HEADER_KEYS = {
   tags: ["tags", "keywords"],
   content: ["content", "body", "article"],
   sources: ["sources", "links", "references"],
+  layoutVariant: ["layout", "layoutvariant", "variant", "template"],
 } as const;
 
 type HeaderMap = Map<string, number>;
@@ -133,6 +135,26 @@ function normaliseImage(
     credit: credit || undefined,
     driveId: undefined,
   } satisfies NewsImage;
+}
+
+const ARTICLE_VARIANTS: NewsArticleLayoutVariant[] = [
+  "default",
+  "spotlight",
+  "gallery",
+];
+
+function normaliseLayoutVariant(
+  raw: string
+): NewsArticleLayoutVariant | undefined {
+  if (!raw) return undefined;
+  const value = raw
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "");
+  const match = ARTICLE_VARIANTS.find(
+    (variant) => variant.replace(/[^a-z0-9]+/g, "") === value
+  );
+  return match;
 }
 
 function parseGallery(raw: string): NewsImage[] | undefined {
@@ -266,6 +288,9 @@ export async function fetchNewsArticles({
       body: getValue(row, headerMap, HEADER_KEYS.content) || undefined,
       tags: parseTags(getValue(row, headerMap, HEADER_KEYS.tags)),
       sources: parseSources(getValue(row, headerMap, HEADER_KEYS.sources)),
+      layoutVariant: normaliseLayoutVariant(
+        getValue(row, headerMap, HEADER_KEYS.layoutVariant)
+      ),
       raw: toRecord(row, headers),
     };
 
