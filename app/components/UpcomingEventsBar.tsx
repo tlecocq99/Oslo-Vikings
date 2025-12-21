@@ -142,9 +142,9 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
   };
 
   return (
-    <section className="w-full bg-gray-50 dark:bg-viking-charcoal/70 border-b border-gray-200 dark:border-gray-700 py-3 md:py-4 transition-colors">
+    <section className="w-full bg-gray-50 dark:bg-viking-charcoal/70 border-b border-gray-200 dark:border-gray-700 transition-colors pb-2">
       <div className="w-full px-4 sm:px-4 lg:px-6">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-6">
+        <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-5">
           <div className="flex items-center justify-between md:block md:mr-2">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5 text-viking-red" />
@@ -166,7 +166,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
             </select>
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-2">
             <select
               id="team-filter"
               value={teamFilter}
@@ -179,27 +179,26 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
                 </option>
               ))}
             </select>
-          </div>
-
-          <div className="hidden md:flex items-center gap-2 ml-auto">
-            <button
-              className="hidden md:inline-flex p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-viking-red transition-colors"
-              onClick={() => scroll("left")}
-              aria-label="Scroll left"
-            >
-              <ArrowLeft className="w-7 h-7" />
-            </button>
-            <button
-              className="hidden md:inline-flex p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-viking-red transition-colors"
-              onClick={() => scroll("right")}
-              aria-label="Scroll right"
-            >
-              <ArrowRight className="w-7 h-7" />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                className="inline-flex p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-viking-red transition-colors"
+                onClick={() => scroll("left")}
+                aria-label="Scroll left"
+              >
+                <ArrowLeft className="w-7 h-7" />
+              </button>
+              <button
+                className="inline-flex p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 text-viking-red transition-colors"
+                onClick={() => scroll("right")}
+                aria-label="Scroll right"
+              >
+                <ArrowRight className="w-7 h-7" />
+              </button>
+            </div>
           </div>
         </div>
 
-        <div className="relative mt-3 md:mt-0">
+        <div className="relative md:mt-0">
           <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-gray-50 to-transparent dark:from-viking-charcoal/70 md:hidden" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-gray-50 to-transparent dark:from-viking-charcoal/70 md:hidden" />
 
@@ -210,7 +209,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
           >
             {filteredEvents.length === 0 ? (
               <div
-                className="min-w-[220px] max-w-xs bg-white dark:bg-black rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-4 flex flex-col justify-center items-center text-center text-sm text-gray-600 dark:text-gray-300"
+                className="min-w-[220px] max-w-xs bg-white dark:bg-black rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 flex flex-col justify-center items-center text-center text-sm text-gray-600 dark:text-gray-300"
                 style={{ scrollSnapAlign: "start" }}
               >
                 No upcoming events found. Check back soon!
@@ -233,7 +232,7 @@ function EventCard({ event }: { event: UpcomingEvent }) {
 
   return (
     <div
-      className="min-w-[220px] max-w-[260px] md:min-w-[240px] md:max-w-xs md:h-full bg-white dark:bg-black rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-3 flex flex-col gap-2 transition-colors"
+      className="min-w-[220px] max-w-[260px] md:min-w-[240px] md:max-w-xs md:h-full bg-white dark:bg-black rounded-lg shadow border border-gray-200 dark:border-gray-700 px-4 py-1 flex flex-col gap-2 transition-colors"
       style={{ scrollSnapAlign: "start" }}
     >
       <div className="flex items-center justify-between text-[15px] uppercase tracking-wide text-viking-red/80">

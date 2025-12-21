@@ -238,6 +238,40 @@ export default async function Home() {
       <SplashScreen />
       <Navigation />
 
+      {/* Desktop Reyrr banner */}
+      <div className="hidden w-full md:block bg-black">
+        <div
+          className="relative mx-auto w-full max-w-[1920px]"
+          style={{ aspectRatio: "1920 / 95" }}
+        >
+          <Image
+            src="/images/backgrounds/reyrr-banner-desktop.png"
+            alt="Reyrr x Oslo Vikings shop your gear banner"
+            fill
+            priority={false}
+            sizes="(min-width: 1280px) 100vw, 100vw"
+            className="object-cover"
+          />
+        </div>
+      </div>
+
+      {/* Mobile Reyrr banner */}
+      <div className="w-full md:hidden bg-black">
+        <div
+          className="relative mx-auto w-full max-w-[640px]"
+          style={{ aspectRatio: "640 / 160" }}
+        >
+          <Image
+            src="/images/backgrounds/reyrr-banner-mobile.png"
+            alt="Reyrr x Oslo Vikings shop your gear banner mobile"
+            fill
+            priority={false}
+            sizes="(max-width: 767px) 100vw, 100vw"
+            className="object-cover"
+          />
+        </div>
+      </div>
+
       {/* Upcoming Games Bar */}
       <UpcomingEventsBar events={upcomingEvents} />
 

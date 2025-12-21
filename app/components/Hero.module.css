@@ -1,7 +1,7 @@
 .link {
   position: relative;
   display: block;
-  min-height: 35vh;
+  min-height: calc(35vh - 20px);
   overflow: hidden;
   background-color: var(--color-viking-red-dark);
   background-image: linear-gradient(
@@ -29,19 +29,19 @@
 
 @media (min-width: 640px) {
   .link {
-    min-height: 55vh;
+    min-height: calc(55vh - 20px);
   }
 }
 
 @media (min-width: 768px) {
   .link {
-    min-height: 70vh;
+    min-height: calc(70vh - 20px);
   }
 }
 
 @media (min-width: 1280px) {
   .link {
-    min-height: 77vh;
+    min-height: calc(77vh - 20px);
   }
 }
 
