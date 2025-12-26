@@ -248,6 +248,8 @@ function ContactPageContent() {
   const [centralContacts, setCentralContacts] = useState<ContactPerson[]>([]);
   const [contactsLoading, setContactsLoading] = useState(true);
   const [contactsError, setContactsError] = useState<string | null>(null);
+  // Toggle this flag to bring the Quick Links card back when needed.
+  const SHOW_QUICK_LINKS = false;
 
   useEffect(() => {
     let isMounted = true;
@@ -382,67 +384,69 @@ function ContactPageContent() {
                 <ContactForm />
               </div>
 
-              <Card className="bg-white dark:bg-viking-surface border border-gray-200 dark:border-gray-700 transition-colors">
-                <CardHeader className="px-4 py-3">
-                  <CardTitle className="text-xl text-viking-charcoal dark:text-gray-100">
-                    Quick Links
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 px-4 pb-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Season Tickets
-                    </span>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="sm"
-                      className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
-                    >
-                      <Link href="#contact-form">Buy Now</Link>
-                    </Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Group Sales
-                    </span>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="sm"
-                      className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
-                    >
-                      <Link href="#contact-form">Inquire</Link>
-                    </Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Corporate Partnerships
-                    </span>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="sm"
-                      className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
-                    >
-                      <Link href="#contact-form">Contact</Link>
-                    </Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-700 dark:text-gray-300">
-                      Media Requests
-                    </span>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="sm"
-                      className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
-                    >
-                      <Link href="#contact-form">Submit</Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              {SHOW_QUICK_LINKS && (
+                <Card className="bg-white dark:bg-viking-surface border border-gray-200 dark:border-gray-700 transition-colors">
+                  <CardHeader className="px-4 py-3">
+                    <CardTitle className="text-xl text-viking-charcoal dark:text-gray-100">
+                      Quick Links
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2 px-4 pb-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Season Tickets
+                      </span>
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
+                      >
+                        <Link href="#contact-form">Buy Now</Link>
+                      </Button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Group Sales
+                      </span>
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
+                      >
+                        <Link href="#contact-form">Inquire</Link>
+                      </Button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Corporate Partnerships
+                      </span>
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
+                      >
+                        <Link href="#contact-form">Contact</Link>
+                      </Button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Media Requests
+                      </span>
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="border-viking-red text-viking-red hover:bg-viking-red hover:text-white dark:border-viking-red/70"
+                      >
+                        <Link href="#contact-form">Submit</Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
         </section>
