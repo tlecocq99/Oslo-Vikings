@@ -39,16 +39,16 @@ export const metadata: Metadata = {
     description: "Official website of the Oslo Vikings American Football team.",
     type: "website",
     locale: "en_US",
-    url: "https://oslo-vikings.vercel.app/",
+    url: "https://www.oslovikings.com/",
     siteName: "Oslo Vikings",
     images: [
       {
-        url: "https://oslo-vikings.vercel.app/og/logo.png",
+        url: "https://www.oslovikings.com/og/logo.png",
         alt: "Oslo Vikings",
       },
       // Square (WhatsApp/Slack sometimes prefer)
       {
-        url: "https://oslovikings.no/og/og-1200x1200.png",
+        url: "https://www.oslovikings.com/og/og-1200x1200.png",
         width: 1200,
         height: 1200,
         alt: "Oslo Vikings (Square)",

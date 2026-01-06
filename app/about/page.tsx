@@ -11,6 +11,12 @@ import {
   Badge,
 } from "lucide-react";
 import { JourneyTimeline } from "../components/JourneyTimeline";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Oslo Vikings – About Us",
+  description: "Learn more about the Oslo Vikings, our mission, values, and history.",
+};
 
 export default function AboutPage() {
   const values = [

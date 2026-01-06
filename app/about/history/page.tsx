@@ -3,6 +3,13 @@ import Footer from "../../components/Footer";
 import { JourneyTimeline } from "../../components/JourneyTimeline";
 import { Trophy, Globe2, Users, Flame } from "lucide-react";
 import Image from "next/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Oslo Vikings – History",
+  description:
+    "Discover the history of the Oslo Vikings American football club.",
+};
 
 const milestones = [
   {

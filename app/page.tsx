@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import type { UpcomingEvent } from "@/app/types/event";
 import dynamic from "next/dynamic";
 import Navigation from "./components/Navigation";
@@ -17,6 +18,13 @@ import { fetchNewsArticles } from "./services/fetchNews";
 import { partners } from "./data/partners";
 import type { NewsCardProps } from "./components/NewsCardContent";
 import type { NewsArticle } from "./types/news";
+import { metadata as layoutMetadata } from "./layout";
+
+export const metadata: Metadata = {
+  ...layoutMetadata,
+  title: "Oslo Vikings - Home",
+  description: "Official website of the Oslo Vikings.",
+};
 
 const PartnersCarousel = dynamic(
   () => import("./components/PartnersCarousel"),

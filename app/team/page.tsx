@@ -6,6 +6,12 @@ import Footer from "../components/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import { ALL_TEAMS } from "./team-config";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Oslo Vikings – Teams Overview",
+  description: "Meet the Oslo Vikings teams and their players.",
+};
 
 // Server component: fetch players securely (no bundling googleapis into client)
 export default function TeamPage() {

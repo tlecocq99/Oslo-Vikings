@@ -3,6 +3,13 @@ import Footer from "../../components/Footer";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ShieldCheck, ClipboardCheck, Scale, FileText } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Oslo Vikings – Antidoping Commitment",
+  description:
+    "Learn about the Oslo Vikings' dedication to clean sport, our antidoping policies, education initiatives, and resources for athletes.",
+};
 
 const commitments = [
   {

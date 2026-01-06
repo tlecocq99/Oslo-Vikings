@@ -4,7 +4,7 @@ A modern, content-driven site for the Oslo Vikings American Football club built 
 
 ## 🌐 Live Site
 
-Catch the latest roster, schedule, and club news at **[oslovikings.vercel.app](https://oslovikings.vercel.app/)**.
+Catch the latest roster, schedule, and club news at **[oslovikings.com](https://www.oslovikings.com/)**.
 
 ## 🏈 Feature Highlights
 

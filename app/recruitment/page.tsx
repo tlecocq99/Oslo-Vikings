@@ -10,7 +10,11 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 
-export const metadata = { title: "Join Oslo Vikings" };
+export const metadata = {
+  title: "Oslo Vikings – Recruitment",
+  description:
+    "Learn how to join the Oslo Vikings.",
+};
 
 export default function RecruitmentPage() {
   const benefits = [

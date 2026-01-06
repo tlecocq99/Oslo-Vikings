@@ -3,6 +3,12 @@ import Link from "next/link";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Oslo Vikings – Boosters",
+  description: "Learn more about the Oslo Vikings Booster Club and how to support our community.",
+};
 
 const boosterHeroDesktop = "/images/backgrounds/boosterBanner.png";
 const boosterHeroMobile = "/images/backgrounds/boosterBanner.png";

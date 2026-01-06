@@ -5,6 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { Award, TrendingUp, Users, HeartHandshake } from "lucide-react";
 import { partners } from "@/app/data/partners";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Oslo Vikings – Partners",
+  description: "Learn more about our partners and sponsors.",
+};
 
 const partnershipPillars = [
   {
