@@ -11,6 +11,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { FlagIcon } from "./FlagIcon";
+import { getImageLoaderProps } from "@/lib/imageLoader";
 
 interface PlayerModalProps {
   player: Player;
@@ -94,6 +95,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
   const imageSrc = image || "/images/players/playerFiller.png";
   const isFallbackImage = imageSrc === "/images/players/playerFiller.png";
   const overlayTextColor = isFallbackImage ? "text-white" : "text-viking-red";
+  const imageLoaderProps = getImageLoaderProps(imageSrc);
 
   return (
     <Dialog>
@@ -108,6 +110,7 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
               className="object-cover"
               sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 480px"
               priority={false}
+              {...imageLoaderProps}
             />
             <div className="absolute inset-0 bg-black/45" />
             <div className="relative z-10 flex h-full w-full flex-col items-center justify-end px-6 pt-8 pb-4 sm:pt-10 sm:pb-5 text-center space-y-2">

@@ -10,6 +10,7 @@ import { Calendar, Search, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { formatSheetDate } from "@/lib/date";
+import { getImageLoaderProps } from "@/lib/imageLoader";
 import type { NewsArticle } from "@/app/types/news";
 import type { NewsCardProps } from "../components/NewsCardContent";
 
@@ -395,6 +396,7 @@ interface ImageFillProps {
 }
 
 function ImageFill({ src, alt }: ImageFillProps) {
+  const loaderProps = getImageLoaderProps(src);
   return (
     <div className="absolute inset-0">
       <div className="absolute inset-0 bg-black/20" />
@@ -405,6 +407,7 @@ function ImageFill({ src, alt }: ImageFillProps) {
         className="object-cover"
         sizes="(max-width: 1024px) 100vw, 50vw"
         priority={false}
+        {...loaderProps}
       />
     </div>
   );

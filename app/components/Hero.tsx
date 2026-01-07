@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getImageLoaderProps } from "@/lib/imageLoader";
 import styles from "./Hero.module.css";
 
 interface HeroImage {
@@ -38,6 +39,7 @@ export default function Hero({
     background_image?.mobileFilename ??
     mobile_background_image?.filename ??
     "/images/backgrounds/mobileHero.png";
+  const heroImageLoaderProps = getImageLoaderProps(heroImageSrc);
   const href = cta_link?.url ?? "/recruitment";
   const ariaLabel =
     cta_text || subtitle || "Explore Oslo Vikings recruitment opportunities";
@@ -55,6 +57,7 @@ export default function Hero({
           priority
           sizes="100vw"
           className={styles.image}
+          {...heroImageLoaderProps}
         />
       </picture>
 

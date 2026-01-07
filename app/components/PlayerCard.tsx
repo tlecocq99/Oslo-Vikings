@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Player } from "@/app/types/player";
 import { FlagIcon } from "./FlagIcon";
 import { PlayerModal } from "./PlayerModal";
+import { getImageLoaderProps } from "@/lib/imageLoader";
 
 export interface PlayerCardProps extends Player {
   variant?: "grid" | "list";
@@ -30,6 +31,7 @@ export default function PlayerCard(props: PlayerCardProps) {
       ? `#${String(number).trim()}`
       : undefined;
   const imageSrc = image || fallbackImage;
+  const imageLoaderProps = getImageLoaderProps(imageSrc);
   const imageAltText = imageAlt || name || "Player image";
 
   // List variant (horizontal card)
@@ -49,6 +51,7 @@ export default function PlayerCard(props: PlayerCardProps) {
             className="w-16 h-16 rounded-full object-cover"
             loading="lazy"
             sizes="64px"
+            {...imageLoaderProps}
           />
           {nationality && (
             <div className="absolute -bottom-1 -right-1 bg-white dark:bg-viking-surface-alt rounded-sm p-[2px] shadow ring-1 ring-black/5 dark:ring-white/10">
@@ -101,6 +104,7 @@ export default function PlayerCard(props: PlayerCardProps) {
               className="w-full h-full object-cover"
               loading="lazy"
               sizes="112px"
+              {...imageLoaderProps}
             />
           </div>
           {nationality && (
@@ -138,6 +142,7 @@ export default function PlayerCard(props: PlayerCardProps) {
               className="object-cover"
               sizes="(max-width: 1023px) 60vw, 320px"
               loading="lazy"
+              {...imageLoaderProps}
             />
             {!image && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/45">

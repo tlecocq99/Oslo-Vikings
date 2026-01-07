@@ -8,6 +8,7 @@ import type {
   TouchEvent as ReactTouchEvent,
 } from "react";
 import Image from "next/image";
+import { getImageLoaderProps } from "@/lib/imageLoader";
 import { Button } from "@/components/ui/button";
 import type { Partner } from "@/app/types/partner";
 
@@ -675,6 +676,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                                   objectFit: "contain",
                                   padding: "0.75rem",
                                 }}
+                                {...getImageLoaderProps(partner.logoSrc)}
                               />
                             ) : (
                               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 text-base font-semibold text-viking-charcoal dark:bg-gray-600 dark:text-white">
@@ -799,6 +801,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                     fill
                     sizes="(min-width: 1024px) 200px, (min-width: 640px) 180px, 45vw"
                     style={{ objectFit: "contain", padding: "1rem" }}
+                    {...getImageLoaderProps(partner.logoSrc)}
                   />
                 ) : (
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-200 text-lg font-semibold text-viking-charcoal dark:bg-gray-600 dark:text-white">
