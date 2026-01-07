@@ -48,14 +48,14 @@ export const metadata: Metadata = {
       },
       // Square (WhatsApp/Slack sometimes prefer)
       {
-        url: "https://www.oslovikings.com/og/og-1200x1200.png",
+        url: "https://www.oslovikings.com/og/og-logo1200x1200.png",
         width: 1200,
         height: 1200,
         alt: "Oslo Vikings (Square)",
       },
       // 16:9
       {
-        url: "https://oslovikings.com/og/og-1600x900.png",
+        url: "https://oslovikings.com/og/og-logo1600x900.png",
         width: 1600,
         height: 900,
         alt: "Oslo Vikings (16:9)",
