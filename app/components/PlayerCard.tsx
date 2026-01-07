@@ -144,13 +144,6 @@ export default function PlayerCard(props: PlayerCardProps) {
               loading="lazy"
               {...imageLoaderProps}
             />
-            {!image && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/45">
-                <span className="text-white text-6xl font-bold drop-shadow-lg">
-                  {displayNumber}
-                </span>
-              </div>
-            )}
           </div>
           <div className="absolute top-8 right-4 bg-viking-red text-white px-2 py-1 rounded font-bold shadow-lg z-20">
             {displayNumber}
