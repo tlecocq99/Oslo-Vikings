@@ -10,7 +10,9 @@ function shouldBypassDefaultLoader(src: string): boolean {
 
 type LoaderAugmentation = Partial<Pick<ImageProps, "loader" | "unoptimized">>;
 
-export function getImageLoaderProps(src: string | null | undefined): LoaderAugmentation {
+export function getImageLoaderProps(
+  src: string | null | undefined
+): LoaderAugmentation {
   if (!src || !shouldBypassDefaultLoader(src)) {
     return {};
   }
