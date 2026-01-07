@@ -8,6 +8,7 @@ import {
   fetchNewsArticles,
 } from "@/app/services/fetchNews";
 import { formatSheetDate } from "@/lib/date";
+import { getImageLoaderProps } from "@/lib/imageLoader";
 import { cn } from "@/lib/utils";
 import type { NewsArticleLayoutVariant } from "@/app/types/news";
 
@@ -300,6 +301,7 @@ export default async function NewsArticlePage({
       ? "text-3xl sm:text-4xl font-black text-slate-900"
       : "text-viking-charcoal dark:text-white"
   );
+  const heroImageLoaderProps = getImageLoaderProps(article.image?.src);
 
   return (
     <article className={articleClassName} data-layout-variant={variant}>
@@ -370,6 +372,7 @@ export default async function NewsArticlePage({
               priority
               className={heroImageClassName}
               sizes="100vw"
+              {...heroImageLoaderProps}
             />
             <div
               className={cn(
@@ -449,6 +452,7 @@ export default async function NewsArticlePage({
                     fill
                     className={galleryImageClassName}
                     sizes="(min-width: 1024px) 50vw, 100vw"
+                    {...getImageLoaderProps(image.src)}
                   />
                 </div>
               ))}

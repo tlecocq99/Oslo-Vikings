@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { StaffMember } from "@/app/types/staff";
+import { getImageLoaderProps } from "@/lib/imageLoader";
 
 const FALLBACK_HEADSHOT = "/images/players/playerFiller.png";
 
@@ -107,6 +108,7 @@ function Avatar({
     (image
       ? `${fallback} portrait`
       : `${fallback || "Oslo Vikings"} placeholder portrait`);
+  const imageLoaderProps = getImageLoaderProps(src);
 
   return (
     <div className="relative w-24 h-24 md:w-28 md:h-28">
@@ -116,6 +118,7 @@ function Avatar({
         fill
         sizes="128px"
         className="rounded-full object-cover shadow-lg"
+        {...imageLoaderProps}
       />
     </div>
   );

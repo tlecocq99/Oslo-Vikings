@@ -17,6 +17,7 @@ import { getTeamBySlug, TEAM_CONFIG, type TeamSlug } from "../team-config";
 import type { StaffMember } from "@/app/types/staff";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getImageLoaderProps } from "@/lib/imageLoader";
 
 export const revalidate = 300;
 
@@ -211,6 +212,8 @@ function TeamHero({
     blurDataURL ??
     "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3Crect%20width='1'%20height='1'%20fill='%230b0e12'/%3E%3C/svg%3E";
   const hasDistinctMobileImage = desktopImage !== mobileImage;
+  const desktopLoaderProps = getImageLoaderProps(desktopImage);
+  const mobileLoaderProps = getImageLoaderProps(mobileImage);
 
   return (
     <section
@@ -229,6 +232,7 @@ function TeamHero({
               className="object-cover lg:hidden"
               placeholder="blur"
               blurDataURL={placeholder}
+              {...mobileLoaderProps}
             />
             <Image
               src={desktopImage}
@@ -239,6 +243,7 @@ function TeamHero({
               className="hidden lg:block object-cover"
               placeholder="blur"
               blurDataURL={placeholder}
+              {...desktopLoaderProps}
             />
           </>
         ) : (
@@ -251,6 +256,7 @@ function TeamHero({
             className="object-cover"
             placeholder="blur"
             blurDataURL={placeholder}
+            {...desktopLoaderProps}
           />
         )}
       </div>
@@ -307,6 +313,7 @@ function FlagStaffContactCard({ member }: { member: StaffMember }) {
             fill
             sizes="112px"
             className="object-cover"
+            {...getImageLoaderProps(imageSrc)}
           />
         </div>
         <div className="flex-1 text-center sm:text-left">

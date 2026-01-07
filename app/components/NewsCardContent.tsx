@@ -2,6 +2,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, User } from "lucide-react";
+import { getImageLoaderProps } from "@/lib/imageLoader";
 import type { NewsImagePlacement } from "@/app/types/news";
 import styles from "./NewsCardContent.module.css";
 
@@ -32,6 +33,7 @@ export function NewsCardContent({
   const href = slug ? `/news/${slug}` : "#";
   const placement: NewsImagePlacement = image?.placement ?? "top";
   const hasImage = Boolean(image?.src) && placement !== "none";
+  const imageLoaderProps = getImageLoaderProps(image?.src);
 
   const imageContent = hasImage ? (
     <>
@@ -42,6 +44,7 @@ export function NewsCardContent({
         className={styles.imageElement}
         sizes="(max-width:768px) 100vw, 400px"
         priority={false}
+        {...imageLoaderProps}
       />
       <div className={styles.imageOverlay} />
     </>
