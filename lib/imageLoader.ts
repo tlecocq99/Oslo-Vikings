@@ -1,6 +1,4 @@
-import type { ImageLoader, ImageProps } from "next/image";
-
-const directImageLoader: ImageLoader = ({ src }) => src;
+import type { ImageProps } from "next/image";
 
 const REMOTE_URL_PATTERN = /^https?:\/\/\S+/i;
 
@@ -8,7 +6,7 @@ function shouldBypassDefaultLoader(src: string): boolean {
   return REMOTE_URL_PATTERN.test(src);
 }
 
-type LoaderAugmentation = Partial<Pick<ImageProps, "loader" | "unoptimized">>;
+type LoaderAugmentation = Partial<Pick<ImageProps, "unoptimized">>;
 
 export function getImageLoaderProps(
   src: string | null | undefined
@@ -18,7 +16,6 @@ export function getImageLoaderProps(
   }
 
   return {
-    loader: directImageLoader,
     unoptimized: true,
   };
 }
