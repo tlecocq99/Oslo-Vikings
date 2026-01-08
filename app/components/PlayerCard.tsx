@@ -30,7 +30,11 @@ export default function PlayerCard(props: PlayerCardProps) {
     typeof number === "number" || typeof number === "string"
       ? `#${String(number).trim()}`
       : undefined;
-  const imageSrc = image || fallbackImage;
+  const normalizedImageSrc =
+    typeof image === "string" && image.trim().length > 0
+      ? image.trim()
+      : fallbackImage;
+  const imageSrc = normalizedImageSrc;
   const imageLoaderProps = getImageLoaderProps(imageSrc);
   const imageAltText = imageAlt || name || "Player image";
 

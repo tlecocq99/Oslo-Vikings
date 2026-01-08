@@ -92,7 +92,10 @@ export function PlayerModal({ player, trigger }: PlayerModalProps) {
   const displayNationality = nationality
     ? countryDisplay(nationality)
     : undefined;
-  const imageSrc = image || "/images/players/playerFiller.png";
+  const imageSrc =
+    typeof image === "string" && image.trim().length > 0
+      ? image.trim()
+      : "/images/players/playerFiller.png";
   const isFallbackImage = imageSrc === "/images/players/playerFiller.png";
   const overlayTextColor = isFallbackImage ? "text-white" : "text-viking-red";
   const imageLoaderProps = getImageLoaderProps(imageSrc);
