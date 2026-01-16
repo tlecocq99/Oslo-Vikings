@@ -495,6 +495,12 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   };
 
   const handleMobileTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement | null;
+    if (target?.closest("a, button, [data-partner-overlay]")) {
+      resetTouchState();
+      return;
+    }
+
     if (!isMobile || mobileSlides.length <= 1) {
       return;
     }
@@ -700,6 +706,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                               ? "opacity-100 pointer-events-auto"
                               : "opacity-0 pointer-events-none"
                           }`}
+                          data-partner-overlay
                           aria-hidden={!isActive}
                         >
                           <p className="text-sm font-medium">
@@ -824,6 +831,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
                     ? "opacity-100 pointer-events-auto"
                     : "opacity-0 pointer-events-none"
                 }`}
+                data-partner-overlay
                 aria-hidden={!isActive}
               >
                 <p className="text-sm font-bold">{partner.description}</p>
