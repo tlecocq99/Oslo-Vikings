@@ -34,6 +34,14 @@ export const metadata: Metadata = {
     "Official website of the Oslo Vikings American Football team. Follow our games, meet the team, and stay updated with the latest news.",
   keywords: ["Oslo Vikings", "American Football", "Norway", "Sports Team"],
   authors: [{ name: "Oslo Vikings" }],
+  icons: {
+    icon: [
+      { url: "/images/logo.png", type: "image/png", sizes: "32x32" },
+      { url: "/images/logo.png", type: "image/png", sizes: "192x192" },
+    ],
+    shortcut: "/images/logo.png",
+    apple: [{ url: "/images/logo.png", type: "image/png", sizes: "180x180" }],
+  },
   openGraph: {
     title: "Oslo Vikings - Norwegian American Football",
     description: "Official website of the Oslo Vikings American Football team.",
@@ -95,7 +103,15 @@ export default function RootLayout({
         content="#0b0e12"
         media="(prefers-color-scheme: dark)"
       />
-      <link rel="icon" href="/images/logo.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png" />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="192x192"
+        href="/images/logo.png"
+      />
+      <link rel="apple-touch-icon" href="/images/logo.png" />
+      <link rel="shortcut icon" href="/images/logo.png" />
       <body
         suppressHydrationWarning
         className={`${inter.className} antialiased transition-colors duration-300 max-w-full overflow-x-hidden`}
