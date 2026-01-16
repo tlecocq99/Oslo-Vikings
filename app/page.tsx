@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 import type { UpcomingEvent } from "@/app/types/event";
 import dynamic from "next/dynamic";
 import Navigation from "./components/Navigation";
@@ -25,6 +25,8 @@ export const metadata: Metadata = {
   title: "Oslo Vikings - Home",
   description: "Official website of the Oslo Vikings.",
 };
+
+export const revalidate = 900; // Refresh every 15 minutes so expired events drop off
 
 const PartnersCarousel = dynamic(
   () => import("./components/PartnersCarousel"),
