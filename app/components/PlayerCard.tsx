@@ -78,11 +78,6 @@ export default function PlayerCard(props: PlayerCardProps) {
               </p>
             </div>
           </div>
-          {bio && (
-            <p className="text-gray-700 dark:text-gray-300 text-xs mt-2 line-clamp-2">
-              {bio}
-            </p>
-          )}
         </div>
       </div>
     );
@@ -171,11 +166,6 @@ export default function PlayerCard(props: PlayerCardProps) {
               />
             )}
           </div>
-          {bio && (
-            <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-2">
-              {bio}
-            </p>
-          )}
         </div>
       </div>
     );
