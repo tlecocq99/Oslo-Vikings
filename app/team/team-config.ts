@@ -38,7 +38,7 @@ export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
     slug: "senior-elite",
     name: "Senior Elite",
     sheetTab: "Senior Elite",
-    staffRange: "A28:H42",
+    staffRange: "A29:H42",
     description:
       "The top-tier Oslo Vikings squad competing for national championships in Norway.",
     heroImage: eliteBanner,
@@ -86,7 +86,7 @@ export const TEAM_CONFIG: Record<TeamSlug, TeamInfo> = {
     slug: "flag-football",
     name: "Flag Football",
     sheetTab: "Flag",
-    staffRange: "A84:H90",
+    staffRange: "A85:H90",
     description:
       "Fast-paced flag football squads introducing players to the sport in a non-contact format.",
     heroImage: DEFAULT_HERO_IMAGE,
