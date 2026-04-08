@@ -20,7 +20,7 @@ const HEADER_KEYS = {
   visibility: ["status", "visibility", "state"],
   featured: ["featured", "isfeatured"],
   date: ["date", "publishdate", "published"],
-  publishedAt: ["publishedat", "timestamp", "datetime"],
+  publishedAt: ["publishedat", "publishdate", "timestamp", "datetime"],
   readTime: ["readtime", "minutes", "readtimeminutes"],
   image: ["image", "thumbnail", "imageurl"],
   imageAlt: ["imagealt", "imgalt", "alt"],
@@ -59,7 +59,7 @@ function getValue(
   row: SheetRow,
   headerMap: HeaderMap,
   keys: readonly string[],
-  fallbackIndex?: number
+  fallbackIndex?: number,
 ): string {
   for (const key of keys) {
     const lookup = normaliseHeader(key);
@@ -120,7 +120,7 @@ function normaliseImage(
   raw: string,
   alt: string,
   placementRaw: string,
-  credit: string
+  credit: string,
 ): NewsImage | undefined {
   const src = raw?.trim();
   if (!src) return undefined;
@@ -144,7 +144,7 @@ const ARTICLE_VARIANTS: NewsArticleLayoutVariant[] = [
 ];
 
 function normaliseLayoutVariant(
-  raw: string
+  raw: string,
 ): NewsArticleLayoutVariant | undefined {
   if (!raw) return undefined;
   const value = raw
@@ -152,7 +152,7 @@ function normaliseLayoutVariant(
     .trim()
     .replace(/[^a-z0-9]+/g, "");
   const match = ARTICLE_VARIANTS.find(
-    (variant) => variant.replace(/[^a-z0-9]+/g, "") === value
+    (variant) => variant.replace(/[^a-z0-9]+/g, "") === value,
   );
   return match;
 }
@@ -172,7 +172,7 @@ function parseGallery(raw: string): NewsImage[] | undefined {
         src: entry,
         placement: "top",
         driveId: undefined,
-      } satisfies NewsImage)
+      }) satisfies NewsImage,
   );
 }
 
@@ -257,13 +257,13 @@ export async function fetchNewsArticles({
     const imagePlacementRaw = getValue(
       row,
       headerMap,
-      HEADER_KEYS.imagePlacement
+      HEADER_KEYS.imagePlacement,
     );
     const image = normaliseImage(
       imageRaw,
       imageAlt,
       imagePlacementRaw,
-      imageCredit
+      imageCredit,
     );
 
     const article: NewsArticle = {
@@ -289,7 +289,7 @@ export async function fetchNewsArticles({
       tags: parseTags(getValue(row, headerMap, HEADER_KEYS.tags)),
       sources: parseSources(getValue(row, headerMap, HEADER_KEYS.sources)),
       layoutVariant: normaliseLayoutVariant(
-        getValue(row, headerMap, HEADER_KEYS.layoutVariant)
+        getValue(row, headerMap, HEADER_KEYS.layoutVariant),
       ),
       raw: toRecord(row, headers),
     };
@@ -325,12 +325,14 @@ export async function fetchNewsArticles({
   return typeof limit === "number" ? sorted.slice(0, limit) : sorted;
 }
 
-export interface FetchNewsArticleOptions
-  extends Omit<FetchNewsOptions, "limit"> {}
+export interface FetchNewsArticleOptions extends Omit<
+  FetchNewsOptions,
+  "limit"
+> {}
 
 export async function fetchNewsArticleBySlug(
   slug: string,
-  options?: FetchNewsArticleOptions
+  options?: FetchNewsArticleOptions,
 ): Promise<NewsArticle | null> {
   if (!slug) return null;
 

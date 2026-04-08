@@ -10,19 +10,20 @@ export function normaliseYear(year: number): number {
   return year + (year >= 70 ? 1900 : 2000);
 }
 
-export function parseEuropeanDate(value: string): number {
+export function parseUSDate(value: string): number {
   const trimmed = value.trim();
   if (!trimmed) return Number.NaN;
 
   const match = trimmed.match(
-    /^(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/
+    /^(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/,
   );
 
   if (!match) return Number.NaN;
 
-  const [, dayStr, monthStr, yearStr, hourStr, minuteStr, secondStr] = match;
-  const day = Number(dayStr);
+  // Input format is MM/DD/YYYY (US)
+  const [, monthStr, dayStr, yearStr, hourStr, minuteStr, secondStr] = match;
   const month = Number(monthStr);
+  const day = Number(dayStr);
   const year = normaliseYear(Number(yearStr));
   const hour = hourStr !== undefined ? Number(hourStr) : 0;
   const minute = minuteStr !== undefined ? Number(minuteStr) : 0;
@@ -61,9 +62,9 @@ export function parseSheetDate(value?: string): number {
   const trimmed = value.trim();
   if (!trimmed) return Number.NaN;
 
-  const european = parseEuropeanDate(trimmed);
-  if (!Number.isNaN(european)) {
-    return european;
+  const us = parseUSDate(trimmed);
+  if (!Number.isNaN(us)) {
+    return us;
   }
 
   const native = Date.parse(trimmed);
