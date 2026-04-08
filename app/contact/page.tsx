@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import type { ContactPerson } from "@/app/types/contact";
-const GoogleMap = dynamic(() => import("@/app/components/GoogleMap"), {
+const OSMMap = dynamic(() => import("@/app/components/OSMMap"), {
   ssr: false,
 });
 
@@ -20,21 +20,21 @@ const MAP_LOCATIONS = [
     title: "Viking Stadium (Frogner Stadium)",
     address: "Middelthuns gate 26, 0368 Oslo, Norway",
   },
-  {
-    id: "office",
-    title: "Head Office",
-    address: "Mølleparken 4, 0459 Oslo, Norway",
-  },
+  // {
+  //   id: "office",
+  //   title: "Head Office",
+  //   address: "Mølleparken 4, 0459 Oslo, Norway",
+  // },
   {
     id: "gym",
     title: "Wang Gym",
     address: "Kronprinsens gate 5, 0251 Oslo, Norway",
   },
-  {
-    id: "nih-field",
-    title: "NIH Kunstgressbane",
-    address: "Sognsveien 220, 0863 Oslo, Norway",
-  },
+  // {
+  //   id: "nih-field",
+  //   title: "NIH Kunstgressbane",
+  //   address: "Sognsveien 220, 0863 Oslo, Norway",
+  // },
 ];
 
 const formatPhoneHref = (phone: string) => phone.replace(/[^+\d]/g, "");
@@ -239,7 +239,7 @@ function ContactPageContent() {
   const requestedLocation = searchParams.get("location");
   const initialLocationId = requestedLocation
     ? MAP_LOCATIONS.find(
-        (loc) => loc.id.toLowerCase() === requestedLocation.toLowerCase()
+        (loc) => loc.id.toLowerCase() === requestedLocation.toLowerCase(),
       )?.id
     : undefined;
   const mapSectionRef = useRef<HTMLElement | null>(null);
@@ -280,7 +280,7 @@ function ContactPageContent() {
         if (!isMounted) return;
         console.error("[contacts] Failed to fetch directory", error);
         setContactsError(
-          "We're having trouble loading the directory right now. Please try again shortly."
+          "We're having trouble loading the directory right now. Please try again shortly.",
         );
         setBoardContacts([]);
         setCentralContacts([]);
@@ -466,7 +466,7 @@ function ContactPageContent() {
                 Viking Stadium is located in the heart of Oslo
               </p>
             </div>
-            <GoogleMap
+            <OSMMap
               locations={MAP_LOCATIONS}
               height={480}
               initialSelectedId={initialLocationId}
