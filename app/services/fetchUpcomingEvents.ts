@@ -7,7 +7,39 @@ const DEFAULT_EVENTS_TAB = process.env.GOOGLE_EVENTS_SHEET ?? "UpcomingEvents";
 const DEFAULT_EVENTS_RANGE = process.env.GOOGLE_EVENTS_RANGE ?? "A1:K200";
 
 const OSLO_TIMEZONE = "Europe/Oslo";
-const DEFAULT_OSLO_OFFSET = "+01:00";
+
+/**
+ * Returns the UTC offset string (e.g. "+02:00") that Oslo observes on the
+ * given date, accounting for daylight-saving time (CET in winter, CEST in
+ * summer).  Falls back to "+01:00" if the runtime lacks Intl support.
+ */
+function getOsloOffsetForDate(dateParts: {
+  year: number;
+  month: number;
+  day: number;
+}): string {
+  try {
+    // Use noon to avoid any midnight DST edge-cases
+    const probe = new Date(
+      Date.UTC(dateParts.year, dateParts.month - 1, dateParts.day, 12, 0, 0),
+    );
+    const formatted = new Intl.DateTimeFormat("en-GB", {
+      timeZone: OSLO_TIMEZONE,
+      timeZoneName: "shortOffset",
+    }).format(probe);
+    // "shortOffset" produces something like "GMT+2" or "GMT+1"
+    const match = formatted.match(/GMT([+-]\d+)/);
+    if (match) {
+      const raw = match[1]; // e.g. "+2" or "-1"
+      const sign = raw[0];
+      const hours = Math.abs(Number(raw.slice(1)));
+      return `${sign}${hours.toString().padStart(2, "0")}:00`;
+    }
+  } catch {
+    // Intl not available or unexpected format – fall back silently
+  }
+  return "+01:00";
+}
 
 const OFFSET_ALIASES: Record<string, string> = {
   cet: "+01:00",
@@ -143,7 +175,7 @@ function resolveContactLocationSlug(location: string): string | undefined {
 
   if (
     Array.from(candidates).some((candidate) =>
-      LOCATION_BLOCKLIST.has(candidate)
+      LOCATION_BLOCKLIST.has(candidate),
     )
   ) {
     return undefined;
@@ -165,7 +197,7 @@ function createLocationHref(location: string | undefined): string | undefined {
 
 function formatTimestampInTimeZone(
   isoTimestamp: string,
-  timeZone: string
+  timeZone: string,
 ): { date: string; time: string } {
   try {
     const date = new Date(isoTimestamp);
@@ -239,7 +271,7 @@ function pickValue(
   row: SheetRow,
   headerMap: HeaderMap,
   keys: string[],
-  fallbackIndex?: number
+  fallbackIndex?: number,
 ): string {
   for (const key of keys) {
     const idx = headerMap.get(key);
@@ -271,7 +303,7 @@ function pickValue(
 
 function splitHeaderAndData(rows: SheetRow[]): SplitSheetRows {
   const firstPopulatedIndex = rows.findIndex((row) =>
-    row.some((cell) => (cell ?? "").toString().trim() !== "")
+    row.some((cell) => (cell ?? "").toString().trim() !== ""),
   );
 
   if (firstPopulatedIndex === -1) {
@@ -279,7 +311,7 @@ function splitHeaderAndData(rows: SheetRow[]): SplitSheetRows {
   }
 
   const header = rows[firstPopulatedIndex].map((cell) =>
-    (cell ?? "").toString()
+    (cell ?? "").toString(),
   );
   const dataRows = rows.slice(firstPopulatedIndex + 1);
   return { header, dataRows };
@@ -306,7 +338,7 @@ function normaliseTeam(raw: string): GameTeam | "All" | string | undefined {
 }
 
 function parseDateParts(
-  value: string
+  value: string,
 ): { year: number; month: number; day: number } | null {
   if (!value) return null;
   const trimmed = value.trim();
@@ -352,7 +384,7 @@ function parseDateParts(
 }
 
 function parseTimeParts(
-  value: string
+  value: string,
 ): { hour: number; minute: number } | null {
   if (!value) return null;
   let trimmed = value.trim();
@@ -378,7 +410,7 @@ function parseTimeParts(
   trimmed = trimmed
     .replace(
       /\b(?:utc|gmt|cet|cest|bst|est|edt|pst|pdt|mez|mesz|hrs|hours?)\b$/i,
-      ""
+      "",
     )
     .trim();
 
@@ -413,7 +445,7 @@ function parseTimeParts(
 function applyMeridiem(
   hour: number,
   minute: number,
-  meridiem?: string
+  meridiem?: string,
 ): { hour: number; minute: number } | null {
   let adjustedHour = hour;
   if (meridiem === "pm" && adjustedHour < 12) {
@@ -447,7 +479,7 @@ function toIsoDate({
 
 function toUtcTimestamp(
   dateParts: { year: number; month: number; day: number },
-  timeParts?: { hour: number; minute: number }
+  timeParts?: { hour: number; minute: number },
 ): string {
   const { year, month, day } = dateParts;
   const hour = timeParts?.hour ?? 0;
@@ -457,7 +489,7 @@ function toUtcTimestamp(
 }
 
 function normaliseTimeString(
-  timeParts: { hour: number; minute: number } | null
+  timeParts: { hour: number; minute: number } | null,
 ): string | undefined {
   if (!timeParts) return undefined;
   const { hour, minute } = timeParts;
@@ -523,7 +555,7 @@ function normaliseOffset(raw: string | undefined): string | null {
 function buildUtcTimestampWithOffset(
   dateParts: { year: number; month: number; day: number },
   timeParts: { hour: number; minute: number } | null,
-  offset: string
+  offset: string,
 ): string {
   const date = toIsoDate(dateParts);
   const time = normaliseTimeString(timeParts) ?? "00:00";
@@ -560,7 +592,7 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
   if (!rows.length) return [];
 
   const normalisedRows: SheetRow[] = rows.map((rawRow) =>
-    rawRow.map((cell) => (cell ?? "").toString())
+    rawRow.map((cell) => (cell ?? "").toString()),
   );
 
   let { header, dataRows } = splitHeaderAndData(normalisedRows);
@@ -603,7 +635,7 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
       row,
       headerMap,
       ["date", "startdate", "eventdate"],
-      0
+      0,
     );
     const dateParts = parseDateParts(dateValue);
     if (!dateParts) {
@@ -614,13 +646,14 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
       row,
       headerMap,
       ["time", "starttime", "eventtime", "kickoff"],
-      1
+      1,
     );
     const timeParts = parseTimeParts(timeValue);
     const hasExplicitTime = Boolean(timeParts);
 
     const offsetRaw = pickValue(row, headerMap, OFFSET_HEADER_KEYS);
-    const offset = normaliseOffset(offsetRaw) ?? DEFAULT_OSLO_OFFSET;
+    const offset =
+      normaliseOffset(offsetRaw) ?? getOsloOffsetForDate(dateParts);
 
     const startsAt = buildUtcTimestampWithOffset(dateParts, timeParts, offset);
     if (startsAt < nowIso) {
@@ -638,7 +671,7 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
       row,
       headerMap,
       ["title", "event", "name", "eventname"],
-      5
+      5,
     );
     const homeTeam = pickValue(row, headerMap, [
       "hometeam",
@@ -656,19 +689,19 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
       row,
       headerMap,
       ["type", "category", "eventtype", "activitytype"],
-      4
+      4,
     );
     const location = pickValue(
       row,
       headerMap,
       ["location", "venue", "place", "field"],
-      2
+      2,
     );
     const description = pickValue(
       row,
       headerMap,
       ["description", "details", "notes"],
-      6
+      6,
     );
     const link = pickValue(row, headerMap, ["link", "url", "cta"], 7);
     const sport = pickValue(row, headerMap, ["sport", "discipline"], 8);
@@ -677,7 +710,7 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
     const normalisedTeam = normaliseTeam(teamRaw);
     const defaultHome =
       typeof normalisedTeam === "string" && normalisedTeam !== "All"
-        ? TEAM_DEFAULT_HOME[normalisedTeam as GameTeam] ?? "Oslo Vikings"
+        ? (TEAM_DEFAULT_HOME[normalisedTeam as GameTeam] ?? "Oslo Vikings")
         : "Oslo Vikings";
 
     const locationHref = createLocationHref(location || undefined);
@@ -705,7 +738,7 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
         ? buildUtcTimestampWithOffset(
             endDateParts,
             endTimeParts ?? timeParts,
-            endOffset
+            endOffset,
           )
         : undefined,
       location: location || undefined,
@@ -733,7 +766,7 @@ function inferHomeAwayTeams(
   rawAway: string,
   opponent: string,
   indicator: string,
-  defaultHome: string
+  defaultHome: string,
 ): { homeTeam: string; awayTeam: string } {
   let homeTeam = rawHome;
   let awayTeam = rawAway;
@@ -767,12 +800,12 @@ function inferHomeAwayTeams(
 function parseScheduleEvents(
   rows: any[][],
   source: ScheduleSource,
-  nowIso: string
+  nowIso: string,
 ): UpcomingEvent[] {
   if (!rows.length) return [];
 
   const normalisedRows: SheetRow[] = rows.map((rawRow) =>
-    rawRow.map((cell) => (cell ?? "").toString())
+    rawRow.map((cell) => (cell ?? "").toString()),
   );
 
   const { header, dataRows } = splitHeaderAndData(normalisedRows);
@@ -809,7 +842,8 @@ function parseScheduleEvents(
     const hasExplicitTime = Boolean(timeParts);
 
     const offsetRaw = pickValue(row, headerMap, OFFSET_HEADER_KEYS);
-    const offset = normaliseOffset(offsetRaw) ?? DEFAULT_OSLO_OFFSET;
+    const offset =
+      normaliseOffset(offsetRaw) ?? getOsloOffsetForDate(dateParts);
 
     const startsAt = buildUtcTimestampWithOffset(dateParts, timeParts, offset);
     if (startsAt < nowIso) {
@@ -863,7 +897,7 @@ function parseScheduleEvents(
       rawAwayTeam,
       opponent,
       indicator,
-      defaultHome
+      defaultHome,
     );
 
     const originalDate = toIsoDate(dateParts);
@@ -900,7 +934,7 @@ function parseScheduleEvents(
 
 export async function fetchUpcomingEvents(
   tab: string = DEFAULT_EVENTS_TAB,
-  range: string = DEFAULT_EVENTS_RANGE
+  range: string = DEFAULT_EVENTS_RANGE,
 ): Promise<UpcomingEvent[]> {
   const nowIso = new Date().toISOString();
 
@@ -910,13 +944,13 @@ export async function fetchUpcomingEvents(
       SCHEDULE_SOURCES.map(async (source) => ({
         source,
         rows: await fetchSheetRows(source.sheet, SCHEDULE_RANGE),
-      }))
+      })),
     ),
   ]);
 
   const generalEvents = parseGeneralEvents(generalRows, nowIso);
   const scheduleEvents = scheduleResults.flatMap(({ source, rows }) =>
-    parseScheduleEvents(rows, source, nowIso)
+    parseScheduleEvents(rows, source, nowIso),
   );
 
   const combined = [...generalEvents, ...scheduleEvents];
