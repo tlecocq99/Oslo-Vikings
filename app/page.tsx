@@ -32,14 +32,14 @@ const PartnersCarousel = dynamic(
   () => import("./components/PartnersCarousel"),
   {
     loading: () => <PartnersCarouselSkeleton />,
-  }
+  },
 );
 
 const teko = Teko({ subsets: ["latin"] });
 
 // Type guard to ensure valid status
 function normalizeGameStatus(
-  status: string
+  status: string,
 ): "upcoming" | "live" | "completed" {
   if (status === "upcoming" || status === "live" || status === "completed") {
     return status;
@@ -237,10 +237,15 @@ export default async function Home() {
       }
     : fallbackUpcomingGame;
 
-  const newsArticles = await fetchNewsArticles({ limit: 6 });
+  const newsArticles = await fetchNewsArticles({ limit: 50 });
+  const featuredFromSheet = newsArticles.filter((a) => a.featured);
+  const homeNewsArticles =
+    featuredFromSheet.length > 0
+      ? featuredFromSheet.slice(0, 2)
+      : newsArticles.slice(0, 2);
   const featuredNews: NewsCardProps[] =
-    newsArticles.length > 0
-      ? newsArticles.slice(0, 2).map(mapNewsArticleToCard)
+    homeNewsArticles.length > 0
+      ? homeNewsArticles.map(mapNewsArticleToCard)
       : fallbackFeaturedNews.slice(0, 2).map(mapFallbackArticleToCard);
 
   return (
