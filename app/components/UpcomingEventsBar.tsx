@@ -26,7 +26,7 @@ function getDateFormatter(timeZone: string) {
         weekday: "short",
         month: "short",
         day: "numeric",
-      })
+      }),
     );
   }
   return DATE_FORMAT_CACHE.get(timeZone)!;
@@ -50,7 +50,7 @@ function formatDateLabel(event: UpcomingEvent) {
     ? fallbackTime
       ? `${fallbackDate} @ ${fallbackTime}`
       : fallbackDate
-    : fallbackTime ?? "";
+    : (fallbackTime ?? "");
 
   if (!event.startsAt) {
     return fallbackLabel;
@@ -83,7 +83,9 @@ function formatDateLabel(event: UpcomingEvent) {
 
 function eventBadgeLabel(event: UpcomingEvent): string {
   if (event.team && event.team !== "All") {
-    return String(event.team).toUpperCase();
+    const team = String(event.team).toUpperCase();
+    if (team === "MAIN") return "ELITE";
+    return team;
   }
   return event.category ? event.category.toUpperCase() : "CLUB EVENT";
 }
@@ -107,7 +109,7 @@ export default function UpcomingEventsBar({ events }: UpcomingEventsBarProps) {
         if (!event.startsAt) {
           console.warn(
             "[upcoming-events] Dropping event without startsAt",
-            event
+            event,
           );
           return false;
         }
