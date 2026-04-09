@@ -157,7 +157,7 @@ export default function OSMMap({
       </div>
       <div
         ref={containerRef}
-        style={{ height: heightPx }}
+        style={{ height: heightPx, position: "relative", zIndex: 0 }}
         className="w-full rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
       />
     </div>
