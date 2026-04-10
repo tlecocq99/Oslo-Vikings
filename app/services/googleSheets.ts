@@ -114,6 +114,24 @@ function buildSheetRange(sheetName: string, range: string): string {
   return trimmedRange ? `${sheetReference}!${trimmedRange}` : sheetReference;
 }
 
+const MAX_RETRIES = 4;
+const RETRY_BASE_MS = 1_500; // 1.5 s → 3 s → 6 s → 12 s
+
+function isRateLimitError(err: unknown): boolean {
+  if (err && typeof err === "object") {
+    const code = (err as any).code ?? (err as any).status;
+    if (code === 429 || code === 429) return true;
+    const message = String((err as any).message ?? "");
+    if (message.includes("Quota exceeded") || message.includes("429"))
+      return true;
+  }
+  return false;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function fetchSheetRows(
   sheetName: string,
   range: string
@@ -123,14 +141,26 @@ export async function fetchSheetRows(
 
   const sheetRange = buildSheetRange(sheetName, range);
 
-  try {
-    const resp = await client.sheets.spreadsheets.values.get({
-      spreadsheetId: client.sheetId,
-      range: sheetRange,
-    });
-    return resp.data.values || [];
-  } catch (err) {
-    console.error(`[sheets] Failed to fetch range '${sheetRange}':`, err);
-    return [];
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const resp = await client.sheets.spreadsheets.values.get({
+        spreadsheetId: client.sheetId,
+        range: sheetRange,
+      });
+      return resp.data.values || [];
+    } catch (err) {
+      if (isRateLimitError(err) && attempt < MAX_RETRIES) {
+        const delay = RETRY_BASE_MS * Math.pow(2, attempt);
+        console.warn(
+          `[sheets] Rate limited on '${sheetRange}'. Retrying in ${delay}ms (attempt ${attempt + 1}/${MAX_RETRIES})…`
+        );
+        await sleep(delay);
+        continue;
+      }
+      console.error(`[sheets] Failed to fetch range '${sheetRange}':`, err);
+      return [];
+    }
   }
+
+  return [];
 }
