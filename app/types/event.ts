@@ -29,6 +29,8 @@ export interface UpcomingEvent {
   link?: string;
   /** Whether this row represents a competitive game. */
   isGame: boolean;
+  /** True = home game, false = away game, undefined = unknown. */
+  isHomeGame?: boolean;
   homeTeam?: string;
   awayTeam?: string;
   sport?: string;

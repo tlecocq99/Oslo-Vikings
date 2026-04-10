@@ -256,7 +256,9 @@ function EventCard({ event }: { event: UpcomingEvent }) {
             <span className="text-viking-red">
               {event.homeTeam ?? "Oslo Vikings"}
             </span>
-            <span className="text-gray-400 dark:text-gray-500">vs</span>
+            <span className="text-gray-400 dark:text-gray-500">
+              {event.isHomeGame === false ? "@" : "vs"}
+            </span>
             <span className="text-gray-700 dark:text-gray-200">
               {event.awayTeam ?? "Opponent"}
             </span>

@@ -580,6 +580,34 @@ function coerceBooleanGame(type: string, home: string, away: string): boolean {
   return Boolean(home && away);
 }
 
+/**
+ * Parses an activity type string like:
+ *   "Home Game vs. Bergen Bears"   → { isGame: true, isHome: true,  opponent: "Bergen Bears" }
+ *   "Away Game @ Haugesund Demons" → { isGame: true, isHome: false, opponent: "Haugesund Demons" }
+ *   "Practice"                     → { isGame: false, isHome: null, opponent: "" }
+ */
+function parseActivityType(typeRaw: string): {
+  isGame: boolean;
+  isHome: boolean | null;
+  opponent: string;
+} {
+  const lower = typeRaw.toLowerCase();
+  const isGame =
+    lower.includes("game") ||
+    lower.includes("match") ||
+    lower.includes("fixture");
+
+  if (!isGame) return { isGame: false, isHome: null, opponent: "" };
+
+  const isHome = lower.includes("home") ? true : lower.includes("away") ? false : null;
+
+  // Extract opponent after "vs.", "vs", "@", or "at"
+  const opponentMatch = typeRaw.match(/(?:vs\.?|@|at)\s+(.+)/i);
+  const opponent = opponentMatch ? opponentMatch[1].trim() : "";
+
+  return { isGame, isHome, opponent };
+}
+
 function createGeneralEventId(index: number): string {
   return `upcoming-event-${index + 1}`;
 }
@@ -673,13 +701,13 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
       ["title", "event", "name", "eventname"],
       5,
     );
-    const homeTeam = pickValue(row, headerMap, [
+    const homeTeamRaw = pickValue(row, headerMap, [
       "hometeam",
       "home",
       "host",
       "homeclub",
     ]);
-    const awayTeam = pickValue(row, headerMap, [
+    const awayTeamRaw = pickValue(row, headerMap, [
       "awayteam",
       "away",
       "opponent",
@@ -715,10 +743,36 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
 
     const locationHref = createLocationHref(location || undefined);
 
-    const isGame = coerceBooleanGame(typeRaw, homeTeam, awayTeam);
-    const title =
+    // Parse opponent out of the activity type string (e.g. "Away Game @ Bergen Bears")
+    const { isGame, isHome, opponent: parsedOpponent } = parseActivityType(typeRaw);
+
+    // Explicit columns take priority; fall back to what was parsed from the activity type
+    let homeTeam = homeTeamRaw;
+    let awayTeam = awayTeamRaw || parsedOpponent;
+
+    if (!homeTeam && !awayTeam && parsedOpponent) {
+      awayTeam = parsedOpponent;
+    }
+
+    // Always keep Oslo Vikings first; for away games swap so Oslo is still listed first
+    // but flag it so the UI can show "@" instead of "vs"
+    let finalIsHomeGame: boolean | undefined = undefined;
+    if (isGame && parsedOpponent && !homeTeamRaw && !awayTeamRaw) {
+      if (isHome === true) {
+        homeTeam = defaultHome;
+        awayTeam = parsedOpponent;
+        finalIsHomeGame = true;
+      } else if (isHome === false) {
+        // Away game — Oslo still listed first, opponent second
+        homeTeam = defaultHome;
+        awayTeam = parsedOpponent;
+        finalIsHomeGame = false;
+      }
+    }
+
+    const finalIsGame = isGame || coerceBooleanGame(typeRaw, homeTeam, awayTeam);    const title =
       titleRaw ||
-      (isGame
+      (finalIsGame
         ? `${homeTeam || defaultHome} vs ${awayTeam || "Opponent"}`
         : typeRaw || "Club Event");
 
@@ -729,7 +783,7 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
     const event: UpcomingEvent = {
       id: createGeneralEventId(rowIndex),
       title,
-      category: typeRaw || (isGame ? "Game" : undefined),
+      category: typeRaw || (finalIsGame ? "Game" : undefined),
       team: normalisedTeam,
       date: displayDateTime.date,
       time: hasExplicitTime ? displayDateTime.time : undefined,
@@ -745,9 +799,10 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
       locationHref,
       description: description || undefined,
       link: link || undefined,
-      isGame,
-      homeTeam: isGame ? homeTeam || defaultHome : undefined,
-      awayTeam: isGame ? awayTeam || "Opponent" : undefined,
+      isGame: finalIsGame,
+      isHomeGame: finalIsHomeGame,
+      homeTeam: finalIsGame ? homeTeam || defaultHome : undefined,
+      awayTeam: finalIsGame ? awayTeam || "Opponent" : undefined,
       sport: sport || undefined,
       originalDate,
       originalTime: hasExplicitTime ? originalTime : undefined,
