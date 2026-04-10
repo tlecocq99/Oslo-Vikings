@@ -599,7 +599,11 @@ function parseActivityType(typeRaw: string): {
 
   if (!isGame) return { isGame: false, isHome: null, opponent: "" };
 
-  const isHome = lower.includes("home") ? true : lower.includes("away") ? false : null;
+  const isHome = lower.includes("home")
+    ? true
+    : lower.includes("away")
+      ? false
+      : null;
 
   // Extract opponent after "vs.", "vs", "@", or "at"
   const opponentMatch = typeRaw.match(/(?:vs\.?|@|at)\s+(.+)/i);
@@ -744,7 +748,11 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
     const locationHref = createLocationHref(location || undefined);
 
     // Parse opponent out of the activity type string (e.g. "Away Game @ Bergen Bears")
-    const { isGame, isHome, opponent: parsedOpponent } = parseActivityType(typeRaw);
+    const {
+      isGame,
+      isHome,
+      opponent: parsedOpponent,
+    } = parseActivityType(typeRaw);
 
     // Explicit columns take priority; fall back to what was parsed from the activity type
     let homeTeam = homeTeamRaw;
@@ -770,7 +778,9 @@ function parseGeneralEvents(rows: any[][], nowIso: string): UpcomingEvent[] {
       }
     }
 
-    const finalIsGame = isGame || coerceBooleanGame(typeRaw, homeTeam, awayTeam);    const title =
+    const finalIsGame =
+      isGame || coerceBooleanGame(typeRaw, homeTeam, awayTeam);
+    const title =
       titleRaw ||
       (finalIsGame
         ? `${homeTeam || defaultHome} vs ${awayTeam || "Opponent"}`
