@@ -19,6 +19,7 @@ import {
   UA,
   TR,
   HU,
+  MW,
 } from "country-flag-icons/react/3x2";
 
 // Loosen the flag component type to align with library signature
@@ -41,6 +42,7 @@ const CODE_MAP: Record<string, FlagComponent> = {
   UA,
   TR,
   HU,
+  MW,
 };
 
 // Map common nationality strings (case-insensitive) to ISO alpha-2 codes
@@ -80,6 +82,8 @@ const NAME_TO_CODE: Record<string, string> = {
   trkiye: "TR",
   hungary: "HU",
   hungarian: "HU",
+  malawi: "MW",
+  malawian: "MW",
 };
 
 export interface FlagIconProps {
